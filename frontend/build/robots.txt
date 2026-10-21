@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+#
+# Allow all crawlers on every public landing page. The auth-gated app
+# routes (/chat, /dashboard, /suggestions, /market-analysis) redirect
+# to /login when no token is present, so they have nothing to index.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://botella.ai/sitemap.xml

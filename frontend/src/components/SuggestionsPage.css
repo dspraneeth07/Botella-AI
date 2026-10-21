@@ -1,0 +1,1224 @@
+/* ============================================
+   SUGGESTIONS PAGE (full page view)
+   ============================================ */
+.sp-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 20px 32px 44px;
+  gap: 14px;
+}
+
+/* Coming soon placeholder */
+.sp-coming-soon {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.sp-coming-soon-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #B79CFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sp-coming-soon-pill {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #D6BBFF;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.sp-coming-soon h2 {
+  font-size: 22px;
+  font-weight: 650;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.sp-coming-soon p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* Loading */
+.sp-loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--text-muted);
+}
+
+.sp-spin {
+  animation: sp-rotate 1s linear infinite;
+  color: #B79CFF;
+}
+
+@keyframes sp-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.sp-loading p {
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Empty state */
+.sp-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 48px;
+}
+
+.sp-empty h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.sp-empty p {
+  font-size: 14px;
+  margin: 0;
+  max-width: 400px;
+  line-height: 1.6;
+}
+
+.sp-retry-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #B79CFF;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 8px;
+  transition: background 0.15s;
+}
+
+.sp-retry-btn:hover {
+  background: rgba(139, 92, 246, 0.25);
+}
+
+.sp-empty-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sp-generate-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  /* #8B5CF6 put white at 4.23:1 - under AA for 14px text. One step deeper
+     clears it at 5.8 without leaving the violet ramp. */
+  background: #6D28D9;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 8px;
+  transition: background 0.15s;
+}
+
+.sp-generate-btn:hover {
+  background: #5B21B6;
+}
+
+.sp-generate-btn:disabled,
+.sp-retry-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.sp-empty-error {
+  color: #FF6B8A;
+  font-size: 13px;
+  margin: 0;
+  max-width: 400px;
+}
+
+/* Tabs */
+.sp-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  background: var(--bg-card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.sp-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 550;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.sp-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover, rgba(255,255,255,0.04));
+}
+
+.sp-tab-active {
+  background: rgba(139, 92, 246, 0.15);
+  color: #B79CFF;
+}
+
+.sp-tab-active:hover {
+  background: rgba(139, 92, 246, 0.2);
+  color: #B79CFF;
+}
+
+/* Trending rides its own budget upstream, so its tab keeps the category's
+   orange identity (CATEGORY_META.social_trending) instead of the indigo. */
+.sp-tab-trending.sp-tab-active {
+  background: rgba(249, 115, 22, 0.15);
+  color: #f97316;
+}
+
+.sp-tab-trending.sp-tab-active:hover {
+  background: rgba(249, 115, 22, 0.2);
+  color: #f97316;
+}
+
+/* Empty state inside the Trending tab (the tab itself is persistent). */
+.sp-trending-empty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 24px;
+  border: 1px dashed rgba(249, 115, 22, 0.35);
+  border-radius: 12px;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.sp-trending-empty svg { color: #f97316; flex-shrink: 0; }
+.sp-trending-empty p { margin: 0; }
+
+/* Content */
+.sp-content {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Suggestions grid */
+.sp-suggestions-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sp-suggestion-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px 22px;
+  background: var(--bg-card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  animation: sp-slide-in 0.35s ease both;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.sp-suggestion-card:hover {
+  border-color: rgba(139, 92, 246, 0.25);
+  transform: translateY(-1px);
+}
+
+.sp-suggestion-num {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.15);
+  color: #B79CFF;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sp-suggestion-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.sp-suggestion-title {
+  font-size: 15px;
+  font-weight: 620;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.sp-suggestion-detail {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* Analyse button */
+.sp-analyse-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: rgba(139, 92, 246, 0.1);
+  color: #B79CFF;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  align-self: center;
+  white-space: nowrap;
+}
+
+.sp-analyse-btn:hover {
+  background: rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateX(2px);
+}
+
+.sp-analyse-btn:active {
+  transform: scale(0.97);
+}
+
+[data-theme="light"] .sp-analyse-btn {
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.2);
+  color: #8B5CF6;
+}
+
+[data-theme="light"] .sp-analyse-btn:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+/* Items grid */
+.sp-items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+.sp-item-card {
+  padding: 18px 20px;
+  background: var(--bg-card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  animation: sp-slide-in 0.35s ease both;
+  transition: border-color 0.2s, transform 0.15s;
+}
+
+.sp-item-card:hover {
+  border-color: rgba(240, 171, 252, 0.25);
+  transform: translateY(-1px);
+}
+
+.sp-item-top {
+  margin-bottom: 14px;
+}
+
+.sp-item-name {
+  font-size: 15px;
+  font-weight: 620;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.sp-item-cat {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.sp-item-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.sp-ai-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--accent-glow);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--accent);
+  margin-bottom: 12px;
+  animation: spPulse 1.5s ease-in-out infinite;
+}
+
+.sp-ai-spinner {
+  animation: spSpin 1s linear infinite;
+}
+
+@keyframes spSpin { to { transform: rotate(360deg); } }
+@keyframes spPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+
+/* ─── AI-refresh loading state (skeleton cards + pulsing header) ─────────── */
+.sp-ai-loading-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  background: linear-gradient(90deg, var(--accent-glow) 0%, rgba(196, 166, 255, 0.12) 50%, var(--accent-glow) 100%);
+  background-size: 200% 100%;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-light);
+  margin-bottom: 14px;
+  animation: spHeaderShine 2.2s linear infinite;
+}
+
+.sp-ai-sparkle {
+  color: var(--accent-light);
+  animation: spSparkle 1.8s ease-in-out infinite;
+}
+
+@keyframes spHeaderShine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes spSparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.85; }
+  50% { transform: scale(1.15) rotate(12deg); opacity: 1; }
+}
+
+.sp-skeleton-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  opacity: 0;
+  animation: spSkelFadeIn 0.4s ease forwards;
+}
+
+@keyframes spSkelFadeIn {
+  to { opacity: 1; }
+}
+
+.sp-skeleton-num,
+.sp-skeleton-line,
+.sp-skeleton-btn {
+  background: linear-gradient(
+    90deg,
+    var(--bg-hover) 0%,
+    var(--bg-elevated) 50%,
+    var(--bg-hover) 100%
+  );
+  background-size: 200% 100%;
+  animation: spShimmer 1.6s linear infinite;
+  border-radius: 6px;
+}
+
+.sp-skeleton-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sp-skeleton-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.sp-skeleton-line {
+  height: 12px;
+  width: 100%;
+}
+
+.sp-skeleton-title {
+  height: 14px;
+  width: 55%;
+}
+
+.sp-skeleton-short {
+  width: 70%;
+}
+
+.sp-skeleton-btn {
+  width: 88px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+@keyframes spShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.sp-item-last-sale {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.sp-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+}
+
+.sp-stat svg {
+  opacity: 0.5;
+}
+
+.sp-stat-value {
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+.sp-stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.sp-stat-danger .sp-stat-value {
+  color: #FF6B8A;
+}
+
+/* Slide animation */
+@keyframes sp-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   RECOMMENDATIONS (signal-aware cards)
+   ============================================ */
+
+/* Category filter tabs can wrap on small widths */
+.sp-cat-tabs {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+/* ── Signal context strip ─────────────────────────────────────────────────── */
+/* Toolbar row: the Active Signals button sits beside the Generate trigger
+   (right-grouped), replacing the old full-width "why today?" strip. */
+.sp-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 4px 0 12px;
+}
+.sp-toolbar .sp-staging-generate { margin: 0; }
+
+.sp-signal-strip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 12px 14px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 8%, var(--bg-card)), var(--bg-card));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.sp-smart-heading {
+  display: flex; align-items: end; justify-content: space-between; gap: 12px;
+  padding: 6px 2px 0;
+}
+.sp-smart-heading h2 { margin: 2px 0 0; color: var(--text-primary); font-size: 1.2rem; line-height: 1.1; }
+.sp-smart-heading > span { color: var(--text-muted); font-size: .72rem; }
+.sp-smart-kicker { color: var(--text-muted); font-size: .66rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
+
+.sp-signal-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.sp-signal-empty svg { color: #B79CFF; flex-shrink: 0; }
+
+.sp-signal-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.sp-signal-chips {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  gap: 8px;
+  scrollbar-width: none;
+}
+.sp-signal-chips::-webkit-scrollbar { height: 0; }
+
+.sp-signal-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 240px;
+  flex: 0 0 auto;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 550;
+  /* The LABEL takes the reading colour, not the signal's hue. Those hues are
+     validated for marks (3:1), not for 12.5px text - on the light pane the
+     weather chip measured 1.66:1. The hue still identifies the chip, through
+     the icon, the border and the tint. */
+  color: var(--text-secondary);
+  background: color-mix(in srgb, var(--chip, #B79CFF) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--chip, #B79CFF) 30%, transparent);
+}
+.sp-signal-chip svg { color: var(--chip, #B79CFF); flex-shrink: 0; }
+
+/* Keep the leading icon at its intended 13px: without this, a long chip that
+   hits max-width lets flexbox shrink the SVG along with the text, so icons
+   look bigger on short chips than long ones (the badge already opts out). */
+.sp-signal-chip > svg {
+  flex-shrink: 0;
+}
+
+.sp-signal-chip > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Crowd-size badge on event chips (only "major" draws get one). */
+.sp-chip-badge {
+  flex-shrink: 0;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: color-mix(in srgb, var(--chip, #B79CFF) 22%, transparent);
+}
+
+/* ── Recommendation list (inbox-style rows) ───────────────────────────────── */
+.sp-rec-list {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card, rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  /* Clips row corners to the rounded border; combined with the scrollable
+     flex-column page container this would let the list be SHRUNK to the
+     viewport and silently clip rows - flex-shrink: 0 keeps every row laid
+     out so the page scrolls instead. */
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.sp-rec-row {
+  border-bottom: 1px solid var(--border);
+  animation: sp-slide-in 0.3s ease both;
+  transition: background 0.15s;
+}
+
+.sp-rec-row:last-child { border-bottom: none; }
+
+.sp-rec-row:hover {
+  background: color-mix(in srgb, var(--cat, #B79CFF) 4%, transparent);
+}
+
+.sp-rec-row-open {
+  background: color-mix(in srgb, var(--cat, #B79CFF) 5%, transparent);
+  box-shadow: inset 3px 0 0 var(--cat, #B79CFF);
+}
+
+/* ── Collapsed summary line ────────────────────────────────────────────────
+   The line is a flex pair: the summary button (expand toggle) plus an
+   always-visible Execute button, so acting on a rec never requires
+   expanding it first. */
+.sp-rec-row-line {
+  display: flex;
+  align-items: center;
+}
+
+.sp-rec-row-line .sp-rec-row-summary {
+  flex: 1;
+  min-width: 0;
+}
+
+.sp-rec-row-execute {
+  margin-right: 18px;
+}
+
+/* Thumbs vote pair on the row line - always visible, active state colored. */
+.sp-rec-vote {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.sp-vote-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sp-vote-btn:hover {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.sp-vote-on-up {
+  color: #2FBF97;
+  background: rgba(47, 191, 151, 0.12);
+}
+
+.sp-vote-on-down {
+  color: #FF6B8A;
+  background: rgba(255, 107, 138, 0.12);
+}
+
+.sp-rec-row-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sp-rec-row-rank {
+  flex-shrink: 0;
+  width: 22px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.sp-rec-row-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--cat, #B79CFF);
+  background: color-mix(in srgb, var(--cat, #B79CFF) 13%, transparent);
+}
+
+.sp-rec-row-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.sp-rec-row-side {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sp-rec-conf-pill {
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sp-rec-chevron {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.sp-rec-row-open .sp-rec-chevron {
+  transform: rotate(180deg);
+}
+
+/* Toolbar row: category tabs on the left, expand-all toggle on the right */
+.sp-rec-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Headline: "{Action}: {product}" - the recommendation in five words */
+.sp-rec-headline {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-size: 13.5px;
+  min-width: 0;
+}
+
+.sp-rec-headline-action {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--cat, #B79CFF);
+}
+
+.sp-rec-headline-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sp-rec-summary-more {
+  align-self: center;
+  flex-shrink: 0;
+  font-size: 11.5px;
+  font-weight: 650;
+  color: var(--text-muted);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--bg-hover, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border);
+}
+
+/* Gist while collapsed: first sentence of the rationale, max two lines */
+.sp-rec-teaser {
+  margin: 0;
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Expanded detail block */
+.sp-rec-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 2px 18px 16px 52px;
+  animation: sp-detail-in 0.25s ease both;
+}
+
+@keyframes sp-detail-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Products */
+.sp-rec-products {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sp-rec-product {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 14.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex-wrap: wrap;
+}
+
+.sp-rec-product svg { color: var(--cat, #B79CFF); flex-shrink: 0; }
+
+.sp-rec-product-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-rec-product-meta {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* Quantity hint */
+.sp-rec-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-secondary, var(--text-primary));
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--cat, #B79CFF) 12%, transparent);
+}
+
+.sp-rec-qty svg { opacity: 0.8; }
+
+/* Rationale */
+.sp-rec-rationale {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* Signals cited */
+.sp-rec-signals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sp-rec-sig {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+  padding: 3px 9px;
+  border-radius: 999px;
+  color: var(--text-muted);
+  background: var(--bg-hover, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border);
+}
+
+/* Footer */
+.sp-rec-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.sp-rec-conf {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 120px;
+}
+
+.sp-rec-conf-track {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--bg-hover, rgba(255, 255, 255, 0.08));
+  overflow: hidden;
+}
+
+.sp-rec-conf-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.sp-rec-conf-label {
+  font-size: 11.5px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.sp-rec-valid {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.sp-rec-valid-expired { color: #FF6B8A; }
+
+/* Light theme */
+[data-theme="light"] .sp-rec-list,
+[data-theme="light"] .sp-signal-strip {
+  background: #F3F1FA;
+}
+
+/* Light theme */
+[data-theme="light"] .sp-suggestion-card,
+[data-theme="light"] .sp-item-card {
+  background: #F3F1FA;
+}
+
+[data-theme="light"] .sp-suggestion-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+[data-theme="light"] .sp-item-card:hover {
+  border-color: rgba(240, 171, 252, 0.35);
+}
+
+[data-theme="light"] .sp-tabs {
+  background: #F3F1FA;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .sp-container {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .sp-suggestion-card {
+    padding: 16px 18px;
+    flex-wrap: wrap;
+  }
+
+  .sp-suggestion-card .sp-analyse-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .sp-items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sp-rec-row-summary {
+    padding: 12px 14px;
+    gap: 9px;
+  }
+
+  /* Rank number is dead weight at phone widths */
+  .sp-rec-row-rank { display: none; }
+
+  /* Icon-only Execute on phones - the label doesn't fit next to the teaser */
+  .sp-rec-row-execute {
+    margin-right: 14px;
+    padding: 7px 10px;
+  }
+  .sp-rec-row-execute span { display: none; }
+
+  .sp-rec-vote { margin-right: 6px; }
+  .sp-vote-btn { padding: 5px; }
+
+  .sp-rec-detail {
+    padding: 2px 14px 14px 14px;
+  }
+
+  .sp-rec-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sp-signal-strip {
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .sp-signal-label { max-width: 58px; line-height: 1.15; }
+
+  .sp-item-stats {
+    gap: 14px;
+  }
+
+  .sp-tabs {
+    width: 100%;
+  }
+
+  .sp-tab {
+    flex: 1;
+    justify-content: center;
+    padding: 9px 14px;
+    font-size: 13px;
+  }
+}
+
+/* Legal disclaimer under the recommendation cards */
+.sp-disclaimer {
+  margin: 22px 2px 4px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* STAGING ONLY: the on-demand generate row (SuggestionsPage STAGING_GENERATE_BUTTON) */
+.sp-staging-generate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 10px 24px 0;
+}
+.sp-staging-generate-err {
+  font-size: 12px;
+  color: #FF6B8A;
+}
+
+/* =============================================================================
+   ACTION RAIL - the column of actions down the right of every card
+   -----------------------------------------------------------------------------
+   One rail per card, rendered whether the card is open or closed, so the two
+   states offer the same actions in the same place instead of each growing its
+   own button.
+   ============================================================================= */
+.sp-rec-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+  align-self: flex-start;
+  padding: 12px 12px 12px 0;
+  min-width: 214px;
+}
+
+.sp-rec-rail .sp-analyse-btn {
+  width: 100%;
+  justify-content: center;
+  gap: 7px;
+}
+
+/* The priority the recommender itself assigned. Never colour alone: the word
+   and the icon carry it, the tone only reinforces. */
+.sp-rec-priority {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--dp-tone, var(--accent));
+  background: color-mix(in srgb, var(--dp-tone, var(--accent)) 14%, transparent);
+  color: var(--text-primary);
+  font-size: 0.71rem;
+  font-weight: 640;
+  white-space: nowrap;
+}
+@supports not (background: color-mix(in srgb, red 10%, transparent)) {
+  .sp-rec-priority { background: var(--bg-secondary); }
+}
+
+.sp-rec-task {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 570;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.sp-rec-task:hover {
+  color: var(--text-primary);
+  border-color: var(--glass-border);
+  background: var(--bg-hover);
+}
+.sp-rec-task.is-saved {
+  border-color: var(--green);
+  color: var(--green);
+  cursor: default;
+  background: transparent;
+}
+.sp-rec-task:disabled { opacity: 1; }
+
+@media (max-width: 860px) {
+  .sp-rec-rail {
+    min-width: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0 14px 14px;
+    width: 100%;
+  }
+  .sp-rec-rail .sp-analyse-btn { width: auto; flex: 1 1 100%; }
+}

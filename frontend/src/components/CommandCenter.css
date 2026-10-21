@@ -1,0 +1,145 @@
+/* CommandCenter.css
+   -----------------------------------------------------------------------------
+   The merged Dashboard + Summary page. The reused panels (KpiGrid,
+   TasksByPriority, StoreIntelligence, ReviewCta) bring their own glass styling
+   from DashPanels.css; this file owns the page shell, the header, and the new
+   Effectiveness band, in the blue/teal elite register used across the app.
+   Every colour aliases onto the shared app tokens, which flip themselves.
+   ------------------------------------------------------------------------- */
+
+.cc-page {
+  --cc-blue: var(--accent);
+  --cc-blue-ink: var(--accent);
+  --cc-text: var(--text-primary, #0F172A);
+  --cc-soft: var(--text-secondary, #64748B);
+
+  /* Own scroll container - .chat-page is a fixed-height non-scrolling column. */
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 22px 26px 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: var(--bg-primary);
+  color: var(--cc-text);
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.cc-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.cc-head-left { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.cc-head-icon {
+  display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px; flex: 0 0 auto;
+  color: #fff; background: linear-gradient(145deg, var(--accent-light), var(--accent));
+  box-shadow: 0 8px 20px -10px rgba(124, 58, 237, 0.7);
+}
+.cc-title { font-size: 1.5rem; font-weight: 750; letter-spacing: -0.025em; margin: 0; }
+.cc-sub { margin: 3px 0 0; font-size: 0.84rem; color: var(--cc-soft); }
+.cc-head-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-left: auto; justify-content: flex-end; }
+.cc-stats-link { gap: 8px; align-self: center; }
+
+@keyframes cc-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* ── KPI row: [6 KPIs + 4 opportunity boxes] with Active Signals beside ──── */
+.cc-kpi-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 16px;
+  align-items: stretch;
+}
+/* Left column stacks the KPI grid and the 4 counter boxes directly beneath. */
+.cc-kpi-main { min-width: 0; display: flex; flex-direction: column; gap: 16px; }
+.cc-kpi-main .ins-counters,
+.cc-kpi-main .ins-hero { margin: 0; }
+/* In the KPI column the counters sit at KPI width - keep them 4-across but let
+   them fall to 2-up only when genuinely tight. */
+.cc-kpi-main .ins-counters { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* ── Active Signals card ─────────────────────────────────────────────────── */
+.cc-signals {
+  display: flex; flex-direction: column; min-width: 0;
+  background: var(--bg-secondary, #fff);
+  border: 1px solid var(--border, #EAEEF3);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 6px 18px -12px rgba(16, 24, 40, 0.14);
+  animation: cc-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.cc-signals-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 13px 15px; border-bottom: 1px solid var(--border-light, #F0F3F7);
+}
+.cc-signals-title { display: inline-flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: 700; letter-spacing: -0.01em; }
+.cc-signals-pulse {
+  position: relative; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px;
+  color: #fff; background: linear-gradient(145deg, var(--accent-light), var(--accent)); flex: 0 0 auto;
+}
+.cc-signals-pulse::after { content: ''; position: absolute; inset: 0; border-radius: 8px; box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.5); animation: cc-sig-pulse 2s ease-out infinite; }
+@keyframes cc-sig-pulse { to { box-shadow: 0 0 0 8px rgba(124, 58, 237, 0); } }
+.cc-signals-count { font-size: 0.78rem; font-weight: 700; color: var(--green); background: color-mix(in srgb, var(--green) 15%, transparent); padding: 3px 9px; border-radius: 999px; }
+
+/* The card fills the full height of the KPI+boxes column beside it, and the
+   scroll area grows to take that height - expanded, not a short fixed box. */
+.cc-signals { height: 100%; }
+.cc-signals-scroll { flex: 1 1 auto; min-height: 160px; overflow-y: auto; padding: 10px 12px; }
+.cc-sig-group { margin-bottom: 12px; }
+.cc-sig-group:last-child { margin-bottom: 0; }
+.cc-sig-group-head {
+  display: flex; align-items: center; gap: 7px; margin-bottom: 5px;
+  font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sig);
+}
+.cc-sig-group-icon { display: grid; place-items: center; color: var(--sig); }
+.cc-sig-group-label { flex: 1 1 auto; }
+.cc-sig-group-count { color: var(--text-tertiary, #94A3B8); font-weight: 700; }
+.cc-sig-item {
+  display: flex; align-items: center; gap: 8px; padding: 5px 6px 5px 8px; border-radius: 8px;
+}
+.cc-sig-item:hover { background: var(--bg-hover); }
+.cc-sig-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sig); flex: 0 0 auto; }
+.cc-sig-text { flex: 1 1 auto; min-width: 0; font-size: 0.82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-primary); }
+.cc-sig-when { font-size: 0.72rem; font-weight: 600; color: var(--text-tertiary, #94A3B8); white-space: nowrap; flex: 0 0 auto; }
+.cc-signals-empty { padding: 26px 16px; text-align: center; font-size: 0.84rem; color: var(--text-tertiary, #94A3B8); }
+.cc-signals-foot { padding: 10px 12px; border-top: 1px solid var(--border-light, #F0F3F7); }
+.cc-signals-viewall { width: 100%; }
+
+/* The 4 opportunity boxes sit as a direct full-width child of the page; the
+   page's own flex gap handles spacing, so drop the block's own bottom margin. */
+.cc-page > .ins-counters { margin-bottom: 0; }
+
+/* ── Body: two equal columns (Tasks | Store Intelligence), then findings ─── */
+.cc-cols2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.cc-col { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+.cc-foot { text-align: center; font-size: 0.78rem; color: var(--cc-soft); margin: 6px 0 0; }
+
+/* ── States ──────────────────────────────────────────────────────────────── */
+.cc-loading { display: flex; align-items: center; justify-content: center; gap: 12px; color: #fff; border-radius: 22px; padding: 46px; margin-top: 8px; background: linear-gradient(120deg, var(--accent), var(--green)); font-weight: 600; }
+.cc-spin { animation: cc-spin 0.9s linear infinite; }
+@keyframes cc-spin { to { transform: rotate(360deg); } }
+.cc-skel { opacity: 0.5; }
+.cc-error { display: flex; align-items: center; gap: 10px; justify-content: center; margin: 60px auto; max-width: 520px; padding: 18px 22px; border: 1px solid var(--border, #EAEEF3); border-radius: 14px; background: var(--bg-secondary, #fff); }
+.cc-error button { margin-left: 6px; font: inherit; font-weight: 600; cursor: pointer; padding: 6px 14px; border-radius: 9px; border: none; color: #fff; background: var(--cc-blue); }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .cc-cols2 { grid-template-columns: minmax(0, 1fr); }
+  .cc-kpi-row { grid-template-columns: minmax(0, 1fr); }
+  .cc-signals-scroll { max-height: 260px; }
+}
+@media (max-width: 720px) {
+  .cc-page { padding: 18px 14px 32px; }
+  .cc-eff { padding: 22px 20px; }
+  .cc-eff-value { font-size: 2.2rem; }
+  .cc-eff-cta { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cc-eff { animation: none; }
+  .cc-eff-cta:hover { transform: none; }
+  .cc-spin { animation: none; }
+}

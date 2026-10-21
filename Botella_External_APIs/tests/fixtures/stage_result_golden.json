@@ -1,0 +1,41 @@
+{
+  "context": {
+    "as_of": "2026-09-21",
+    "config_version": "default",
+    "run_id": "0d5f9f4e-2a1b-4c3d-8e7f-000000000001",
+    "seed": 7,
+    "snapshot_id": "snap-2026-09-21-0400",
+    "store_id": 46,
+    "tenant_id": 46,
+    "versions": {
+      "candidates": "1.0.0",
+      "engine": "2.0.0"
+    }
+  },
+  "duration_ms": 0,
+  "input_digest": "a1c9601f36fbfbd7216a957c77584c7e407dc6accd38cbab72b19705055bd881",
+  "ok": true,
+  "provenance": {
+    "calibration_version": null,
+    "cohort_level": "state",
+    "cohort_size": 240,
+    "config_keys": [
+      "dead_stock.days"
+    ],
+    "evidence_state": "ESTABLISHED",
+    "inputs": [
+      "items.last_sold_days_ago",
+      "items.sku"
+    ],
+    "own_observations": 4,
+    "own_weight": 0.8
+  },
+  "reasons": [],
+  "schema": "stage_result/1",
+  "stage": "dead_stock",
+  "stage_version": "1.0.0",
+  "value": [
+    "MD1",
+    "ZB1"
+  ]
+}

@@ -1,0 +1,950 @@
+<title>The Deficit Rewrite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  color-scheme:light;
+  --paper:#FBFAF7; --card:#FFFFFF; --sunk:#F3F1EC; --rule:#DFDAD0;
+  --ink:#1A1713; --body:#3D3830; --mute:#6F675B; --faint:#9A9184;
+  --blue:#1F4E79; --blue-bg:#E6EEF6; --blue-edge:#A9C4DD;
+  --green:#15613F; --green-bg:#E5F1E9; --green-edge:#A6CDB6;
+  --brass:#9A5A05; --brass-bg:#FCF1E0; --brass-edge:#E3C68E;
+  --plum:#7A4E9A; --plum-bg:#F0E9F6; --plum-edge:#C9B3DC;
+  --red:#A32118; --red-bg:#FBEAE7; --red-edge:#E0AFA8;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --plum:#C09BE0; --plum-bg:#1E1428; --plum-edge:#42305A;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --plum:#C09BE0; --plum-bg:#1E1428; --plum-edge:#42305A;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);
+  font-family:"Source Sans 3",system-ui,sans-serif;font-size:16.5px;line-height:1.66;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--ink);margin:0;font-family:"Source Serif 4",Georgia,serif;text-wrap:balance}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:0 110px;padding-inline:28px}
+
+header.mast{border-bottom:3px double var(--rule);padding:46px 0 26px;margin-bottom:34px}
+.dept{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:20px}
+h1{font-size:clamp(34px,5.4vw,56px);font-weight:700;line-height:1.04;letter-spacing:-.02em}
+.dek{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.1vw,21px);line-height:1.5;
+  margin-top:16px;max-width:62ch}
+.byline{margin-top:22px;padding-top:14px;border-top:1px solid var(--rule);
+  font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:8px 26px}
+.byline b{color:var(--body);font-weight:600}
+
+.verdict{background:var(--card);border:1px solid var(--rule);border-left:5px solid var(--green);
+  padding:26px 30px;margin:32px 0}
+.verdict h2{font-size:24px;margin-bottom:12px;color:var(--green)}
+.verdict p{margin:0 0 13px;max-width:74ch}.verdict p:last-child{margin:0}
+
+section{margin-top:62px;scroll-margin-top:20px}
+.sec-no{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:9px}
+section>h2{font-size:clamp(25px,3.3vw,34px);font-weight:700;letter-spacing:-.015em;
+  padding-bottom:13px;border-bottom:2px solid var(--ink);margin-bottom:24px}
+h3{font-size:20px;font-weight:600;margin:32px 0 11px}
+h4{font-size:16px;font-weight:600;margin:22px 0 8px}
+p{margin:0 0 15px;max-width:76ch}
+ul,ol{max-width:76ch;padding-left:22px;margin:0 0 15px}li{margin-bottom:7px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:"JetBrains Mono",monospace;font-size:.85em;background:var(--sunk);
+  padding:1.5px 5px;border-radius:2px;color:var(--ink);word-break:break-word}
+
+pre{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:var(--sunk);
+  border:1px solid var(--rule);padding:0;margin:12px 0;overflow-x:auto;color:var(--ink)}
+pre code{background:none;padding:0;font-size:inherit;display:block;white-space:normal}
+.ln{display:block;padding:1px 14px;white-space:pre;line-height:1.5}
+.ln.cmt{color:var(--mute)}
+.ln.hi{background:var(--blue-bg);border-left:3px solid var(--blue);padding-left:11px;font-weight:500}
+.ln.ok{background:var(--green-bg);border-left:3px solid var(--green);padding-left:11px}
+.ln.no{background:var(--red-bg);border-left:3px solid var(--red);padding-left:11px}
+pre code .cmt{color:var(--mute)}
+
+.comp{border:1px solid var(--rule);background:var(--card);margin:24px 0;overflow:hidden}
+.comp-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;padding:14px 20px;
+  background:var(--sunk);border-bottom:1px solid var(--rule)}
+.comp-h .id{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;color:var(--blue)}
+.comp-h h3{margin:0;font-size:19px;flex:1 1 300px}
+.comp-h .cl{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:9.5px;
+  letter-spacing:.08em;color:var(--mute);background:var(--sunk);padding:3px 9px;
+  border-radius:2px;border:1px solid var(--rule);font-weight:700;white-space:nowrap}
+.comp-b{padding:18px 20px}.comp-b>*:last-child{margin-bottom:0}
+.comp.c-new{border-left:5px solid var(--green)}
+.comp.c-new .id{color:var(--green)}
+.comp.c-new .cl{color:var(--green);background:var(--green-bg);border-color:var(--green-edge)}
+.comp.c-chg{border-left:5px solid var(--blue)}
+.comp.c-chg .cl{color:var(--blue);background:var(--blue-bg);border-color:var(--blue-edge)}
+.comp.c-gone{border-left:5px solid var(--red)}
+.comp.c-gone .id{color:var(--red)}
+.comp.c-gone .cl{color:var(--red);background:var(--red-bg);border-color:var(--red-edge)}
+
+.lbl{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--mute);margin:16px 0 5px;font-weight:700}
+.lbl:first-child{margin-top:0}
+.io{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:14px 0}
+.io div{background:var(--card);padding:11px 13px}
+.io .t{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:5px;font-weight:700}
+.io .c{font-size:12.5px;line-height:1.5}
+.io code{font-size:11.5px}
+
+.meas{border:1px solid var(--green-edge);border-left:4px solid var(--green);
+  background:var(--green-bg);padding:12px 16px;margin:14px 0}
+.meas .l{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--green);font-weight:700;display:block;margin-bottom:4px}
+.meas p{margin:0;font-size:13.5px;max-width:72ch;color:var(--ink)}
+.meas p+p{margin-top:8px}
+
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:680px;background:var(--card)}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mute);font-weight:700;background:var(--sunk)}
+tbody tr:last-child td{border-bottom:none}
+td.mono{font-family:"JetBrains Mono",monospace;font-size:12px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;
+  font-family:"JetBrains Mono",monospace;white-space:nowrap}
+td.good{color:var(--green);font-weight:600}
+td.bad{color:var(--red);font-weight:600}
+.tag{font-family:"JetBrains Mono",monospace;font-size:10px;padding:2px 7px;border:1px solid;
+  border-radius:2px;white-space:nowrap;font-weight:700}
+.t-b{color:var(--blue);border-color:var(--blue-edge);background:var(--blue-bg)}
+.t-g{color:var(--green);border-color:var(--green-edge);background:var(--green-bg)}
+.t-r{color:var(--red);border-color:var(--red-edge);background:var(--red-bg)}
+.t-p{color:var(--plum);border-color:var(--plum-edge);background:var(--plum-bg)}
+
+.note{border:1px solid var(--rule);border-left:4px solid var(--blue);background:var(--card);
+  padding:15px 19px;margin:20px 0}
+.note p{margin:0;max-width:74ch}.note p+p{margin-top:10px}
+.note .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--blue);font-weight:700;display:block;margin-bottom:5px}
+.good{border:1px solid var(--green-edge);border-left:4px solid var(--green);
+  background:var(--green-bg);padding:15px 19px;margin:20px 0}
+.good p{margin:0;max-width:74ch;color:var(--ink)}.good p+p{margin-top:10px}
+.good .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--green);font-weight:700;display:block;margin-bottom:5px}
+.bad{border:1px solid var(--red-edge);border-left:4px solid var(--red);
+  background:var(--red-bg);padding:15px 19px;margin:20px 0}
+.bad p{margin:0;max-width:74ch;color:var(--ink)}.bad p+p{margin-top:10px}
+.bad .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--red);font-weight:700;display:block;margin-bottom:5px}
+
+figure{margin:26px 0;background:var(--card);border:1px solid var(--rule);padding:20px 18px 14px}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+.scroll-x{overflow-x:auto}
+figcaption{font-size:12.5px;color:var(--mute);line-height:1.55;margin-top:12px;
+  padding-top:11px;border-top:1px solid var(--rule)}
+footer{margin-top:74px;padding-top:20px;border-top:3px double var(--rule);
+  font-size:12.5px;color:var(--mute)}
+footer p{max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+@media print{body{background:#fff}.comp{break-inside:avoid}figure{break-inside:avoid}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="dept">Engine Three · architecture change record · branch Enh_Engine_v1</div>
+  <h1>The criterion was the defect</h1>
+  <p class="dek">What actually changed in the architecture since the component specification —
+  measured, with the eight ideas that measurement threw out and the one problem it exposed and
+  did not solve. Four new stages, one rewritten ranking basis, nothing else moved.</p>
+  <div class="byline">
+    <span><b>Date</b> 4 October 2026</span>
+    <span><b>Companion to</b> the thirteen-component specification of 22 September</span>
+    <span><b>State</b> 1,265 tests · both build guards clean · 120 declared settings</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <h2>One line changed the engine, and it was not a model</h2>
+  <p>The specification got the layers right and the <em>ranking basis</em> wrong. Expected value was
+  multiplied by <strong>total demand</strong>, estimated from a trailing 28-day window. Ranking on
+  that quantity orders products by how big a seller each one <em>looks right now</em>, so it selects
+  the windows that are most inflated — and an inflated window is by definition the one most likely
+  to fall back. <strong>The selection criterion and the estimation error were the same number.</strong></p>
+  <p>Multiplying instead by the <strong>deficit</strong> — the units the current plan misses — took
+  the pooled hit rate from <strong>31.0% to 75.9%</strong> and incremental margin per card from
+  <strong>−$952 to +$48</strong>. Against a null that already knows about mean reversion the edge is
+  <strong>+16.6 points at p = 0.0005</strong>, and it holds at all five pilot stores (+6.1 to +19.9).
+  No new data, no new model, no new field from the POS.</p>
+  <p>What is <em>not</em> fixed, stated here rather than in a footnote: the engine is right about
+  <strong>direction</strong> almost everywhere and wrong about <strong>size</strong> almost
+  everywhere. <strong>Four of five stores are net negative</strong> in the month the cards were
+  written for, once the stock they called for and did not sell is costed. A per-store calibration
+  fixed that at one store and did not generalise to the other four.</p>
+</div>
+
+<!-- ════════════ 1 ════════════ -->
+<section id="s1">
+  <div class="sec-no">Section 01</div>
+  <h2>The change itself</h2>
+
+  <p>The specification shrank each estimate toward a <strong>peer cohort</strong> — across stores.
+  The new stage shrinks a SKU's recent rate toward <strong>its own long run</strong> — across time.
+  Same arithmetic, second axis:</p>
+
+<pre><code><span class="ln cmt">sheet 06, already built: shrink this store toward stores like it.</span>
+<span class="ln cmt">sheet 20, the new stage:  shrink this window toward this SKU's own history.</span>
+<span class="ln"></span>
+<span class="ln hi">        rate_hat = ( n_eff · r_recent  +  k · r_long ) / ( n_eff + k )</span>
+<span class="ln hi">        n_eff    = open_days / ( 1 + cv² )</span>
+<span class="ln"></span>
+<span class="ln cmt">  n_eff is the textbook overdispersion deflation — an erratic four weeks</span>
+<span class="ln cmt">  carries less information than a steady four weeks, so it is worth less.</span>
+<span class="ln"></span>
+<span class="ln ok">  k is NOT a new constant. It is the registry's existing</span>
+<span class="ln ok">  shrink.k.sku_velocity, so the two axes cannot drift apart.</span>
+<span class="ln"></span>
+<span class="ln cmt">and then the part that actually changed the ranking:</span>
+<span class="ln"></span>
+<span class="ln no">  BEFORE   score = margin × rate_hat × horizon        # the LEVEL</span>
+<span class="ln ok">  AFTER    score = margin × (rate_hat − r_recent) × horizon   # the GAP</span>
+<span class="ln"></span>
+<span class="ln cmt">  open days throughout. never calendar days.</span></code></pre>
+
+  <p>The difference is not a refinement of the same ordering — it <strong>reverses</strong> it. A
+  product whose window is running hot has a large level and a <em>negative</em> gap; it used to rank
+  first and is now refused outright. That is the whole mechanism:</p>
+
+  <figure>
+    <div class="scroll-x">
+    <svg viewBox="0 0 980 578" role="img" aria-label="Two products drawn against their own long-run rates. Product A's trailing 28-day window is running hot at 0.95 units per open day against a long run of 0.65, giving a deficit of minus 9 units over 30 days. Product B's window is running quiet at 0.18 against the same 0.65 long run, giving a deficit of plus 14 units. The old criterion ranked by the level, so it picked A, the product whose window was inflated. The new criterion ranks by the gap, so A is refused and B is the card. Pooled across five stores the old ordering scored 31 percent and minus 952 dollars of incremental margin per card; the new ordering scores 75.9 percent and plus 48 dollars per card.">
+      <defs>
+        <marker id="gpr" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--red)"/></marker>
+        <marker id="gpg" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--green)"/></marker>
+        <marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+      </defs>
+
+      <text x="6" y="18" font-size="12" fill="currentColor" opacity=".8">Two products, one store, the same morning. Solid line = the trailing 28-day window. Dashed line = the SKU's own long run. All rates per OPEN day.</text>
+
+      <!-- ── PANEL A ── -->
+      <rect x="24" y="40" width="446" height="260" rx="4" fill="var(--red-bg)" stroke="var(--red-edge)" stroke-width="1.2"/>
+      <text x="40" y="60" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.3" font-weight="700" fill="var(--red)">PRODUCT A · WINDOW RUNNING HOT</text>
+      <text x="96" y="76" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing=".9" fill="var(--mute)">UNITS PER OPEN DAY</text>
+
+      <line x1="96" y1="80" x2="96" y2="240" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="96" y1="240" x2="440" y2="240" stroke="currentColor" stroke-width="1.2"/>
+      <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--mute)" text-anchor="end">
+        <text x="88" y="84">1.0</text><text x="88" y="164">0.5</text><text x="88" y="244">0</text>
+      </g>
+      <g stroke="currentColor" opacity=".13" stroke-width="1">
+        <line x1="96" y1="80" x2="440" y2="80"/><line x1="96" y1="160" x2="440" y2="160"/>
+      </g>
+
+      <line x1="96" y1="136" x2="440" y2="136" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4" opacity=".75"/>
+      <text x="436" y="130" font-size="11" text-anchor="end" fill="currentColor" opacity=".85">r_long  0.65</text>
+      <line x1="96" y1="88" x2="440" y2="88" stroke="var(--red)" stroke-width="2"/>
+      <text x="436" y="104" font-size="11" text-anchor="end" font-weight="700" fill="var(--red)">r_recent  0.95</text>
+
+      <g fill="var(--red)" opacity=".8">
+        <circle cx="140" cy="125" r="2.8"/><circle cx="200" cy="83" r="2.8"/>
+        <circle cx="260" cy="104" r="2.8"/><circle cx="320" cy="80" r="2.8"/>
+        <circle cx="380" cy="88" r="2.8"/>
+      </g>
+
+      <line x1="250" y1="88" x2="250" y2="136" stroke="var(--red)" stroke-width="1.6" marker-start="url(#gpr)" marker-end="url(#gpr)"/>
+      <text x="260" y="109" font-size="11.5" font-weight="700" fill="var(--red)">deficit = −9 units / 30 days</text>
+
+      <text x="40" y="266" font-size="12.5" font-weight="700" fill="var(--red)">The gap is NEGATIVE — there is nothing to recover.</text>
+      <text x="40" y="285" font-size="11.5" fill="currentColor" opacity=".85">The window is high because it is high. The honest forecast is that it falls back.</text>
+
+      <!-- ── PANEL B ── -->
+      <rect x="510" y="40" width="446" height="260" rx="4" fill="var(--green-bg)" stroke="var(--green-edge)" stroke-width="1.2"/>
+      <text x="526" y="60" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.3" font-weight="700" fill="var(--green)">PRODUCT B · WINDOW RUNNING QUIET</text>
+      <text x="582" y="76" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing=".9" fill="var(--mute)">UNITS PER OPEN DAY</text>
+
+      <line x1="582" y1="80" x2="582" y2="240" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="582" y1="240" x2="926" y2="240" stroke="currentColor" stroke-width="1.2"/>
+      <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--mute)" text-anchor="end">
+        <text x="574" y="84">1.0</text><text x="574" y="164">0.5</text><text x="574" y="244">0</text>
+      </g>
+      <g stroke="currentColor" opacity=".13" stroke-width="1">
+        <line x1="582" y1="80" x2="926" y2="80"/><line x1="582" y1="160" x2="926" y2="160"/>
+      </g>
+
+      <line x1="582" y1="136" x2="926" y2="136" stroke="currentColor" stroke-width="1.5" stroke-dasharray="5 4" opacity=".75"/>
+      <text x="922" y="130" font-size="11" text-anchor="end" fill="currentColor" opacity=".85">r_long  0.65</text>
+      <line x1="582" y1="211" x2="926" y2="211" stroke="var(--green)" stroke-width="2"/>
+      <text x="922" y="228" font-size="11" text-anchor="end" font-weight="700" fill="var(--green)">r_recent  0.18</text>
+
+      <g fill="var(--green)" opacity=".85">
+        <circle cx="626" cy="208" r="2.8"/><circle cx="686" cy="221" r="2.8"/>
+        <circle cx="746" cy="200" r="2.8"/><circle cx="806" cy="216" r="2.8"/>
+        <circle cx="866" cy="211" r="2.8"/>
+      </g>
+
+      <line x1="736" y1="136" x2="736" y2="211" stroke="var(--green)" stroke-width="1.6" marker-start="url(#gpg)" marker-end="url(#gpg)"/>
+      <text x="746" y="178" font-size="11.5" font-weight="700" fill="var(--green)">deficit = +14 units / 30 days</text>
+
+      <text x="526" y="266" font-size="12.5" font-weight="700" fill="var(--green)">The gap is POSITIVE — and it is the size of the card.</text>
+      <text x="526" y="285" font-size="11.5" fill="currentColor" opacity=".85">14 units is the median pick the new ordering actually makes.</text>
+
+      <!-- ── OLD ── -->
+      <rect x="24" y="322" width="932" height="82" rx="4" fill="var(--card)" stroke="var(--red)" stroke-width="1.6"/>
+      <text x="42" y="345" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.4" font-weight="700" fill="var(--red)">BEFORE — RANK BY THE LEVEL</text>
+      <text x="42" y="368" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">score = margin × rate_hat × H       →   A scores 28.5 units of demand,  B scores 5.4</text>
+      <text x="42" y="390" font-size="12.5" font-weight="700" fill="var(--red)">A ranks first. The engine spent its ten cards on the products least able to beat their own window.</text>
+
+      <!-- ── NEW ── -->
+      <rect x="24" y="424" width="932" height="82" rx="4" fill="var(--card)" stroke="var(--green)" stroke-width="1.6"/>
+      <text x="42" y="447" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.4" font-weight="700" fill="var(--green)">AFTER — RANK BY THE GAP</text>
+      <text x="42" y="470" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">score = margin × (rate_hat − r_recent) × H   →   A is −9 and REFUSED,  B is +14 and ranked</text>
+      <text x="42" y="492" font-size="12.5" font-weight="700" fill="var(--green)">B is the card. A never reaches the list — a negative gap is not a small opportunity, it is none.</text>
+
+      <g stroke="currentColor" opacity=".5" fill="none" stroke-width="1.2">
+        <line x1="247" y1="300" x2="247" y2="320" marker-end="url(#ar1)"/>
+        <line x1="733" y1="300" x2="733" y2="320" marker-end="url(#ar1)"/>
+      </g>
+
+      <line x1="24" y1="526" x2="956" y2="526" stroke="currentColor" stroke-width="1" opacity=".2"/>
+      <text x="24" y="547" font-size="12.5" fill="currentColor"><tspan font-weight="700" fill="var(--green)">Measured, pooled over the five pilot stores.</tspan> The old ordering placed 2,080 bets at 31.0%, for <tspan font-weight="700" fill="var(--red)">−$952</tspan> of incremental margin per card.</text>
+      <text x="24" y="566" font-size="12.5" fill="currentColor">The new ordering places 1,056 at 75.9%, for <tspan font-weight="700" fill="var(--green)">+$48</tspan> per card. Fewer, smaller, sharper bets — and the sign of the money changes.</text>
+    </svg>
+    </div>
+    <figcaption><strong>Why the old ordering was anti-correlated with its own outcome.</strong> Both
+    products are judged against the same question — will it beat its recent rate — and the old
+    criterion systematically picked the one that could not. The rates shown are per open day in the
+    band the engine really operates in; the median new pick is 14 units over 30 days.</figcaption>
+  </figure>
+
+  <div class="good">
+    <span class="l">Why this is structure and not a fit</span>
+    <p>The hit rate is flat at <strong>68.0 / 68.0 / 68.7 / 68.4 / 68.0</strong> for
+    <code>k = 8 / 13 / 21 / 30 / 45</code>. Insensitivity across a five-fold range of the only free
+    parameter is the signature of a real effect; a tuned one collapses when you move the knob.</p>
+    <p><strong>A version that scored higher is deliberately not in the code.</strong> A rank-average
+    of the same two signals hit 74.8% — then fell to 64.9% and 50.4% as a materiality floor was
+    applied, because its edge was borrowed from products selling about one unit a month, where the
+    ratio is noise amplified by division. The shippable version scores lower and keeps scoring it.</p>
+  </div>
+
+  <h3>The second output, and the rule attached to it</h3>
+
+  <p>The stage returns two numbers, and confusing them is how a card ends up carrying a fabricated
+  dollar figure. The separation is enforced at the type level, not by convention:</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Output</th><th>What it is</th><th>Where it is allowed to go</th><th>May be multiplied by margin?</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">deficit_units</td><td>Units the current plan misses</td><td><strong>Money</strong> — <code>units_at_stake</code> in the score</td><td class="good">Yes — it is a unit count</td></tr>
+      <tr><td class="mono">p_hit</td><td>Likelihood it beats its baseline</td><td><strong>Confidence</strong> — sheet 08 calibration</td><td class="bad">Never — it is a ratio</td></tr>
+    </tbody>
+  </table></div>
+
+  <p>And <code>p_hit</code> itself was rebuilt. It originally <em>averaged</em> a squashed uplift with
+  steadiness, which lets either term carry a candidate alone — so a perfectly steady seller had
+  <code>steadiness = 1.0</code> whether it was climbing <em>or dying</em>, and <code>cv = 0</code>
+  forced <code>p_hit ≥ 0.5</code> however hard the product was falling:</p>
+
+<pre><code><span class="ln no">  BEFORE   p_hit = mean( squash(uplift), steadiness )   # either term can carry it</span>
+<span class="ln ok">  AFTER    p_hit = s / (1 + s),   s = uplift × steadiness   # both must hold</span>
+<span class="ln"></span>
+<span class="ln cmt">  chosen on the first 25 decision dates, scored on the last 25 it never saw:</span>
+<span class="ln cmt">  68.8% → 69.6%. it scored BETTER out of sample. structure, not a fit.</span>
+<span class="ln"></span>
+<span class="ln hi">  and the floor now reads as a sentence: p_hit ≥ 0.5 is exactly</span>
+<span class="ln hi">  uplift × steadiness ≥ 1 — the long run must exceed the recent rate by (1 + cv).</span></code></pre>
+
+  <p>Even with the product form, a steady decliner cleared the confidence floor, so recommendability
+  requires three things rather than one. The third is what refuses product A above:</p>
+
+<pre><code><span class="ln">def is_recommendable(reverted, ctx, config) -&gt; bool:</span>
+<span class="ln">    return (reverted.material                       <span class="cmt"># ≥ MATERIALITY_FLOOR_UNITS</span></span>
+<span class="ln ok">            and reverted.deficit_units &gt; 0.0        # a negative gap is NOT a small one</span>
+<span class="ln">            and reverted.p_hit &gt;= config.get(MIN_HIT_PROBABILITY, ctx))</span></code></pre>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section id="s2">
+  <div class="sec-no">Section 02</div>
+  <h2>Where the four new stages sit</h2>
+
+  <p>The five layers are unchanged and so are nine of the thirteen components. Four stages were
+  added and one was rewritten in place. The thing to read in the diagram is the <strong>order</strong>
+  inside layer 2: the new stage runs <em>before</em> the cohort blend, so the quantity shrunk across
+  stores is one that has already been shrunk across time.</p>
+
+  <figure>
+    <div class="scroll-x">
+    <svg viewBox="0 0 980 664" role="img" aria-label="The five layers of the engine with four new stages inserted. Layer one, Data, keeps the feature store and capability profile and adds S17, computed calendar facts. Layer two, Predict, runs the pattern engine, then the new S14 temporal reversion stage, then the existing cohort shrinkage estimator, with both shrinkage stages sharing one k from the registry. Layer three, Decide, adds S15 the merchandise contract and S16 card lifecycle memory, and rewrites S8 the composer to rank on the deficit. Layer four, Explain, is unchanged. Layer five, Prove, adds the forecast accuracy gate and promise grading, while the holdout remains switched off. A right-hand column states what changed in each layer.">
+      <defs>
+        <marker id="f2a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+        <marker id="f2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--green)"/></marker>
+      </defs>
+
+      <text x="6" y="18" font-size="12.5" fill="currentColor" opacity=".8">Green is new on this branch. Blue is rewritten in place. Grey carries over from the specification untouched.</text>
+      <text x="806" y="38" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.3" fill="var(--mute)">WHAT CHANGED HERE</text>
+
+      <!-- LAYER 1 -->
+      <rect x="6" y="46" width="968" height="92" rx="5" fill="var(--sunk)"/>
+      <rect x="6" y="46" width="4" height="92" rx="2" fill="currentColor" opacity=".35"/>
+      <text x="20" y="76" font-family="Source Serif 4, serif" font-size="24" font-weight="700" fill="currentColor" opacity=".55">1</text>
+      <text x="44" y="74" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1.3" opacity=".8">DATA</text>
+      <text x="20" y="100" font-size="10" fill="currentColor" opacity=".6">what happened here,</text>
+      <text x="20" y="114" font-size="10" fill="currentColor" opacity=".6">and at stores like it</text>
+
+      <rect x="160" y="56" width="200" height="72" rx="3" fill="var(--card)" stroke="currentColor" stroke-width="1.1" opacity=".5"/>
+      <text x="172" y="74" font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor" opacity=".75">S1 · FEATURE STORE</text>
+      <text x="172" y="92" font-size="11" fill="currentColor" opacity=".75">one row per SKU per OPEN day</text>
+      <text x="172" y="110" font-size="11" fill="currentColor" opacity=".75">unchanged</text>
+
+      <rect x="375" y="56" width="200" height="72" rx="3" fill="var(--card)" stroke="currentColor" stroke-width="1.1" opacity=".5"/>
+      <text x="387" y="74" font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor" opacity=".75">S2 · CAPABILITY PROFILE</text>
+      <text x="387" y="92" font-size="11" fill="currentColor" opacity=".75">cost% · cat% · clock% · stale</text>
+      <text x="387" y="110" font-size="11" fill="currentColor" opacity=".75">unchanged</text>
+
+      <rect x="590" y="54" width="200" height="76" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.2"/>
+      <text x="602" y="72" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">S17 · CALENDAR FACTS</text>
+      <text x="602" y="90" font-size="11" fill="var(--green)">moving dates COMPUTED</text>
+      <text x="602" y="107" font-size="11" fill="var(--green)">Easter · 4th Thursday · 2nd Sunday</text>
+      <text x="602" y="123" font-size="10" fill="var(--green)" font-weight="700">a 2031 run needs no edit</text>
+
+      <text x="806" y="72" font-size="11" fill="var(--green)" font-weight="700">Calendar facts added.</text>
+      <text x="806" y="90" font-size="10.5" fill="currentColor" opacity=".85">22 tests pin known dates</text>
+      <text x="806" y="106" font-size="10.5" fill="currentColor" opacity=".85">across four years so the</text>
+      <text x="806" y="122" font-size="10.5" fill="currentColor" opacity=".85">arithmetic cannot drift.</text>
+
+      <!-- LAYER 2 -->
+      <rect x="6" y="148" width="968" height="92" rx="5" fill="var(--sunk)"/>
+      <rect x="6" y="148" width="4" height="92" rx="2" fill="var(--green)"/>
+      <text x="20" y="178" font-family="Source Serif 4, serif" font-size="24" font-weight="700" fill="var(--green)">2</text>
+      <text x="44" y="176" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1.3">PREDICT</text>
+      <text x="20" y="202" font-size="10" fill="currentColor" opacity=".6">how much will sell,</text>
+      <text x="20" y="216" font-size="10" fill="currentColor" opacity=".6">as a range</text>
+
+      <rect x="160" y="158" width="150" height="72" rx="3" fill="var(--card)" stroke="currentColor" stroke-width="1.1" opacity=".5"/>
+      <text x="170" y="176" font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor" opacity=".75">S4 · PATTERNS</text>
+      <text x="170" y="194" font-size="11" fill="currentColor" opacity=".75">nine, unchanged</text>
+      <text x="170" y="212" font-size="11" fill="currentColor" opacity=".75">r_recent · r_long · cv</text>
+
+      <rect x="340" y="154" width="200" height="80" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.8"/>
+      <text x="352" y="172" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">S14 · TEMPORAL REVERSION</text>
+      <text x="352" y="191" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--green)">(n_eff·r_recent + k·r_long)</text>
+      <text x="352" y="206" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--green)">───────────────────────</text>
+      <text x="352" y="220" font-family="JetBrains Mono, monospace" font-size="10.5" font-weight="700" fill="var(--green)">        n_eff + k</text>
+
+      <rect x="570" y="158" width="220" height="72" rx="3" fill="var(--card)" stroke="currentColor" stroke-width="1.1" opacity=".5"/>
+      <text x="582" y="176" font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor" opacity=".75">S5 · COHORT SHRINKAGE</text>
+      <text x="582" y="194" font-size="11" fill="currentColor" opacity=".75">across STORES — unchanged</text>
+      <text x="582" y="212" font-size="11" fill="currentColor" opacity=".75">now receives a reverted rate</text>
+
+      <text x="806" y="172" font-size="11" fill="var(--green)" font-weight="700">A second shrinkage axis.</text>
+      <text x="806" y="190" font-size="10.5" fill="currentColor" opacity=".85">S14 runs BEFORE S5, and</text>
+      <text x="806" y="206" font-size="10.5" fill="currentColor" opacity=".85">both read ONE k from the</text>
+      <text x="806" y="222" font-size="10.5" fill="currentColor" opacity=".85">registry, so they cannot</text>
+      <text x="806" y="236" font-size="10.5" fill="currentColor" opacity=".85">drift apart.</text>
+
+      <g stroke="var(--green)" fill="none" stroke-width="1.5">
+        <line x1="312" y1="194" x2="336" y2="194" marker-end="url(#f2g)"/>
+        <line x1="542" y1="194" x2="566" y2="194" marker-end="url(#f2g)"/>
+      </g>
+      <text x="345" y="248" font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--green)" font-weight="700">↑ shared: shrink.k.sku_velocity ↑</text>
+
+      <!-- LAYER 3 -->
+      <rect x="6" y="268" width="968" height="110" rx="5" fill="var(--sunk)"/>
+      <rect x="6" y="268" width="4" height="110" rx="2" fill="var(--green)"/>
+      <text x="20" y="298" font-family="Source Serif 4, serif" font-size="24" font-weight="700" fill="var(--green)">3</text>
+      <text x="44" y="296" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1.3">DECIDE</text>
+      <text x="20" y="322" font-size="10" fill="currentColor" opacity=".6">what to do, ranked</text>
+      <text x="20" y="336" font-size="10" fill="currentColor" opacity=".6">in code, never by</text>
+      <text x="20" y="350" font-size="10" fill="currentColor" opacity=".6">the model</text>
+
+      <rect x="160" y="278" width="150" height="90" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.2"/>
+      <text x="170" y="296" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">S15 · MERCHANDISE</text>
+      <text x="170" y="314" font-size="11" fill="var(--green)">bags of ice, deposits</text>
+      <text x="170" y="331" font-size="11" fill="var(--green)">and SKU 0123456789</text>
+      <text x="170" y="348" font-size="11" fill="var(--green)">never reach the rank</text>
+      <text x="170" y="363" font-size="10" fill="var(--green)" font-weight="700">45 of 44,398 · 0.10%</text>
+
+      <rect x="320" y="282" width="150" height="82" rx="3" fill="var(--card)" stroke="currentColor" stroke-width="1.1" opacity=".5"/>
+      <text x="330" y="300" font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor" opacity=".75">S7 · CANDIDATES</text>
+      <text x="330" y="318" font-size="11" fill="currentColor" opacity=".75">typed actions</text>
+      <text x="330" y="336" font-size="11" fill="currentColor" opacity=".75">unchanged</text>
+
+      <rect x="480" y="278" width="150" height="90" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.2"/>
+      <text x="490" y="296" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">S16 · LIFECYCLE</text>
+      <text x="490" y="314" font-size="11" fill="var(--green)">the engine now has</text>
+      <text x="490" y="331" font-size="11" fill="var(--green)">a MEMORY of what</text>
+      <text x="490" y="348" font-size="11" fill="var(--green)">it already said</text>
+      <text x="490" y="363" font-size="10" fill="var(--green)" font-weight="700">162 cards → 69</text>
+
+      <rect x="640" y="274" width="150" height="98" rx="3" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2.8"/>
+      <text x="650" y="292" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--blue)">S8 · COMPOSER</text>
+      <text x="650" y="310" font-size="11" font-weight="700" fill="var(--blue)">REWRITTEN</text>
+      <text x="650" y="328" font-size="11" fill="var(--blue)">units_at_stake =</text>
+      <text x="650" y="344" font-size="11" fill="var(--blue)">max(0, deficit_units)</text>
+      <text x="650" y="364" font-size="10" fill="var(--blue)" font-weight="700">never reads p_hit</text>
+
+      <text x="806" y="292" font-size="11" fill="var(--blue)" font-weight="700">The ranking basis.</text>
+      <text x="806" y="310" font-size="10.5" fill="currentColor" opacity=".85">Two new gates before it</text>
+      <text x="806" y="326" font-size="10.5" fill="currentColor" opacity=".85">and the multiplicand</text>
+      <text x="806" y="342" font-size="10.5" fill="currentColor" opacity=".85">swapped inside it. This</text>
+      <text x="806" y="358" font-size="10.5" fill="currentColor" opacity=".85">layer carries the whole</text>
+      <text x="806" y="374" font-size="10.5" fill="currentColor" opacity=".85">measured gain.</text>
+
+      <!-- LAYER 4 -->
+      <rect x="6" y="388" width="968" height="68" rx="5" fill="var(--sunk)"/>
+      <rect x="6" y="388" width="4" height="68" rx="2" fill="var(--brass)" opacity=".5"/>
+      <text x="20" y="418" font-family="Source Serif 4, serif" font-size="24" font-weight="700" fill="var(--brass)" opacity=".7">4</text>
+      <text x="44" y="416" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1.3" opacity=".8">EXPLAIN</text>
+      <text x="20" y="440" font-size="10" fill="currentColor" opacity=".6">put it in words</text>
+
+      <rect x="160" y="398" width="630" height="48" rx="3" fill="var(--card)" stroke="currentColor" stroke-width="1.1" opacity=".5"/>
+      <text x="172" y="416" font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor" opacity=".75">S9 RETRIEVAL · S10 WRITER-ONLY MODEL · S11 VALIDATOR</text>
+      <text x="172" y="436" font-size="11.5" fill="currentColor" opacity=".8">Untouched. The model still writes and still never selects or ranks — which is why the ranking swap was a one-module change.</text>
+
+      <text x="806" y="416" font-size="11" fill="currentColor" opacity=".75" font-weight="700">Nothing.</text>
+      <text x="806" y="434" font-size="10.5" fill="currentColor" opacity=".8">And that is the point.</text>
+
+      <!-- LAYER 5 -->
+      <rect x="6" y="466" width="968" height="110" rx="5" fill="var(--sunk)"/>
+      <rect x="6" y="466" width="4" height="110" rx="2" fill="var(--green)"/>
+      <text x="20" y="496" font-family="Source Serif 4, serif" font-size="24" font-weight="700" fill="var(--green)">5</text>
+      <text x="44" y="494" font-size="12" font-weight="700" fill="currentColor" letter-spacing="1.3">PROVE</text>
+      <text x="20" y="520" font-size="10" fill="currentColor" opacity=".6">earn the screen,</text>
+      <text x="20" y="534" font-size="10" fill="currentColor" opacity=".6">or stay in shadow</text>
+
+      <rect x="160" y="476" width="200" height="90" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.2"/>
+      <text x="172" y="494" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">NEW · FORECAST GATE (R10)</text>
+      <text x="172" y="512" font-size="11" fill="var(--green)">WAPE · bias · p10–p90</text>
+      <text x="172" y="529" font-size="11" fill="var(--green)">vs 3 baselines, over EVERY</text>
+      <text x="172" y="545" font-size="11" fill="var(--green)">material SKU, not just picks</text>
+      <text x="172" y="561" font-size="10" fill="var(--green)" font-weight="700">PASS at 30d and 60d</text>
+
+      <rect x="375" y="476" width="200" height="90" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.2"/>
+      <text x="387" y="494" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">NEW · PROMISE GRADING</text>
+      <text x="387" y="512" font-size="11" fill="var(--green)">realised ÷ promised units</text>
+      <text x="387" y="529" font-size="11" fill="var(--green)">+ cost of unsold stock</text>
+      <text x="387" y="545" font-size="11" fill="var(--green)">= a NET figure, at last</text>
+      <text x="387" y="561" font-size="10" fill="var(--green)" font-weight="700">this is what found the hole</text>
+
+      <rect x="590" y="480" width="200" height="82" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="1.6" stroke-dasharray="5 4"/>
+      <text x="602" y="498" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--red)">S12 · HOLDOUT</text>
+      <text x="602" y="516" font-size="11" fill="var(--red)">built, still switched off</text>
+      <text x="602" y="533" font-size="11" fill="var(--red)">recommendation_evaluations</text>
+      <text x="602" y="550" font-size="11" fill="var(--red)" font-weight="700">has zero rows</text>
+
+      <text x="806" y="494" font-size="11" fill="var(--green)" font-weight="700">Two measures added.</text>
+      <text x="806" y="512" font-size="10.5" fill="currentColor" opacity=".85">Neither flatters the</text>
+      <text x="806" y="528" font-size="10.5" fill="currentColor" opacity=".85">engine. The one that</text>
+      <text x="806" y="544" font-size="10.5" fill="currentColor" opacity=".85">would prove CAUSATION</text>
+      <text x="806" y="560" font-size="10.5" fill="var(--red)" font-weight="700">is still not running.</text>
+
+      <g stroke="currentColor" opacity=".45" fill="none" stroke-width="1.2">
+        <line x1="470" y1="138" x2="470" y2="146" marker-end="url(#f2a)"/>
+        <line x1="470" y1="258" x2="470" y2="266" marker-end="url(#f2a)"/>
+        <line x1="470" y1="378" x2="470" y2="386" marker-end="url(#f2a)"/>
+        <line x1="470" y1="456" x2="470" y2="464" marker-end="url(#f2a)"/>
+      </g>
+
+      <line x1="6" y1="596" x2="974" y2="596" stroke="currentColor" stroke-width="1" opacity=".22"/>
+      <text x="6" y="617" font-size="12.5" fill="currentColor"><tspan font-weight="700" fill="var(--green)">The change in one line:</tspan> same five layers, same thirteen components, four stages inserted — and one quantity swapped inside the composer,</text>
+      <text x="6" y="636" font-size="12.5" fill="currentColor">from the demand <tspan font-weight="700" fill="var(--red)">level</tspan> to the demand <tspan font-weight="700" fill="var(--green)">gap</tspan>. Nothing in the language path moved, because the model never chose anything in the first place.</text>
+      <text x="6" y="658" font-family="JetBrains Mono, monospace" font-size="10" fill="currentColor" opacity=".6">green = new on this branch   ·   blue = rewritten in place   ·   grey = carried over untouched   ·   dashed red = built and not switched on</text>
+    </svg>
+    </div>
+    <figcaption><strong>Four insertions and one rewrite.</strong> Layer 4 is deliberately empty of
+    change: because the model only ever wrote the card and never chose it, correcting the selection
+    criterion touched the ranking module and nothing in the language path.</figcaption>
+  </figure>
+
+  <div class="note">
+    <span class="l">What is wired into the live route, and what is not</span>
+    <p>Being exact about this matters more than the diagram. <strong>The deficit gate is live:</strong>
+    <code>app/recommender/deterministic.py</code> imports <code>revert</code> and
+    <code>is_recommendable</code> and screens on them, stamping
+    <code>versions={"temporal_reversion": "1.1.0"}</code> on every run. The calendar facts are wired
+    into <code>app/pipeline/features/build.py</code>.</p>
+    <p><strong>The lifecycle memory and the full merchandise contract are not yet on the route.</strong>
+    They are built, tested and exercised by the audit harness; the live path still uses its own
+    narrower <code>is_merchandise</code> screen and has no card memory between mornings. Wiring them
+    in is the next migration step, not a finished one, and no number on this page depends on
+    pretending otherwise.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section id="s3">
+  <div class="sec-no">Section 03</div>
+  <h2>The new stages, in detail</h2>
+
+  <p>Four component cards. Each carries what the specification said, what was built instead, and the
+  measurement that decided it.</p>
+
+  <!-- S14 -->
+  <div class="comp c-new">
+    <div class="comp-h"><span class="id">S14</span><h3>Temporal reversion</h3><span class="cl">sheet 20 · the change that moved the number</span></div>
+    <div class="comp-b">
+      <p>Four hundred and seventy-three lines, and it is the whole result. Its settings are the only
+      ones on the branch marked <code>MEASURED</code> rather than <code>PROVISIONAL</code>, because
+      each was chosen by a sweep that is reproducible from the exports.</p>
+      <div class="tw"><table>
+        <thead><tr><th>Setting</th><th class="num">Value</th><th>Status</th><th>What fixes it there</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">MATERIALITY_FLOOR_UNITS</td><td class="num">8</td><td><span class="tag t-g">MEASURED</span></td><td>Raising it to 80 drove the hit rate 66.2% → 39.5%: big steady sellers have little room to beat their own rate</td></tr>
+          <tr><td class="mono">MIN_HIT_PROBABILITY</td><td class="num">0.5</td><td><span class="tag t-g">MEASURED</span></td><td>Exactly <code>uplift × steadiness ≥ 1</code> — a threshold that reads as a sentence</td></tr>
+          <tr><td class="mono">REVERSION_HORIZON_DAYS</td><td class="num">30</td><td><span class="tag t-g">MEASURED</span></td><td>Deliberately <em>not</em> the forecast horizon; tying them together cost 19.9 points at 90 days</td></tr>
+          <tr><td class="mono">DEFICIT_CALIBRATION</td><td class="num">1.0</td><td><span class="tag t-g">MEASURED</span></td><td>Identity by default. Per-store factors are fitted where enough closed windows exist — see section 05</td></tr>
+          <tr><td class="mono">DEFAULT_DISPERSION_CV</td><td class="num">1.0</td><td><span class="tag t-b">PROVISIONAL</span></td><td>Poisson-equivalent assumption when a SKU has fewer than 4 weeks to measure <code>cv</code> from</td></tr>
+        </tbody>
+      </table></div>
+      <div class="io">
+        <div><div class="t">In</div><div class="c"><code>recent_units</code>, <code>recent_open_days</code>, <code>long_run_units</code>, <code>long_run_open_days</code>, <code>weekly_rates</code></div></div>
+        <div><div class="t">Out</div><div class="c"><code>RevertedDemand</code> — <code>rate_hat</code>, <code>deficit_units</code>, <code>p_hit</code>, <code>material</code>, provenance</div></div>
+        <div><div class="t">Order</div><div class="c">Runs before the cohort blend in <code>assemble.py</code>; <code>Estimate</code> carries <code>reversion: RevertedDemand | None</code></div></div>
+        <div><div class="t">Denominator</div><div class="c"><strong>Open days, everywhere.</strong> A store shut on Sundays has 6-day weeks and a calendar denominator understates every rate by a seventh</div></div>
+      </div>
+      <div class="meas"><span class="l">Measured</span>
+        <p>Pooled over five stores: <strong>31.0% → 75.9%</strong>, <strong>−$952 → +$48</strong>
+        incremental margin per card. At Bethany alone, where it was first measured:
+        <strong>39.3% → 65.6%</strong> and <strong>−$13,783 → +$14,508</strong> of realised margin.</p>
+        <p>Flat across <code>k = 8…45</code>, and the tuned variant that scored higher is not in the
+        code. Both facts are in the module docstring so the next person does not re-tune it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S16 -->
+  <div class="comp c-new">
+    <div class="comp-h"><span class="id">S16</span><h3>Card lifecycle — the engine had no memory</h3><span class="cl">R16 · from the March ledger</span></div>
+    <div class="comp-b">
+      <p><strong>The defect, found by reading the ledger rather than the code.</strong> Stroyski 1.75L
+      was recommended on <strong>eight consecutive trading days</strong> and missed every one. The
+      engine recomputed the same depressed window each morning with no idea it had already said this,
+      or that the prediction was visibly failing.</p>
+      <p>Three rules, checked before any card is issued, in this order — and then the part without
+      which the other three do nothing:</p>
+
+      <figure>
+        <div class="scroll-x">
+        <svg viewBox="0 0 980 400" role="img" aria-label="The card lifecycle as a state machine. A candidate that clears the deficit, materiality and confidence gates becomes a live card. A live card is retired by one of three rules: declining, when sales since issue fall below the rate that justified it, which can fire from day three; no recovery, past the seven open-day review window; or stale, at twenty-one open days. A retired card is then suppressed for fourteen open days before it can be earned again. Without that suppression step, the next morning re-earns the same card from exactly the evidence just shown to be wrong, shown as a red dashed loop straight back to live.">
+          <defs>
+            <marker id="lcb" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--blue)"/></marker>
+            <marker id="lcr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--red)"/></marker>
+            <marker id="lcg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--green)"/></marker>
+          </defs>
+
+          <text x="6" y="18" font-size="12" fill="currentColor" opacity=".8">Four states. The transition that was missing is the last one, and without it the first three are decoration.</text>
+
+          <rect x="24" y="150" width="166" height="76" rx="4" fill="var(--card)" stroke="currentColor" stroke-width="1.4"/>
+          <text x="107" y="180" font-size="12.5" font-weight="700" text-anchor="middle" fill="currentColor">ELIGIBLE</text>
+          <text x="107" y="200" font-size="10.5" text-anchor="middle" fill="currentColor" opacity=".75">a candidate the</text>
+          <text x="107" y="215" font-size="10.5" text-anchor="middle" fill="currentColor" opacity=".75">gates would pass</text>
+
+          <rect x="300" y="146" width="180" height="84" rx="4" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.4"/>
+          <text x="390" y="178" font-size="13" font-weight="700" text-anchor="middle" fill="var(--green)">LIVE CARD</text>
+          <text x="390" y="198" font-size="10.5" text-anchor="middle" fill="var(--green)">on the owner's screen,</text>
+          <text x="390" y="214" font-size="10.5" text-anchor="middle" fill="var(--green)">with its promised units</text>
+
+          <rect x="660" y="150" width="150" height="76" rx="4" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+          <text x="735" y="180" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--red)">RETIRED</text>
+          <text x="735" y="200" font-size="10.5" text-anchor="middle" fill="var(--red)">pulled, and the</text>
+          <text x="735" y="215" font-size="10.5" text-anchor="middle" fill="var(--red)">rule is recorded</text>
+
+          <rect x="840" y="150" width="116" height="76" rx="4" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2.4"/>
+          <text x="898" y="180" font-size="12" font-weight="700" text-anchor="middle" fill="var(--blue)">SUPPRESSED</text>
+          <text x="898" y="200" font-size="10.5" text-anchor="middle" fill="var(--blue)">14 open days</text>
+          <text x="898" y="215" font-size="10.5" text-anchor="middle" fill="var(--blue)">of silence</text>
+
+          <line x1="192" y1="188" x2="294" y2="188" stroke="var(--green)" stroke-width="1.6" marker-end="url(#lcg)"/>
+          <g text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="var(--green)">
+            <text x="243" y="152">deficit &gt; 0</text>
+            <text x="243" y="164">material ≥ 8u</text>
+            <text x="243" y="176">p_hit ≥ 0.5</text>
+          </g>
+
+          <line x1="482" y1="188" x2="654" y2="188" stroke="var(--red)" stroke-width="1.6" marker-end="url(#lcr)"/>
+          <text x="568" y="150" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" text-anchor="middle" fill="var(--red)">1 · DECLINING — from day 3</text>
+          <text x="568" y="165" font-size="9.5" text-anchor="middle" fill="var(--red)">below the rate that justified it</text>
+          <text x="568" y="209" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" text-anchor="middle" fill="var(--red)">2 · NO RECOVERY — day 7</text>
+          <text x="568" y="226" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700" text-anchor="middle" fill="var(--red)">3 · STALE — day 21</text>
+
+          <line x1="812" y1="188" x2="834" y2="188" stroke="var(--blue)" stroke-width="1.8" marker-end="url(#lcb)"/>
+
+          <path d="M898 228 L898 300 L107 300 L107 232" fill="none" stroke="var(--blue)" stroke-width="1.8" stroke-dasharray="6 4" marker-end="url(#lcb)"/>
+          <text x="500" y="292" font-size="11" text-anchor="middle" font-weight="700" fill="var(--blue)">14 open days elapsed — the card may be earned again, from evidence that has had time to change</text>
+
+          <path d="M735 148 L735 76 L390 76 L390 142" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-dasharray="5 4" marker-end="url(#lcr)"/>
+          <text x="562" y="60" font-size="11.5" text-anchor="middle" font-weight="700" fill="var(--red)">WITHOUT SUPPRESSION, THIS IS THE REAL EDGE</text>
+          <text x="562" y="98" font-size="11" text-anchor="middle" fill="var(--red)">The next morning re-earns the card from exactly the evidence just shown to be wrong. Eight days of Stroyski.</text>
+
+          <line x1="6" y1="326" x2="974" y2="326" stroke="currentColor" stroke-width="1" opacity=".22"/>
+          <text x="6" y="348" font-size="12.5" fill="currentColor"><tspan font-weight="700" fill="var(--green)">Measured on the March ledger:</tspan> 162 cards became <tspan font-weight="700">69</tspan>, at the same hit rate. Stroyski was pulled after <tspan font-weight="700">3 days instead of 8</tspan>.</text>
+          <text x="6" y="370" font-size="12.5" fill="currentColor" opacity=".85">17 retirements that month — 13 declining, 1 no-recovery, 3 stale. The declining rule does nearly all the work, which is why it may fire first.</text>
+          <text x="6" y="392" font-family="JetBrains Mono, monospace" font-size="10" fill="currentColor" opacity=".6">Every count is in OPEN days: a store shut on Sundays reaches its day-7 review after eight calendar days, and the rule must not fire early for that.</text>
+        </svg>
+        </div>
+        <figcaption><strong>Retirement without suppression is not retirement.</strong> The red loop is
+        the defect: the three rules remove a card, and the next run re-derives it from the same
+        depressed window. Suppression is the only transition that makes the state machine
+        terminate.</figcaption>
+      </figure>
+
+      <div class="io">
+        <div><div class="t">Settings</div><div class="c"><code>CARD_REVIEW_OPEN_DAYS=7</code>, <code>CARD_MAX_OPEN_DAYS=21</code>, <code>DECLINE_RATIO=0.8</code>, <code>MIN_OPEN_DAYS_TO_JUDGE=3</code>, <code>RETIRE_SUPPRESS_OPEN_DAYS=14</code></div></div>
+        <div><div class="t">Out</div><div class="c">A retirement reason, and <code>suppressed_until(retired_on_open_day, …)</code></div></div>
+        <div><div class="t">Status</div><div class="c">Built and tested. <strong>Not yet wired into the live route</strong> — the ledger harness uses it</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- S15 -->
+  <div class="comp c-new">
+    <div class="comp-h"><span class="id">S15</span><h3>Merchandise contract — and it nearly shipped broken</h3><span class="cl">M8 · the most useful page in this record</span></div>
+    <div class="comp-b">
+      <p><strong>The defect.</strong> <code>0123456789</code> at 3,506 units a month,
+      <code>SKU 12</code> at ten cents (a bottle deposit), and bags of ice reached the <em>top</em> of
+      the earnings table. Huge volume, a wobbling trailing window — exactly the shape the reversion
+      signal hunts. The engine was working correctly on data that should never have reached it.</p>
+      <p><strong>The near-miss.</strong> The first version of the filter was audited against all ten
+      stores' catalogues before shipping, and would have <strong>deleted real stock</strong>:</p>
+      <div class="tw"><table>
+        <thead><tr><th>Rule, as first written</th><th>What it would have refused</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">an ascending run of digits · 0*1?2?3?…</td><td><strong>1690 Absolut Mandrin</strong>, 1389 Paul Masson, 12390 Moët &amp; Chandon</td></tr>
+          <tr><td class="mono">four-character SKU minimum</td><td><strong>417 E&amp;J Brandy</strong>, 443 Bud Light, 105 Keg Miller Lite, 3A Adictivo Añejo</td></tr>
+          <tr><td class="mono">the word "department"</td><td><strong>Department 66 Grenache</strong> — a <em>winery</em></td></tr>
+          <tr><td class="mono">the word "rounding"</td><td><strong>LYNX POLARIZED GROUNDING AD.</strong> — g-<em>rounding</em></td></tr>
+          <tr><td class="mono">a $0.50 price floor</td><td><strong>187 real bottles</strong> with broken price fields</td></tr>
+        </tbody>
+      </table></div>
+      <p>Rewritten to exact forms and phrases, with word-boundary matching for single words, and the
+      price floor demoted from a refusal to a <strong>flag</strong>:
+      <strong>45 of 44,398 SKUs refused — 0.10%</strong>, every one accountable.</p>
+      <div class="bad">
+        <span class="l">The sentence that is now in the module</span>
+        <p><strong>A filter that removes real stock is worse than the mess it cleans up.</strong> It
+        is in the source, beside a <code>REMOVED_TERMS</code> constant that documents what was dropped
+        and why, so the broad version cannot come back as a well-meaning simplification.</p>
+      </div>
+      <div class="note">
+        <span class="l">A quiet bug this class produces</span>
+        <p>The word-boundary rule depends on a literal <code>\b</code> reaching the regex. Written
+        through a shell heredoc it became <code>\x08</code>, a backspace character — which matches
+        nothing and silently disabled the entire word filter while every test that only checked
+        exact forms still passed. The module is built with explicit escaping for that reason.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- S17 -->
+  <div class="comp c-gone">
+    <div class="comp-h"><span class="id">S17</span><h3>Calendar facts — kept. The candidate they powered — rejected</h3><span class="cl">built, measured, half discarded</span></div>
+    <div class="comp-b">
+      <p>Moving dates are <strong>computed, never tabulated</strong>: Thanksgiving is the fourth
+      Thursday, Memorial Day the last Monday, the Super Bowl moved to the second Sunday in February
+      in 2022, and Easter needs the anonymous Gregorian computus. <strong>22 tests</strong> pin
+      known-good dates across four years so the arithmetic cannot drift silently, and a run in 2031
+      needs no edit.</p>
+      <p><strong>Then the honest part.</strong> A seasonal multiplier built from those facts — with
+      the day-of-week and pre-holiday indices <em>estimated from each store's own history</em> rather
+      than hand-written — <strong>lost at 0 of 4 horizons</strong>, pushing 30-day bias from +0.6% to
+      <strong>+9.2%</strong>.</p>
+      <p>The trailing window already reflects current conditions, so a store-level busy-ness index
+      double-counts. This is the <strong>second</strong> time seasonality has been tried on this
+      engine and lost. The harness prints <code>REJECT</code> with the reason rather than quietly
+      omitting the arm.</p>
+      <div class="meas"><span class="l">What survives, and why</span>
+        <p>The calendar <strong>facts</strong> stay, because they are inputs a model can learn a
+        coefficient for. The <strong>multiplier</strong> does not, because it asserted one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section id="s4">
+  <div class="sec-no">Section 04</div>
+  <h2>What the measurement threw out</h2>
+
+  <p>A record that lists only what worked is not evidence. Eight ideas were built far enough to
+  measure and then removed — including two that scored <em>better</em> than what shipped.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Idea</th><th>Why it is not in the code</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Tuned rank-average of reversion + stability</strong></td><td>74.8% → 64.9% → 50.4% as a materiality floor was applied. Its edge was borrowed from products selling about one unit a month, where the ratio is noise amplified by division</td></tr>
+      <tr><td><strong>Seasonality as a ranking ratio</strong></td><td>90-day hit rate 70.0% → 58.4%</td></tr>
+      <tr><td><strong>Seasonality as a forecast multiplier</strong></td><td>Lost at 0 of 4 horizons; 30-day bias +0.6% → +9.2%</td></tr>
+      <tr><td><strong>A higher materiality floor</strong></td><td>66.2% → 39.5% as it rose from 8 to 80 units. Big steady sellers have little room to beat their own rate</td></tr>
+      <tr><td><strong>Stockout-shape features</strong> <code>longest_zero_run</code></td><td>About 8 points of decile spread, against reversion's 49–61</td></tr>
+      <tr><td><strong>A lower <code>k</code> to fix the promise</strong></td><td>Fixes the promised quantity and breaks the forecast — <code>k=21</code> already minimises WAPE and bias</td></tr>
+      <tr><td><strong>Batch-relative <code>p_hit</code> percentile</strong></td><td>Measured well and is unshippable: the same product scores differently depending on which others happen to be in the run</td></tr>
+      <tr><td><strong>SKU price floor as a refusal</strong></td><td>Deleted 187 real bottles with broken price fields. Demoted to a flag</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The prediction interval took three attempts, and only the third is honest</h3>
+
+  <div class="tw"><table>
+    <thead><tr><th>Attempt</th><th>Coverage, target 75–85%</th><th>Why it failed</th></tr></thead>
+    <tbody>
+      <tr><td>Weekly <code>cv</code> applied to the window total</td><td class="num bad">91–93%</td><td>So wide it could not be wrong — a band that is always right measures nothing</td></tr>
+      <tr><td><code>cv / √weeks</code></td><td class="num bad">37–62%</td><td>Too narrow. Weekly demand is autocorrelated, so the √n deflation does not apply</td></tr>
+      <tr><td><strong>Empirical, from the estimator's own track record</strong></td><td class="num good">80–82%</td><td>Drops the distributional assumption entirely: fit the band on an early slice, apply it to later dates</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Four statistical choices that change the headline</h3>
+  <ul>
+    <li><strong>A reversion-matched null, not a volume-matched one.</strong> The engine selects
+    products whose window is depressed, and the metric asks whether they beat that window — close to
+    the same question, so part of any edge is regression to the mean. Against a volume-matched null
+    the edge reads <strong>+44 points</strong>; against products <em>equally primed to revert</em> it
+    is <strong>+16.6</strong>. The second one is the one quoted.</li>
+    <li><strong>A date-clustered bootstrap.</strong> Two picks on the same morning share a market. A
+    row-wise bootstrap reported "82.9%" off 41 observations and was thrown away.</li>
+    <li><strong>A pooled permutation test, not per-run.</strong> Each run shows about five cards, so
+    a per-run test is nearly powerless — Fisher over 24 of them returned <strong>p = 0.73</strong>
+    while the clustered interval comfortably excluded the null. Pooling across runs while drawing the
+    null run-by-run gives <strong>p = 0.0005</strong>. Both are printed, because the discrepancy is
+    informative rather than embarrassing.</li>
+    <li><strong>Incremental margin, not total.</strong> <code>(sold − expected) × margin</code>, not
+    <code>sold × margin</code>. The old ordering showed the <em>largest</em> total captured, $215k,
+    and a <em>negative</em> incremental — total margin rewards naming the biggest sellers while
+    predicting nothing about them.</li>
+  </ul>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section id="s5">
+  <div class="sec-no">Section 05</div>
+  <h2>What this does not fix</h2>
+
+  <p>Two claims from the earlier work are now known to be wrong, and both were mine. They are here
+  rather than in a footnote because an architecture record that hides its retractions cannot be used
+  to make the next decision.</p>
+
+  <div class="bad">
+    <span class="l">Retraction 1 — I validated at one store and generalised from it</span>
+    <p>The promised <em>quantity</em>, not the direction, is the open problem. A per-store scaling
+    factor fitted on each store's own closed windows took Bethany from <strong>50% to 93%</strong> of
+    its promise kept, out of sample, on dates the factor never saw. I reported the promise fixed.
+    Across five stores it holds at <strong>one</strong>.</p>
+  </div>
+
+  <div class="tw"><table>
+    <thead><tr><th>Store</th><th class="num">Backtest</th><th class="num">Hard null</th><th class="num">Edge</th><th class="num">p</th><th class="num">April hit</th><th class="num">Promise kept</th><th class="num">April net</th></tr></thead>
+    <tbody>
+      <tr><td>178 Marshfield</td><td class="num">83.8%</td><td class="num">63.8%</td><td class="num good">+19.9</td><td class="num">0.0005</td><td class="num">68.6%</td><td class="num bad">21%</td><td class="num bad">−$5,099</td></tr>
+      <tr><td>181 Cork Runner</td><td class="num">78.0%</td><td class="num">59.4%</td><td class="num good">+18.6</td><td class="num">0.0005</td><td class="num">77.4%</td><td class="num bad">150%</td><td class="num bad">−$186</td></tr>
+      <tr><td><strong>171 Bethany</strong></td><td class="num">75.7%</td><td class="num">59.1%</td><td class="num good">+16.6</td><td class="num">0.0005</td><td class="num">65.2%</td><td class="num good">104%</td><td class="num good">+$120</td></tr>
+      <tr><td>176 Northlake</td><td class="num">71.0%</td><td class="num">63.1%</td><td class="num good">+7.9</td><td class="num">0.0005</td><td class="num">54.7%</td><td class="num bad">45%</td><td class="num bad">−$776</td></tr>
+      <tr><td>177 Mango Jo's</td><td class="num">76.1%</td><td class="num">70.0%</td><td class="num good">+6.1</td><td class="num">0.0005</td><td class="num">78.6%</td><td class="num bad">53%</td><td class="num bad">−$5,539</td></tr>
+    </tbody>
+  </table></div>
+
+  <p><strong>Every store beats a reversion-matched null significantly.</strong> That is the result
+  that holds, and it is what "ship" means in the audit index. <strong>Four of five are net negative
+  in April.</strong> That is the result that does not, and "ship" does <em>not</em> mean "makes
+  money".</p>
+
+  <p>Marshfield shows the fallback working as designed: it has history only from February 2025, so
+  there are too few closed windows to fit a factor on, and every one of its 169 cards uses the
+  identity. Refusing to invent a correction is the right behaviour, and it is why its promise is the
+  worst of the five. One scalar per store is not enough — where the reversion relationship shifts
+  between the calibration period and the measured month, the factor is stale. The most honest next
+  step is probably to promise a <strong>range</strong> rather than a point.</p>
+
+  <div class="bad">
+    <span class="l">Retraction 2 — 90% was not reachable, and asking for it was the wrong question</span>
+    <p>Measured three independent ways. The top decile of the strongest available signal caps at
+    <strong>65–69%</strong> at every horizon. Sweeping floor × coverage over 50 decision dates, the
+    best <em>worst</em>-horizon result is <strong>73.1%</strong>. Taking only the single best card per
+    date gives <strong>71.1%</strong>.</p>
+    <p>The reason is arithmetic, not engineering: for a product selling about ten units a month,
+    Poisson noise alone puts it below its own mean roughly a third of the time, whatever is known
+    about it. <strong>A 90% hit rate on this metric would be evidence of a leak</strong>, not of
+    skill. The edge over the reversion-matched null is the number that can rise.</p>
+  </div>
+
+  <h3>Four things no architecture change can fix</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Blocked on</th><th>Why, and what would unblock it</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Historical on-hand</strong></td><td>Does not exist in the warehouse. A stockout is indistinguishable from a dip, so the engine recommends it and then scores the restock as skill — noise in the selection <em>and</em> in the grade. Cannot be backfilled; capture has to start now</td></tr>
+      <tr><td><strong>Lead times</strong></td><td><code>purchase_orders</code> has the right columns and <strong>zero rows</strong> at four of five stores. Every order quantity rests on a declared assumption until the stores are asked</td></tr>
+      <tr><td><strong>A gradient-boosted model (R9)</strong></td><td>No numeric stack, and <code>app/pipeline</code> forbids one by design — pure standard library, so the production modules can be called from anywhere. Train offline, consume a fitted artefact</td></tr>
+      <tr><td><strong>Causal proof</strong></td><td><code>recommendation_evaluations</code> has zero rows. Nobody acted on any card in this record; they were generated retrospectively from data the engine could legitimately have seen each morning. That shows it points at products that go on to move — not that acting on it causes the movement. The holdout mechanism exists and is switched off</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section id="s6">
+  <div class="sec-no">Section 06</div>
+  <h2>Reproducing every figure here</h2>
+
+  <p>Three commands. The exports are SELECT-only and cursor-streamed; nothing in this chain writes to
+  the warehouse.</p>
+
+<pre><code><span class="ln cmt"># 1 · export each pilot store from syncgo — SELECT-only, cursor-streamed</span>
+<span class="ln">cd backend &amp;&amp; node scripts/export-store-sales.js all --out ../audit/data</span>
+<span class="ln"></span>
+<span class="ln cmt"># 2 · all three evidence layers for every store, plus the index</span>
+<span class="ln">cd ../Botella_External_APIs</span>
+<span class="ln hi">python scripts/run_all_ledgers.py --data ../audit/data --out ../audit --month 2026-03</span>
+<span class="ln"></span>
+<span class="ln cmt"># 3 · the tests and both build guards</span>
+<span class="ln ok">python -m pytest tests/ -q                   # 1,265 pass</span>
+<span class="ln ok">python scripts/check_no_literals.py          # no magic numbers in the pipeline</span>
+<span class="ln ok">python scripts/check_no_state_branches.py    # nothing branches on evidence state</span>
+<span class="ln">python scripts/config_report.py              # 106 of 120 settings still PROVISIONAL</span></code></pre>
+
+  <div class="io">
+    <div><div class="t">Index</div><div class="c"><code>audit/ENGINE_AUDIT.html</code> — every store, sorted by edge, failures at the top of the bottom</div></div>
+    <div><div class="t">Per store</div><div class="c"><code>audit/ledger-{store}-2026-03/RECOMMENDATION_LEDGER.html</code> — 12 sections, every card with its text and its outcome</div></div>
+    <div><div class="t">Determinism</div><div class="c">Rerun on the same exports and every page reproduces except its generation date</div></div>
+  </div>
+
+  <div class="note">
+    <span class="l">Why 106 of 120 settings still say PROVISIONAL on every CI run</span>
+    <p>The registry prints the status of each declared setting at build time, and a
+    <code>PROVISIONAL</code> value is one that was chosen by judgement rather than by a sweep. Leaving
+    that count loud is deliberate: it is the difference between an engine with five measured
+    parameters and 115 honest guesses, and an engine that pretends all 120 were earned.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>What changed from the specification, in one paragraph.</strong> The five layers, the
+  thirteen components, the shrinkage continuum, the deterministic composer, the writer-only model and
+  the gate all carry over. Four stages were inserted — temporal reversion in layer 2, the merchandise
+  contract and the card lifecycle in layer 3, computed calendar facts in layer 1 — and one quantity
+  was swapped inside the composer: expected value is now multiplied by the <em>deficit</em> rather
+  than by <em>total demand</em>. That swap is the measured gain. The seasonal multiplier those
+  calendar facts were built to power was rejected by its own measurement and is not in the code.</p>
+  <p><strong>Grounding.</strong> Every figure on this page is produced by the modules in
+  <code>app/pipeline</code> called directly — not by a port or a reimplementation — over exports of
+  the five pilot stores taken from <code>syncgo</code> with read-only queries. Outcomes are graded by
+  <code>app/pipeline/outcomes/lift.py</code>, the single lift definition pinned digit-for-digit
+  against <code>backend/lib/lift.js</code>. The backtest spans 52 decision dates across 2.3 years at
+  fortnightly spacing; the ledger covers March 2026 followed 30, 60, 90 and 120 days out. One claim
+  on this page is not a measurement: that wiring the lifecycle and merchandise modules into the live
+  route is the next step is a judgement, and the migration has not been done.</p>
+</footer>
+
+</div>

@@ -1,0 +1,993 @@
+{
+  "month": "2026-10",
+  "store": {
+    "client_id": 22,
+    "location_id": 22,
+    "name": "The Spirit Shop"
+  },
+  "window_days": 30,
+  "month_rule": "a card belongs to the calendar month its 30-day window ended in",
+  "generated_at": "2026-10-08T12:47:30.938Z",
+  "data_through": "2026-10-07",
+  "accuracy": {
+    "what_this_board_measures": "Did what the card predicted come true. Graded on the prediction alone; needs no owner action, and reads neither the arm, the inferred action, the votes nor the money.",
+    "window_days": 30,
+    "both_arms_counted": true,
+    "hit_rule": "lift >= 1.0: the product sold at least what its own trailing rate projected over the 30-day window",
+    "summary": {
+      "cards": 12,
+      "products": 12,
+      "measured_on": 11,
+      "hits": 9,
+      "hit_rate": 0.818,
+      "hit_rate_interval_95": {
+        "low": 0.523,
+        "high": 0.949
+      },
+      "mean_lift": 6.295,
+      "promise_fill": {
+        "cards_with_quantity": 9,
+        "recommended_units": 767,
+        "sold_units": 64,
+        "fill_ratio": 0.083
+      },
+      "interval_coverage": {
+        "cards_with_range": 0,
+        "inside_range": 0,
+        "range_refused": 0,
+        "coverage": null
+      },
+      "stockout_grade": {
+        "cards": 0,
+        "sold_through": 0,
+        "not_sold_through": 0,
+        "ungraded": 0
+      }
+    },
+    "lines": [
+      {
+        "sku": "17007",
+        "product": "CIMARRON BLANCO TEQUILA 1L",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 14.58,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "28406",
+        "product": "TITOS VODKA 1.75L",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 8.3,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 55,
+          "sold_units": 43,
+          "fill_ratio": 0.782
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "33328",
+        "product": "LAMARCA PROSECCO 750ML",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 4.9,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 21,
+          "sold_units": 7,
+          "fill_ratio": 0.333
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "39877",
+        "product": "CROWN ROYAL 80PF WHISKEY 1.75L",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 14,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "42224",
+        "product": "MAKERS MARK BOURBON 1.75L",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 11.2,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 10,
+          "sold_units": 6,
+          "fill_ratio": 0.6
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "45245",
+        "product": "RIEDEL DEGUSTAZIONE RED WINE GLASSES",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 120,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "48941",
+        "product": "LONE RIVER RANCH WATER SELTZER 6PK 12OZ CN",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.24,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 19,
+          "sold_units": 2,
+          "fill_ratio": 0.105
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "51632",
+        "product": "HIGH NOON VARIETY 12PK (G/P/B/W)",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 3.45,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "57003",
+        "product": "SURFSIDE STARTER VARIETY 8PK 12OZ CN (TEA)",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 2.24,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 8,
+          "sold_units": 2,
+          "fill_ratio": 0.25
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "88729",
+        "product": "LARCENY SPIRIT SHOP 2026 PRIVATE BARREL 750ML",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 288,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "88907",
+        "product": "WILLIES REMEDY 10MG THC SOCIAL TONIC 750ML",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 9.33,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 9,
+          "sold_units": 4,
+          "fill_ratio": 0.444
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "89027",
+        "product": "CAYMUS CABERNET SAUVIGNON CALIFORNIA 1 LITER",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 237,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      }
+    ],
+    "refusals": [
+      "interval coverage: no range stored on any card this month",
+      "stockout grade: no stockout card closed this month"
+    ]
+  },
+  "holdout": {
+    "what_this_board_measures": "Did telling the store change anything. Shown against withheld, per product; dollars are per product, never totals; the action is inferred from the purchases feed, an uploaded invoice, the stock delta or a price drop. This board states no hit rate.",
+    "window_days": 30,
+    "min_measured_per_arm_for_a_difference": 5,
+    "dollars_are_per_product": true,
+    "summary": {
+      "shown": {
+        "products": 10,
+        "measurable": 9,
+        "avg_lift": 6.771,
+        "priced": 9,
+        "dollars": 1877.11,
+        "dollars_per_product": 208.57
+      },
+      "withheld": {
+        "products": 2,
+        "measurable": 2,
+        "avg_lift": 4.15,
+        "priced": 2,
+        "dollars": 567.45,
+        "dollars_per_product": 283.73
+      },
+      "difference": {
+        "lift": null,
+        "dollars_per_product": null,
+        "refused_reason": "needs 5 measured outcomes per arm; have 9 shown and 2 withheld"
+      },
+      "totals_for_the_record": {
+        "shown_dollars_total": 1877.11,
+        "withheld_dollars_total": 567.45,
+        "note": "The arms are different sizes by design; the difference is taken per product above."
+      },
+      "action_inferred_on_shown": {
+        "acted": 2,
+        "not_acted": 2,
+        "unobservable": 6,
+        "detectors": {
+          "stock delta": 2
+        }
+      },
+      "line": "holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 9 shown and 2 withheld"
+    },
+    "by_family": [
+      {
+        "family": "promote",
+        "shown": {
+          "products": 4,
+          "measurable": 4,
+          "avg_lift": 9.193,
+          "priced": 4,
+          "dollars": 944.03,
+          "dollars_per_product": 236.01
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 4 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "reorder",
+        "shown": {
+          "products": 2,
+          "measurable": 2,
+          "avg_lift": 2.345,
+          "priced": 2,
+          "dollars": 174.62,
+          "dollars_per_product": 87.31
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0,
+          "priced": 1,
+          "dollars": -458.91,
+          "dollars_per_product": -458.91
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 2 shown and 1 withheld"
+        }
+      },
+      {
+        "family": "pre_stock",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 4.9,
+          "priced": 1,
+          "dollars": 105.8,
+          "dollars_per_product": 105.8
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 8.3,
+          "priced": 1,
+          "dollars": 1026.36,
+          "dollars_per_product": 1026.36
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 1 withheld"
+        }
+      },
+      {
+        "family": "bundle",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 14.58,
+          "priced": 1,
+          "dollars": 661.23,
+          "dollars_per_product": 661.23
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "endcap",
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 0 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "markdown",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0,
+          "priced": 1,
+          "dollars": -8.57,
+          "dollars_per_product": -8.57
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      }
+    ],
+    "lines": [
+      {
+        "sku": "17007",
+        "product": "CIMARRON BLANCO TEQUILA 1L",
+        "families": [
+          "bundle"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 14.58,
+          "priced": 1,
+          "dollars": 661.23,
+          "dollars_per_product": 661.23
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "28406",
+        "product": "TITOS VODKA 1.75L",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 8.3,
+          "priced": 1,
+          "dollars": 1026.36,
+          "dollars_per_product": 1026.36
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "withheld only: this product was never shown this month",
+        "refusals": []
+      },
+      {
+        "sku": "33328",
+        "product": "LAMARCA PROSECCO 750ML",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 4.9,
+          "priced": 1,
+          "dollars": 105.8,
+          "dollars_per_product": 105.8
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "39877",
+        "product": "CROWN ROYAL 80PF WHISKEY 1.75L",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 14,
+          "priced": 1,
+          "dollars": 445.62,
+          "dollars_per_product": 445.62
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "42224",
+        "product": "MAKERS MARK BOURBON 1.75L",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 11.2,
+          "priced": 1,
+          "dollars": 278.62,
+          "dollars_per_product": 278.62
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "45245",
+        "product": "RIEDEL DEGUSTAZIONE RED WINE GLASSES",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "48941",
+        "product": "LONE RIVER RANCH WATER SELTZER 6PK 12OZ CN",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.24,
+          "priced": 1,
+          "dollars": 4.32,
+          "dollars_per_product": 4.32
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "51632",
+        "product": "HIGH NOON VARIETY 12PK (G/P/B/W)",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 3.45,
+          "priced": 1,
+          "dollars": 170.3,
+          "dollars_per_product": 170.3
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "57003",
+        "product": "SURFSIDE STARTER VARIETY 8PK 12OZ CN (TEA)",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 2.24,
+          "priced": 1,
+          "dollars": 5.54,
+          "dollars_per_product": 5.54
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "88729",
+        "product": "LARCENY SPIRIT SHOP 2026 PRIVATE BARREL 750ML",
+        "families": [
+          "markdown"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0,
+          "priced": 1,
+          "dollars": -8.57,
+          "dollars_per_product": -8.57
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "88907",
+        "product": "WILLIES REMEDY 10MG THC SOCIAL TONIC 750ML",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 9.33,
+          "priced": 1,
+          "dollars": 214.25,
+          "dollars_per_product": 214.25
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "89027",
+        "product": "CAYMUS CABERNET SAUVIGNON CALIFORNIA 1 LITER",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0,
+          "priced": 1,
+          "dollars": -458.91,
+          "dollars_per_product": -458.91
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "withheld only: this product was never shown this month",
+        "refusals": []
+      }
+    ],
+    "refusals": [
+      "difference: needs 5 measured outcomes per arm; have 9 shown and 2 withheld"
+    ]
+  },
+  "refusals": [],
+  "pilot_store": false
+}

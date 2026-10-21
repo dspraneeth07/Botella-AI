@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Money audit - Tuscany</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#fbfaf7;--fg:#1a1713;--mut:#6f675b;--line:#dfdad0;--good:#047857;--bad:#be123c;--badbg:#fff1f2;--goodbg:#ecfdf5;--panel:#f3f1ec}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1115;--fg:#e8e6e1;--mut:#9a948a;--line:#2a2e36;--good:#34d399;--bad:#fb7185;--badbg:#2d0d16;--goodbg:#052e23;--panel:#181b21}}
+:root[data-theme="dark"]{--bg:#0f1115;--fg:#e8e6e1;--mut:#9a948a;--line:#2a2e36;--good:#34d399;--bad:#fb7185;--badbg:#2d0d16;--goodbg:#052e23;--panel:#181b21}
+body{margin:0;padding:24px 16px 64px;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:16px;margin:28px 0 8px}
+p{max-width:80ch}.mut{color:var(--mut)}.bad{color:var(--bad);font-weight:600}.good{color:var(--good);font-weight:600}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}td.r,th.r{text-align:right;white-space:nowrap}
+.summary th{width:28ch;text-transform:none;letter-spacing:0;font-size:13px;color:var(--fg)}
+.cards{font-size:12.5px}.cards td.why{min-width:36ch;max-width:60ch;color:var(--mut)}
+tr.v-lost_money td{background:var(--badbg)}tr.v-made_money td{background:var(--goodbg)}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px}
+.wrap{overflow-x:auto}.answer li{margin:4px 0}
+</style></head><body>
+<h1>Money audit - Tuscany</h1>
+<p class="mut">Client 173, location 173. Generated 2026-10-19 09:37:12 UTC. Read-only; nothing here is a forecast.</p>
+
+<h2>Are they losing money on any recommendation?</h2>
+<ul class="answer"><li>Tuscany: 29 card(s) shown in the last 120 days (1 withheld as the control); 2 confirmed bought; 0 have a closed evaluation window.</li>
+<li>Nothing can be stated about money made: no closed, confirmed card carries a full net yet (no closed confirmed card carries a full net yet).</li>
+<li>Cannot be stated yet: 29 card(s) have no closed window yet.</li>
+<li>29 card(s) have no admission record, so their expected profit at issue is unknown.</li>
+<li>Causal statement (holdout): holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 0 shown and 0 withheld.</li></ul>
+
+<h2>Summary</h2>
+<table class="summary"><tbody><tr><th>Cards shown</th><td>29 <span class="mut">last 120 days; 1 withheld as the control; 29 distinct product-windows (0 repeat cards, counted once in the money)</span></td></tr>
+<tr><th>Confirmed bought</th><td>2 <span class="mut">fulfilment_state confirmed: purchases feed or invoice</span></td></tr>
+<tr><th>Closed windows</th><td>0</td></tr>
+<tr><th>Lost money</th><td><span class="">0</span> <span class="mut">confirmed, closed, net &lt; 0</span></td></tr>
+<tr><th>Made money</th><td><span class="">0</span> <span class="mut">confirmed, closed, net &gt; 0</span></td></tr>
+<tr><th>Broke even</th><td>0</td></tr>
+<tr><th>Exposure unconfirmed</th><td>0 <span class="mut">closed with a net, purchase not established</span></td></tr>
+<tr><th>Not followed, no exposure</th><td>0</td></tr>
+<tr><th>Window open</th><td>29</td></tr>
+<tr><th>Unmeasurable</th><td>0 <span class="mut">each row names the missing input</span></td></tr>
+<tr><th>Realised net, closed confirmed</th><td><span class="mut">n/a</span> <span class="mut">no closed, confirmed card carries a full net yet (no closed confirmed card carries a full net yet)</span></td></tr>
+<tr><th>Per card</th><td><span class="mut">n/a</span> <span class="mut">no closed confirmed card carries a full net yet</span></td></tr>
+<tr><th>Largest single loss</th><td><span class="mut">none</span> <span class="mut">no confirmed card with a closed window has a negative net</span></td></tr>
+<tr><th>Unattributed closed net</th><td><span class="mut">n/a</span> <span class="mut">0 card(s); every closed card with a computable net, whatever its fulfilment state - what the products did, not what the cards earned</span></td></tr>
+<tr><th>Expected-profit floor in force</th><td>$0 <span class="mut">REC_MIN_PROFIT_USD=0; REC_MIN_PROFIT_USD=0 in this environment: the dollar floor is switched off, so cards below $1 expected profit were shown</span></td></tr>
+<tr><th>Issued below $1 expected profit</th><td>0 <span class="mut">29 without an admission row; 0 with no computable figure</span></td></tr>
+<tr><th>Holdout (the only causal statement)</th><td>holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 0 shown and 0 withheld <span class="mut">shown 9 product-windows, withheld 1</span></td></tr></tbody></table>
+
+<h2>Every card shown, losses first</h2>
+<p class="mut">incremental margin (recommendation_evaluations.margin_impact: (sold - expected) x (price - cost)) minus the holding cost incurred. the engine's holding_cost_if_unsold x units_unsold / suggested_order_qty - an approximation, stated on each row. the 30-day window where closed, else the longest closed window; closed means the evaluator's data_through has passed rec_date + window. recommended units not sold inside the window (recommended_qty - units_sold, floored at 0); a count against the order, not a shelf count.</p>
+<div class="wrap"><table class="cards"><thead><tr><th>Verdict</th><th>Card</th><th>Issued</th><th>SKU</th><th>Family</th><th>Fulfilment</th>
+<th class="r">Expected profit</th><th class="r">Order qty</th><th class="r">Price</th><th class="r">Cost</th><th class="r">Margin/unit</th><th class="r">Holding if unsold</th>
+<th class="r">Window</th><th class="r">Sold</th><th class="r">Expected</th><th class="r">Lift</th><th class="r">Incr. margin</th><th class="r">Unsold</th><th class="r">Holding incurred</th><th class="r">Net</th><th>Why</th></tr></thead><tbody>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2615</td><td>2026-10-18</td>
+<td>90011394</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">9</td>
+<td class="r">14.99</td><td class="r">11.18</td><td class="r">3.81</td>
+<td class="r">$5.04</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2616</td><td>2026-10-18</td>
+<td>90029646</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">7</td>
+<td class="r">3.99</td><td class="r">2.79</td><td class="r">1.20</td>
+<td class="r">$1.35</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2617</td><td>2026-10-18</td>
+<td>90051419</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">7</td>
+<td class="r">21.99</td><td class="r">17.30</td><td class="r">4.69</td>
+<td class="r">$5.80</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2618</td><td>2026-10-18</td>
+<td>90053855</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">8</td>
+<td class="r">6.99</td><td class="r">3.57</td><td class="r">3.42</td>
+<td class="r">$1.81</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2619</td><td>2026-10-18</td>
+<td>90055529</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">3</td>
+<td class="r">1.99</td><td class="r">1.00</td><td class="r">0.99</td>
+<td class="r">$0.31</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2620</td><td>2026-10-18</td>
+<td>90057621</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">4</td>
+<td class="r">3.99</td><td class="r">2.20</td><td class="r">1.79</td>
+<td class="r">$0.58</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2621</td><td>2026-10-18</td>
+<td>90030864</td>
+<td>overstock</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">29.99</td><td class="r">24.99</td><td class="r">5.00</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2622</td><td>2026-10-18</td>
+<td>90057477</td>
+<td>overstock</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">6.99</td><td class="r">3.38</td><td class="r">3.61</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2623</td><td>2026-10-18</td>
+<td>121022</td>
+<td>overstock</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">24.99</td><td class="r">17.93</td><td class="r">7.06</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2624</td><td>2026-10-18</td>
+<td>90022166 <span class="mut">+1</span></td>
+<td>bundle</td>
+<td>unobservable</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">2.09</td><td class="r">1.39</td><td class="r">0.70</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-18; the first window closes at 2026-10-25)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2160</td><td>2026-10-16</td>
+<td>90053855</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">8</td>
+<td class="r">6.99</td><td class="r">3.57</td><td class="r">3.42</td>
+<td class="r">$1.81</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2161</td><td>2026-10-16</td>
+<td>90057621</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">4</td>
+<td class="r">3.99</td><td class="r">2.20</td><td class="r">1.79</td>
+<td class="r">$0.58</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2162</td><td>2026-10-16</td>
+<td>90059022</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">7</td>
+<td class="r">2.19</td><td class="r">0.62</td><td class="r">1.57</td>
+<td class="r">$0.68</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2163</td><td>2026-10-16</td>
+<td>90048158</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">31</td>
+<td class="r">0.89</td><td class="r">0.34</td><td class="r">0.55</td>
+<td class="r">$2.53</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2164</td><td>2026-10-16</td>
+<td>90031917</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">7</td>
+<td class="r">3.99</td><td class="r">2.65</td><td class="r">1.34</td>
+<td class="r">$1.30</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2165</td><td>2026-10-16</td>
+<td>90052285</td>
+<td>stockout</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">35</td>
+<td class="r">3.99</td><td class="r">2.74</td><td class="r">1.25</td>
+<td class="r">$6.65</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2166</td><td>2026-10-16</td>
+<td>90030864</td>
+<td>overstock</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">29.99</td><td class="r">24.99</td><td class="r">5.00</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2167</td><td>2026-10-16</td>
+<td>90057477</td>
+<td>overstock</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">6.99</td><td class="r">3.38</td><td class="r">3.61</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2168</td><td>2026-10-16</td>
+<td>121022</td>
+<td>overstock</td>
+<td>pending</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">24.99</td><td class="r">17.93</td><td class="r">7.06</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>2169</td><td>2026-10-16</td>
+<td>90022166 <span class="mut">+1</span></td>
+<td>bundle</td>
+<td>unobservable</td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">2.09</td><td class="r">1.39</td><td class="r">0.70</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">not yet evaluated (issued 2026-10-16; the first window closes at 2026-10-23)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1835</td><td>2026-10-12</td>
+<td>90050141</td>
+<td>stockout</td>
+<td>confirmed <span class="mut">(stock_delta)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">4</td>
+<td class="r">16.99</td><td class="r">10.38</td><td class="r">6.61</td>
+<td class="r">$1.68</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">1</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">3</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1837</td><td>2026-10-12</td>
+<td>90053855</td>
+<td>stockout</td>
+<td>pending <span class="mut">(stock_delta)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">8</td>
+<td class="r">6.99</td><td class="r">3.57</td><td class="r">3.42</td>
+<td class="r">$1.81</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">0</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">8</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1838</td><td>2026-10-12</td>
+<td>90056535</td>
+<td>stockout</td>
+<td>pending <span class="mut">(stock_delta)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">2</td>
+<td class="r">20.99</td><td class="r">15.99</td><td class="r">5.00</td>
+<td class="r">$0.58</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">0</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">2</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1839</td><td>2026-10-12</td>
+<td>90058546</td>
+<td>stockout</td>
+<td>confirmed <span class="mut">(stock_delta)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">5</td>
+<td class="r">3.99</td><td class="r">2.45</td><td class="r">1.54</td>
+<td class="r">$0.76</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">4</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="good">$6.16</span></td>
+<td class="r">1</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1840</td><td>2026-10-12</td>
+<td>90030864</td>
+<td>overstock</td>
+<td>pending <span class="mut">(price)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">29.99</td><td class="r">24.99</td><td class="r">5.00</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">12</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="good">$60.00</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1841</td><td>2026-10-12</td>
+<td>90057477</td>
+<td>overstock</td>
+<td>pending <span class="mut">(price)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">6.99</td><td class="r">3.38</td><td class="r">3.61</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">4</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="good">$14.46</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1842</td><td>2026-10-12</td>
+<td>121022</td>
+<td>overstock</td>
+<td>pending <span class="mut">(price)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">24.99</td><td class="r">17.93</td><td class="r">7.06</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">2</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1843</td><td>2026-10-12</td>
+<td>90029720</td>
+<td>overstock</td>
+<td>pending <span class="mut">(price)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">26.99</td><td class="r">19.25</td><td class="r">7.74</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">3</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="good">$23.21</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+<tr class="v-window_open">
+<td><span class="verdict">window_open</span></td>
+<td>1844</td><td>2026-10-12</td>
+<td>90022166 <span class="mut">+1</span></td>
+<td>bundle</td>
+<td>unobservable <span class="mut">(unobservable)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">2.09</td><td class="r">1.39</td><td class="r">0.70</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">41</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="good">$21.13</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">no evaluation window has closed (sales through 2026-10-17; the 7-day window closes at 2026-10-19)</td></tr>
+</tbody></table></div>
+
+<h2>Withheld cards (the control)</h2>
+<p class="mut">Never shown to the owner, so nothing was made or lost on them; their figures are what the holdout comparison reads.</p>
+<div class="wrap"><table class="cards"><thead><tr><th>Verdict</th><th>Card</th><th>Issued</th><th>SKU</th><th>Family</th><th>Fulfilment</th>
+<th class="r">Expected profit</th><th class="r">Order qty</th><th class="r">Price</th><th class="r">Cost</th><th class="r">Margin/unit</th><th class="r">Holding if unsold</th>
+<th class="r">Window</th><th class="r">Sold</th><th class="r">Expected</th><th class="r">Lift</th><th class="r">Incr. margin</th><th class="r">Unsold</th><th class="r">Holding incurred</th><th class="r">Net</th><th>Why</th></tr></thead><tbody>
+<tr class="v-withheld">
+<td><span class="verdict">withheld</span></td>
+<td>1836</td><td>2026-10-12</td>
+<td>90052256</td>
+<td>stockout</td>
+<td>pending <span class="mut">(stock_delta)</span></td>
+<td class="r"><span class="mut">no row</span></td>
+<td class="r">6</td>
+<td class="r">3.99</td><td class="r">2.74</td><td class="r">1.25</td>
+<td class="r">$1.14</td>
+<td class="r">30d <span class="mut">open</span></td>
+<td class="r">4</td><td class="r">0.0</td><td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="good">$5.01</span></td>
+<td class="r">2</td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="r"><span class="mut">n/a</span></td>
+<td class="why">holdout arm: the card was never shown, so there is nothing to make or lose on it; it is the control the holdout comparison reads</td></tr>
+</tbody></table></div>
+</body></html>

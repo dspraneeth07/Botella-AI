@@ -1,0 +1,1063 @@
+{
+  "month": "2026-10",
+  "store": {
+    "client_id": 125,
+    "location_id": 125,
+    "name": "Route 106 Wine & Spirits"
+  },
+  "window_days": 30,
+  "month_rule": "a card belongs to the calendar month its 30-day window ended in",
+  "generated_at": "2026-10-08T12:47:35.148Z",
+  "data_through": "2026-10-07",
+  "accuracy": {
+    "what_this_board_measures": "Did what the card predicted come true. Graded on the prediction alone; needs no owner action, and reads neither the arm, the inferred action, the votes nor the money.",
+    "window_days": 30,
+    "both_arms_counted": true,
+    "hit_rule": "lift >= 1.0: the product sold at least what its own trailing rate projected over the 30-day window",
+    "summary": {
+      "cards": 13,
+      "products": 13,
+      "measured_on": 11,
+      "hits": 11,
+      "hit_rate": 1,
+      "hit_rate_interval_95": {
+        "low": 0.741,
+        "high": 1
+      },
+      "mean_lift": 2.371,
+      "promise_fill": {
+        "cards_with_quantity": 8,
+        "recommended_units": 2449,
+        "sold_units": 3491,
+        "fill_ratio": 1.425
+      },
+      "interval_coverage": {
+        "cards_with_range": 0,
+        "inside_range": 0,
+        "range_refused": 0,
+        "coverage": null
+      },
+      "stockout_grade": {
+        "cards": 0,
+        "sold_through": 0,
+        "not_sold_through": 0,
+        "ungraded": 0
+      }
+    },
+    "lines": [
+      {
+        "sku": "12587",
+        "product": "HIGH NOON VODKA VARIETY PACK CAN",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.6,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "1814",
+        "product": "MICHELOB ULTRA CAN",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 2.22,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 24,
+          "sold_units": 33,
+          "fill_ratio": 1.375
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "18461",
+        "product": "HIGH NOON VODKA BEACH PACK CAN",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.64,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "19597",
+        "product": "SURFSIDE SUPER LYTE",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 2.44,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 15,
+          "sold_units": 138,
+          "fill_ratio": 9.2
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "3402",
+        "product": "SMIR ROOT BEER",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 120,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "4037",
+        "product": "SAUZA BLUE SILVER 750",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.84,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 336,
+          "sold_units": 534,
+          "fill_ratio": 1.589
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "4805",
+        "product": "DR ROOT BEER 750",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 6.46,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 249,
+          "sold_units": 3,
+          "fill_ratio": 0.012
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "4806",
+        "product": "DR.MCGILLICUDDY'S ROOTBEER",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.67,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 428,
+          "sold_units": 974,
+          "fill_ratio": 2.276
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "4840",
+        "product": "DR. MCGILLICUDDY'S MENTHOLMINT",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 2.6,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 856,
+          "sold_units": 1802,
+          "fill_ratio": 2.105
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "4845",
+        "product": "FIREBALL",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.85,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "5281",
+        "product": "PINNACLE",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 421,
+          "sold_units": 7,
+          "fill_ratio": 0.017
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "5434",
+        "product": "TITO'S",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.73,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "9276",
+        "product": "OYSTER SAV BL 750",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 2.03,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      }
+    ],
+    "refusals": [
+      "interval coverage: no range stored on any card this month",
+      "stockout grade: no stockout card closed this month"
+    ]
+  },
+  "holdout": {
+    "what_this_board_measures": "Did telling the store change anything. Shown against withheld, per product; dollars are per product, never totals; the action is inferred from the purchases feed, an uploaded invoice, the stock delta or a price drop. This board states no hit rate.",
+    "window_days": 30,
+    "min_measured_per_arm_for_a_difference": 5,
+    "dollars_are_per_product": true,
+    "summary": {
+      "shown": {
+        "products": 13,
+        "measurable": 11,
+        "avg_lift": 2.371,
+        "priced": 12,
+        "dollars": 12734.01,
+        "dollars_per_product": 1061.17
+      },
+      "withheld": {
+        "products": 0,
+        "measurable": 0,
+        "avg_lift": null,
+        "priced": 0,
+        "dollars": null,
+        "dollars_per_product": null
+      },
+      "difference": {
+        "lift": null,
+        "dollars_per_product": null,
+        "refused_reason": "needs 5 measured outcomes per arm; have 11 shown and 0 withheld"
+      },
+      "totals_for_the_record": {
+        "shown_dollars_total": 12734.01,
+        "withheld_dollars_total": null,
+        "note": "The arms are different sizes by design; the difference is taken per product above."
+      },
+      "action_inferred_on_shown": {
+        "acted": 4,
+        "not_acted": 2,
+        "unobservable": 7,
+        "detectors": {
+          "stock delta": 4
+        }
+      },
+      "line": "holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 11 shown and 0 withheld"
+    },
+    "by_family": [
+      {
+        "family": "endcap",
+        "shown": {
+          "products": 4,
+          "measurable": 4,
+          "avg_lift": 1.96,
+          "priced": 4,
+          "dollars": 3684.74,
+          "dollars_per_product": 921.19
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 4 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "liquidate",
+        "shown": {
+          "products": 2,
+          "measurable": 1,
+          "avg_lift": 6.46,
+          "priced": 2,
+          "dollars": 155.62,
+          "dollars_per_product": 77.81
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "pre_stock",
+        "shown": {
+          "products": 2,
+          "measurable": 2,
+          "avg_lift": 1.945,
+          "priced": 2,
+          "dollars": 954.04,
+          "dollars_per_product": 477.02
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 2 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "promote",
+        "shown": {
+          "products": 2,
+          "measurable": 1,
+          "avg_lift": 1.6,
+          "priced": 1,
+          "dollars": 194.9,
+          "dollars_per_product": 194.9
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "reorder",
+        "shown": {
+          "products": 2,
+          "measurable": 2,
+          "avg_lift": 2.22,
+          "priced": 2,
+          "dollars": 6704.53,
+          "dollars_per_product": 3352.27
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 2 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "bundle",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.85,
+          "priced": 1,
+          "dollars": 1040.18,
+          "dollars_per_product": 1040.18
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      }
+    ],
+    "lines": [
+      {
+        "sku": "12587",
+        "product": "HIGH NOON VODKA VARIETY PACK CAN",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.6,
+          "priced": 1,
+          "dollars": 194.9,
+          "dollars_per_product": 194.9
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "1814",
+        "product": "MICHELOB ULTRA CAN",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 2.22,
+          "priced": 1,
+          "dollars": 562.25,
+          "dollars_per_product": 562.25
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "18461",
+        "product": "HIGH NOON VODKA BEACH PACK CAN",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.64,
+          "priced": 1,
+          "dollars": 221.71,
+          "dollars_per_product": 221.71
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "19597",
+        "product": "SURFSIDE SUPER LYTE",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 2.44,
+          "priced": 1,
+          "dollars": 1544.97,
+          "dollars_per_product": 1544.97
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "3402",
+        "product": "SMIR ROOT BEER",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "4037",
+        "product": "SAUZA BLUE SILVER 750",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.84,
+          "priced": 1,
+          "dollars": 5594.78,
+          "dollars_per_product": 5594.78
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "4805",
+        "product": "DR ROOT BEER 750",
+        "families": [
+          "liquidate"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 6.46,
+          "priced": 1,
+          "dollars": 50.69,
+          "dollars_per_product": 50.69
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "4806",
+        "product": "DR.MCGILLICUDDY'S ROOTBEER",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.67,
+          "priced": 1,
+          "dollars": 391.79,
+          "dollars_per_product": 391.79
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "4840",
+        "product": "DR. MCGILLICUDDY'S MENTHOLMINT",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 2.6,
+          "priced": 1,
+          "dollars": 1109.75,
+          "dollars_per_product": 1109.75
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "4845",
+        "product": "FIREBALL",
+        "families": [
+          "bundle"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.85,
+          "priced": 1,
+          "dollars": 1040.18,
+          "dollars_per_product": 1040.18
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "5281",
+        "product": "PINNACLE",
+        "families": [
+          "liquidate"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 104.93,
+          "dollars_per_product": 104.93
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "5434",
+        "product": "TITO'S",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.73,
+          "priced": 1,
+          "dollars": 1475.94,
+          "dollars_per_product": 1475.94
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "9276",
+        "product": "OYSTER SAV BL 750",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 2.03,
+          "priced": 1,
+          "dollars": 442.12,
+          "dollars_per_product": 442.12
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      }
+    ],
+    "refusals": [
+      "difference: needs 5 measured outcomes per arm; have 11 shown and 0 withheld"
+    ]
+  },
+  "refusals": [],
+  "pilot_store": false
+}

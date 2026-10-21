@@ -1,0 +1,24 @@
+{
+  "_comment": "Sheet 00 reference fixture. A stage must run from this file alone: no database, no network, no clock.",
+  "context": {
+    "run_id": "0d5f9f4e-2a1b-4c3d-8e7f-000000000001",
+    "tenant_id": 46,
+    "store_id": 46,
+    "as_of": "2026-09-21",
+    "snapshot_id": "snap-2026-09-21-0400",
+    "config_version": "default",
+    "seed": 7,
+    "versions": {
+      "engine": "2.0.0",
+      "candidates": "1.0.0"
+    }
+  },
+  "input": {
+    "items": [
+      { "sku": "RS1", "on_hand": 10, "last_sold_days_ago": 4 },
+      { "sku": "MD1", "on_hand": 34, "last_sold_days_ago": 120 },
+      { "sku": "ZB1", "on_hand": 6, "last_sold_days_ago": 365 },
+      { "sku": "PR1", "on_hand": 2, "last_sold_days_ago": 11 }
+    ]
+  }
+}

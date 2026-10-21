@@ -1,0 +1,612 @@
+<title>The Eleven Families</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  color-scheme:light;
+  --paper:#FBFAF7; --card:#FFFFFF; --sunk:#F3F1EC; --rule:#DFDAD0;
+  --ink:#1A1713; --body:#3D3830; --mute:#6F675B; --faint:#9A9184;
+  --blue:#1F4E79; --blue-bg:#E6EEF6; --blue-edge:#A9C4DD;
+  --green:#15613F; --green-bg:#E5F1E9; --green-edge:#A6CDB6;
+  --brass:#9A5A05; --brass-bg:#FCF1E0; --brass-edge:#E3C68E;
+  --plum:#7A4E9A; --plum-bg:#F0E9F6; --plum-edge:#C9B3DC;
+  --red:#A32118; --red-bg:#FBEAE7; --red-edge:#E0AFA8;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --plum:#C09BE0; --plum-bg:#1E1428; --plum-edge:#42305A;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --plum:#C09BE0; --plum-bg:#1E1428; --plum-edge:#42305A;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);
+  font-family:"Source Sans 3",system-ui,sans-serif;font-size:16.5px;line-height:1.66;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--ink);margin:0;font-family:"Source Serif 4",Georgia,serif;text-wrap:balance}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:0 110px;padding-inline:28px}
+
+header.mast{border-bottom:3px double var(--rule);padding:46px 0 26px;margin-bottom:34px}
+.dept{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:20px}
+h1{font-size:clamp(34px,5.4vw,56px);font-weight:700;line-height:1.04;letter-spacing:-.02em}
+.dek{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.1vw,21px);line-height:1.5;
+  margin-top:16px;max-width:62ch}
+.byline{margin-top:22px;padding-top:14px;border-top:1px solid var(--rule);
+  font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:8px 26px}
+.byline b{color:var(--body);font-weight:600}
+
+.verdict{background:var(--card);border:1px solid var(--rule);border-left:5px solid var(--brass);
+  padding:26px 30px;margin:32px 0}
+.verdict h2{font-size:24px;margin-bottom:12px;color:var(--brass)}
+.verdict p{margin:0 0 13px;max-width:74ch}.verdict p:last-child{margin:0}
+
+section{margin-top:62px;scroll-margin-top:20px}
+.sec-no{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:9px}
+section>h2{font-size:clamp(25px,3.3vw,34px);font-weight:700;letter-spacing:-.015em;
+  padding-bottom:13px;border-bottom:2px solid var(--ink);margin-bottom:24px}
+h3{font-size:20px;font-weight:600;margin:32px 0 11px}
+h4{font-size:16px;font-weight:600;margin:22px 0 8px}
+p{margin:0 0 15px;max-width:76ch}
+ul,ol{max-width:76ch;padding-left:22px;margin:0 0 15px}li{margin-bottom:7px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:"JetBrains Mono",monospace;font-size:.85em;background:var(--sunk);
+  padding:1.5px 5px;border-radius:2px;color:var(--ink);word-break:break-word}
+
+pre{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:var(--sunk);
+  border:1px solid var(--rule);padding:0;margin:12px 0;overflow-x:auto;color:var(--ink)}
+pre code{background:none;padding:0;font-size:inherit;display:block;white-space:normal}
+.ln{display:block;padding:1px 14px;white-space:pre;line-height:1.5}
+.ln.cmt{color:var(--mute)}
+.ln.hi{background:var(--blue-bg);border-left:3px solid var(--blue);padding-left:11px;font-weight:500}
+.ln.ok{background:var(--green-bg);border-left:3px solid var(--green);padding-left:11px}
+.ln.no{background:var(--red-bg);border-left:3px solid var(--red);padding-left:11px}
+pre code .cmt{color:var(--mute)}
+
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:700px;background:var(--card)}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mute);font-weight:700;background:var(--sunk)}
+tbody tr:last-child td{border-bottom:none}
+td.mono{font-family:"JetBrains Mono",monospace;font-size:12px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;
+  font-family:"JetBrains Mono",monospace;white-space:nowrap}
+td.good{color:var(--green);font-weight:600}
+td.bad{color:var(--red);font-weight:600}
+td.warn{color:var(--brass);font-weight:600}
+.tag{font-family:"JetBrains Mono",monospace;font-size:10px;padding:2px 7px;border:1px solid;
+  border-radius:2px;white-space:nowrap;font-weight:700}
+.t-b{color:var(--blue);border-color:var(--blue-edge);background:var(--blue-bg)}
+.t-g{color:var(--green);border-color:var(--green-edge);background:var(--green-bg)}
+.t-r{color:var(--red);border-color:var(--red-edge);background:var(--red-bg)}
+.t-o{color:var(--brass);border-color:var(--brass-edge);background:var(--brass-bg)}
+
+.note{border:1px solid var(--rule);border-left:4px solid var(--blue);background:var(--card);
+  padding:15px 19px;margin:20px 0}
+.note p{margin:0;max-width:74ch}.note p+p{margin-top:10px}
+.note .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--blue);font-weight:700;display:block;margin-bottom:5px}
+.good{border:1px solid var(--green-edge);border-left:4px solid var(--green);
+  background:var(--green-bg);padding:15px 19px;margin:20px 0}
+.good p{margin:0;max-width:74ch;color:var(--ink)}.good p+p{margin-top:10px}
+.good .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--green);font-weight:700;display:block;margin-bottom:5px}
+.bad{border:1px solid var(--red-edge);border-left:4px solid var(--red);
+  background:var(--red-bg);padding:15px 19px;margin:20px 0}
+.bad p{margin:0;max-width:74ch;color:var(--ink)}.bad p+p{margin-top:10px}
+.bad .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--red);font-weight:700;display:block;margin-bottom:5px}
+
+figure{margin:26px 0;background:var(--card);border:1px solid var(--rule);padding:20px 18px 14px}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+.scroll-x{overflow-x:auto}
+figcaption{font-size:12.5px;color:var(--mute);line-height:1.55;margin-top:12px;
+  padding-top:11px;border-top:1px solid var(--rule)}
+footer{margin-top:74px;padding-top:20px;border-top:3px double var(--rule);
+  font-size:12.5px;color:var(--mute)}
+footer p{max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+@media print{body{background:#fff}figure{break-inside:avoid}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="dept">Engine Three · the signal ensemble · and the route to $1,000 a store</div>
+  <h1>Ten families are ranked on four literals</h1>
+  <p class="dek">The eleven families in the UI are not broken plumbing — the plumbing works. They are
+  broken economics: ten of them quote a hand-written confidence, so they cannot be compared with the
+  one family that earns its number, and the slate is carved up by family instead of by value.</p>
+  <div class="byline">
+    <span><b>Date</b> 5 October 2026</span>
+    <span><b>Read in source</b> <code>app/recommender/families.py</code> · <code>pipeline.py</code> · <code>app/signals/</code></span>
+    <span><b>Baseline</b> ~$370 per store per month, from one family of eleven</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <h2>The four numbers that explain everything</h2>
+<pre><code><span class="ln cmt">app/recommender/families.py</span>
+<span class="ln"></span>
+<span class="ln no">  cold_box    confidence=0.55     ← weather. a literal.</span>
+<span class="ln no">  pre_stock   confidence=0.55     ← calendar, sports, news. a literal.</span>
+<span class="ln no">  bundles     confidence=0.7      ← bundle. a literal.</span>
+<span class="ln no">  stock_new   confidence=0.6      ← new &amp; trending. a literal.</span>
+<span class="ln"></span>
+<span class="ln no">  ExtraPick.units_at_stake = None for bundles</span></code></pre>
+  <p>A hand-written confidence cannot be ranked against a measured one. So
+  <code>pipeline.py</code> does the only thing it can — it gives these families <strong>reserved
+  slots</strong>: <code>limit = max_recommendations − len(extra)</code>. A weak weather card therefore
+  displaces a strong restock card, and a genuinely large weather opportunity can never take more than
+  one slot. <strong>That is why the slate looks like restock: the other families were never allowed
+  to compete, only to interrupt.</strong></p>
+  <p>And the correction is not "switch them on". Measured across <strong>155 signal-driven
+  recommendations, this layer scored 6 to 10 points below random.</strong> Turning all eleven on
+  without earning them first makes the engine <em>worse</em> and moves 90% further away. The fix is
+  one currency — expected incremental margin × calibrated probability — and a coefficient each signal
+  had to earn from the store's own history.</p>
+</div>
+
+<!-- ════════════ 1 ════════════ -->
+<section id="s1">
+  <div class="sec-no">Section 01</div>
+  <h2>Where each of the eleven dies</h2>
+
+  <p>Twenty modules under <code>app/signals/</code> — weather, news, sports, holidays, Reddit,
+  Instagram, YouTube, registers, email, Google Trends. All of it funnels into <strong>two narrow
+  trigger sets</strong> and four hardcoded confidences.</p>
+
+  <figure>
+    <div class="scroll-x">
+    <svg viewBox="0 0 980 660" role="img" aria-label="The eleven recommendation families and where each one fails today. Twenty signal modules funnel into just two trigger sets: heat keys for the weather family and sports or festival prefixes for the pre-stock family. The understock family earns a measured expected value from the deficit and ranks properly. The overstock families produce value in capital released and markdown avoided, which is never counted. Weather, calendar and sports, news, bundle, and new and trending all carry hardcoded confidences of 0.55, 0.55, 0.7 and 0.6 and receive reserved slots rather than competing on value. Each family is annotated with the specific reason it cannot rank.">
+      <defs>
+        <marker id="e1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+        <marker id="e1r" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--red)"/></marker>
+        <marker id="e1g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--green)"/></marker>
+      </defs>
+
+      <text x="6" y="18" font-size="12" fill="currentColor" opacity=".85">Left: what the engine collects. Middle: the two gates everything has to squeeze through. Right: what reaches the owner, and why.</text>
+
+      <!-- SIGNAL SOURCES -->
+      <rect x="6" y="34" width="176" height="300" rx="4" fill="var(--sunk)"/>
+      <text x="18" y="54" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.1" font-weight="700" fill="var(--ink)">app/signals/ — 20 MODULES</text>
+      <g font-size="10.5" fill="currentColor" opacity=".85">
+        <text x="18" y="76">weather.py</text><text x="18" y="94">news.py · news_analyst.py</text>
+        <text x="18" y="112">sports.py · events.py</text><text x="18" y="130">holidays.py</text>
+        <text x="18" y="148">reddit.py · twitter.py</text><text x="18" y="166">instagram.py · youtube.py</text>
+        <text x="18" y="184">google_trends.py</text><text x="18" y="202">registers.py</text>
+        <text x="18" y="220">email_news.py · capture.py</text><text x="18" y="238">trend_analyst.py</text>
+        <text x="18" y="256">event_analyst.py · social.py</text><text x="18" y="274">mapping.py · us_states.py</text>
+      </g>
+      <text x="18" y="300" font-size="10" font-weight="700" fill="var(--green)">switches are ON by default.</text>
+      <text x="18" y="316" font-size="10" fill="currentColor" opacity=".75">The collection layer works.</text>
+
+      <!-- THE TWO GATES -->
+      <rect x="212" y="60" width="196" height="92" rx="4" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2.4"/>
+      <text x="224" y="80" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--red)">GATE 1 · HEAT_KEYS</text>
+      <text x="224" y="98" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">("heat_advisory",</text>
+      <text x="224" y="113" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)"> "heat_", "hot_")</text>
+      <text x="224" y="133" font-size="10" font-weight="700" fill="var(--red)">cold snap · storm · rain</text>
+      <text x="224" y="146" font-size="10" font-weight="700" fill="var(--red)">long weekend → NOTHING</text>
+
+      <rect x="212" y="166" width="196" height="92" rx="4" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2.4"/>
+      <text x="224" y="186" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--red)">GATE 2 · EVENT_PREFIXES</text>
+      <text x="224" y="204" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">nhl_ nfl_ nba_ mlb_</text>
+      <text x="224" y="219" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">ncaa_ news_festival</text>
+      <text x="224" y="239" font-size="10" font-weight="700" fill="var(--red)">payday · tax change</text>
+      <text x="224" y="252" font-size="10" font-weight="700" fill="var(--red)">competitor promo → NOTHING</text>
+
+      <text x="212" y="282" font-size="11" font-weight="700" fill="var(--red)">Twenty modules, two gates.</text>
+      <text x="212" y="298" font-size="10.5" fill="currentColor" opacity=".8">And each family is capped at</text>
+      <text x="212" y="313" font-size="10.5" fill="currentColor" opacity=".8">limit=1 or limit=2, however</text>
+      <text x="212" y="328" font-size="10.5" fill="currentColor" opacity=".8">large the opportunity is.</text>
+
+      <g stroke="var(--red)" fill="none" stroke-width="1.4">
+        <line x1="184" y1="120" x2="206" y2="106" marker-end="url(#e1r)"/>
+        <line x1="184" y1="170" x2="206" y2="200" marker-end="url(#e1r)"/>
+      </g>
+
+      <!-- THE ELEVEN -->
+      <text x="438" y="50" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.1" font-weight="700" fill="var(--ink)">THE ELEVEN FAMILIES, AND WHY EACH CANNOT RANK</text>
+
+      <rect x="438" y="60" width="536" height="56" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.4"/>
+      <text x="450" y="78" font-size="11.5" font-weight="700" fill="var(--green)">UNDERSTOCK · 2 cards</text>
+      <text x="450" y="95" font-size="10.5" fill="var(--ink)">Earns its number: units_at_stake = deficit_units, confidence = p_hit, ranks on EV.</text>
+      <text x="450" y="110" font-size="10.5" font-weight="700" fill="var(--green)">This is the only family producing measurable money. ~$370 / store / month.</text>
+
+      <rect x="438" y="124" width="536" height="56" rx="3" fill="var(--brass-bg)" stroke="var(--brass)" stroke-width="2.4"/>
+      <text x="450" y="142" font-size="11.5" font-weight="700" fill="var(--brass)">OVERSTOCK · 2 cards</text>
+      <text x="450" y="159" font-size="10.5" fill="var(--ink)">Its value is capital released + markdown avoided — a DIFFERENT currency.</text>
+      <text x="450" y="174" font-size="10.5" font-weight="700" fill="var(--brass)">Never counted anywhere, so it looks worthless and is not.</text>
+
+      <rect x="438" y="188" width="536" height="52" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+      <text x="450" y="206" font-size="11.5" font-weight="700" fill="var(--red)">WEATHER · 1 card <tspan font-family="JetBrains Mono, monospace" font-size="10">confidence=0.55</tspan></text>
+      <text x="450" y="222" font-size="10.5" fill="var(--ink)">Picks the fastest chillable SKU when a heat key is present. Nothing asks whether</text>
+      <text x="450" y="236" font-size="10.5" font-weight="700" fill="var(--red)">heat moves THIS store's seltzer, or by how much.</text>
+
+      <rect x="438" y="248" width="536" height="52" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+      <text x="450" y="266" font-size="11.5" font-weight="700" fill="var(--red)">CALENDAR &amp; SPORTS · 2 cards <tspan font-family="JetBrains Mono, monospace" font-size="10">confidence=0.55</tspan></text>
+      <text x="450" y="282" font-size="10.5" fill="var(--ink)">A festival is scheduled for a weekend that was going to be busy anyway —</text>
+      <text x="450" y="296" font-size="10.5" font-weight="700" fill="var(--red)">confounding runs TOWARD finding an effect that is not there.</text>
+
+      <rect x="438" y="308" width="536" height="52" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+      <text x="450" y="326" font-size="11.5" font-weight="700" fill="var(--red)">NEWS · 1 card <tspan font-family="JetBrains Mono, monospace" font-size="10">confidence=0.55</tspan></text>
+      <text x="450" y="342" font-size="10.5" fill="var(--ink)">Shares pre_stock with sports. The most valuable news signals — a competitor</text>
+      <text x="450" y="356" font-size="10.5" font-weight="700" fill="var(--red)">promotion, a tax change — have no trigger at all.</text>
+
+      <rect x="438" y="368" width="536" height="52" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+      <text x="450" y="386" font-size="11.5" font-weight="700" fill="var(--red)">BUNDLE · 2 cards <tspan font-family="JetBrains Mono, monospace" font-size="10">confidence=0.7 · units_at_stake=None</tspan></text>
+      <text x="450" y="402" font-size="10.5" fill="var(--ink)">Needs 12 baskets of support AND both halves named in the catalogue. The basket</text>
+      <text x="450" y="416" font-size="10.5" font-weight="700" fill="var(--red)">lift it measures is never turned into units, so it cannot be priced.</text>
+
+      <rect x="438" y="428" width="536" height="52" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+      <text x="450" y="446" font-size="11.5" font-weight="700" fill="var(--red)">NEW &amp; TRENDING · 1 card <tspan font-family="JetBrains Mono, monospace" font-size="10">confidence=0.6</tspan></text>
+      <text x="450" y="462" font-size="10.5" fill="var(--ink)">Needs 5 area stores to agree. The cohort's early velocity IS an estimate —</text>
+      <text x="450" y="476" font-size="10.5" font-weight="700" fill="var(--red)">it is simply never used as one.</text>
+
+      <!-- the reserved slot mechanism -->
+      <rect x="6" y="500" width="968" height="86" rx="4" fill="var(--card)" stroke="var(--red)" stroke-width="2"/>
+      <text x="20" y="520" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.2" font-weight="700" fill="var(--red)">AND THE MECHANISM THAT FOLLOWS FROM IT — app/recommender/pipeline.py</text>
+      <text x="20" y="542" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">limit = max(1, self._settings.max_recommendations − len(extra))</text>
+      <text x="20" y="562" font-size="12" fill="var(--ink)">The signal families take their slots FIRST, then understock fills whatever is left. Nothing compares them, because</text>
+      <text x="20" y="578" font-size="12" fill="var(--ink)">there is no common unit to compare them in. A 0.55 literal and a measured p_hit are not the same kind of number.</text>
+
+      <line x1="6" y1="606" x2="974" y2="606" stroke="currentColor" stroke-width="1" opacity=".22"/>
+      <text x="6" y="628" font-size="12.5" fill="currentColor"><tspan font-weight="700" fill="var(--red)">So the owner sees restock.</tspan> Not because the other signals are switched off — they are switched on — but because they were given</text>
+      <text x="6" y="646" font-size="12.5" fill="currentColor">slots instead of a price, and a slot can be filled by the weakest card in a family just as easily as by the strongest.</text>
+    </svg>
+    </div>
+    <figcaption><strong>The collection layer works; the economics layer does not exist.</strong>
+    Twenty signal modules, all switched on, squeezed through two literal string-prefix gates into four
+    families with hand-written confidences and hard caps of one or two cards each.</figcaption>
+  </figure>
+
+  <div class="tw"><table>
+    <thead><tr><th>Family</th><th class="num">UI cards</th><th>What it quotes today</th><th>Can it rank?</th><th>Measured value</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Understock</strong></td><td class="num">2</td><td class="mono">deficit_units · p_hit</td><td class="good">Yes</td><td class="good">+$48/card, p=0.0005</td></tr>
+      <tr><td><strong>Overstock</strong></td><td class="num">2</td><td>units over <code>order_up_to</code></td><td class="warn">Wrong currency</td><td class="warn">never counted</td></tr>
+      <tr><td><strong>Weather</strong></td><td class="num">1</td><td class="mono">confidence=0.55</td><td class="bad">No</td><td class="bad">part of the −6 to −10 pts</td></tr>
+      <tr><td><strong>Calendar &amp; Sports</strong></td><td class="num">2</td><td class="mono">confidence=0.55</td><td class="bad">No</td><td class="bad">part of the −6 to −10 pts</td></tr>
+      <tr><td><strong>News</strong></td><td class="num">1</td><td class="mono">confidence=0.55</td><td class="bad">No</td><td class="bad">part of the −6 to −10 pts</td></tr>
+      <tr><td><strong>Bundle</strong></td><td class="num">2</td><td class="mono">confidence=0.7 · units=None</td><td class="bad">No</td><td class="bad">unmeasured</td></tr>
+      <tr><td><strong>New &amp; Trending</strong></td><td class="num">1</td><td class="mono">confidence=0.6</td><td class="bad">No</td><td class="bad">unmeasured</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section id="s2">
+  <div class="sec-no">Section 02</div>
+  <h2>One currency, one pool, one ranking</h2>
+
+  <p>The ensemble is not a model-blending exercise. It is making every family quote its value in the
+  same units, so that they can be compared at all — and then deleting the reserved slots, because
+  they were only ever a workaround for families that could not be priced.</p>
+
+  <figure>
+    <div class="scroll-x">
+    <svg viewBox="0 0 980 520" role="img" aria-label="Before and after the ensemble change. Before, the signal families take reserved slots first with hardcoded confidences, and the understock family fills whatever is left, with no comparison between them. After, every family returns units at stake, a unit margin and a raw confidence, all of which pass through the existing calibration and scoring modules into one ranked pool, with a family cap preserving diversity and abstention as a valid empty outcome.">
+      <defs>
+        <marker id="e2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+        <marker id="e2g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--green)"/></marker>
+      </defs>
+
+      <!-- BEFORE -->
+      <rect x="6" y="30" width="470" height="222" rx="4" fill="var(--red-bg)" stroke="var(--red-edge)" stroke-width="1.4"/>
+      <text x="20" y="52" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.3" font-weight="700" fill="var(--red)">BEFORE — SLOTS CARVED UP BY FAMILY</text>
+
+      <rect x="20" y="64" width="124" height="40" rx="3" fill="var(--card)" stroke="var(--red)" stroke-width="1.4"/>
+      <text x="30" y="80" font-size="10.5" fill="var(--ink)">weather 0.55</text>
+      <text x="30" y="96" font-size="10.5" fill="var(--ink)">news 0.55</text>
+      <rect x="20" y="110" width="124" height="40" rx="3" fill="var(--card)" stroke="var(--red)" stroke-width="1.4"/>
+      <text x="30" y="126" font-size="10.5" fill="var(--ink)">bundle 0.7</text>
+      <text x="30" y="142" font-size="10.5" fill="var(--ink)">trending 0.6</text>
+
+      <rect x="172" y="76" width="112" height="62" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+      <text x="182" y="96" font-size="10.5" font-weight="700" fill="var(--red)">RESERVED</text>
+      <text x="182" y="112" font-size="10.5" font-weight="700" fill="var(--red)">SLOTS</text>
+      <text x="182" y="130" font-size="9.5" fill="var(--red)">taken first</text>
+
+      <rect x="312" y="76" width="146" height="62" rx="3" fill="var(--card)" stroke="currentColor" stroke-width="1.4" opacity=".75"/>
+      <text x="322" y="96" font-size="10.5" fill="currentColor">understock fills</text>
+      <text x="322" y="112" font-size="10.5" fill="currentColor">what is left</text>
+      <text x="322" y="130" font-family="JetBrains Mono, monospace" font-size="9" fill="currentColor">limit − len(extra)</text>
+
+      <g stroke="var(--red)" fill="none" stroke-width="1.4">
+        <line x1="146" y1="100" x2="166" y2="100" marker-end="url(#e2)" color="var(--red)"/>
+        <line x1="286" y1="107" x2="306" y2="107" marker-end="url(#e2)" color="var(--red)"/>
+      </g>
+
+      <text x="20" y="178" font-size="11.5" font-weight="700" fill="var(--red)">Nothing compares a 0.55 literal with a measured p_hit,</text>
+      <text x="20" y="194" font-size="11.5" font-weight="700" fill="var(--red)">so nothing can. A weak weather card displaces a strong</text>
+      <text x="20" y="210" font-size="11.5" font-weight="700" fill="var(--red)">reorder, and a huge weather opportunity still gets one slot.</text>
+      <text x="20" y="234" font-size="11" fill="currentColor" opacity=".8">Measured: this layer scored 6–10 points BELOW random over 155 cards.</text>
+
+      <!-- AFTER -->
+      <rect x="504" y="30" width="470" height="222" rx="4" fill="var(--green-bg)" stroke="var(--green-edge)" stroke-width="1.4"/>
+      <text x="518" y="52" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.3" font-weight="700" fill="var(--green)">AFTER — ONE POOL, PRICED IN ONE UNIT</text>
+
+      <rect x="518" y="64" width="142" height="92" rx="3" fill="var(--card)" stroke="var(--green)" stroke-width="2"/>
+      <text x="528" y="82" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">ALL 11 RETURN</text>
+      <text x="528" y="99" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">units_at_stake</text>
+      <text x="528" y="114" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">unit_margin</text>
+      <text x="528" y="129" font-family="JetBrains Mono, monospace" font-size="10" fill="var(--ink)">raw_confidence</text>
+      <text x="528" y="147" font-size="9.5" font-weight="700" fill="var(--green)">never None. never a literal.</text>
+
+      <rect x="686" y="64" width="128" height="92" rx="3" fill="var(--card)" stroke="var(--green)" stroke-width="2"/>
+      <text x="696" y="82" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">EXISTING MODULES</text>
+      <text x="696" y="99" font-size="10" fill="var(--ink)">calibrate/apply</text>
+      <text x="696" y="114" font-size="10" fill="var(--ink)">rank/score</text>
+      <text x="696" y="129" font-size="10" fill="var(--ink)">policy/inventory</text>
+      <text x="696" y="147" font-size="9.5" font-weight="700" fill="var(--green)">nothing new to write</text>
+
+      <rect x="840" y="64" width="120" height="92" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.6"/>
+      <text x="850" y="82" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">ONE RANKING</text>
+      <text x="850" y="100" font-size="10" fill="var(--green)">by expected</text>
+      <text x="850" y="115" font-size="10" fill="var(--green)">net margin</text>
+      <text x="850" y="133" font-size="10" fill="var(--green)">family cap keeps</text>
+      <text x="850" y="147" font-size="10" fill="var(--green)">the variety</text>
+
+      <g stroke="var(--green)" fill="none" stroke-width="1.6">
+        <line x1="662" y1="110" x2="680" y2="110" marker-end="url(#e2g)"/>
+        <line x1="816" y1="110" x2="834" y2="110" marker-end="url(#e2g)"/>
+      </g>
+
+      <text x="518" y="178" font-size="11.5" font-weight="700" fill="var(--green)">A weather card now beats a reorder when it is worth more,</text>
+      <text x="518" y="194" font-size="11.5" font-weight="700" fill="var(--green)">and loses when it is not. The slate composition becomes a</text>
+      <text x="518" y="210" font-size="11.5" font-weight="700" fill="var(--green)">measurement rather than a layout decision.</text>
+      <text x="518" y="234" font-size="11" fill="currentColor" opacity=".85">And an empty slate becomes legal: "nothing worth doing today".</text>
+
+      <!-- the earning gate -->
+      <rect x="6" y="268" width="968" height="162" rx="4" fill="var(--sunk)"/>
+      <text x="20" y="290" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.3" font-weight="700" fill="var(--ink)">BUT FIRST — EVERY SIGNAL HAS TO EARN ITS COEFFICIENT, BY THE PATTERN PRICE ELASTICITY ALREADY SET</text>
+
+      <text x="20" y="316" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--ink)">ln(units + 1) = α + β·signal_active + dow + month + trend + ε        HC1-robust standard errors</text>
+
+      <rect x="20" y="332" width="462" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+      <text x="32" y="352" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--green)">β = 0.22  [0.09, 0.35]</text>
+      <text x="32" y="370" font-size="11.5" fill="var(--ink)">USABLE — heat lifts this store's seltzer about 25%. A card may cite it.</text>
+      <text x="32" y="382" font-size="10" fill="var(--green)">units_at_stake = β × baseline_units over the signal's own window</text>
+
+      <rect x="498" y="332" width="462" height="54" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2"/>
+      <text x="510" y="352" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="var(--red)">β = 0.05  [−0.18, 0.28]</text>
+      <text x="510" y="370" font-size="11.5" fill="var(--ink)">REFUSED — the interval spans zero. No card, no sentence, no mention.</text>
+      <text x="510" y="382" font-size="10" fill="var(--red)">guard.py already enforces exactly this for price. Reuse it, do not rewrite it.</text>
+
+      <text x="20" y="408" font-size="12" font-weight="700" fill="var(--brass)">Expect REFUSED to be the majority, especially at low-volume stores. The price module says so explicitly, and it is the</text>
+      <text x="20" y="424" font-size="12" font-weight="700" fill="var(--brass)">correct answer — a signal layer that finds an effect everywhere is the 6-to-10-points-below-random layer rebuilt.</text>
+
+      <line x1="6" y1="452" x2="974" y2="452" stroke="currentColor" stroke-width="1" opacity=".22"/>
+      <text x="6" y="474" font-size="12.5" fill="currentColor"><tspan font-weight="700" fill="var(--green)">The rule, in one line:</tspan> a signal must earn its place in the arithmetic before it is allowed into the sentence.</text>
+      <text x="6" y="496" font-size="12.5" fill="currentColor">And the two most valuable new signals do the opposite of recommending — a competitor promotion or a tax change says this dip</text>
+      <text x="6" y="514" font-size="12.5" fill="currentColor">has a CAUSE and must not be recovered. A signal that suppresses a bad card is worth as much as one that creates a good card.</text>
+    </svg>
+    </div>
+    <figcaption><strong>The ensemble, drawn as the change it actually is.</strong> Almost nothing new
+    gets written: the calibration, scoring and inventory-policy modules all exist. What changes is
+    that every family has to quote a price, and every signal has to produce a coefficient with an
+    interval before it may be cited.</figcaption>
+  </figure>
+
+  <h3>What <code>units_at_stake</code> means for each family</h3>
+  <p>All seven are derivable from data the request context already carries. None needs a new source.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Family</th><th><code>units_at_stake</code></th><th>Comes from</th></tr></thead>
+    <tbody>
+      <tr><td>understock</td><td class="mono">max(0, deficit_units)</td><td>unchanged — sheet 20, and it must stay byte-identical</td></tr>
+      <tr><td>overstock / clear</td><td>units above <code>order_up_to</code></td><td><code>policy/inventory.py</code>, which already computes it</td></tr>
+      <tr><td>weather</td><td class="mono">β × baseline_units</td><td>the signal elasticity, over the advisory's own window</td></tr>
+      <tr><td>calendar &amp; sports</td><td class="mono">β × baseline_units</td><td>same, with the fixture's window</td></tr>
+      <tr><td>news</td><td class="mono">β × baseline_units</td><td>same, and negative β is allowed — it suppresses</td></tr>
+      <tr><td>bundle</td><td>incremental units on the attached SKU</td><td><code>co_purchases</code> basket lift, already measured at ≥12 support</td></tr>
+      <tr><td>new &amp; trending</td><td>the cohort's first-30-day velocity</td><td><code>area_winners</code> at ≥5 stores — already an estimate</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section id="s3">
+  <div class="sec-no">Section 03</div>
+  <h2>Where the $1,000 comes from</h2>
+
+  <p>The measured baseline is <strong>+$51,052</strong> of incremental margin — 1,056 cards, five
+  stores, 52 decision dates across 2.3 years. That is <strong>about $370 per store per month, from
+  the understock family alone</strong>. The target is 2.7 times that, and here is every component of
+  it with the prompt that measures it.</p>
+
+  <figure>
+    <div class="scroll-x">
+    <svg viewBox="0 0 980 520" role="img" aria-label="A waterfall from the measured baseline of 370 dollars per store per month to a projected 1310 dollars. Sizing to the economic quantile adds about 200 dollars, correcting the carrying-cost model recovers about 150 dollars that was already being earned, counting the overstock families adds about 225 dollars, an earned bundle family adds about 115 dollars, and earned weather, calendar, news and trending signals add about 250 dollars. The 1000 dollar target line sits below the projected total, but at the low end of every assumption the total is exactly 1000 dollars, so the target is the floor of the projection rather than a comfortable margin.">
+      <text x="6" y="18" font-size="12" fill="currentColor" opacity=".85">Measured baseline in blue. Everything else is a PROJECTION, each with a prompt whose gate measures it.</text>
+
+      <!-- y axis: $0 at 400, $1400 at 100 -> 300px for 1400 -->
+      <line x1="70" y1="400" x2="950" y2="400" stroke="currentColor" stroke-width="1.3"/>
+      <line x1="70" y1="400" x2="70" y2="96" stroke="currentColor" stroke-width="1.2"/>
+      <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--mute)" text-anchor="end">
+        <text x="64" y="404">$0</text><text x="64" y="297">$500</text>
+        <text x="64" y="190">$1,000</text><text x="64" y="104">$1,400</text>
+      </g>
+      <g stroke="currentColor" opacity=".12" stroke-width="1">
+        <line x1="70" y1="297" x2="950" y2="297"/><line x1="70" y1="104" x2="950" y2="104"/>
+      </g>
+
+      <!-- target line -->
+      <line x1="70" y1="186" x2="950" y2="186" stroke="var(--brass)" stroke-width="2" stroke-dasharray="6 4"/>
+      <text x="946" y="180" font-size="11" font-weight="700" text-anchor="end" fill="var(--brass)">the $1,000 target</text>
+
+      <!-- bars -->
+      <rect x="86" y="321" width="100" height="79" fill="var(--blue)" opacity=".75"/>
+      <text x="136" y="314" font-size="11" font-weight="700" text-anchor="middle" fill="var(--blue)">$370</text>
+      <text x="136" y="418" font-size="10" text-anchor="middle" fill="var(--ink)">measured</text>
+      <text x="136" y="431" font-size="10" text-anchor="middle" fill="var(--ink)">baseline</text>
+      <text x="136" y="446" font-size="9" text-anchor="middle" fill="var(--mute)">understock only</text>
+
+      <rect x="206" y="278" width="100" height="43" fill="var(--green)" opacity=".6"/>
+      <text x="256" y="271" font-size="11" font-weight="700" text-anchor="middle" fill="var(--green)">+$200</text>
+      <text x="256" y="418" font-size="10" text-anchor="middle" fill="var(--ink)">size to q*</text>
+      <text x="256" y="431" font-size="10" text-anchor="middle" fill="var(--ink)">not the mean</text>
+      <text x="256" y="446" font-size="9" text-anchor="middle" fill="var(--mute)">N1.2 · N1.3</text>
+
+      <rect x="326" y="246" width="100" height="32" fill="var(--brass)" opacity=".55"/>
+      <text x="376" y="239" font-size="11" font-weight="700" text-anchor="middle" fill="var(--brass)">+$150</text>
+      <text x="376" y="418" font-size="10" text-anchor="middle" fill="var(--ink)">carrying cost</text>
+      <text x="376" y="431" font-size="10" text-anchor="middle" fill="var(--ink)">correction</text>
+      <text x="376" y="446" font-size="9" text-anchor="middle" fill="var(--brass)">recovered, not new</text>
+
+      <rect x="446" y="198" width="100" height="48" fill="var(--green)" opacity=".6"/>
+      <text x="496" y="191" font-size="11" font-weight="700" text-anchor="middle" fill="var(--green)">+$225</text>
+      <text x="496" y="418" font-size="10" text-anchor="middle" fill="var(--ink)">overstock</text>
+      <text x="496" y="431" font-size="10" text-anchor="middle" fill="var(--ink)">counted at last</text>
+      <text x="496" y="446" font-size="9" text-anchor="middle" fill="var(--mute)">N3.3</text>
+
+      <rect x="566" y="173" width="100" height="25" fill="var(--green)" opacity=".6"/>
+      <text x="616" y="166" font-size="11" font-weight="700" text-anchor="middle" fill="var(--green)">+$115</text>
+      <text x="616" y="418" font-size="10" text-anchor="middle" fill="var(--ink)">bundle,</text>
+      <text x="616" y="431" font-size="10" text-anchor="middle" fill="var(--ink)">earned</text>
+      <text x="616" y="446" font-size="9" text-anchor="middle" fill="var(--mute)">N3.1</text>
+
+      <rect x="686" y="119" width="100" height="54" fill="var(--green)" opacity=".6"/>
+      <text x="736" y="112" font-size="11" font-weight="700" text-anchor="middle" fill="var(--green)">+$250</text>
+      <text x="736" y="418" font-size="10" text-anchor="middle" fill="var(--ink)">weather · calendar</text>
+      <text x="736" y="431" font-size="10" text-anchor="middle" fill="var(--ink)">news · trending</text>
+      <text x="736" y="446" font-size="9" text-anchor="middle" fill="var(--mute)">N4.1 · N4.2</text>
+
+      <rect x="820" y="119" width="110" height="281" fill="var(--green)" opacity=".28" stroke="var(--green)" stroke-width="2.4"/>
+      <text x="875" y="112" font-size="13" font-weight="700" text-anchor="middle" fill="var(--green)">$1,310</text>
+      <text x="875" y="418" font-size="10.5" font-weight="700" text-anchor="middle" fill="var(--green)">projected</text>
+      <text x="875" y="431" font-size="10.5" font-weight="700" text-anchor="middle" fill="var(--green)">total</text>
+      <text x="875" y="446" font-size="9" text-anchor="middle" fill="var(--mute)">at midpoints</text>
+
+      <!-- connectors -->
+      <g stroke="currentColor" opacity=".35" stroke-width="1" stroke-dasharray="3 3">
+        <line x1="186" y1="321" x2="206" y2="321"/><line x1="306" y1="278" x2="326" y2="278"/>
+        <line x1="426" y1="246" x2="446" y2="246"/><line x1="546" y1="198" x2="566" y2="198"/>
+        <line x1="666" y1="173" x2="686" y2="173"/><line x1="786" y1="119" x2="820" y2="119"/>
+      </g>
+
+      <line x1="6" y1="466" x2="974" y2="466" stroke="currentColor" stroke-width="1" opacity=".22"/>
+      <text x="6" y="488" font-size="12.5" fill="currentColor"><tspan font-weight="700" fill="var(--red)">The honest caveat, and it matters:</tspan> at the LOW end of every assumption the total is $1,000 exactly — the target is the FLOOR of</text>
+      <text x="6" y="508" font-size="12.5" fill="currentColor">this projection, not a comfortable margin. At the high end it is $1,620. Any row that measures zero gets dropped and published as dropped.</text>
+    </svg>
+    </div>
+    <figcaption><strong>The route to $1,000, decomposed so each piece can be falsified.</strong> Only
+    the first bar is measured. The low-to-high range across all five projected rows is $1,000 to
+    $1,620, which is why the signal families are not optional — without them the low case misses the
+    target.</figcaption>
+  </figure>
+
+  <div class="tw"><table>
+    <thead><tr><th>Source</th><th>Mechanism</th><th class="num">Low</th><th class="num">Mid</th><th class="num">High</th><th>Prompt</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Measured baseline</strong></td><td>understock, +$48/card at 5.1 cards a run</td><td class="num">$370</td><td class="num">$370</td><td class="num">$370</td><td class="mono">—</td></tr>
+      <tr><td>Size to <code>q*</code></td><td>the engine under-orders: p50 is 14 where p91 is 19, and it hits 76% of the time</td><td class="num">$150</td><td class="num">$200</td><td class="num">$250</td><td class="mono">N1.2 N1.3</td></tr>
+      <tr><td>Carrying-cost fix</td><td>reveals margin already earned and mis-charged as a full-COGS write-off</td><td class="num">$100</td><td class="num">$150</td><td class="num">$200</td><td class="mono">N0.1</td></tr>
+      <tr><td>Overstock families</td><td>capital released and markdown avoided — a currency never counted</td><td class="num">$150</td><td class="num">$225</td><td class="num">$300</td><td class="mono">N3.3</td></tr>
+      <tr><td>Bundle, earned</td><td>measured basket uplift instead of a 0.7 literal</td><td class="num">$80</td><td class="num">$115</td><td class="num">$150</td><td class="mono">N3.1</td></tr>
+      <tr><td>Signals, earned</td><td>pre-stocking where <code>β</code> is estimated and non-zero</td><td class="num">$150</td><td class="num">$250</td><td class="num">$350</td><td class="mono">N4.1 N4.2</td></tr>
+      <tr><td><strong>Total</strong></td><td><strong>per store, per month</strong></td><td class="num warn"><strong>$1,000</strong></td><td class="num good"><strong>$1,310</strong></td><td class="num good"><strong>$1,620</strong></td><td class="mono">N7.2</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="bad">
+    <span class="l">What would make this projection wrong</span>
+    <p><strong>The signal rows are the fragile ones.</strong> If most <code>β</code> intervals span
+    zero — which the price-elasticity module warns is the expected outcome at low-volume stores — the
+    weather, calendar, news and trending row collapses toward zero and the low case falls to $850.
+    That is a real possibility and the correct response is to publish it, drop those families, and
+    make up the gap from sizing and overstock, which do not depend on any signal being real.</p>
+    <p><strong>Five of ten audited stores send no cost data at all.</strong> For those stores there is
+    no margin, so no money target can be measured — only the accuracy gate applies, and their money
+    columns must read "no cost data", never "$0". Fixing the POS connector that drops the cost field
+    is worth more than any model change on this page.</p>
+  </div>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section id="s4">
+  <div class="sec-no">Section 04</div>
+  <h2>The order of work</h2>
+
+  <p>Eight workstreams, twenty prompts, each with a gate that must be green before the next begins.
+  The full text is in <code>ENGINE-NINETY-PROMPTS.md</code> on the branch.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Stream</th><th>Prompts</th><th>What it does</th><th>Gate</th><th class="num">Time</th></tr></thead>
+    <tbody>
+      <tr><td class="mono"><strong>N0</strong></td><td>3</td><td>Repair the ruler: carrying cost, net margin per card, holdout on</td><td>net margin per card exists with an interval, outcomes accumulating</td><td class="num">1–2 wk</td></tr>
+      <tr><td class="mono"><strong>N1</strong></td><td>3</td><td>Split the promise from the order; derive <code>q*</code> from margin and carrying cost</td><td><strong>promise kept 85–95%</strong>, net margin positive at ≥4 of 5</td><td class="num">3–4 wk</td></tr>
+      <tr><td class="mono"><strong>N2</strong></td><td>2</td><td>Fit the calibration curve from holdout; make it a build gate</td><td><strong>ECE &lt; 5</strong>, no card states an unearned confidence</td><td class="num">3 wk</td></tr>
+      <tr><td class="mono"><strong>N3</strong></td><td>4</td><td>One currency for all eleven families; delete the reserved slots; count the overstock money; measure each family separately</td><td>per-family table for all 11, losers switched off in the same commit</td><td class="num">4 wk</td></tr>
+      <tr><td class="mono"><strong>N4</strong></td><td>3</td><td>Signal elasticity with an interval; widen the triggers; persist signal history</td><td>every signal key has a <code>β</code>, an interval and a verdict</td><td class="num">4–5 wk</td></tr>
+      <tr><td class="mono"><strong>N5</strong></td><td>1</td><td>Put lifecycle and the merchandise contract on the live route</td><td>no SKU recommended on consecutive days while failing</td><td class="num">2 wk</td></tr>
+      <tr><td class="mono"><strong>N6</strong></td><td>3</td><td>Censor stockouts; Croston/SBA for intermittent; start capturing on-hand</td><td><strong>bias ±5% at all four horizons</strong>, coverage ≥90%</td><td class="num">5–6 wk</td></tr>
+      <tr><td class="mono"><strong>N7</strong></td><td>2</td><td>Cash and shelf budget; abstention; both targets as measured gates</td><td><strong>≥90% of issued cards net-positive</strong> at a published coverage</td><td class="num">3 wk</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="good">
+    <span class="l">Start today — three items, all collection, all lost forever if deferred</span>
+    <p><strong><code>REC_HOLDOUT_PCT = 20</code></strong> (N0.3) — one flag. It unblocks the
+    calibration fit, the monitor, the matched gate and any causal claim at all. Zero engineering
+    cost and it has been off for the whole programme.</p>
+    <p><strong>Nightly on-hand snapshots</strong> (N6.3) — cannot be backfilled. Every night without
+    it is a night that can never be used for training or grading, and it is the single confusion that
+    caps selection accuracy near 73%.</p>
+    <p><strong><code>signal_history</code></strong> (N4.3) — <code>β</code> cannot be fitted without
+    a record of which signals were active when. Holidays, fixtures and moving dates are
+    <em>computable</em> and backfill exactly; weather and news do not, so their coefficients stay
+    refused until history exists.</p>
+  </div>
+
+  <div class="note">
+    <span class="l">The one thing not to do</span>
+    <p>Do not reach 90% by raising the <code>p_hit</code> floor. The engine's own settings already
+    price that path: 0.50 gives 75.9% at 5.1 cards a run; 0.55 buys about one point, cuts coverage to
+    2.4 cards and <strong>halves the margin</strong>. A floor high enough to show 90% issues almost
+    nothing, and a dashboard reading 90% beside an empty slate is a worse product than one reading
+    76% with five useful cards.</p>
+    <p>Abstention in N7.1 is a different thing entirely: it withholds cards whose <em>expected
+    profit</em> is negative, and it publishes the coverage it chose.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>How this was established.</strong> Read in source on branch <code>Enh_Engine_v1</code>:
+  the four hardcoded confidences and <code>units_at_stake=None</code> in
+  <code>app/recommender/families.py</code>; the reserved-slot arithmetic
+  <code>limit = max_recommendations − len(extra)</code> in <code>app/recommender/pipeline.py</code>;
+  the two trigger sets <code>HEAT_KEYS</code> and <code>EVENT_KEY_PREFIXES</code>; the twenty modules
+  under <code>app/signals/</code> with their master switches defaulting on; and the refusal
+  discipline in <code>app/pipeline/elasticity/guard.py</code> that the signal coefficients should
+  reuse. The "6 to 10 points below random over 155 signal-driven recommendations" figure is from the
+  estate audit and is the reason this is a measurement programme rather than a feature switch.</p>
+  <p><strong>What is projection rather than measurement.</strong> Only the $370 baseline is measured.
+  Every other row in section 03 is an estimate with a stated range, and each has a prompt whose gate
+  decides it. The phase durations are judgement. The claim that correcting the carrying-cost model
+  changes the sign at two or three stores is a prediction that has to be re-run to know. Nobody has
+  yet acted on any recommendation the engine has made, so all of it remains forecasting evidence
+  rather than causal evidence until the holdout has been on for a quarter.</p>
+</footer>
+
+</div>

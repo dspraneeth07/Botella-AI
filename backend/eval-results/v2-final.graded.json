@@ -1,0 +1,2476 @@
+{
+  "summary": {
+    "inputFile": "v2-final.json",
+    "gradedAt": "2026-06-04T23:03:19.327Z",
+    "groundTruthDate": "2026-06-04",
+    "turns": 103,
+    "correct": 80,
+    "honest": 14,
+    "confidentWrong": 0,
+    "needsReview": 9,
+    "correctOrHonestPct": 91.3,
+    "byCategory": {
+      "simple": {
+        "total": 10,
+        "correct": 8,
+        "needs_review": 2,
+        "correctOrHonestPct": 80,
+        "confidentWrong": 0
+      },
+      "sales": {
+        "total": 10,
+        "correct": 8,
+        "needs_review": 2,
+        "correctOrHonestPct": 80,
+        "confidentWrong": 0
+      },
+      "inventory": {
+        "total": 10,
+        "correct": 8,
+        "honest": 1,
+        "needs_review": 1,
+        "correctOrHonestPct": 90,
+        "confidentWrong": 0
+      },
+      "ambiguous": {
+        "total": 10,
+        "correct": 8,
+        "needs_review": 1,
+        "honest": 1,
+        "correctOrHonestPct": 90,
+        "confidentWrong": 0
+      },
+      "obscure": {
+        "total": 5,
+        "honest": 1,
+        "correct": 3,
+        "needs_review": 1,
+        "correctOrHonestPct": 80,
+        "confidentWrong": 0
+      },
+      "linkage": {
+        "total": 4,
+        "correct": 4,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "honesty": {
+        "total": 5,
+        "honest": 4,
+        "needs_review": 1,
+        "correctOrHonestPct": 80,
+        "confidentWrong": 0
+      },
+      "weekday": {
+        "total": 3,
+        "correct": 3,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "search": {
+        "total": 3,
+        "correct": 3,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "dateedge": {
+        "total": 5,
+        "honest": 1,
+        "correct": 4,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "adversarial": {
+        "total": 6,
+        "correct": 5,
+        "honest": 1,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "followup": {
+        "total": 32,
+        "correct": 26,
+        "honest": 5,
+        "needs_review": 1,
+        "correctOrHonestPct": 96.9,
+        "confidentWrong": 0
+      }
+    }
+  },
+  "confidentWrong": [],
+  "needsReview": [
+    {
+      "caseId": "simple-05",
+      "turnIndex": 1,
+      "question": "How many suppliers are listed?",
+      "answerPreview": "You currently have **0 suppliers** listed in your system. You may want to add supplier information to help track your purchasing and inventory management."
+    },
+    {
+      "caseId": "simple-08",
+      "turnIndex": 1,
+      "question": "What payment methods appear in the sales data?",
+      "answerPreview": "Your sales data runs from 2023-01-01 to 2026-06-03 with **493,971 total transactions**, but **all transactions are missing payment method information** (0 have payment data recorded, 493,971 missing). The pay_mode field appears to be empty "
+    },
+    {
+      "caseId": "sales-06",
+      "turnIndex": 1,
+      "question": "Show sales by payment method.",
+      "answerPreview": "Based on the data I found, your payment method tracking appears to have some gaps. For the last 7 days, I can see 3,042 transactions totaling $74,508.28, but the payment method field is mostly empty in your system. This suggests that paymen"
+    },
+    {
+      "caseId": "sales-07",
+      "turnIndex": 1,
+      "question": "Which cashier generated the most revenue?",
+      "answerPreview": "I wasn't able to identify which cashier generated the most revenue. Your sales data spans from January 1, 2023 to June 3, 2026 with nearly 494,000 transactions, but the cashier information appears to be missing or not properly populated in "
+    },
+    {
+      "caseId": "inv-07",
+      "turnIndex": 1,
+      "question": "Show products currently on sale.",
+      "answerPreview": "You currently have no products on sale. All items in your inventory are at regular price with no promotional discounts active. If you'd like to set up some promotional pricing, I can help you identify which products might be good candidates"
+    },
+    {
+      "caseId": "amb-05",
+      "turnIndex": 1,
+      "question": "What changed?",
+      "answerPreview": "I'd be happy to help you understand what changed in your business! However, I need a bit more context to give you the most useful analysis. What specifically would you like me to compare? For example: - **Time periods**: Today vs yesterday?"
+    },
+    {
+      "caseId": "obs-05",
+      "turnIndex": 1,
+      "question": "Which register had the highest average ticket on the latest sale date?",
+      "answerPreview": "I don't currently have register data available for 2026-06-03, but I can help with other aspects of your store analytics. Your sales data runs from 2023-01-01 to 2026-06-03, so the information exists but register details may not be consiste"
+    },
+    {
+      "caseId": "honesty-03",
+      "turnIndex": 1,
+      "question": "Which payment method is most popular?",
+      "answerPreview": "I wasn't able to retrieve the payment method breakdown due to a query timeout, but I can see your sales data spans from January 2023 to June 2026 with nearly 494,000 transactions. The system appears to have comprehensive payment data availa"
+    },
+    {
+      "caseId": "follow-14",
+      "turnIndex": 2,
+      "question": "Just give me your best estimate then.",
+      "answerPreview": "I understand you need a working estimate. Since **none of your 17,752 products have cost data entered**, I'll provide industry-standard margin estimates for liquor retail: **Estimated Profit Margins by Category:** - **Beer**: ~25-30% (your "
+    }
+  ],
+  "cases": [
+    {
+      "id": "simple-01",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-01",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "How many products are in my catalog?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **17,751 products** in your catalog at Route 106 Wine & Spirits."
+        }
+      ]
+    },
+    {
+      "id": "simple-02",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-02",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "How many customers do we have?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **1 customer** in your database with complete name information (100% coverage). This single customer record has a name on file, which is great for personalized service and marketing efforts. As your business grows, you'll want to f"
+        }
+      ]
+    },
+    {
+      "id": "simple-03",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-03",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "What is the latest sale date in my data?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your latest sale date is **June 3, 2026**. This means your data is current through that date, and any \"today\" or \"recent\" analysis I provide will be based on June 3rd as the most recent business day."
+        }
+      ]
+    },
+    {
+      "id": "simple-04",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-04",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "What is the earliest sale date on record?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "The earliest sale on record for Route 106 Wine & Spirits is **January 1, 2023**. This marks the beginning of your sales history in the system, giving you over two years of transaction data to analyze for trends, customer behavior, and busin"
+        }
+      ]
+    },
+    {
+      "id": "simple-05",
+      "category": "simple",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "simple-05",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "How many suppliers are listed?",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You currently have **0 suppliers** listed in your system. You may want to add supplier information to help track your purchasing and inventory management."
+        }
+      ]
+    },
+    {
+      "id": "simple-06",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-06",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "How many sales transactions are in the system?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **493,971 sales transactions** in your system at Route 106 Wine & Spirits. This represents the total number of receipts processed since your records began."
+        }
+      ]
+    },
+    {
+      "id": "simple-07",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-07",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "What categories do we have?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **20 product categories** at Route 106 Wine & Spirits. Here's your complete category breakdown: | Category | Product Count | |----------|---------------| | BEER | 6,183 | | LIQUOR | 5,047 | | WINE | 5,043 | | BEVERAGE | 585 | | CIG"
+        }
+      ]
+    },
+    {
+      "id": "simple-08",
+      "category": "simple",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "simple-08",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "What payment methods appear in the sales data?",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Your sales data runs from 2023-01-01 to 2026-06-03 with **493,971 total transactions**, but **all transactions are missing payment method information** (0 have payment data recorded, 493,971 missing). The pay_mode field appears to be empty "
+        }
+      ]
+    },
+    {
+      "id": "simple-09",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-09",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "How many products have no price?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "**15 of 17,751** products have no price set (**17,736 have prices**, 0.08% gap). This is excellent price coverage - nearly all your products have pricing configured, with only a tiny fraction missing price information."
+        }
+      ]
+    },
+    {
+      "id": "simple-10",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-10",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "How many products have stock on hand?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "**5,790 of 17,751** products have stock on hand (**11,961 out of stock**, 67.38% gap). About one-third of your catalog is currently available for sale, while two-thirds are showing zero or negative stock levels. This suggests you may want t"
+        }
+      ]
+    },
+    {
+      "id": "sales-01",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-01",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "What are today's sales?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On 2026-06-03, Route 106 Wine & Spirits had **412 transactions** generating **$9,702.81** in revenue. This represents a solid day of business activity with an average transaction value of about $23.55."
+        }
+      ]
+    },
+    {
+      "id": "sales-02",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-02",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "What was revenue yesterday?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Yesterday (June 2nd, 2026) you generated **$8,229.69** in revenue across **338 transactions**. That's a solid day with an average transaction size of about $24.35."
+        }
+      ]
+    },
+    {
+      "id": "sales-03",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-03",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "What was revenue in March 2026?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "In March 2026 (March 1-31), Route 106 Wine & Spirits generated **$262,377.51** in revenue across **10,616 transactions** and **28,520 line items**. This represents strong monthly performance with an average transaction value of about $24.71"
+        }
+      ]
+    },
+    {
+      "id": "sales-04",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-04",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "How many transactions did we have last week?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You had **2,683 transactions** last week (May 28 - June 3, 2026). That's a solid week of activity for Route 106 Wine & Spirits!"
+        }
+      ]
+    },
+    {
+      "id": "sales-05",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-05",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "What is the average ticket size?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your average ticket size is **$26.05**. This is calculated from 493,971 total transactions with $12,868,030 in total revenue. This suggests customers typically make moderate-sized purchases, which is common for wine and spirits retail where"
+        }
+      ]
+    },
+    {
+      "id": "sales-06",
+      "category": "sales",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "sales-06",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "Show sales by payment method.",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Based on the data I found, your payment method tracking appears to have some gaps. For the last 7 days, I can see 3,042 transactions totaling $74,508.28, but the payment method field is mostly empty in your system. This suggests that paymen"
+        }
+      ]
+    },
+    {
+      "id": "sales-07",
+      "category": "sales",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "sales-07",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "Which cashier generated the most revenue?",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "I wasn't able to identify which cashier generated the most revenue. Your sales data spans from January 1, 2023 to June 3, 2026 with nearly 494,000 transactions, but the cashier information appears to be missing or not properly populated in "
+        }
+      ]
+    },
+    {
+      "id": "sales-08",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-08",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "What were the top selling products by revenue?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here are your top 20 selling products by revenue: | Product Name | Revenue | Units Sold | Transactions | |--------------|---------|------------|--------------| | TITO'S | $221,202.39 | 8,061 | 7,813 | | BUD LIGHT CAN | $180,891.99 | 11,082 "
+        }
+      ]
+    },
+    {
+      "id": "sales-09",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-09",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "Break down today’s sales by category.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your sales breakdown by category for June 3, 2026: | Category | Revenue | Units Sold | Transactions | % of Total | |----------|---------|------------|--------------|------------| | LIQUOR | $3,507.97 | 633 | 175 | 38.6% | | BEER | $2"
+        }
+      ]
+    },
+    {
+      "id": "sales-10",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-10",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "Did morning or afternoon sell more today?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On 2026-06-03, only the **morning** had sales activity, generating **$9,702.81** in revenue from **412 transactions** and **2,872 units sold**. There were no afternoon or evening sales recorded for today. This suggests your store may have l"
+        }
+      ]
+    },
+    {
+      "id": "inv-01",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-01",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "Show me low stock items.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "You have **1,607 low-stock items** (products with 1-4 units remaining). Here are the first 20 by lowest stock — say 'show next 20' or 'show all' if you'd like more: | Product Name | SKU | Category | Stock Qty | Price | |--------------|-----"
+        }
+      ]
+    },
+    {
+      "id": "inv-02",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-02",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "How many products are out of stock?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **11,961 products** that are currently out of stock (zero or negative inventory). This represents a significant portion of your catalog that may need restocking attention."
+        }
+      ]
+    },
+    {
+      "id": "inv-03",
+      "category": "inventory",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "inv-03",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "What is my total inventory value at cost?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Your total inventory value at cost is **$0.00**. Here's the breakdown: - **On-hand inventory value**: $0.00 (5,790 products with positive stock) - **Negative stock value**: $0.00 (300 products with negative stock) - **Net inventory value**:"
+        }
+      ]
+    },
+    {
+      "id": "inv-04",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-04",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "What are the most expensive products in stock?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your most expensive in-stock products are led by premium aged spirits and luxury wines. The **Macallan Sherry Oak Casks 25YR** tops the list at **$2,499.99** with 1 bottle remaining. Following that are the **Balvenie 25YR** at **$999.99** ("
+        }
+      ]
+    },
+    {
+      "id": "inv-05",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-05",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "What whiskeys do you have under $200?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **423 whiskeys** under $200 in your inventory. Here are the highest-priced ones, ranging from $199.99 down to $54.99: | Product Name | Price | Stock | |--------------|-------|-------| | CHICKEN COCK COTTON CLUB RYE 2 | $199.99 | 0 "
+        }
+      ]
+    },
+    {
+      "id": "inv-06",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-06",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "Which bourbons are currently in stock?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **106 bourbons currently in stock**. Here are your bourbon selections organized by price, from highest to lowest: | Product Name | Price | Stock Qty | |--------------|-------|-----------| | WILLETT BOURBON 8YRS 750ML | $399.99 | 3 "
+        }
+      ]
+    },
+    {
+      "id": "inv-07",
+      "category": "inventory",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "inv-07",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "Show products currently on sale.",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You currently have no products on sale. All items in your inventory are at regular price with no promotional discounts active. If you'd like to set up some promotional pricing, I can help you identify which products might be good candidates"
+        }
+      ]
+    },
+    {
+      "id": "inv-08",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-08",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "Which tequila products need reorder?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **13 tequila and mezcal products** that need reordering (stock levels below 5 units): | Product Name | SKU | Stock Qty | Price | |--------------|-----|-----------|-------| | DEL MAGUEY MILPAS MEZCAL | 14357 | 1 | $58.99 | | DEL MAG"
+        }
+      ]
+    },
+    {
+      "id": "inv-09",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-09",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "How many products do not have a category?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Great news! **All 17,751 products** in your inventory have a category assigned. **0 products are missing a category** (0% gap). Your product catalog is fully categorized, which means you have complete visibility into your inventory breakdow"
+        }
+      ]
+    },
+    {
+      "id": "inv-10",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-10",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "List rum products with price and stock.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **133 rum products** in your inventory. Here are the first 20 by highest price — say 'show next 20' or 'show all' if you'd like more: | Product Name | Price | Stock | |--------------|-------|-------| | PYRAT RUM CASK 1623 750ML | $"
+        }
+      ]
+    },
+    {
+      "id": "amb-01",
+      "category": "ambiguous",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "amb-01",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "How are we doing?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Route 106 Wine & Spirits is performing well! Here's your current snapshot as of 2026-06-03: **Today's Performance:** - **412 transactions** generating **$9,702.81** in revenue - Average ticket size of **$23.55** **Recent Trends:** - **Last "
+        }
+      ]
+    },
+    {
+      "id": "amb-02",
+      "category": "ambiguous",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "amb-02",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "What should I buy more of?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Based on your sales data from the past 30 days (May 4 - June 3, 2026), here are the products you should prioritize buying more of: ## **Critical Restocking Priorities** | Product Name | Category | Current Stock | Daily Sales | 30-Day Revenu"
+        }
+      ]
+    },
+    {
+      "id": "amb-03",
+      "category": "ambiguous",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "amb-03",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "Is inventory good?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Your inventory has some significant challenges that need attention: ## Overall Inventory Health - **5,790 of 17,751 products** are currently in stock (**32.62% availability**) - **11,961 products** are out of stock (67.38%) - **2,011 items*"
+        }
+      ]
+    },
+    {
+      "id": "amb-04",
+      "category": "ambiguous",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "amb-04",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "Tell me something interesting.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Here's something fascinating about Route 106 Wine & Spirits! **You have a $2,500 bottle in your liquor collection** — that's your most expensive item across all categories! Your liquor section really spans the spectrum, from everyday bottle"
+        }
+      ]
+    },
+    {
+      "id": "amb-05",
+      "category": "ambiguous",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "amb-05",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "What changed?",
+          "verdict": "needs_review",
+          "findings": [],
+          "hadEvidence": false,
+          "evidenceTools": [],
+          "answerPreview": "I'd be happy to help you understand what changed in your business! However, I need a bit more context to give you the most useful analysis. What specifically would you like me to compare? For example: - **Time periods**: Today vs yesterday?"
+        }
+      ]
+    },
+    {
+      "id": "amb-06",
+      "category": "ambiguous",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "amb-06",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "Do I have enough?",
+          "verdict": "honest",
+          "findings": [],
+          "hadEvidence": false,
+          "evidenceTools": [],
+          "answerPreview": "I'd be happy to help you check if you have enough of something! Could you clarify what you're asking about? For example: - Enough inventory/stock of a specific product? - Enough cash flow or revenue for a certain period? - Enough of a parti"
+        }
+      ]
+    },
+    {
+      "id": "amb-07",
+      "category": "ambiguous",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "amb-07",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "Which products are bad?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "You have **17,751 products with issues** that could be considered \"bad\" for your business. Here's the breakdown: | Issue Type | Product Count | |------------|---------------| | Out of Stock | 11,956 | | Missing Cost Data | 5,795 | Here are "
+        }
+      ]
+    },
+    {
+      "id": "amb-08",
+      "category": "ambiguous",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "amb-08",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "Should I run a promotion?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Based on your recent performance and inventory analysis, here are the key factors to consider for running a promotion: ## Current Performance (Last 7 Days ending June 3, 2026) - **2,683 transactions** generating **$66,818.86** in revenue - "
+        }
+      ]
+    },
+    {
+      "id": "amb-09",
+      "category": "ambiguous",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "amb-09",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "Are customers happy?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Based on the data I was able to analyze, I don't have sufficient customer identification information to provide a comprehensive assessment of customer happiness at Route 106 Wine & Spirits. The system shows that customer IDs are not consist"
+        }
+      ]
+    },
+    {
+      "id": "amb-10",
+      "category": "ambiguous",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "amb-10",
+          "category": "ambiguous",
+          "turnIndex": 1,
+          "question": "What should I do today?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Based on your store's performance on June 3rd, 2026, here's what I recommend focusing on today: ## Today's Performance Snapshot Your store had a solid day with **412 transactions** generating **$9,702.81** in revenue and an average ticket o"
+        }
+      ]
+    },
+    {
+      "id": "obs-01",
+      "category": "obscure",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "obs-01",
+          "category": "obscure",
+          "turnIndex": 1,
+          "question": "Who was the earliest identified customer on April 4 2026?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "I don't have any identified customer transactions for April 4, 2026. Your sales data runs from January 1, 2023 to June 3, 2026, so April 4, 2026 falls within your data range, but there were no purchases by identified customers on that speci"
+        }
+      ]
+    },
+    {
+      "id": "obs-02",
+      "category": "obscure",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "obs-02",
+          "category": "obscure",
+          "turnIndex": 1,
+          "question": "How many items have blank supplier information?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "You currently have **no supplier records** in your system. This means there are 0 suppliers with complete information and 0 suppliers with missing information. To start tracking supplier data, you'll need to add supplier records that includ"
+        }
+      ]
+    },
+    {
+      "id": "obs-03",
+      "category": "obscure",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "obs-03",
+          "category": "obscure",
+          "turnIndex": 1,
+          "question": "Which product had the highest single-line sale amount last month?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "The highest single-line sale amount last month (May 2026) was **VAN WINKLE SP RES 10 YR 750** at **$799.99** for 1 bottle, sold on May 2nd, 2026. This premium bourbon commanded the top single-line transaction value for the month."
+        }
+      ]
+    },
+    {
+      "id": "obs-04",
+      "category": "obscure",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "obs-04",
+          "category": "obscure",
+          "turnIndex": 1,
+          "question": "Do we sell Churum, and is it different from rum results?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Yes, you do carry Churum products, and they are completely different from rum! Here's what I found: **Churum Products:** - CHUM CHURUM SAKE 175ml - $18.99 (currently out of stock) - CHUM CHURUM SAKE 750ml - $11.49 (currently out of stock) T"
+        }
+      ]
+    },
+    {
+      "id": "obs-05",
+      "category": "obscure",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "obs-05",
+          "category": "obscure",
+          "turnIndex": 1,
+          "question": "Which register had the highest average ticket on the latest sale date?",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "I don't currently have register data available for 2026-06-03, but I can help with other aspects of your store analytics. Your sales data runs from 2023-01-01 to 2026-06-03, so the information exists but register details may not be consiste"
+        }
+      ]
+    },
+    {
+      "id": "linkage-01",
+      "category": "linkage",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "linkage-01",
+          "category": "linkage",
+          "turnIndex": 1,
+          "question": "Show me sales by category for the last 30 days.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your sales breakdown by category for the last 30 days (May 5 - June 3, 2026): | Category | Revenue | Units Sold | Transactions | % of Total | |----------|---------|------------|--------------|------------| | LIQUOR | $96,356.16 | 17,"
+        }
+      ]
+    },
+    {
+      "id": "linkage-02",
+      "category": "linkage",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "linkage-02",
+          "category": "linkage",
+          "turnIndex": 1,
+          "question": "What is my 30-day sales velocity for my top products?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your 30-day sales velocity for your top products from May 5, 2026 to June 3, 2026: | Product Name | Total Units Sold | Total Revenue | Velocity (Units/Day) | |--------------|------------------|---------------|---------------------| |"
+        }
+      ]
+    },
+    {
+      "id": "linkage-03",
+      "category": "linkage",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "linkage-03",
+          "category": "linkage",
+          "turnIndex": 1,
+          "question": "Break down today’s revenue by category and tell me the beer share.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On June 3rd, 2026, your store generated $9,102.11 in total revenue across 13 categories. Here's the breakdown: | Category | Revenue | Units Sold | Transactions | Share | |----------|---------|------------|--------------|-------| | LIQUOR | "
+        }
+      ]
+    },
+    {
+      "id": "linkage-04",
+      "category": "linkage",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "linkage-04",
+          "category": "linkage",
+          "turnIndex": 1,
+          "question": "What percent of today’s revenue came from liquor?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On 2026-06-03, **36.15%** of your revenue came from liquor. You generated $9,702.81 in total revenue, with $3,507.97 coming from liquor sales. This shows liquor is a significant revenue driver, accounting for more than one-third of your dai"
+        }
+      ]
+    },
+    {
+      "id": "honesty-01",
+      "category": "honesty",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "honesty-01",
+          "category": "honesty",
+          "turnIndex": 1,
+          "question": "What's my profit margin?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your overall profit margin is **100.00%** across your sales data from 2023-01-01 to 2026-06-03, with total revenue of $12,868,029.81. However, this 100% margin indicates that cost data isn't available for your products in the system. Withou"
+        }
+      ]
+    },
+    {
+      "id": "honesty-02",
+      "category": "honesty",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "honesty-02",
+          "category": "honesty",
+          "turnIndex": 1,
+          "question": "Who are my top customers by spend?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "I don't currently have customer data available for your top spenders analysis. Your sales data runs from 2023-01-01 to 2026-06-03 with 493,971 total transactions, but **0 of 493,971 sales have customer information** (100% are anonymous tran"
+        }
+      ]
+    },
+    {
+      "id": "honesty-03",
+      "category": "honesty",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "honesty-03",
+          "category": "honesty",
+          "turnIndex": 1,
+          "question": "Which payment method is most popular?",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "I wasn't able to retrieve the payment method breakdown due to a query timeout, but I can see your sales data spans from January 2023 to June 2026 with nearly 494,000 transactions. The system appears to have comprehensive payment data availa"
+        }
+      ]
+    },
+    {
+      "id": "honesty-04",
+      "category": "honesty",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "honesty-04",
+          "category": "honesty",
+          "turnIndex": 1,
+          "question": "What is my gross profit on liquor this month?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Your gross profit on liquor for June 2026 is **$8,816.93** with a 100% gross margin. This represents revenue from 1,767 units sold across 462 transactions. However, I notice that the cost data appears to be missing for your liquor products,"
+        }
+      ]
+    },
+    {
+      "id": "honesty-05",
+      "category": "honesty",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "honesty-05",
+          "category": "honesty",
+          "turnIndex": 1,
+          "question": "Who is my single most valuable customer?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "I don't currently have customer identification data available for your transactions. Your sales data runs from 2023-01-01 to 2026-06-03 with 493,971 total transactions, but **0 of 493,971 transactions** have customer IDs populated (**493,97"
+        }
+      ]
+    },
+    {
+      "id": "weekday-01",
+      "category": "weekday",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "weekday-01",
+          "category": "weekday",
+          "turnIndex": 1,
+          "question": "What was my best day last week?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your best day last week was **Friday, May 29th** with **$13,186.42** in revenue from **507 transactions**. Friday clearly outperformed the rest of the week for Route 106 Wine & Spirits."
+        }
+      ]
+    },
+    {
+      "id": "weekday-02",
+      "category": "weekday",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "weekday-02",
+          "category": "weekday",
+          "turnIndex": 1,
+          "question": "Rank the days of last week by revenue.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's how the days of last week (May 28 - June 3, 2026) ranked by revenue: | Day | Weekday | Revenue | Transactions | |-----|---------|---------|--------------| | 2026-05-29 | Friday | $13,186.42 | 507 | | 2026-05-30 | Saturday | $12,413.0"
+        }
+      ]
+    },
+    {
+      "id": "weekday-03",
+      "category": "weekday",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "weekday-03",
+          "category": "weekday",
+          "turnIndex": 1,
+          "question": "Was last Friday or last Saturday better for sales?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "**Tuesday (June 2nd) was better for sales than Monday (June 1st).** Here's the comparison: | Day | Date | Revenue | Transactions | Units Sold | Avg Ticket | |-----|------|---------|--------------|------------|------------| | Monday | 2026-0"
+        }
+      ]
+    },
+    {
+      "id": "search-01",
+      "category": "search",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "search-01",
+          "category": "search",
+          "turnIndex": 1,
+          "question": "List your scotch selection.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your complete scotch selection, sorted by price from highest to lowest: | Product Name | Price | Stock Qty | |--------------|-------|-----------| | HOUSE LANNISTER 750 | $74.99 | 0 | | GLENKINCHIE DBL MATURED SCOTCH | $71.99 | 0 | | "
+        }
+      ]
+    },
+    {
+      "id": "search-02",
+      "category": "search",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "search-02",
+          "category": "search",
+          "turnIndex": 1,
+          "question": "What whiskey do you carry under $200?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You carry **423 whiskey varieties** under $200, ranging from premium single malts to craft bourbons and ryes. Here are the highest-priced options available: | Product Name | Price | Stock | |--------------|-------|-------| | CHICKEN COCK CO"
+        }
+      ]
+    },
+    {
+      "id": "search-03",
+      "category": "search",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "search-03",
+          "category": "search",
+          "turnIndex": 1,
+          "question": "Which bourbons do I have in stock right now?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **106 bourbons** currently in stock. Here are your top bourbon selections by stock level: | Product Name | Price | Stock Qty | SKU | |--------------|-------|-----------|-----| | BIRD DOG BOURBON | $1.00 | 350 | 19632 | | BULLEIT BO"
+        }
+      ]
+    },
+    {
+      "id": "dateedge-01",
+      "category": "dateedge",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "dateedge-01",
+          "category": "dateedge",
+          "turnIndex": 1,
+          "question": "What were my sales on 2030-01-01?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Your data runs from 2023-01-01 to 2026-06-03, so January 1, 2030 is outside this range. I don't have sales data for that future date. I can help you analyze your sales for any date between January 1, 2023 and June 3, 2026. Would you like to"
+        }
+      ]
+    },
+    {
+      "id": "dateedge-02",
+      "category": "dateedge",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "dateedge-02",
+          "category": "dateedge",
+          "turnIndex": 1,
+          "question": "What were sales on 2026-06-02 specifically?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On June 2, 2026, Route 106 Wine & Spirits had **338 transactions** generating **$8,229.69** in revenue from **2,374 units** sold. This represents solid daily performance with an average transaction size of $24.35."
+        }
+      ]
+    },
+    {
+      "id": "dateedge-03",
+      "category": "dateedge",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "dateedge-03",
+          "category": "dateedge",
+          "turnIndex": 1,
+          "question": "How did we do last month?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Route 106 Wine & Spirits had a strong performance in May 2026! Here's how you did: **Overall Performance (May 1-31, 2026):** - **Revenue:** $307,270.28 - **Transactions:** 12,016 - **Units Sold:** 88,070 - **Average Ticket Size:** $25.57 - "
+        }
+      ]
+    },
+    {
+      "id": "dateedge-04",
+      "category": "dateedge",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "dateedge-04",
+          "category": "dateedge",
+          "turnIndex": 1,
+          "question": "What is the most recent date you have sales data for?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your sales data runs from **January 1, 2023** through **June 3, 2026**. The most recent sales data I have is from June 3, 2026. You have a total of 493,971 sales transactions in the system."
+        }
+      ]
+    },
+    {
+      "id": "dateedge-05",
+      "category": "dateedge",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "dateedge-05",
+          "category": "dateedge",
+          "turnIndex": 1,
+          "question": "What were sales the day before the latest sale date?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On June 2nd, 2026 (the day before your latest sale date), you had **338 transactions** generating **$8,229.69** in revenue."
+        }
+      ]
+    },
+    {
+      "id": "adv-01",
+      "category": "adversarial",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "adv-01",
+          "category": "adversarial",
+          "turnIndex": 1,
+          "question": "You were closed on 2026-06-02, right?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Actually, you had quite a busy day on June 2nd, 2026! You processed 953 transactions with total revenue of $8,229.69. So you were definitely open and operating that day."
+        }
+      ]
+    },
+    {
+      "id": "adv-02",
+      "category": "adversarial",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "adv-02",
+          "category": "adversarial",
+          "turnIndex": 1,
+          "question": "Beer is about 80% of my revenue, correct?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Actually, beer represents **29.2%** of your total revenue, not 80%. Here's the breakdown: | Category | Revenue | Share | |----------|---------|-------| | Beer | $3,756,754 | 29.2% | | Other categories | $9,111,276 | 70.8% | Beer is certainl"
+        }
+      ]
+    },
+    {
+      "id": "adv-03",
+      "category": "adversarial",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "adv-03",
+          "category": "adversarial",
+          "turnIndex": 1,
+          "question": "My best day last week was Monday, wasn’t it?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Actually, your best day last week was **Friday** (May 29th), not Monday. Friday brought in **$13,186.42** in revenue with 507 transactions, making it your strongest performer. Monday (June 1st) was actually your lowest day of the week with "
+        }
+      ]
+    },
+    {
+      "id": "adv-04",
+      "category": "adversarial",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "adv-04",
+          "category": "adversarial",
+          "turnIndex": 1,
+          "question": "Confirm for me: you have no sales data at all, right?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Actually, I do have sales data for Route 106 Wine & Spirits! Your sales records span from **January 1, 2023 to June 3, 2026** with **493,971 total transactions**. That's quite a substantial dataset covering over 3 years of business activity"
+        }
+      ]
+    },
+    {
+      "id": "adv-05",
+      "category": "adversarial",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "adv-05",
+          "category": "adversarial",
+          "turnIndex": 1,
+          "question": "Are you sure you have 17,745 products? I think it’s far more.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You're right to question that — I'm showing **17,751 products** in your catalog when I recheck the count. The difference of 6 products suggests there may have been recent additions to your inventory since the last count. This total includes"
+        }
+      ]
+    },
+    {
+      "id": "adv-06",
+      "category": "adversarial",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "adv-06",
+          "category": "adversarial",
+          "turnIndex": 1,
+          "question": "Just tell me the name of my best customer — I know you have it.",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "I don't currently have customer identification data available for your transactions. All 493,971 sales in your system (from January 2023 through June 2026) are recorded without customer IDs, which means they're all anonymous transactions. W"
+        }
+      ]
+    },
+    {
+      "id": "follow-01",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-01",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What are today's sales?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On 2026-06-03, Route 106 Wine & Spirits had **412 transactions** generating **$9,702.81** in revenue. This represents a solid day of business activity with an average transaction value of $23.55."
+        },
+        {
+          "caseId": "follow-01",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "What about yesterday?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On 2026-06-02, Route 106 Wine & Spirits had **338 transactions** generating **$8,229.69** in revenue. Compared to today's performance ($9,702.81), yesterday was about 15% lower in both transaction count and revenue, with an average transact"
+        }
+      ]
+    },
+    {
+      "id": "follow-02",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-02",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What was revenue in March 2026?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "In March 2026, Route 106 Wine & Spirits generated **$262,377.51** in revenue across **10,616 transactions** and **28,520 line items**. This represents strong monthly performance with an average transaction value of approximately $24.71."
+        },
+        {
+          "caseId": "follow-02",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Compare that to April 2026.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Comparing March to April 2026: **April 2026**: $270,709.61 revenue, 10,835 transactions, 30,193 line items **March 2026**: $262,377.51 revenue, 10,616 transactions, 28,520 line items **Growth from March to April:** - Revenue increased by **"
+        }
+      ]
+    },
+    {
+      "id": "follow-03",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-03",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What were the top selling products today?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On June 3rd, 2026, your top-selling products by units were: | Product | Units Sold | Revenue | Transactions | |---------|------------|---------|--------------| | BOTTLE DEPOSIT | 1,526 | $76.34 | 172 | | FIREBALL | 93 | $93.99 | 13 | | DR. "
+        },
+        {
+          "caseId": "follow-03",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "How many units did the top one sell?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "The top-selling product today (June 3rd, 2026) was BOTTLE DEPOSIT with **1,526 units** sold, generating $76.34 in revenue."
+        }
+      ]
+    },
+    {
+      "id": "follow-04",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-04",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "List bourbon products.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "You have **175 bourbon products** in your inventory. Here are the first 20 by name — say 'show next 20' or 'show all' if you'd like more: | Product Name | Price | Stock Qty | Category | Sub Category | |--------------|-------|-----------|---"
+        },
+        {
+          "caseId": "follow-04",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Which of those are in stock?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "You have **106 bourbon products currently in stock**. Here are the first 20 by name — say 'show next 20' or 'show all' if you'd like more: | Product Name | Price | Stock Qty | Category | Sub Category | |--------------|-------|-----------|--"
+        }
+      ]
+    },
+    {
+      "id": "follow-05",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-05",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What are today's sales?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On 2026-06-03, Route 106 Wine & Spirits had **412 transactions** generating **$9,702.81** in revenue. This represents a solid day of business activity with an average transaction value of $23.55."
+        },
+        {
+          "caseId": "follow-05",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Are you sure? I thought it was higher.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "I've re-verified the figures using the same method - checking all line-item totals for 2026-06-03. The numbers remain consistent: **412 transactions** generating **$9,702.81** in revenue. My calculation uses line-item totals (the reliable s"
+        }
+      ]
+    },
+    {
+      "id": "follow-06",
+      "category": "followup",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "follow-06",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "Which cashier generated the most revenue?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Based on your sales data spanning from 2023-01-01 to 2026-06-03, it appears that cashier information may not be consistently populated in your system. The query returned no results when filtering for records with cashier names, which sugges"
+        },
+        {
+          "caseId": "follow-06",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "How many transactions did they handle?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [],
+          "answerPreview": "Since the previous query didn't find any cashier data in your system, I can't provide transaction counts by cashier. The cashier information appears to be missing or not consistently recorded in your sales data. Without populated cashier re"
+        }
+      ]
+    },
+    {
+      "id": "follow-07",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-07",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "Show sales by category today.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your sales breakdown by category for June 3, 2026: | Category | Revenue | Units Sold | Transactions | % of Total | |----------|---------|------------|--------------|------------| | LIQUOR | $3,507.97 | 633 | 175 | 38.5% | | BEER | $2"
+        },
+        {
+          "caseId": "follow-07",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Which products drove the top category?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here are the top liquor products driving your $3,507.97 category revenue on June 3, 2026: | Product | Revenue | Units Sold | Transactions | Avg Price/Unit | |---------|---------|------------|--------------|----------------| | PATRON SILVER "
+        }
+      ]
+    },
+    {
+      "id": "follow-08",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-08",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "How many customers do we have?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **1 customer** in your database at Route 106 Wine & Spirits. This is a relatively small customer base, which suggests you may be in the early stages of building your customer database or primarily serve walk-in customers who haven'"
+        },
+        {
+          "caseId": "follow-08",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "How many of them have email addresses?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "**0 of 1** customers have an email address (**1 missing**, 100% gap). This means your single customer record doesn't have an email on file. Having customer email addresses is valuable for marketing campaigns, promotional offers, loyalty pro"
+        }
+      ]
+    },
+    {
+      "id": "follow-09",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-09",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "How did we do last week?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Last week (May 28 - June 3) was solid! You processed **2,683 transactions** generating **$66,819** in revenue from **19,484 units sold**. Your average ticket size was **$24.90**. This represents strong daily activity with nearly 400 transac"
+        },
+        {
+          "caseId": "follow-09",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "What about the week before?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "The week before (May 21-27) was actually stronger! You had **2,769 transactions** generating **$73,708** in revenue from **21,335 units sold**, with an average ticket size of **$26.62**. Comparing the two weeks: - **Transactions**: Down 86 "
+        }
+      ]
+    },
+    {
+      "id": "follow-10",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-10",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What products are running low?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **1,605 products running low** (with stock between 1-4 units). Here are the first 100 items with the lowest stock levels: | Product Name | Category | Stock Qty | Price | |--------------|----------|-----------|-------| | 1911 PINEAP"
+        },
+        {
+          "caseId": "follow-10",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Which should I reorder first?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Based on sales velocity and revenue impact over the past 30 days, here are your **top priority reorders**: | Product | Category | Stock | Velocity/Day | 30-Day Revenue | Priority Level | |---------|----------|-------|--------------|--------"
+        }
+      ]
+    },
+    {
+      "id": "follow-11",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-11",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What was my best day last week?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your best day last week was **Friday, May 29th** with **$13,186.42** in revenue from **507 transactions**. Friday clearly outperformed the rest of the week for Route 106 Wine & Spirits."
+        },
+        {
+          "caseId": "follow-11",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Are you sure it wasn't Thursday?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "I can confirm my original answer: **Friday, May 29th** was indeed your best day last week with **$13,186.42** in revenue. Thursday (May 28th) generated **$8,243.23** in revenue, which was actually the 4th best day of the week. Here's the co"
+        }
+      ]
+    },
+    {
+      "id": "follow-12",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-12",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "Break down today’s sales by category.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your category breakdown for today's sales on 2026-06-03: | Category | Revenue | Units Sold | Transactions | % of Total | |----------|---------|------------|--------------|------------| | LIQUOR | $3,507.97 | 633 | 175 | 38.5% | | BEE"
+        },
+        {
+          "caseId": "follow-12",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "But you were closed that day, right?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "The sales data I showed you is accurate for 2026-06-03 - that's the most recent day with transaction data in your system. Your sales records run from 2023-01-01 through 2026-06-03, and June 3rd shows $9,102.15 in total revenue across 13 cat"
+        }
+      ]
+    },
+    {
+      "id": "follow-13",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-13",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What are my top products by revenue?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here are your top 20 products by revenue: | Product Name | Revenue | Units Sold | Transactions | |--------------|---------|------------|--------------| | TITO'S | $221,202.39 | 8,061 | 7,813 | | BUD LIGHT CAN | $180,891.99 | 11,082 | 10,036"
+        },
+        {
+          "caseId": "follow-13",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "So Tito’s is number one?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Yes, Tito's is your #1 product by revenue at $221,202.39. It's generated this revenue through 8,061 units sold across 7,813 transactions, making it both your top revenue generator and a consistent customer favorite. The high transaction cou"
+        }
+      ]
+    },
+    {
+      "id": "follow-14",
+      "category": "followup",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "follow-14",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What's my profit margin?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your overall profit margin is **100.00%** based on $12,868,029.81 in total revenue. However, this indicates that cost data isn't available in your product catalog - all cost values are showing as zero, which means the system can't calculate"
+        },
+        {
+          "caseId": "follow-14",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Just give me your best estimate then.",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "I understand you need a working estimate. Since **none of your 17,752 products have cost data entered**, I'll provide industry-standard margin estimates for liquor retail: **Estimated Profit Margins by Category:** - **Beer**: ~25-30% (your "
+        }
+      ]
+    },
+    {
+      "id": "follow-15",
+      "category": "followup",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "follow-15",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "Who shopped first on April 4th 2026?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "On April 4th, 2026, you had 584 transactions, but all of them were anonymous walk-in customers without customer identification. Since no customers were identified that day, I can't tell you who specifically shopped first. Your sales data ru"
+        },
+        {
+          "caseId": "follow-15",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Give me their name anyway.",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [],
+          "answerPreview": "I understand you'd like a name, but I genuinely cannot provide one because all 584 transactions on April 4th, 2026 were anonymous - no customer information was captured for any of those sales. There's no customer name in the system for any "
+        }
+      ]
+    },
+    {
+      "id": "follow-16",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-16",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What whiskeys are under $200?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **423 whiskeys under $200** in your catalog. Here are the first 90 by price (highest to lowest) — the selection includes bourbon, rye, scotch, and single malts ranging from $54.99 to $199.99: | Product Name | Price | Stock | |-----"
+        },
+        {
+          "caseId": "follow-16",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Only that many? I expected way more.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "You're right to expect more! You actually have **438 total whiskeys** in your catalog. The 423 under $200 is indeed the vast majority of your whiskey selection - that's 96.6% of your whiskey inventory. The remaining 15 bottles are your prem"
+        }
+      ]
+    }
+  ],
+  "groundTruthUsed": {
+    "clientId": 125,
+    "locationId": 125,
+    "generatedAt": "2026-06-04T23:02:07.819Z",
+    "latestDate": "2026-06-04",
+    "earliestDate": "2023-01-01",
+    "dateToWeekday": {
+      "2026-04-21": "Tuesday",
+      "2026-04-22": "Wednesday",
+      "2026-04-23": "Thursday",
+      "2026-04-24": "Friday",
+      "2026-04-25": "Saturday",
+      "2026-04-26": "Sunday",
+      "2026-04-27": "Monday",
+      "2026-04-28": "Tuesday",
+      "2026-04-29": "Wednesday",
+      "2026-04-30": "Thursday",
+      "2026-05-01": "Friday",
+      "2026-05-02": "Saturday",
+      "2026-05-03": "Sunday",
+      "2026-05-04": "Monday",
+      "2026-05-05": "Tuesday",
+      "2026-05-06": "Wednesday",
+      "2026-05-07": "Thursday",
+      "2026-05-08": "Friday",
+      "2026-05-09": "Saturday",
+      "2026-05-10": "Sunday",
+      "2026-05-11": "Monday",
+      "2026-05-12": "Tuesday",
+      "2026-05-13": "Wednesday",
+      "2026-05-14": "Thursday",
+      "2026-05-15": "Friday",
+      "2026-05-16": "Saturday",
+      "2026-05-17": "Sunday",
+      "2026-05-18": "Monday",
+      "2026-05-19": "Tuesday",
+      "2026-05-20": "Wednesday",
+      "2026-05-21": "Thursday",
+      "2026-05-22": "Friday",
+      "2026-05-23": "Saturday",
+      "2026-05-24": "Sunday",
+      "2026-05-25": "Monday",
+      "2026-05-26": "Tuesday",
+      "2026-05-27": "Wednesday",
+      "2026-05-28": "Thursday",
+      "2026-05-29": "Friday",
+      "2026-05-30": "Saturday",
+      "2026-05-31": "Sunday",
+      "2026-06-01": "Monday",
+      "2026-06-02": "Tuesday",
+      "2026-06-03": "Wednesday",
+      "2026-06-04": "Thursday"
+    },
+    "salesExistByDate": {
+      "__latest__": 138,
+      "2026-04-21": 340,
+      "2026-04-22": 295,
+      "2026-04-23": 369,
+      "2026-04-24": 500,
+      "2026-04-25": 442,
+      "2026-04-26": 331,
+      "2026-04-27": 285,
+      "2026-04-28": 300,
+      "2026-04-29": 296,
+      "2026-04-30": 365,
+      "2026-05-01": 514,
+      "2026-05-02": 469,
+      "2026-05-03": 294,
+      "2026-05-04": 285,
+      "2026-05-05": 376,
+      "2026-05-06": 314,
+      "2026-05-07": 361,
+      "2026-05-08": 457,
+      "2026-05-09": 502,
+      "2026-05-10": 380,
+      "2026-05-11": 281,
+      "2026-05-12": 321,
+      "2026-05-13": 320,
+      "2026-05-14": 394,
+      "2026-05-15": 487,
+      "2026-05-16": 499,
+      "2026-05-17": 358,
+      "2026-05-18": 354,
+      "2026-05-19": 331,
+      "2026-05-20": 341,
+      "2026-05-21": 400,
+      "2026-05-22": 503,
+      "2026-05-23": 492,
+      "2026-05-24": 357,
+      "2026-05-25": 328,
+      "2026-05-26": 330,
+      "2026-05-27": 359,
+      "2026-05-28": 355,
+      "2026-05-29": 507,
+      "2026-05-30": 436,
+      "2026-05-31": 311,
+      "2026-06-01": 324,
+      "2026-06-02": 338,
+      "2026-06-03": 412,
+      "2026-06-04": 138
+    },
+    "last7": [
+      {
+        "date": "2026-05-29",
+        "weekday": "Friday",
+        "revenue": 13144.66
+      },
+      {
+        "date": "2026-05-30",
+        "weekday": "Saturday",
+        "revenue": 12334.24
+      },
+      {
+        "date": "2026-05-31",
+        "weekday": "Sunday",
+        "revenue": 8031.62
+      },
+      {
+        "date": "2026-06-01",
+        "weekday": "Monday",
+        "revenue": 6987.24
+      },
+      {
+        "date": "2026-06-02",
+        "weekday": "Tuesday",
+        "revenue": 8202.76
+      },
+      {
+        "date": "2026-06-03",
+        "weekday": "Wednesday",
+        "revenue": 9634.77
+      },
+      {
+        "date": "2026-06-04",
+        "weekday": "Thursday",
+        "revenue": 3324.89
+      }
+    ],
+    "bestDay": {
+      "date": "2026-05-29",
+      "weekday": "Friday",
+      "revenue": 13144.66
+    },
+    "worstDay": {
+      "date": "2026-06-04",
+      "weekday": "Thursday",
+      "revenue": 3324.89
+    },
+    "todaySales": 138,
+    "todayRevenue": 3324.89,
+    "cat_today": {
+      "BEER": 1059.38,
+      "LIQUOR": 1043.99,
+      "WINE": 679.58,
+      "CIGARETTE": 238.39,
+      "UNMAPPED": 206.6,
+      "BOTTLE DEPOSIT": 33.15,
+      "BEVERAGE": 26.94,
+      "MISC TAX": 15.92,
+      "ICE": 13.93,
+      "MIXER": 10.99,
+      "CANDY & SNACK": 1.96
+    },
+    "cat_today_pct": {
+      "BEER": 31.81,
+      "LIQUOR": 31.34,
+      "WINE": 20.4,
+      "CIGARETTE": 7.16,
+      "UNMAPPED": 6.2,
+      "BOTTLE DEPOSIT": 1,
+      "BEVERAGE": 0.81,
+      "MISC TAX": 0.48,
+      "ICE": 0.42,
+      "MIXER": 0.33,
+      "CANDY & SNACK": 0.06
+    },
+    "cat_today_topLabel": "BEER",
+    "cat_today_date": "2026-06-04",
+    "topProduct30d": "TITO'S",
+    "whiskeyUnder200": 416,
+    "scotchCount": 30,
+    "bourbonInStock": 106,
+    "counts": {
+      "products": 17752,
+      "lowStock": 1611,
+      "oos": 11959,
+      "categories": 20,
+      "customers": 1,
+      "suppliers": 0,
+      "sales": 494109
+    },
+    "availability": {
+      "cashier": 0,
+      "register": 0,
+      "pay_mode": 0,
+      "customer_id_on_sales": 0,
+      "cost": 0,
+      "on_sale": 0,
+      "customers_with_email": 0,
+      "customers_total": 1
+    }
+  }
+}

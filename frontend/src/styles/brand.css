@@ -1,0 +1,539 @@
+/* =============================================================================
+   BOTELLA - BRAND SYSTEM  (bx- prefix)
+   -----------------------------------------------------------------------------
+   The design foundation for the public marketing site: tokens, typography,
+   grid, buttons, section primitives and motion. Everything the new homepage
+   and the refreshed content pages build on.
+
+   Register: enterprise-editorial. Violet-cast ink + cool paper (#F3F0FB) + one
+   signature accent - Botella Violet - flanked by fuchsia and cyan for data,
+   with jade held back purely for "live" status. Alternating light and dark
+   sections give the page the same "shift of register" category-leader sites
+   use to separate narrative from proof.
+
+   This file also re-maps the LEGACY `.lp-*` variables used by the SEO content
+   pages onto the new palette, so the whole public site moves together without
+   rewriting every content page. The `html .lp` selector is one point more
+   specific than the original `.lp` rule, so it wins regardless of import order.
+   ============================================================================= */
+
+:root {
+  /* -- Ink (dark register) ------------------------------------------- */
+  /* The dark register is BLACK, not violet-ink. Purple is the accent, white is
+     the type, and the ground stays neutral as it is raised - see app-theme.css,
+     which the signed-in product reads. */
+  --bx-ink-950: #000000;
+  --bx-ink-900: #000000;
+  --bx-ink-800: #0A0A0C;
+  --bx-ink-700: #121215;
+  --bx-ink-600: #24242B;
+
+  /* -- Paper (light register) - the warm base the brand started from -- */
+  --bx-paper-50: #FBFAFE;
+  --bx-paper-100: #F3F0FB;   /* brand base, cooled toward the accent */
+  --bx-paper-200: #E8E3F6;
+  --bx-paper-300: #D9D2ED;
+
+  /* -- Signature accents ---------------------------------------------
+     Violet is the signature. Fuchsia and cyan flank it so data and status read
+     apart without leaving the family; jade is held back for one job only -
+     "live / in production". These are the DARK-register cuts. */
+  --bx-violet: #B79CFF;      /* the signature       8.3:1 on ink */
+  --bx-violet-soft: #D6BBFF;
+  --bx-fuchsia: #F58BC6;     /* 7.5:1 on a raised ink card */
+  --bx-cyan: #56CCF2;        /* 9.3:1 on ink */
+  --bx-jade: #2FBF97;        /* 8.6:1 on ink - status only */
+  --bx-plum: #C4A6FF;
+
+  /* Two gradients, because they do different jobs.
+     SIGNATURE fills buttons and always carries WHITE text, so every stop is
+     deep enough to clear AA (5.4:1 at its lightest point).
+     DISPLAY paints large headline type through background-clip, so it can be
+     as luminous as the register allows - and it flips per theme, because a
+     gradient tuned for ink is all but invisible on paper. */
+  --bx-grad-signature: linear-gradient(104deg, #7C3AED 0%, #6D28D9 52%, #9333EA 100%);
+  --bx-grad-display: linear-gradient(104deg, #F0ABFC 0%, #C4A6FF 46%, #8B9DFF 100%);
+  --bx-grad-cool: linear-gradient(104deg, #38BDF8 0%, #7C3AED 100%);
+
+  /* -- Semantic (DARK is the default register) ----------------------- */
+  --bx-bg: var(--bx-ink-900);
+  --bx-bg-alt: var(--bx-ink-800);
+  --bx-surface: rgba(255, 255, 255, 0.035);
+  --bx-surface-2: rgba(255, 255, 255, 0.06);
+  --bx-border: rgba(255, 255, 255, 0.11);
+  --bx-border-strong: rgba(255, 255, 255, 0.19);
+  --bx-text: #FFFFFF;
+  --bx-text-2: #C8C8D0;
+  --bx-muted: #90909C;
+  --bx-accent: #B79CFF;
+  --bx-accent-ink: #0B0B0E;
+  --bx-shadow: 0 24px 70px -30px rgba(0, 0, 0, 0.85);
+  --bx-shadow-sm: 0 10px 30px -18px rgba(0, 0, 0, 0.8);
+
+  /* -- Type ----------------------------------------------------------- */
+  /* TWO faces carry the whole product: the display cut for anything that is a
+     name, a number or a label, the body cut for prose. The signed-in app draws
+     on these same two tokens (see app-theme.css), so a KPI label in the
+     dashboard and an eyebrow on the marketing page are set in the same type.
+
+     `--bx-font-mono` is kept as an ALIAS onto the display face rather than
+     deleted: it is named at ~27 call sites, all of them small uppercase
+     letterspaced LABELS (eyebrows, nav pills, footer captions) - none of them
+     code, and none of them needing character-cell alignment. Pointing the token
+     at the display face retires the third face in one edit without touching
+     every rule that referenced it. Genuine code (the store agent's SQL panes)
+     names a monospace stack directly and is unaffected. */
+  --bx-font-display: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --bx-font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --bx-font-editorial: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --bx-font-mono: var(--bx-font-display);
+
+  /* Fluid scale - everything keys off the viewport so there is exactly one
+     type ramp from 360px to 1600px, no breakpoint-by-breakpoint overrides. */
+  --bx-t-display: clamp(2.9rem, 7.4vw, 6.6rem);
+  --bx-t-h1: clamp(2.4rem, 5.4vw, 4.6rem);
+  --bx-t-h2: clamp(1.9rem, 3.6vw, 3.25rem);
+  --bx-t-h3: clamp(1.25rem, 1.9vw, 1.7rem);
+  --bx-t-lead: clamp(1.05rem, 1.35vw, 1.32rem);
+  --bx-t-body: 1rem;
+  --bx-t-small: 0.875rem;
+  --bx-t-label: 0.72rem;
+
+  /* -- Space / grid --------------------------------------------------- */
+  --bx-gutter: clamp(20px, 5vw, 68px);
+  --bx-max: 1320px;
+  --bx-max-narrow: 960px;
+  --bx-sec-y: clamp(72px, 9vw, 148px);
+  --bx-radius: 18px;
+  --bx-radius-sm: 12px;
+  --bx-radius-lg: 28px;
+
+  --bx-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --bx-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* -- LIGHT REGISTER ---------------------------------------------------- */
+[data-theme="light"] {
+  --bx-bg: #FBFAFE;
+  --bx-bg-alt: #F3F0FB;
+  --bx-surface: #FFFFFF;
+  --bx-surface-2: #F3F0FB;
+  --bx-border: rgba(46, 16, 101, 0.13);
+  --bx-border-strong: rgba(46, 16, 101, 0.24);
+  --bx-text: #0C0814;
+  --bx-text-2: #3B3550;
+  /* The accent family is re-cut for the light register. The luminous dark-mode
+     violets sit at 2-3:1 on paper, which fails AA for the small mono labels
+     and inline links that carry them. These deeper cuts all clear 5.4:1 on
+     both #FBFAFE and #FFFFFF while reading as the same family. */
+  --bx-violet: #6D28D9;
+  --bx-violet-soft: #8B5CF6;
+  --bx-accent: #6D28D9;              /* 6.7:1 on paper, 6.4:1 on white */
+  --bx-accent-ink: #FFFFFF;
+  --bx-jade: #15795C;                /* 5.1:1 / 5.3:1 - status only */
+  --bx-cyan: #0369A1;                /* 5.4:1 / 5.7:1 */
+  --bx-fuchsia: #BE185D;             /* 5.8:1 / 6.1:1 */
+  --bx-plum: #7C3AED;                /* 5.4:1 / 5.8:1 */
+  --bx-grad-display: linear-gradient(104deg, #A21CAF 0%, #6D28D9 48%, #4338CA 100%);
+  --bx-muted: #524B66;               /* 7.0:1 on cream; clears AA on the
+                                        tinted legacy card surfaces too */
+  --bx-shadow: 0 30px 70px -40px rgba(38, 16, 66, 0.40);
+  --bx-shadow-sm: 0 12px 30px -20px rgba(38, 16, 66, 0.34);
+}
+
+/* =============================================================================
+   LEGACY BRIDGE - re-skin the existing `.lp-*` content pages
+   ============================================================================= */
+html .lp {
+  --lp-bg: var(--bx-bg);
+  --lp-card: var(--bx-surface);
+  --lp-border: var(--bx-border);
+  --lp-accent: var(--bx-accent);
+  --lp-accent-light: var(--bx-violet-soft);
+  --lp-accent-glow: rgba(167, 139, 250, 0.18);
+  --lp-text: var(--bx-text);
+  --lp-muted: var(--bx-muted);
+  --lp-secondary: var(--bx-text-2);
+  font-family: var(--bx-font-body);
+}
+/* The legacy light-theme block is written as `[data-theme="light"] .lp`, which
+   out-ranks the `html .lp` bridge above. This selector is one point more
+   specific again, so the light register maps through the same tokens. */
+html[data-theme="light"] .lp {
+  --lp-bg: var(--bx-bg);
+  --lp-card: var(--bx-surface);
+  --lp-border: var(--bx-border);
+  --lp-accent: var(--bx-accent);
+  --lp-text: var(--bx-text);
+  --lp-muted: var(--bx-muted);
+  --lp-secondary: var(--bx-text-2);
+  --lp-accent-glow: rgba(109, 40, 217, 0.14);
+  /* In the light register the "light" accent has to go DARKER, not lighter -
+     legacy CSS uses it for hover states and chip text on white. */
+  --lp-accent-light: #581C87;
+}
+
+/* Safety net: several legacy anchors (footer legal bar, inline article links)
+   never had a colour of their own and were falling back to the browser default
+   link blue on the content pages. Zero-specificity `:where()` means this can
+   never out-rank a real component rule. */
+html :where(.lp) :where(a) { color: inherit; }
+
+/* The old dot-grid texture reads as noise against the new palette - soften it
+   right down so the cream / ink surfaces stay clean. */
+html .lp::before { opacity: 0.4; }
+
+/* Content pages inherit the new display face for headings. */
+html .lp h1, html .lp h2, html .lp h3,
+html .cp h1, html .cp h2, html .cp h3 {
+  font-family: var(--bx-font-display);
+  letter-spacing: -0.028em;
+}
+html .lp h1 i, html .lp h2 i,
+html .cp h1 i, html .cp h2 i {
+  font-family: var(--bx-font-editorial);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--bx-accent);
+}
+
+/* =============================================================================
+   PRIMITIVES
+   ============================================================================= */
+
+.bx {
+  background: var(--bx-bg);
+  color: var(--bx-text);
+  font-family: var(--bx-font-body);
+  font-size: var(--bx-t-body);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
+  overflow-x: clip;
+}
+/* `:where()` contributes zero specificity, so this default never out-ranks the
+   component classes below (.bx-link, .bx-btn-*, .sf-col a ...). Without it a
+   plain `.bx a` rule would beat every single-class colour rule on an anchor. */
+.bx :where(a) { text-decoration: none; color: inherit; }
+.bx img { max-width: 100%; }
+.bx ::selection { background: var(--bx-accent); color: var(--bx-accent-ink); }
+
+.bx-wrap {
+  width: 100%;
+  max-width: var(--bx-max);
+  margin: 0 auto;
+  padding-inline: var(--bx-gutter);
+}
+.bx-wrap-narrow { max-width: var(--bx-max-narrow); }
+
+/* Section shells - the two registers the page alternates between. */
+.bx-sec {
+  position: relative;
+  padding-block: var(--bx-sec-y);
+}
+.bx-sec-dark {
+  background: var(--bx-ink-950);
+  color: #FFFFFF;
+  --bx-text: #FFFFFF;
+  --bx-text-2: #C8C8D0;
+  --bx-muted: #90909C;
+  --bx-surface: rgba(255, 255, 255, 0.04);
+  --bx-surface-2: rgba(255, 255, 255, 0.07);
+  --bx-border: rgba(255, 255, 255, 0.11);
+  --bx-border-strong: rgba(255, 255, 255, 0.2);
+  /* Dark sections restore the luminous cuts - they clear AA against ink. */
+  --bx-accent: #B79CFF;
+  --bx-accent-ink: #0C0814;
+  --bx-violet: #B79CFF;
+  --bx-violet-soft: #D6BBFF;
+  --bx-jade: #2FBF97;
+  --bx-cyan: #56CCF2;
+  --bx-fuchsia: #F58BC6;
+  --bx-plum: #C4A6FF;
+  --bx-grad-display: linear-gradient(104deg, #F0ABFC 0%, #C4A6FF 46%, #8B9DFF 100%);
+}
+.bx-sec-tint { background: var(--bx-bg-alt); }
+
+/* -- Eyebrow / kicker -------------------------------------------------- */
+.bx-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--bx-font-mono);
+  font-size: var(--bx-t-label);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bx-accent);
+  margin-bottom: 22px;
+}
+.bx-eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+}
+
+/* -- Headings ---------------------------------------------------------- */
+.bx-display,
+.bx-h1,
+.bx-h2,
+.bx-h3 {
+  font-family: var(--bx-font-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  margin: 0;
+  text-wrap: balance;
+}
+.bx-display { font-size: var(--bx-t-display); }
+.bx-h1 { font-size: var(--bx-t-h1); }
+.bx-h2 { font-size: var(--bx-t-h2); line-height: 1.06; }
+.bx-h3 {
+  font-size: var(--bx-t-h3);
+  line-height: 1.25;
+  letter-spacing: -0.022em;
+}
+
+/* Editorial emphasis - the one place the serif appears. Used sparingly and
+   always at large sizes, which keeps it feeling authored, not decorative. */
+.bx-em {
+  font-family: var(--bx-font-editorial);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  background: var(--bx-grad-display);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  padding-right: 0.06em;
+}
+
+.bx-lead {
+  font-size: var(--bx-t-lead);
+  line-height: 1.55;
+  color: var(--bx-text-2);
+  max-width: 62ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+.bx-muted { color: var(--bx-muted); }
+
+/* -- Buttons ----------------------------------------------------------- */
+.bx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--bx-font-body);
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  padding: 15px 26px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.32s var(--bx-ease), background 0.24s ease,
+              border-color 0.24s ease, color 0.24s ease, box-shadow 0.32s var(--bx-ease);
+}
+.bx-btn:hover { transform: translateY(-2px); }
+.bx-btn:active { transform: translateY(0); }
+
+.bx-btn-primary {
+  background: var(--bx-grad-signature);
+  color: #FFFFFF;
+  box-shadow: 0 12px 34px -14px rgba(124, 58, 237, 0.9),
+              0 0 0 1px rgba(196, 166, 255, 0.22) inset;
+}
+.bx-btn-primary:hover {
+  box-shadow: 0 22px 52px -14px rgba(147, 51, 234, 0.95),
+              0 0 0 1px rgba(240, 171, 252, 0.35) inset;
+}
+
+.bx-btn-ghost {
+  background: transparent;
+  color: var(--bx-text);
+  border-color: var(--bx-border-strong);
+}
+.bx-btn-ghost:hover {
+  background: var(--bx-surface-2);
+  border-color: var(--bx-accent);
+}
+
+.bx-btn-ink {
+  background: var(--bx-text);
+  color: var(--bx-bg);
+}
+
+.bx-btn-sm { padding: 11px 20px; font-size: 0.86rem; }
+
+/* Text link with a travelling arrow. */
+.bx-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--bx-accent);
+}
+.bx-link .bx-link-arrow {
+  transition: transform 0.34s var(--bx-ease);
+  display: inline-block;
+}
+.bx-link:hover .bx-link-arrow { transform: translateX(5px); }
+
+/* -- Rules & meta ------------------------------------------------------ */
+.bx-rule {
+  height: 1px;
+  border: 0;
+  background: var(--bx-border);
+  margin: 0;
+}
+.bx-mono {
+  font-family: var(--bx-font-mono);
+  font-size: var(--bx-t-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bx-muted);
+}
+
+/* -- Cards ------------------------------------------------------------- */
+.bx-card {
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
+  padding: clamp(22px, 2.4vw, 34px);
+  transition: border-color 0.3s ease, background 0.3s ease,
+              transform 0.4s var(--bx-ease), box-shadow 0.4s var(--bx-ease);
+}
+.bx-card:hover {
+  border-color: var(--bx-border-strong);
+  transform: translateY(-4px);
+  box-shadow: var(--bx-shadow-sm);
+}
+
+/* -- Badges / pills ---------------------------------------------------- */
+.bx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--bx-border);
+  background: var(--bx-surface);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--bx-text-2);
+  transition: border-color 0.24s ease, color 0.24s ease, background 0.24s ease;
+}
+.bx-pill:hover {
+  border-color: var(--bx-accent);
+  color: var(--bx-text);
+}
+.bx-pill-live {
+  color: var(--bx-jade);
+  border-color: rgba(31, 163, 126, 0.4);
+  background: rgba(31, 163, 126, 0.1);
+}
+.bx-pill-soon { color: var(--bx-muted); }
+
+.bx-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex: none;
+}
+.bx-dot-pulse { animation: bx-pulse 2.4s var(--bx-ease-in-out) infinite; }
+@keyframes bx-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.72); }
+}
+
+/* =============================================================================
+   MOTION - scroll reveals. Purposeful only: one rise-and-fade, staggered.
+   ============================================================================= */
+.bx-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.85s var(--bx-ease), transform 0.85s var(--bx-ease);
+  transition-delay: var(--bx-delay, 0s);
+  will-change: opacity, transform;
+}
+.bx-reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero load sequence - plays once, on mount, without waiting for scroll. */
+@keyframes bx-rise {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: none; }
+}
+.bx-rise {
+  opacity: 0;
+  animation: bx-rise 1s var(--bx-ease) forwards;
+  animation-delay: var(--bx-delay, 0s);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bx-reveal,
+  .bx-rise {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+  .bx *,
+  .bx *::before,
+  .bx *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* =============================================================================
+   ACCESSIBILITY
+   ============================================================================= */
+.bx :focus-visible,
+.lp :focus-visible {
+  outline: 2px solid var(--bx-accent, #B79CFF);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.bx [tabindex="-1"]:focus { outline: none; }
+
+/* Skip-to-content link. global.css also defines `.skip-link` at the same
+   specificity; scoping to `html body` here makes this the single winner so the
+   two rules cannot merge into a half-positioned element over the hero. */
+html body a.skip-link {
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: auto;
+  transform: translateY(-120%);
+  z-index: 10001;
+  background: var(--bx-violet);
+  color: #FFFFFF;
+  font-family: var(--bx-font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 12px 22px;
+  border-radius: 0 0 12px 0;
+  box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s var(--bx-ease);
+}
+html body a.skip-link:focus,
+html body a.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid #FFFFFF;
+  outline-offset: -4px;
+}

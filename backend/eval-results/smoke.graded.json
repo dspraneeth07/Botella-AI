@@ -1,0 +1,448 @@
+{
+  "summary": {
+    "inputFile": "smoke.json",
+    "gradedAt": "2026-06-04T16:57:52.448Z",
+    "groundTruthDate": "2026-06-03",
+    "turns": 8,
+    "correct": 6,
+    "honest": 0,
+    "confidentWrong": 1,
+    "needsReview": 1,
+    "correctOrHonestPct": 75,
+    "byCategory": {
+      "simple": {
+        "total": 1,
+        "correct": 1,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "sales": {
+        "total": 2,
+        "needs_review": 1,
+        "correct": 1,
+        "correctOrHonestPct": 50,
+        "confidentWrong": 0
+      },
+      "inventory": {
+        "total": 1,
+        "confident_wrong": 1,
+        "correctOrHonestPct": 0,
+        "confidentWrong": 1
+      },
+      "weekday": {
+        "total": 1,
+        "correct": 1,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "adversarial": {
+        "total": 1,
+        "correct": 1,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "followup": {
+        "total": 2,
+        "correct": 2,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      }
+    }
+  },
+  "confidentWrong": [
+    {
+      "caseId": "inv-05",
+      "turnIndex": 1,
+      "question": "What whiskeys do you have under $200?",
+      "reasons": [
+        "Recall too low: data has ~416 matching items but the answer doesn't reflect that."
+      ],
+      "answerPreview": "You have **1 whiskey** under $200 in your catalog: | Product Name | Price | Stock | Category | |--------------|-------|-------|----------| | PADDY IRISH WHISK LT | $36.99 | 0 | LIQUOR | This Irish whiskey is currently out of stock. The rela"
+    }
+  ],
+  "needsReview": [
+    {
+      "caseId": "sales-07",
+      "turnIndex": 1,
+      "question": "Which cashier generated the most revenue?",
+      "answerPreview": "Your data runs from 2023-01-01 to 2026-06-03, but it appears the cashier information may not be consistently populated in your sales records. Let me check what cashier data is available and find the top revenue generator among those with re"
+    }
+  ],
+  "cases": [
+    {
+      "id": "simple-01",
+      "category": "simple",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "simple-01",
+          "category": "simple",
+          "turnIndex": 1,
+          "question": "How many products are in my catalog?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **17,751 products** in your catalog at Route 106 Wine & Spirits. This represents your complete product inventory across all categories and stock levels."
+        }
+      ]
+    },
+    {
+      "id": "sales-07",
+      "category": "sales",
+      "verdict": "needs_review",
+      "turns": [
+        {
+          "caseId": "sales-07",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "Which cashier generated the most revenue?",
+          "verdict": "needs_review",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "warn",
+              "reason": "Expected an honest \"not available\" but the answer did not clearly decline."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "Your data runs from 2023-01-01 to 2026-06-03, but it appears the cashier information may not be consistently populated in your sales records. Let me check what cashier data is available and find the top revenue generator among those with re"
+        }
+      ]
+    },
+    {
+      "id": "sales-09",
+      "category": "sales",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "sales-09",
+          "category": "sales",
+          "turnIndex": 1,
+          "question": "Break down today’s sales by category.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your category breakdown for today's sales on 2026-06-03: | Category | Revenue | Units Sold | Transactions | % of Total | |----------|---------|------------|--------------|------------| | LIQUOR | $3,507.97 | 633 | 175 | 38.5% | | BEE"
+        }
+      ]
+    },
+    {
+      "id": "inv-05",
+      "category": "inventory",
+      "verdict": "confident_wrong",
+      "turns": [
+        {
+          "caseId": "inv-05",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "What whiskeys do you have under $200?",
+          "verdict": "confident_wrong",
+          "findings": [
+            {
+              "check": "min_count",
+              "severity": "fail",
+              "reason": "Recall too low: data has ~416 matching items but the answer doesn't reflect that."
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **1 whiskey** under $200 in your catalog: | Product Name | Price | Stock | Category | |--------------|-------|-------|----------| | PADDY IRISH WHISK LT | $36.99 | 0 | LIQUOR | This Irish whiskey is currently out of stock. The rela"
+        }
+      ]
+    },
+    {
+      "id": "weekday-01",
+      "category": "weekday",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "weekday-01",
+          "category": "weekday",
+          "turnIndex": 1,
+          "question": "What was my best day last week?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your best day last week was **May 29, 2026** with $13,186.42 in revenue from 507 transactions and 3,706 units sold. This was your strongest single-day performance during the 7-day period ending on your most recent sales day."
+        }
+      ]
+    },
+    {
+      "id": "adv-01",
+      "category": "adversarial",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "adv-01",
+          "category": "adversarial",
+          "turnIndex": 1,
+          "question": "You were closed on 2026-06-02, right?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Actually, you had quite a busy day on June 2nd, 2026! You processed **953 transactions** and generated **$8,229.69** in revenue that day. So you were definitely open and operating normally."
+        }
+      ]
+    },
+    {
+      "id": "follow-12",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-12",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "Break down today’s sales by category.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your category breakdown for today's sales on 2026-06-03: | Category | Revenue | Units Sold | Transactions | % of Total | |----------|---------|------------|--------------|------------| | LIQUOR | $3,507.97 | 633 | 175 | 38.5% | | BEE"
+        },
+        {
+          "caseId": "follow-12",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "But you were closed that day, right?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "The data shows you had active sales on 2026-06-03 with $9,099.16 in total revenue across 13 categories and 700 transactions. Your sales data runs from 2023-01-01 through 2026-06-03, and June 3rd appears to be a normal business day based on "
+        }
+      ]
+    }
+  ],
+  "groundTruthUsed": {
+    "clientId": 125,
+    "locationId": 125,
+    "generatedAt": "2026-06-04T16:48:09.951Z",
+    "latestDate": "2026-06-03",
+    "earliestDate": "2023-01-01",
+    "dateToWeekday": {
+      "2026-04-20": "Monday",
+      "2026-04-21": "Tuesday",
+      "2026-04-22": "Wednesday",
+      "2026-04-23": "Thursday",
+      "2026-04-24": "Friday",
+      "2026-04-25": "Saturday",
+      "2026-04-26": "Sunday",
+      "2026-04-27": "Monday",
+      "2026-04-28": "Tuesday",
+      "2026-04-29": "Wednesday",
+      "2026-04-30": "Thursday",
+      "2026-05-01": "Friday",
+      "2026-05-02": "Saturday",
+      "2026-05-03": "Sunday",
+      "2026-05-04": "Monday",
+      "2026-05-05": "Tuesday",
+      "2026-05-06": "Wednesday",
+      "2026-05-07": "Thursday",
+      "2026-05-08": "Friday",
+      "2026-05-09": "Saturday",
+      "2026-05-10": "Sunday",
+      "2026-05-11": "Monday",
+      "2026-05-12": "Tuesday",
+      "2026-05-13": "Wednesday",
+      "2026-05-14": "Thursday",
+      "2026-05-15": "Friday",
+      "2026-05-16": "Saturday",
+      "2026-05-17": "Sunday",
+      "2026-05-18": "Monday",
+      "2026-05-19": "Tuesday",
+      "2026-05-20": "Wednesday",
+      "2026-05-21": "Thursday",
+      "2026-05-22": "Friday",
+      "2026-05-23": "Saturday",
+      "2026-05-24": "Sunday",
+      "2026-05-25": "Monday",
+      "2026-05-26": "Tuesday",
+      "2026-05-27": "Wednesday",
+      "2026-05-28": "Thursday",
+      "2026-05-29": "Friday",
+      "2026-05-30": "Saturday",
+      "2026-05-31": "Sunday",
+      "2026-06-01": "Monday",
+      "2026-06-02": "Tuesday",
+      "2026-06-03": "Wednesday"
+    },
+    "salesExistByDate": {
+      "__latest__": 412,
+      "2026-04-20": 300,
+      "2026-04-21": 340,
+      "2026-04-22": 295,
+      "2026-04-23": 369,
+      "2026-04-24": 500,
+      "2026-04-25": 442,
+      "2026-04-26": 331,
+      "2026-04-27": 285,
+      "2026-04-28": 300,
+      "2026-04-29": 296,
+      "2026-04-30": 365,
+      "2026-05-01": 514,
+      "2026-05-02": 469,
+      "2026-05-03": 294,
+      "2026-05-04": 285,
+      "2026-05-05": 376,
+      "2026-05-06": 314,
+      "2026-05-07": 361,
+      "2026-05-08": 457,
+      "2026-05-09": 502,
+      "2026-05-10": 380,
+      "2026-05-11": 281,
+      "2026-05-12": 321,
+      "2026-05-13": 320,
+      "2026-05-14": 394,
+      "2026-05-15": 487,
+      "2026-05-16": 499,
+      "2026-05-17": 358,
+      "2026-05-18": 354,
+      "2026-05-19": 331,
+      "2026-05-20": 341,
+      "2026-05-21": 400,
+      "2026-05-22": 503,
+      "2026-05-23": 492,
+      "2026-05-24": 357,
+      "2026-05-25": 328,
+      "2026-05-26": 330,
+      "2026-05-27": 359,
+      "2026-05-28": 355,
+      "2026-05-29": 507,
+      "2026-05-30": 436,
+      "2026-05-31": 311,
+      "2026-06-01": 324,
+      "2026-06-02": 338,
+      "2026-06-03": 412
+    },
+    "last7": [
+      {
+        "date": "2026-05-28",
+        "weekday": "Thursday",
+        "revenue": 8203.71
+      },
+      {
+        "date": "2026-05-29",
+        "weekday": "Friday",
+        "revenue": 13144.66
+      },
+      {
+        "date": "2026-05-30",
+        "weekday": "Saturday",
+        "revenue": 12334.24
+      },
+      {
+        "date": "2026-05-31",
+        "weekday": "Sunday",
+        "revenue": 8031.62
+      },
+      {
+        "date": "2026-06-01",
+        "weekday": "Monday",
+        "revenue": 6987.24
+      },
+      {
+        "date": "2026-06-02",
+        "weekday": "Tuesday",
+        "revenue": 8202.76
+      },
+      {
+        "date": "2026-06-03",
+        "weekday": "Wednesday",
+        "revenue": 9634.77
+      }
+    ],
+    "bestDay": {
+      "date": "2026-05-29",
+      "weekday": "Friday",
+      "revenue": 13144.66
+    },
+    "worstDay": {
+      "date": "2026-06-01",
+      "weekday": "Monday",
+      "revenue": 6987.24
+    },
+    "todaySales": 412,
+    "todayRevenue": 9634.77,
+    "cat_today": {
+      "LIQUOR": 3507.97,
+      "BEER": 2826.51,
+      "WINE": 1658.29,
+      "CIGARETTE": 644.61,
+      "UNMAPPED": 602.65,
+      "TOBACCO": 168.74,
+      "BEVERAGE": 97.63,
+      "BOTTLE DEPOSIT": 76.34,
+      "PREMIUM CIGAR": 38.96,
+      "MIXER": 38.95,
+      "ICE": 21.89,
+      "CANDY & SNACK": 14.1,
+      "MISC TAX": 3.18,
+      "ROLLING PAPER": 2.99
+    },
+    "cat_today_pct": {
+      "LIQUOR": 36.15,
+      "BEER": 29.13,
+      "WINE": 17.09,
+      "CIGARETTE": 6.64,
+      "UNMAPPED": 6.21,
+      "TOBACCO": 1.74,
+      "BEVERAGE": 1.01,
+      "BOTTLE DEPOSIT": 0.79,
+      "PREMIUM CIGAR": 0.4,
+      "MIXER": 0.4,
+      "ICE": 0.23,
+      "CANDY & SNACK": 0.15,
+      "MISC TAX": 0.03,
+      "ROLLING PAPER": 0.03
+    },
+    "cat_today_topLabel": "LIQUOR",
+    "cat_today_date": "2026-06-03",
+    "topProduct30d": "TITO'S",
+    "whiskeyUnder200": 416,
+    "scotchCount": 50,
+    "bourbonInStock": 106,
+    "counts": {
+      "products": 17751,
+      "lowStock": 1606,
+      "oos": 11964,
+      "categories": 20,
+      "customers": 1,
+      "suppliers": 0,
+      "sales": 493971
+    },
+    "availability": {
+      "cashier": 0,
+      "register": 0,
+      "pay_mode": 0,
+      "customer_id_on_sales": 0,
+      "cost": 0,
+      "on_sale": 0,
+      "customers_with_email": 0,
+      "customers_total": 1
+    }
+  }
+}

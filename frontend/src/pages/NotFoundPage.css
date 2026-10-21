@@ -1,0 +1,280 @@
+/* ============================================
+   NOT FOUND PAGE - 404 (nfp- prefix)
+   Rendered for any URL that doesn't match a known
+   route. Wrapped in ContentLayout so it shares the
+   SiteHeader + SiteFooter chrome with the rest of
+   the public site.
+   ============================================ */
+
+.nfp {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 0 16px;
+  text-align: center;
+  animation: nfp-fade-in 0.35s ease both;
+}
+
+@keyframes nfp-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Giant gradient "404" - visual anchor of the page. Uses the same
+   indigo→purple gradient as the brand wordmark so the page feels
+   on-brand instead of looking like a generic browser error. */
+.nfp-code {
+  font-family: var(--bx-font-body);
+  font-size: clamp(120px, 22vw, 220px);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -8px;
+  margin: 0 0 12px;
+  background: linear-gradient(135deg, #D6BBFF, #F472B6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+[data-theme="light"] .nfp-code {
+  background: linear-gradient(135deg, #6D28D9, #86198F);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nfp-title {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 700;
+  letter-spacing: -1px;
+  color: var(--lp-text);
+  margin: 0 0 16px;
+}
+
+.nfp-msg {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--lp-secondary);
+  max-width: 580px;
+  margin: 0 auto 32px;
+}
+
+.nfp-path {
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-family: var(--bx-font-display);
+  font-size: 13.5px;
+  color: var(--lp-accent-light);
+  word-break: break-all;
+}
+
+[data-theme="light"] .nfp-path {
+  background: #f3f4f6;
+  color: var(--lp-accent);
+}
+
+/* Primary + secondary CTAs */
+.nfp-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+
+.nfp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 24px;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+  font-family: var(--bx-font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.05s,
+              border-color 0.15s, color 0.15s;
+  border: 1px solid transparent;
+}
+
+.nfp-btn:active {
+  transform: translateY(1px);
+}
+
+.nfp-btn-primary {
+  background: var(--lp-accent);
+  color: #fff !important;
+}
+
+.nfp-btn-primary:hover {
+  background: var(--lp-accent-light);
+  box-shadow: 0 4px 22px var(--lp-accent-glow);
+}
+
+.nfp-btn-secondary {
+  background: transparent;
+  border-color: var(--lp-border);
+  color: var(--lp-text);
+}
+
+.nfp-btn-secondary:hover {
+  border-color: var(--lp-accent);
+  background: var(--lp-accent-glow);
+  color: var(--lp-accent-light);
+}
+
+[data-theme="light"] .nfp-btn-secondary:hover {
+  color: var(--lp-accent);
+}
+
+/* Suggestions section */
+.nfp-suggestions {
+  margin-top: 16px;
+  text-align: left;
+}
+
+.nfp-suggestions-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--lp-muted);
+  margin: 0 0 18px;
+  text-align: center;
+}
+
+.nfp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.nfp-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.18s, transform 0.18s, background 0.18s,
+              box-shadow 0.18s;
+}
+
+.nfp-card:hover {
+  border-color: var(--lp-accent);
+  transform: translateY(-2px);
+  background: var(--lp-card);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .nfp-card {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .nfp-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.nfp-card-em {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  font-size: 22px;
+  border-radius: 10px;
+  background: var(--lp-accent-glow);
+  flex-shrink: 0;
+}
+
+.nfp-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.nfp-card-body strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--lp-text);
+  line-height: 1.25;
+}
+
+.nfp-card-body em {
+  display: block;
+  font-style: normal;
+  font-size: 12px;
+  color: var(--lp-muted);
+  line-height: 1.3;
+}
+
+.nfp-card-arrow {
+  font-size: 16px;
+  color: var(--lp-muted);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.18s, transform 0.18s, color 0.18s;
+  flex-shrink: 0;
+}
+
+.nfp-card:hover .nfp-card-arrow {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--lp-accent-light);
+}
+
+/* "Still stuck?" footer line */
+.nfp-help {
+  margin-top: 40px;
+  font-size: 13.5px;
+  color: var(--lp-muted);
+  text-align: center;
+}
+
+.nfp-help a {
+  color: var(--lp-accent-light);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--lp-accent);
+  padding-bottom: 1px;
+  transition: color 0.15s;
+}
+
+.nfp-help a:hover {
+  color: var(--lp-text);
+}
+
+[data-theme="light"] .nfp-help a {
+  color: var(--lp-accent);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .nfp { padding: 16px 0; }
+  .nfp-grid { grid-template-columns: 1fr; }
+  .nfp-actions { gap: 10px; }
+  .nfp-btn { padding: 10px 18px; font-size: 14px; }
+  .nfp-code { letter-spacing: -5px; }
+}
+
+@media (max-width: 420px) {
+  .nfp-msg { font-size: 14.5px; }
+  .nfp-path {
+    display: inline-block;
+    margin-top: 4px;
+    max-width: 100%;
+  }
+}

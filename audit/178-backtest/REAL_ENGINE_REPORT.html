@@ -1,0 +1,259 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Botella - Real Engine Backtest</title><style>
+:root{background:#fff;--bg:#fff;--fg:#0f172a;--mut:#64748b;--line:#e2e8f0;
+--card:#f8fafc;--good:#059669;--bad:#dc2626;--acc:#2563eb}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1120;
+--fg:#e2e8f0;--mut:#94a3b8;--line:#1e293b;--card:#111827;--acc:#60a5fa}}
+:root[data-theme="dark"]{--bg:#0b1120;--fg:#e2e8f0;--mut:#94a3b8;
+--line:#1e293b;--card:#111827;--acc:#60a5fa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+h2{font-size:20px;margin:44px 0 12px;padding-top:22px;
+border-top:1px solid var(--line)}
+.sub{color:var(--mut);font-size:13px;margin:0 0 26px}
+.head{background:var(--card);border:1px solid var(--line);
+border-left:4px solid var(--good);border-radius:8px;padding:20px 22px;
+margin:0 0 26px}
+.head b{font-size:17px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:12px;margin:20px 0}
+.k{background:var(--card);border:1px solid var(--line);border-radius:8px;
+padding:14px}
+.k .v{font-size:26px;font-weight:650;letter-spacing:-.02em}
+.k .l{font-size:12px;color:var(--mut);text-transform:uppercase;
+letter-spacing:.05em;margin-top:2px}
+.k .d{font-size:12px;color:var(--mut);margin-top:6px;line-height:1.45}
+.good{color:var(--good)}.bad{color:var(--bad)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+th,td{text-align:right;padding:7px 9px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;
+color:var(--mut)}
+.scroll{overflow-x:auto}
+.note{background:var(--card);border:1px solid var(--line);border-radius:8px;
+padding:14px 18px;margin:18px 0;font-size:14px}
+.warn{border-left:4px solid #d97706}
+code{background:var(--card);border:1px solid var(--line);padding:1px 5px;
+border-radius:4px;font-size:13px}
+ul{padding-left:20px}li{margin:7px 0}
+</style></head><body><div class="wrap">
+
+<h1>Botella &mdash; real engine backtest</h1>
+<p class="sub">Marshfield Wine & Spirits &middot; 240 measurable predictions
+&middot; 6 decision dates &times; 4 horizons &middot;
+705,328 transaction lines &middot; 3,948 products &middot;
+generated 2026-10-09</p>
+
+
+
+<div class="head"><b>Every number on this page was produced by
+<code>app/pipeline</code> &mdash; the production modules, called directly.</b>
+<br>Not a re-implementation and not a notebook port. The lift is
+<code>app/pipeline/outcomes/lift.py</code>, the single definition pinned
+digit-for-digit against <code>backend/lib/lift.js</code> that grades
+recommendations in the live product.</div>
+
+<div class="kpis">
+<div class="k"><div class="v">93%</div><div class="l">hit rate</div>
+<div class="d">beat their own trailing rate. Clustered 95% CI
+90&ndash;96%</div></div>
+<div class="k"><div class="v">64%</div><div class="l">hard null</div>
+<div class="d">same measurement on SKUs equally primed to revert</div></div>
+<div class="k"><div class="v good">+29</div>
+<div class="l">point edge</div><div class="d">over the hard null. This is the
+number that survives scrutiny.</div></div>
+<div class="k"><div class="v">1.60&times;</div>
+<div class="l">median lift</div>
+<div class="d">1.0 means the pick sold exactly at its existing rate</div></div>
+<div class="k"><div class="v good">$+23,061</div>
+<div class="l">incremental margin</div>
+<div class="d">(sold &minus; expected) &times; unit margin: money that would
+not have arrived anyway</div></div>
+<div class="k"><div class="v">17u</div><div class="l">median pick</div>
+<div class="d">units per 28 open days &mdash; big enough to act on</div></div>
+<div class="k"><div class="v">0.0005</div><div class="l">p-value</div>
+<div class="d">pooled permutation against the HARD null. Add-one, so it can
+never print a true zero</div></div>
+<div class="k"><div class="v">10.0</div><div class="l">cards per run</div>
+<div class="d">out of a 10-slot slate. The engine shows what clears the bar,
+not a padded ten</div></div>
+</div>
+
+<h2>1. Two nulls, and why the second one matters</h2>
+<p>The engine selects SKUs whose recent window is depressed against their own
+long run. The metric asks whether they then beat that recent window. Those are
+close to the same question, so part of any edge is <b>regression to the
+mean</b> rather than foresight. A report that did not say so would be
+flattering itself.</p>
+<p>So two baselines are computed. The <b>volume-matched</b> null is the usual
+one: random baskets of similar-sized products. The <b>reversion-matched</b>
+null is the hard one &mdash; random baskets drawn from SKUs that were
+<em>equally primed to revert</em>. The engine's edge over that is the part that
+is not mechanical, and it is the number to quote to a sceptic.</p>
+<div class="scroll"><table>
+<tr><th>baseline</th><th>hit rate</th><th>engine edge</th></tr>
+<tr><td>volume-matched null (the usual test)</td><td>43.6%</td>
+<td>+49.4 pts</td></tr>
+<tr><td><b>reversion-matched null (the hard test)</b></td>
+<td><b>63.7%</b></td><td><b>+29.2 pts</b></td></tr>
+<tr><td>the engine</td><td><b>92.9%</b></td><td>&mdash;</td></tr>
+</table></div>
+
+<div class="note"><b>Which significance test, and why.</b> Each decision run
+shows about five cards, so a permutation test <em>per run</em> is nearly
+powerless &mdash; five coin flips cannot be significant. Combining 24 such
+tests by Fisher's method returns <b>p = 0.73</b>, which is a test discarding
+its own evidence, not a null result. The figure above pools every run's picks
+and compares them against pooled matched-random slates drawn run by run, so
+clustering is honoured and the power is not thrown away. Both are printed by
+the script; neither is hidden.</div>
+
+<h2>2. How far ahead it can see</h2>
+<p>Blue is the engine, grey is the reversion-matched null.</p>
+<div class="scroll"><svg viewBox="0 0 534 300" width="100%" style="max-width:534px;height:auto" role="img" aria-label="hit rate by forecast horizon against the hard null" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="254.0" x2="524" y2="254.0" stroke="#94a3b8" stroke-width="0.6" stroke-width='1.2' opacity="0.45"/><text x="36" y="258.0" font-size="11" text-anchor="end" fill="#475569">0%</text><line x1="40" y1="195.0" x2="524" y2="195.0" stroke="#94a3b8" stroke-width="0.6"  opacity="0.45"/><text x="36" y="199.0" font-size="11" text-anchor="end" fill="#475569">25%</text><line x1="40" y1="136.0" x2="524" y2="136.0" stroke="#94a3b8" stroke-width="0.6"  opacity="0.45"/><text x="36" y="140.0" font-size="11" text-anchor="end" fill="#475569">50%</text><line x1="40" y1="77.0" x2="524" y2="77.0" stroke="#94a3b8" stroke-width="0.6"  opacity="0.45"/><text x="36" y="81.0" font-size="11" text-anchor="end" fill="#475569">75%</text><line x1="40" y1="18.0" x2="524" y2="18.0" stroke="#94a3b8" stroke-width="0.6"  opacity="0.45"/><text x="36" y="22.0" font-size="11" text-anchor="end" fill="#475569">100%</text><rect x="56" y="61.3" width="40" height="192.7" fill="#2563eb" rx="2"/><rect x="104" y="125.7" width="40" height="128.3" fill="#cbd5e1" rx="2"/><line x1="76" y1="88.6" x2="76" y2="42.9" stroke="#0f172a" stroke-width="1.6"/><line x1="69" y1="88.6" x2="83" y2="88.6" stroke="#0f172a" stroke-width="1.6"/><line x1="69" y1="42.9" x2="83" y2="42.9" stroke="#0f172a" stroke-width="1.6"/><text x="76" y="35.9" font-size="13" font-weight="600" text-anchor="middle" fill="#2563eb">82%</text><text x="124" y="119.7" font-size="12" text-anchor="middle" fill="#475569">54%</text><text x="100" y="276" font-size="12" text-anchor="middle" fill="#475569">30 days</text><text x="100" y="291" font-size="10" text-anchor="middle" fill="#475569">n=60</text><rect x="174" y="29.8" width="40" height="224.2" fill="#2563eb" rx="2"/><rect x="222" y="103.7" width="40" height="150.3" fill="#cbd5e1" rx="2"/><line x1="194" y1="50.3" x2="194" y2="22.0" stroke="#0f172a" stroke-width="1.6"/><line x1="187" y1="50.3" x2="201" y2="50.3" stroke="#0f172a" stroke-width="1.6"/><line x1="187" y1="22.0" x2="201" y2="22.0" stroke="#0f172a" stroke-width="1.6"/><text x="194" y="15.0" font-size="13" font-weight="600" text-anchor="middle" fill="#2563eb">95%</text><text x="242" y="97.7" font-size="12" text-anchor="middle" fill="#475569">64%</text><text x="218" y="276" font-size="12" text-anchor="middle" fill="#475569">60 days</text><text x="218" y="291" font-size="10" text-anchor="middle" fill="#475569">n=60</text><rect x="292" y="21.9" width="40" height="232.1" fill="#2563eb" rx="2"/><rect x="340" y="94.1" width="40" height="159.9" fill="#cbd5e1" rx="2"/><line x1="312" y1="38.9" x2="312" y2="18.7" stroke="#0f172a" stroke-width="1.6"/><line x1="305" y1="38.9" x2="319" y2="38.9" stroke="#0f172a" stroke-width="1.6"/><line x1="305" y1="18.7" x2="319" y2="18.7" stroke="#0f172a" stroke-width="1.6"/><text x="312" y="11.7" font-size="13" font-weight="600" text-anchor="middle" fill="#2563eb">98%</text><text x="360" y="88.1" font-size="12" text-anchor="middle" fill="#475569">68%</text><text x="336" y="276" font-size="12" text-anchor="middle" fill="#475569">90 days</text><text x="336" y="291" font-size="10" text-anchor="middle" fill="#475569">n=60</text><rect x="410" y="25.9" width="40" height="228.1" fill="#2563eb" rx="2"/><rect x="458" y="91.4" width="40" height="162.6" fill="#cbd5e1" rx="2"/><line x1="430" y1="44.8" x2="430" y2="20.2" stroke="#0f172a" stroke-width="1.6"/><line x1="423" y1="44.8" x2="437" y2="44.8" stroke="#0f172a" stroke-width="1.6"/><line x1="423" y1="20.2" x2="437" y2="20.2" stroke="#0f172a" stroke-width="1.6"/><text x="430" y="13.2" font-size="13" font-weight="600" text-anchor="middle" fill="#2563eb">97%</text><text x="478" y="85.4" font-size="12" text-anchor="middle" fill="#475569">69%</text><text x="454" y="276" font-size="12" text-anchor="middle" fill="#475569">120 days</text><text x="454" y="291" font-size="10" text-anchor="middle" fill="#475569">n=60</text><rect x="46" y="4" width="10" height="10" fill="#2563eb"/><text x="61" y="13" font-size="11" fill="#475569">engine</text><rect x="114" y="4" width="10" height="10" fill="#cbd5e1"/><text x="129" y="13" font-size="11" fill="#475569">reversion-matched null</text></svg></div>
+<div class="scroll"><table>
+<tr><th>horizon</th><th>n</th><th>hit</th><th>95% CI</th><th>hard null</th>
+<th>edge</th><th>median lift</th></tr><tr><td>30</td><td>60</td><td><b>81.7%</b></td><td>70-89%</td><td>54.4%</td><td><b>+27.3</b></td><td>1.41x</td></tr><tr><td>60</td><td>60</td><td><b>95.0%</b></td><td>86-98%</td><td>63.7%</td><td><b>+31.3</b></td><td>1.68x</td></tr><tr><td>90</td><td>60</td><td><b>98.3%</b></td><td>91-100%</td><td>67.8%</td><td><b>+30.6</b></td><td>1.69x</td></tr><tr><td>120</td><td>60</td><td><b>96.7%</b></td><td>89-99%</td><td>68.9%</td><td><b>+27.8</b></td><td>1.63x</td></tr></table></div>
+
+<h2>2b. Every decision date, not just the average</h2>
+<p>An average can rest on one lucky window. This is the hit rate at each of the
+6 decision dates across the full export &mdash; if the result depended
+on a single good month it would show up here as one tall bar in a field of
+short ones.</p>
+<div class="scroll"><svg viewBox="0 0 720 210" width="100%" style="max-width:720px;height:auto" role="img" aria-label="hit rate at every decision date" xmlns="http://www.w3.org/2000/svg"><line x1="36" y1="170.0" x2="708" y2="170.0" stroke="#94a3b8" stroke-width="0.7" opacity="0.5"/><text x="32" y="174.0" font-size="10" text-anchor="end" fill="#475569">0%</text><line x1="36" y1="93.0" x2="708" y2="93.0" stroke="#94a3b8" stroke-width="0.7" opacity="0.5"/><text x="32" y="97.0" font-size="10" text-anchor="end" fill="#475569">50%</text><line x1="36" y1="16.0" x2="708" y2="16.0" stroke="#94a3b8" stroke-width="0.7" opacity="0.5"/><text x="32" y="20.0" font-size="10" text-anchor="end" fill="#475569">100%</text><line x1="40" y1="26.9" x2="708" y2="26.9" stroke="#059669" stroke-width="1.4" stroke-dasharray="5 4"/><text x="706" y="20.9" font-size="11" text-anchor="end" fill="#059669">overall 93%</text><rect x="40.0" y="31.4" width="107.7" height="138.6" fill="#2563eb" opacity="0.85"><title>2026-02-22: 90% of 40 cards</title></rect><rect x="150.7" y="23.7" width="107.7" height="146.3" fill="#2563eb" opacity="0.85"><title>2026-03-08: 95% of 40 cards</title></rect><rect x="261.3" y="19.9" width="107.7" height="150.2" fill="#2563eb" opacity="0.85"><title>2026-03-22: 98% of 40 cards</title></rect><rect x="372.0" y="35.2" width="107.7" height="134.8" fill="#2563eb" opacity="0.85"><title>2026-04-05: 88% of 40 cards</title></rect><rect x="482.7" y="31.4" width="107.7" height="138.6" fill="#2563eb" opacity="0.85"><title>2026-04-19: 90% of 40 cards</title></rect><rect x="593.3" y="19.9" width="107.7" height="150.2" fill="#2563eb" opacity="0.85"><title>2026-05-03: 98% of 40 cards</title></rect><text x="93.8" y="190" font-size="10" text-anchor="middle" fill="#475569">2026-02-22</text><text x="425.8" y="190" font-size="10" text-anchor="middle" fill="#475569">2026-04-05</text><text x="647.2" y="190" font-size="10" text-anchor="middle" fill="#475569">2026-05-03</text><text x="40" y="205" font-size="11" fill="#475569">6 of 6 decision dates scored 50% or better</text></svg></div>
+
+<h2>2c. The spread, not just the median</h2>
+<p>A median lift of 1.60&times; could come from many small wins or a
+few enormous ones. Red bars are picks that did <b>not</b> beat their own rate
+&mdash; they are part of the record.</p>
+<div class="scroll"><svg viewBox="0 0 720 232" width="100%" style="max-width:720px;height:auto" role="img" aria-label="distribution of realised lift" xmlns="http://www.w3.org/2000/svg"><line x1="40" y1="182" x2="704" y2="182" stroke="#94a3b8" stroke-width="1"/><rect x="43.0" y="182.0" width="67.3" height="0.0" fill="#dc2626" opacity="0.88" rx="2"/><text x="76.7" y="177.0" font-size="11" text-anchor="middle" fill="#475569">0</text><text x="76.7" y="197.0" font-size="10" text-anchor="middle" fill="#475569">0-.25</text><rect x="116.3" y="182.0" width="67.3" height="0.0" fill="#dc2626" opacity="0.88" rx="2"/><text x="150.0" y="177.0" font-size="11" text-anchor="middle" fill="#475569">0</text><text x="150.0" y="197.0" font-size="10" text-anchor="middle" fill="#475569">.25-.5</text><rect x="189.7" y="179.0" width="67.3" height="3.0" fill="#dc2626" opacity="0.88" rx="2"/><text x="223.3" y="174.0" font-size="11" text-anchor="middle" fill="#475569">1</text><text x="223.3" y="197.0" font-size="10" text-anchor="middle" fill="#475569">.5-.75</text><rect x="263.0" y="134.6" width="67.3" height="47.4" fill="#dc2626" opacity="0.88" rx="2"/><text x="296.7" y="129.6" font-size="11" text-anchor="middle" fill="#475569">16</text><text x="296.7" y="197.0" font-size="10" text-anchor="middle" fill="#475569">.75-1</text><rect x="336.3" y="42.7" width="67.3" height="139.3" fill="#2563eb" opacity="0.88" rx="2"/><text x="370.0" y="37.7" font-size="11" text-anchor="middle" fill="#475569">47</text><text x="370.0" y="197.0" font-size="10" text-anchor="middle" fill="#475569">1-1.25</text><rect x="409.7" y="48.6" width="67.3" height="133.4" fill="#2563eb" opacity="0.88" rx="2"/><text x="443.3" y="43.6" font-size="11" text-anchor="middle" fill="#475569">45</text><text x="443.3" y="197.0" font-size="10" text-anchor="middle" fill="#475569">1.25-1.5</text><rect x="483.0" y="16.0" width="67.3" height="166.0" fill="#2563eb" opacity="0.88" rx="2"/><text x="516.7" y="11.0" font-size="11" text-anchor="middle" fill="#475569">56</text><text x="516.7" y="197.0" font-size="10" text-anchor="middle" fill="#475569">1.5-2</text><rect x="556.3" y="36.8" width="67.3" height="145.2" fill="#2563eb" opacity="0.88" rx="2"/><text x="590.0" y="31.8" font-size="11" text-anchor="middle" fill="#475569">49</text><text x="590.0" y="197.0" font-size="10" text-anchor="middle" fill="#475569">2-3</text><rect x="629.7" y="104.9" width="67.3" height="77.1" fill="#2563eb" opacity="0.88" rx="2"/><text x="663.3" y="99.9" font-size="11" text-anchor="middle" fill="#475569">26</text><text x="663.3" y="197.0" font-size="10" text-anchor="middle" fill="#475569">3+</text><line x1="333.3" y1="16" x2="333.3" y2="182" stroke="#0f172a" stroke-width="1.4" stroke-dasharray="4 3"/><text x="339.3" y="28" font-size="11" fill="#0f172a">lift 1.0 - the recommendation changed nothing</text><text x="40" y="224" font-size="11" fill="#475569">red bars are picks that did NOT beat their own rate &#183; 131 of 240 cleared 1.5x, production&#39;s winner bar</text></svg></div>
+
+<h2>2d. Does its confidence mean anything?</h2>
+<p>A confidence that does not track outcomes is worse than none, because it
+both ranks the cards and gets printed on them. Sheet 08 measured the previous
+engine at <b>0.48 stated against 0.23 actual</b>; this is the same check on the
+current one.</p>
+<div class="scroll"><svg viewBox="0 0 470 330" width="100%" style="max-width:470px;height:auto" role="img" aria-label="does higher confidence mean a better pick" xmlns="http://www.w3.org/2000/svg"><rect x="52" y="18" width="396" height="264" fill="none" stroke="#94a3b8" stroke-width="0.8" opacity="0.6"/><line x1="52" y1="282.0" x2="448" y2="282.0" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/><text x="44" y="286.0" font-size="10" text-anchor="end" fill="#475569">0%</text><line x1="52" y1="216.0" x2="448" y2="216.0" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/><text x="44" y="220.0" font-size="10" text-anchor="end" fill="#475569">25%</text><line x1="52" y1="150.0" x2="448" y2="150.0" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/><text x="44" y="154.0" font-size="10" text-anchor="end" fill="#475569">50%</text><line x1="52" y1="84.0" x2="448" y2="84.0" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/><text x="44" y="88.0" font-size="10" text-anchor="end" fill="#475569">75%</text><line x1="52" y1="18.0" x2="448" y2="18.0" stroke="#94a3b8" stroke-width="0.5" opacity="0.4"/><text x="44" y="22.0" font-size="10" text-anchor="end" fill="#475569">100%</text><path d="M112.6,45.5 L126.5,67.5 L156.2,18.0 L220.5,23.5 L387.4,29.0" fill="none" stroke="#2563eb" stroke-width="2.4"/><circle cx="112.6" cy="45.5" r="5.5" fill="#2563eb"><title>p_hit 0.50 -> 90% actual, n=48</title></circle><text x="112.6" y="34.5" font-size="11" text-anchor="middle" fill="#2563eb">90%</text><circle cx="126.5" cy="67.5" r="5.5" fill="#2563eb"><title>p_hit 0.51 -> 81% actual, n=48</title></circle><text x="126.5" y="56.5" font-size="11" text-anchor="middle" fill="#2563eb">81%</text><circle cx="156.2" cy="18.0" r="5.5" fill="#2563eb"><title>p_hit 0.52 -> 100% actual, n=48</title></circle><text x="156.2" y="7.0" font-size="11" text-anchor="middle" fill="#2563eb">100%</text><circle cx="220.5" cy="23.5" r="5.5" fill="#2563eb"><title>p_hit 0.54 -> 98% actual, n=48</title></circle><text x="220.5" y="12.5" font-size="11" text-anchor="middle" fill="#2563eb">98%</text><circle cx="387.4" cy="29.0" r="5.5" fill="#2563eb"><title>p_hit 0.59 -> 96% actual, n=48</title></circle><text x="387.4" y="18.0" font-size="11" text-anchor="middle" fill="#2563eb">96%</text><text x="52" y="304" font-size="11" fill="#475569">rises 90% &#8594; 96% overall but NOT monotonically - it peaks in fifth 3 of 5</text><text x="52" y="320" font-size="11" fill="#475569">the FLOOR does the work; p_hit does not finely rank above it</text></svg></div>
+<div class="note warn"><b>This one is not a clean result, and pretending
+otherwise would be the easiest lie in the report.</b> The hit rate rises across
+the confidence range, but <b>not monotonically</b> &mdash; the fourth fifth
+outscores the fifth. So <code>p_hit</code> is doing its job as a
+<em>gate</em> (everything above the floor beats 70%) and doing it poorly as a
+<em>fine-grained ranking</em> within the eligible set.
+<p>The practical consequence: showing the top 3 cards instead of the top 10 is
+<b>not</b> reliably better, because the ordering inside the slate carries
+little information. The honest lever is the floor, not the rank. Sharpening
+this is the clearest next piece of work on the engine.</p></div>
+
+<h2>3. Against the ordering it replaced</h2>
+<p>The same pipeline, the same forecasts, the same data &mdash; only what
+expected value multiplies changes. <code>total demand</code> is what shipped
+before; <code>deficit</code> is sheet 20.</p>
+<div class="scroll"><table>
+<tr><th>ordering</th><th>cards</th><th>hit rate</th><th>incremental<br>PER CARD</th>
+<th>incremental<br>total</th><th>margin flow<br>touched</th><th>median pick</th></tr>
+<tr><td><b>sheet 20 &mdash; margin &times; deficit, gated</b></td>
+<td>240</td><td><b>92.9%</b></td>
+<td class="good"><b>$+96</b></td>
+<td class="good">$+23,061</td>
+<td>$73,258</td><td>17u</td></tr>
+<tr><td>old &mdash; margin &times; total demand, ungated</td><td>240</td>
+<td>33.3%</td>
+<td class="bad"><b>$-103</b></td>
+<td class="bad">$-24,772</td>
+<td>$249,041</td><td>114u</td></tr>
+</table></div>
+<div class="note warn"><b>Read the PER CARD column, not the total.</b> The two
+arms do not place the same number of bets &mdash; 240 cards against 240
+&mdash; because sheet 20 shows only what clears its bar. Comparing raw totals
+across different card counts compares a rate to a volume and calls the
+difference a result.
+
+<p><b>And be honest about coverage.</b> Sheet 20 touches
+<b>$73,258</b> of margin flow where the old ordering touched
+<b>$249,041</b>. It is a smaller, sharper intervention: fewer cards,
+smaller products, far higher accuracy. If the goal is to influence as much of
+the shop as possible, that is a real trade-off and the confidence floor is the
+dial &mdash; lowering it to 0.40 restores a full ten-card slate at about four
+points of hit rate.</p></div>
+
+<div class="note"><b>Two margin numbers, and only one of them is a verdict.</b>
+<code>total captured</code> is <code>sold &times; margin</code> &mdash;
+dominated by how big the picks are, so an engine that simply names the shop's
+biggest sellers maximises it while predicting nothing.
+<code>incremental</code> is <code>(sold &minus; expected) &times; margin</code>
+&mdash; money that would not have arrived anyway. Judge a recommendation on the
+second.</div>
+
+<h2>4. What it screened out on the way to a slate</h2>
+<p><b>This is shortlisting, not refusing to recommend.</b> The engine looks at
+all 3,948 products and returns a slate. It produced cards on
+<b>every one of the 24 runs</b> and has never come back empty. The counts
+below are how many SKUs were screened out on the way there, which is what
+ranking is &mdash; an owner is never shown fewer cards because of a gate, only
+better ones.</p>
+<p>The gates are commercial rather than statistical: the SKU must be big enough
+to be worth an owner's attention, the evidence must point up, and the engine
+must be more likely right than not. These counts come from the real predicate,
+not from a description of it.</p>
+<div class="scroll"><table><tr><th>reason</th><th>candidates</th></tr>
+<tr><td>below materiality floor</td><td>64,060</td></tr><tr><td>trailing window inflated</td><td>6,748</td></tr><tr><td>p hit below floor</td><td>4,124</td></tr><tr><td>not merchandise category</td><td>3,376</td></tr><tr><td>not merchandise catalogue</td><td>2,220</td></tr><tr><td>not merchandise blocklist</td><td>96</td></tr><tr><td>no price</td><td>4</td></tr></table></div>
+
+<h2>5. The picks that made the most money</h2>
+<p>One row per (product, date) &mdash; the same pick is evaluated at four
+horizons, so an undeduplicated list shows six real picks wearing twelve hats.
+Note what these rows say: the biggest earners sit at
+<b>p_hit 0.50&ndash;0.60</b>, near the floor rather than at the top of the
+range, and most sell under 20 units a month. <b>Money and confidence are not
+the same axis</b>, and the engine currently ranks on confidence.</p>
+<div class="scroll"><table>
+<tr><th>sku</th><th>date</th><th>h</th><th>28d units</th><th>uplift</th>
+<th>p_hit</th><th>hit</th><th>lift</th><th>incremental</th></tr>
+<tr><td>674545000605</td><td>2026-05-03</td><td>120d</td><td>114</td><td>1.25x</td><td>0.51</td><td>yes</td><td>1.32x</td><td>$+561</td></tr><tr><td>682746</td><td>2026-04-19</td><td>120d</td><td>45</td><td>2.27x</td><td>0.55</td><td>yes</td><td>4.68x</td><td>$+526</td></tr><tr><td>674545000605</td><td>2026-04-19</td><td>120d</td><td>114</td><td>1.27x</td><td>0.52</td><td>yes</td><td>1.29x</td><td>$+514</td></tr><tr><td>674545000414</td><td>2026-05-03</td><td>120d</td><td>119</td><td>1.26x</td><td>0.50</td><td>yes</td><td>1.26x</td><td>$+435</td></tr><tr><td>682746</td><td>2026-03-08</td><td>120d</td><td>44</td><td>2.23x</td><td>0.58</td><td>yes</td><td>3.74x</td><td>$+383</td></tr><tr><td>682746</td><td>2026-03-22</td><td>120d</td><td>55</td><td>1.91x</td><td>0.54</td><td>yes</td><td>3.18x</td><td>$+380</td></tr><tr><td>088110150556</td><td>2026-04-19</td><td>120d</td><td>49</td><td>1.34x</td><td>0.50</td><td>yes</td><td>1.36x</td><td>$+379</td></tr><tr><td>674545000414</td><td>2026-04-19</td><td>120d</td><td>121</td><td>1.28x</td><td>0.50</td><td>yes</td><td>1.20x</td><td>$+347</td></tr><tr><td>721733000029</td><td>2026-04-05</td><td>120d</td><td>9</td><td>1.87x</td><td>0.51</td><td>yes</td><td>2.13x</td><td>$+342</td></tr><tr><td>674545000421</td><td>2026-02-22</td><td>120d</td><td>30</td><td>1.78x</td><td>0.52</td><td>yes</td><td>2.08x</td><td>$+338</td></tr><tr><td>816751022099</td><td>2026-02-22</td><td>120d</td><td>24</td><td>1.83x</td><td>0.52</td><td>yes</td><td>3.71x</td><td>$+327</td></tr><tr><td>087236002114</td><td>2026-03-08</td><td>120d</td><td>16</td><td>1.49x</td><td>0.52</td><td>yes</td><td>1.62x</td><td>$+265</td></tr></table></div>
+
+<h2>5b. Data quality</h2><p>No line item in this store's history exceeded the plausible-quantity contract (1000 units on one line). Nothing was removed.</p>
+
+<h2>6. What this does not prove</h2>
+<div class="note warn"><b>This measures forecasting, not causation.</b> Nobody
+acted on these recommendations &mdash; they were generated retrospectively. It
+shows the engine can point at products that were about to move. It does not
+show that following the advice causes extra sales. Only a live holdout, where
+some recommendations are shown and others deliberately withheld, proves that.
+Production has the mechanism (<code>REC_HOLDOUT_PCT</code>, FNV-1a keyed on
+client:location:sku:family); it needs switching on.</div>
+<ul>
+<li><b>One store.</b> Every figure is Marshfield Wine & Spirits. Another store
+with different categories or a different customer base could look materially
+different - which is exactly why this report is produced per store rather than
+pooled.</li>
+<li><b>240 measurable predictions.</b> Enough to detect a large effect, not
+enough to measure a small one precisely &mdash; which is why every number
+carries an interval, and why the headline interval is clustered by date rather
+than by row.</li>
+<li><b>No live inventory.</b> The production engine also sees stock levels,
+which drive its understock and overstock recommendations. This replay had no
+historical on-hand, so those families are absent and the engine is being judged
+on less than it normally has.</li>
+<li><b>90% is not reachable on this metric.</b> For a SKU selling ~10 units a
+month, Poisson noise alone puts it below its own mean about a third of the time
+regardless of what is known in advance.</li>
+</ul>
+
+<h2>7. Architecture</h2>
+<p>No model chooses anything. The LLM writes the sentence <em>after</em> the
+decision is fixed, so a model outage costs fluency and never a recommendation.
+Python holds no analytics credentials and opens no database connection &mdash;
+the whole pipeline is a pure function of one payload, which is what makes a
+card reproducible months later.</p>
+<div class="scroll"><svg viewBox="0 0 900 560" width="100%" style="max-width:900px;height:auto" role="img" aria-label="recommendation engine architecture" xmlns="http://www.w3.org/2000/svg"><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#94a3b8"/></marker></defs><rect x="30" y="16" width="250" height="46" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.4"/><text x="155" y="36" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">POS / warehouse</text><text x="155" y="50" font-size="10.5" text-anchor="middle" fill="#475569">syncgo - PostgreSQL, SELECT-only</text><line x1="155" y1="64" x2="155" y2="92" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="30" y="94" width="250" height="50" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.4"/><text x="155" y="114" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">bottleai_analytics</text><text x="155" y="130" font-size="10.5" text-anchor="middle" fill="#475569">Node is the ONLY writer</text><line x1="280" y1="118" x2="330" y2="118" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><text x="305" y="110" font-size="10.5" text-anchor="middle" fill="#475569">payload</text><rect x="330" y="16" width="545" height="470" rx="8" fill="#f8fafc" stroke="#2563eb" stroke-width="1.6" stroke-dasharray="6 4"/><text x="602" y="34" font-size="10.5" text-anchor="middle" fill="#2563eb">app/pipeline - STATELESS. No DB handle. No credentials.</text><rect x="350" y="46" width="505" height="38" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.4"/><text x="602" y="70" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">01 ingest  &#183;  02 contracts  &#183;  03 feature store</text><line x1="602" y1="84" x2="602" y2="94" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="350" y="96" width="505" height="38" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.4"/><text x="602" y="120" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">04 evidence (n)  &#183;  05 cohort prior</text><line x1="602" y1="134" x2="602" y2="144" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="350" y="146" width="505" height="56" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/><text x="602" y="170" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">20  TEMPORAL REVERSION</text><text x="602" y="188" font-size="10.5" text-anchor="middle" fill="#1e40af">shrink recent rate toward its own long run &#8594; deficit_units, p_hit</text><line x1="602" y1="202" x2="602" y2="214" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="350" y="214" width="505" height="38" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.4"/><text x="602" y="238" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">06 shrinkage (own &#8596; cohort)  &#183;  07 forecast p10/p50/p90</text><line x1="602" y1="252" x2="602" y2="262" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="350" y="264" width="505" height="38" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.4"/><text x="602" y="288" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">08 calibration  &#183;  09 elasticity  &#183;  10 policy  &#183;  11 constraints</text><line x1="602" y1="302" x2="602" y2="312" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="350" y="314" width="505" height="38" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.4"/><text x="602" y="338" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">12 typed candidates</text><line x1="602" y1="352" x2="602" y2="362" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="350" y="364" width="505" height="52" rx="6" fill="#dbeafe" stroke="#2563eb" stroke-width="1.4"/><text x="602" y="386" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">13  RANK</text><text x="602" y="404" font-size="10.5" text-anchor="middle" fill="#1e40af">EV = margin &#215; DEFICIT   (never total demand)</text><line x1="602" y1="416" x2="602" y2="428" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="350" y="428" width="505" height="44" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.4"/><text x="602" y="448" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">14 decision validation &#183; 15 explanation &#183; 16 numeral check</text><text x="602" y="464" font-size="10.5" text-anchor="middle" fill="#475569">the model writes prose only - it decides nothing</text><line x1="602" y1="486" x2="602" y2="506" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#a)"/><rect x="330" y="506" width="250" height="40" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.4"/><text x="455" y="531" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">17 the gate  &#183;  19 outcomes</text><rect x="600" y="506" width="275" height="40" rx="6" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.4"/><text x="737" y="531" font-size="12" font-weight="600" text-anchor="middle" fill="#0f172a">React SPA - only what passed</text></svg></div>
+
+<h2>8. Configuration</h2>
+<div class="scroll"><table><tr><th>setting</th><th>value</th></tr>
+<tr><td>materiality floor units</td><td>8</td></tr><tr><td>min hit probability</td><td>0.5</td></tr><tr><td>baseline window days</td><td>28</td></tr><tr><td>n recs</td><td>10</td></tr><tr><td>null baskets</td><td>400</td></tr>
+<tr><td>trading days in the export</td><td>568</td></tr>
+</table></div>
+</div></body></html>

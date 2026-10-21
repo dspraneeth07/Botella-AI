@@ -1,0 +1,32 @@
+/* CustomCursor.css - soft "glow spotlight" that follows the cursor.
+   The normal system cursor stays visible; this is just an ambient glow. */
+
+.cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0;
+  background: radial-gradient(
+    circle,
+    rgba(167, 139, 250, 0.20) 0%,
+    rgba(167, 139, 250, 0.08) 38%,
+    transparent 70%
+  );
+  filter: blur(16px);
+  transition: opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+
+[data-theme="light"] .cursor-glow {
+  background: radial-gradient(
+    circle,
+    rgba(167, 139, 250, 0.16) 0%,
+    rgba(167, 139, 250, 0.06) 38%,
+    transparent 70%
+  );
+}

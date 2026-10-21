@@ -1,0 +1,824 @@
+{
+  "month": "2026-09",
+  "store": {
+    "client_id": 171,
+    "location_id": 171,
+    "name": "Bethany Discount Liquor Allen, TX"
+  },
+  "window_days": 30,
+  "month_rule": "a card belongs to the calendar month its 30-day window ended in",
+  "generated_at": "2026-10-08T12:47:50.704Z",
+  "data_through": "2026-10-06",
+  "accuracy": {
+    "what_this_board_measures": "Did what the card predicted come true. Graded on the prediction alone; needs no owner action, and reads neither the arm, the inferred action, the votes nor the money.",
+    "window_days": 30,
+    "both_arms_counted": true,
+    "hit_rule": "lift >= 1.0: the product sold at least what its own trailing rate projected over the 30-day window",
+    "summary": {
+      "cards": 10,
+      "products": 9,
+      "measured_on": 10,
+      "hits": 2,
+      "hit_rate": 0.2,
+      "hit_rate_interval_95": {
+        "low": 0.057,
+        "high": 0.51
+      },
+      "mean_lift": 0.607,
+      "promise_fill": {
+        "cards_with_quantity": 7,
+        "recommended_units": 701,
+        "sold_units": 401,
+        "fill_ratio": 0.572
+      },
+      "interval_coverage": {
+        "cards_with_range": 0,
+        "inside_range": 0,
+        "range_refused": 0,
+        "coverage": null
+      },
+      "stockout_grade": {
+        "cards": 0,
+        "sold_through": 0,
+        "not_sold_through": 0,
+        "ungraded": 0
+      }
+    },
+    "lines": [
+      {
+        "sku": "080480016210",
+        "product": "BACARDI Silver 50ML",
+        "cards": 2,
+        "measured": 2,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.345,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 150,
+          "sold_units": 207,
+          "fill_ratio": 1.38
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080432500170",
+        "product": "Jameson Irish Whiskey 750ml",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.69,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 25,
+          "sold_units": 5,
+          "fill_ratio": 0.2
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080660010113",
+        "product": "99 Butterscotch 50 mL",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.81,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 300,
+          "sold_units": 21,
+          "fill_ratio": 0.07
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080686001904",
+        "product": "Jim Beam 50ml",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.14,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "085000042564",
+        "product": "High Noon Transfusion 6pk",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.16,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 6,
+          "sold_units": 28,
+          "fill_ratio": 4.667
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "088004045456",
+        "product": "99 Fruit Punch 50ml",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.09,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 70,
+          "sold_units": 15,
+          "fill_ratio": 0.214
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "617768111055",
+        "product": "Svedka 50ml",
+        "cards": 1,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 1.36,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 150,
+          "sold_units": 125,
+          "fill_ratio": 0.833
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "619947000013",
+        "product": "Titos 1L",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.61,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "856065002585",
+        "product": "DEEP EDDY PEACH 750",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.52,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      }
+    ],
+    "refusals": [
+      "interval coverage: no range stored on any card this month",
+      "stockout grade: no stockout card closed this month"
+    ]
+  },
+  "holdout": {
+    "what_this_board_measures": "Did telling the store change anything. Shown against withheld, per product; dollars are per product, never totals; the action is inferred from the purchases feed, an uploaded invoice, the stock delta or a price drop. This board states no hit rate.",
+    "window_days": 30,
+    "min_measured_per_arm_for_a_difference": 5,
+    "dollars_are_per_product": true,
+    "summary": {
+      "shown": {
+        "products": 9,
+        "measurable": 9,
+        "avg_lift": 0.649,
+        "priced": 9,
+        "dollars": -1019.65,
+        "dollars_per_product": -113.29
+      },
+      "withheld": {
+        "products": 0,
+        "measurable": 0,
+        "avg_lift": null,
+        "priced": 0,
+        "dollars": null,
+        "dollars_per_product": null
+      },
+      "difference": {
+        "lift": null,
+        "dollars_per_product": null,
+        "refused_reason": "needs 5 measured outcomes per arm; have 9 shown and 0 withheld"
+      },
+      "totals_for_the_record": {
+        "shown_dollars_total": -1019.65,
+        "withheld_dollars_total": null,
+        "note": "The arms are different sizes by design; the difference is taken per product above."
+      },
+      "action_inferred_on_shown": {
+        "acted": 0,
+        "not_acted": 3,
+        "unobservable": 6,
+        "detectors": {}
+      },
+      "line": "holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 9 shown and 0 withheld"
+    },
+    "by_family": [
+      {
+        "family": "bundle",
+        "shown": {
+          "products": 2,
+          "measurable": 2,
+          "avg_lift": 0.875,
+          "priced": 2,
+          "dollars": -253.19,
+          "dollars_per_product": -126.59
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 2 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "markdown",
+        "shown": {
+          "products": 2,
+          "measurable": 2,
+          "avg_lift": 1.025,
+          "priced": 2,
+          "dollars": -7.83,
+          "dollars_per_product": -3.91
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 2 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "cold_box",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.16,
+          "priced": 1,
+          "dollars": -178.6,
+          "dollars_per_product": -178.6
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "liquidate",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.81,
+          "priced": 1,
+          "dollars": -1.56,
+          "dollars_per_product": -1.56
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "pre_stock",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.46,
+          "priced": 1,
+          "dollars": -319.06,
+          "dollars_per_product": -319.06
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "promote",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.52,
+          "priced": 1,
+          "dollars": -74.91,
+          "dollars_per_product": -74.91
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "reorder",
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.09,
+          "priced": 1,
+          "dollars": -184.5,
+          "dollars_per_product": -184.5
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      }
+    ],
+    "lines": [
+      {
+        "sku": "080432500170",
+        "product": "Jameson Irish Whiskey 750ml",
+        "families": [
+          "markdown"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.69,
+          "priced": 1,
+          "dollars": -24.1,
+          "dollars_per_product": -24.1
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "080480016210",
+        "product": "BACARDI Silver 50ML",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.46,
+          "priced": 1,
+          "dollars": -319.06,
+          "dollars_per_product": -319.06
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "080660010113",
+        "product": "99 Butterscotch 50 mL",
+        "families": [
+          "liquidate"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.81,
+          "priced": 1,
+          "dollars": -1.56,
+          "dollars_per_product": -1.56
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "080686001904",
+        "product": "Jim Beam 50ml",
+        "families": [
+          "bundle"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.14,
+          "priced": 1,
+          "dollars": 14.98,
+          "dollars_per_product": 14.98
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "085000042564",
+        "product": "High Noon Transfusion 6pk",
+        "families": [
+          "cold_box"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.16,
+          "priced": 1,
+          "dollars": -178.6,
+          "dollars_per_product": -178.6
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "088004045456",
+        "product": "99 Fruit Punch 50ml",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.09,
+          "priced": 1,
+          "dollars": -184.5,
+          "dollars_per_product": -184.5
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "617768111055",
+        "product": "Svedka 50ml",
+        "families": [
+          "markdown"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.36,
+          "priced": 1,
+          "dollars": 16.27,
+          "dollars_per_product": 16.27
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "619947000013",
+        "product": "Titos 1L",
+        "families": [
+          "bundle"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.61,
+          "priced": 1,
+          "dollars": -268.17,
+          "dollars_per_product": -268.17
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "856065002585",
+        "product": "DEEP EDDY PEACH 750",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.52,
+          "priced": 1,
+          "dollars": -74.91,
+          "dollars_per_product": -74.91
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      }
+    ],
+    "refusals": [
+      "difference: needs 5 measured outcomes per arm; have 9 shown and 0 withheld"
+    ]
+  },
+  "refusals": [],
+  "pilot_store": true
+}

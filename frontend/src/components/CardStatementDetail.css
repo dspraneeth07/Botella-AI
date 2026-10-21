@@ -1,0 +1,830 @@
+/* CardStatementDetail.css - one analysed card statement
+   -----------------------------------------------------------------------------
+   Builds on ReferenceScreen.css, which the component imports: .ref-card,
+   .ref-tile, .ref-table, .ref-subtab, .ref-btn and .ref-disclaimer are already
+   styled. Only what is new to this view lives here, prefixed csd-.
+
+   The finding layout follows the target report (head rule, two "says" panes,
+   math row, callout) but in the app's own tokens: no copy of its wine palette
+   or its fonts. The Rebelipay hero wears the app's primary colour only (the
+   --rp-* tokens, made from --ac and scoped to .csd-hero); every other "good"
+   figure, the KPI tile
+   included, keeps the positive token (--gr). --am is fuchsia and means
+   "needs attention", never "good". */
+
+.csd {
+  /* The same aliases .ref-page and .po-page publish, so this view renders
+     correctly whichever page shell the list screen wraps it in. No height or
+     overflow here: the page around it scrolls. */
+  --bg: var(--bg-primary);
+  --bg2: var(--bg-secondary);
+  --card: var(--bg-card);
+  --hover: var(--bg-hover);
+  --elev: var(--bg-elevated);
+  --bd: var(--border);
+  --bd2: var(--border-light);
+  --tx: var(--text-primary);
+  --tx2: var(--text-secondary);
+  --mu: var(--text-muted);
+  --ac: var(--accent);
+  --ac2: var(--accent-light);
+  --act: var(--accent-glow);
+  --gr: var(--green);
+  --rd: var(--red);
+  --am: var(--yellow);
+  --on-fill: var(--bx-accent-ink);
+
+  color: var(--tx);
+  font-family: var(--bx-font-body);
+  font-variant-numeric: tabular-nums;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.csd :focus-visible { outline: 2px solid var(--ac); outline-offset: 2px; }
+
+.csd-back {
+  border: none; background: none; padding: 0; margin-bottom: 12px;
+  color: var(--tx2); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 5px;
+}
+.csd-back:hover { color: var(--tx); }
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.csd-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.csd-head-titles { min-width: 0; flex: 1 1 320px; }
+.csd-title {
+  margin: 0; font-family: var(--bx-font-display);
+  font-size: 26px; font-weight: 800; letter-spacing: -0.02em; overflow-wrap: anywhere;
+}
+.csd-sub {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px;
+  margin: 6px 0 0; font-size: 13px; color: var(--tx2);
+}
+.csd-layout-tag {
+  display: inline-flex; align-items: center;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ac2); background: var(--act); padding: 2px 4px 2px 8px; border-radius: 6px;
+}
+.csd-layout-tag .ref-info, .csd-layout-tag .mi-group { margin-left: 4px; }
+.csd-sub-item { display: inline-flex; align-items: center; gap: 5px; }
+.csd-sub-item .mi-btn { width: 16px; height: 16px; }
+.csd-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+/* The statement's status beside its details, as the list shows it. */
+.csd-status {
+  display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+}
+.csd-status.is-ok { color: var(--gr); background: color-mix(in srgb, var(--gr) 15%, transparent); }
+.csd-status.is-bad { color: var(--rd); background: color-mix(in srgb, var(--rd) 15%, transparent); }
+.csd-status.is-wait { color: var(--ac2); background: var(--act); }
+
+/* Reanalyse holds one width whether it says "Reanalyse" or "Analysing…",
+   so the buttons beside it never move. */
+.csd-reanalyse { min-width: 8.9em; justify-content: center; }
+
+/* The note after a Reanalyse lands ("Reanalysed · 7 of 7 checks passed"):
+   under the button, out of the flow, so nothing moves. It fades in, holds and
+   fades out (DONE_MS in the JS is the same 6s). Centred under the button;
+   where that would spill past the page's edge (the button starting or ending
+   a wrapped row on a phone), the JS nudges it back inside with a left margin.
+   22px tall, so on a narrow screen it barely reaches the card below. */
+.csd-refresh { position: relative; display: inline-flex; }
+.csd-updated-live {
+  position: absolute; top: calc(100% + 4px); left: 50%;
+  transform: translateX(-50%);
+  z-index: 3; pointer-events: none;
+}
+.csd-updated {
+  display: inline-flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+  padding: 2px 9px;
+  font-size: 12px; font-weight: 600; line-height: 16px;
+  color: var(--gr);
+  background: color-mix(in srgb, var(--gr) 12%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--gr) 30%, transparent);
+  border-radius: 999px;
+  animation: csd-updated 6s ease both;
+}
+@keyframes csd-updated {
+  0% { opacity: 0; }
+  4%, 93% { opacity: 1; }
+  100% { opacity: 0; }
+}
+.csd-btn-danger { color: var(--rd); }
+.csd-btn-danger:hover:not(:disabled) { color: var(--rd); border-color: var(--rd); }
+
+.csd-skel-head { height: 56px; border-radius: 12px; background: var(--elev); margin-bottom: 16px; max-width: 520px; }
+
+/* ── Banners ──────────────────────────────────────────────────────────────── */
+.csd-banner {
+  display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap;
+  padding: 12px 14px; margin-bottom: 14px;
+  border-radius: 10px; font-size: 13px; line-height: 1.55; color: var(--tx2);
+}
+.csd-banner > svg { flex: none; margin-top: 2px; }
+.csd-banner-body { flex: 1 1 260px; min-width: 0; }
+.csd-banner strong { display: block; color: var(--tx); }
+.csd-banner-hint { color: var(--mu); margin-top: 4px; }
+.csd-banner-bad {
+  background: color-mix(in srgb, var(--rd) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rd) 30%, transparent);
+}
+.csd-banner-bad > svg { color: var(--rd); }
+.csd-banner-warn {
+  background: color-mix(in srgb, var(--am) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--am) 30%, transparent);
+}
+.csd-banner-warn > svg { color: var(--am); }
+.csd-banner-info { background: var(--act); border: 1px solid var(--bd2); }
+.csd-banner-info > svg { color: var(--ac2); }
+.csd-check-list { margin: 6px 0 0; padding-left: 18px; }
+.csd-check-list li { margin: 2px 0; }
+@supports not (background: color-mix(in srgb, red, blue)) {
+  .csd-banner-bad, .csd-banner-warn { background: var(--elev); border: 1px solid var(--bd); }
+}
+
+.csd-analysing { display: flex; align-items: flex-start; gap: 12px; }
+.csd-analysing svg { color: var(--ac); flex: none; margin-top: 2px; }
+.csd-analysing p { margin: 4px 0 0; font-size: 13px; color: var(--tx2); }
+
+/* ── Rebelipay hero ───────────────────────────────────────────────────────── */
+/* Every mark is the app's primary (--ac, violet), the same as the "Upload
+   statement" button and the active sidebar item: the eyebrow, the Estimate
+   tag, what Rebelipay would charge and the saving in the bars and the donut
+   (the saving at full strength, the highlight), the "You save" pill, the
+   button and the link, and the tints are it, faded. The saving's figures,
+   and only those, are the app's positive green (--gr), the colour savings
+   figures have everywhere else in the app (the list's "SAVED" and savings
+   column, the KPI tile): the headline amount, the pill's text, the donut's
+   readout. Both from the app tokens, so they follow the theme by themselves.
+   The one other mark is the neutral grey of the "Paid today" bar, the
+   baseline it is compared with. */
+.csd-hero {
+  --rp-accent: var(--ac);
+  --rp-on-accent: var(--on-fill);
+  --rp-soft: color-mix(in srgb, var(--ac) 9%, var(--card));   /* where the gradient starts */
+  --rp-soft-border: color-mix(in srgb, var(--ac) 40%, var(--bd2));
+  --rp-chip-bg: color-mix(in srgb, var(--ac) 14%, var(--card));
+  --rp-hover: color-mix(in srgb, var(--ac) 8%, transparent);
+  --rp-neutral: var(--mu);                                      /* the "Paid today" bar */
+  /* What Rebelipay would charge, in the bars and the donut: the primary faded
+     45% into the card, the lightest step that still clears the data-viz
+     validator's 2:1 floor on white. */
+  --rp-cost: color-mix(in srgb, var(--ac) 45%, var(--card));
+  /* The saving's figures: the app's positive green. */
+  --rp-save: var(--gr);
+  /* A penalty the store stops itself (D49), in the bars and the donut: the
+     same green, a saving that is not Rebelipay's. Against the two purples it
+     clears the data-viz validator's colour-blind separation (deutan 22+ light,
+     14+ dark). */
+  --rp-fix: var(--gr);
+
+  border-color: var(--rp-soft-border);
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--rp-soft), var(--card) 62%);
+  padding: 18px 20px;
+  container: csd-hero / inline-size;   /* for .csd-hero-body's query */
+}
+/* Not eligible: the same primary-tinted frame, no tint and no pitch. */
+.csd-hero-quiet { background: var(--card); border-color: var(--rp-soft-border); }
+.csd-hero :focus-visible { outline-color: var(--rp-accent); }
+.csd-hero-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.csd-hero-eyebrow {
+  display: inline-flex; align-items: center;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--rp-accent);
+}
+/* The app's fuchsia "Estimate" tag would be a second colour here. */
+.csd-hero .ref-est-label { color: var(--rp-accent); background: var(--rp-chip-bg); }
+/* Inter Tight is condensed already: at 700 with negative tracking the
+   sentence read cramped and heavy. 600 with normal spacing reads as one smooth
+   line, and leaves the figure (700) as the one heavier thing in it. */
+.csd-hero-title {
+  margin: 10px 0 0; font-family: var(--bx-font-display);
+  font-size: 22px; font-weight: 600; letter-spacing: 0; line-height: 1.3; text-wrap: balance;
+}
+/* The figure: in the saving's green and a clear step up from the sentence
+   (1.3em), line-height 1 so it never makes its line taller than the words
+   around it, and tabular digits. Its box is the final figure's width (the
+   hidden copy and the counting figure share one grid cell), so the count-up
+   changes the digits and nothing else on the line moves. */
+.csd-hero-figure {
+  display: inline-grid; justify-items: end;
+  font-size: 1.3em; font-weight: 700; line-height: 1;
+  font-variant-numeric: tabular-nums; letter-spacing: 0; white-space: nowrap;
+}
+.csd-hero-figure > * { grid-area: 1 / 1; }
+.csd-hero-figure-final { visibility: hidden; }
+.csd-hero-amount { color: var(--rp-save); font-weight: inherit; }
+.csd-hero-sub { margin: 6px 0 0; font-size: 13.5px; color: var(--tx2); text-wrap: pretty; }
+.csd-quiet-text { margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: var(--tx2); max-width: 78ch; }
+.csd-quiet-text strong { color: var(--tx); }
+
+/* Two bars on one scale, as broad pills 2px apart: what was paid today
+   (neutral, the baseline) and the same amount with Rebelipay, split into what
+   Rebelipay would charge (the primary, faded) and what you keep (the primary
+   at full strength: the difference, the highlight). The pill under it, its
+   figure in green, points up at the saving, so the difference reads at a
+   glance. */
+.csd-compare { margin: 16px 0 4px; display: flex; flex-direction: column; gap: 18px; max-width: 760px; }
+.csd-bar-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  margin-bottom: 8px; border-radius: 6px;
+}
+.csd-bar-label {
+  display: inline-flex; align-items: center; gap: 8px; min-width: 0;
+  font-size: 13.5px; font-weight: 500; color: var(--tx2); white-space: nowrap;
+}
+.csd-bar-value { flex: none; font-size: 15px; font-weight: 700; color: var(--tx); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* The swatch that makes "With Rebelipay" the donut's key as well. */
+.csd-bar-key { width: 10px; height: 10px; border-radius: 3px; flex: none; background: var(--rp-cost); }
+.csd-bar-track { display: flex; gap: 2px; height: 22px; }
+.csd-bar-fill { flex: 1 1 0; min-width: 8px; border-radius: 999px; }
+.csd-bar-fill.is-now { background: var(--rp-neutral); }
+.csd-bar-fill.is-rp { background: var(--rp-cost); border-radius: 999px 4px 4px 999px; }
+.csd-bar-fill.is-save { background: var(--rp-accent); border-radius: 4px 999px 999px 4px; }
+/* With a penalty fix after it, the switching saving is a middle segment. */
+.csd-bar-fill.is-save:not(:last-child) { border-radius: 4px; }
+.csd-bar-fill.is-fix { background: var(--rp-fix); border-radius: 4px 999px 999px 4px; }
+.csd-save-row { position: relative; display: flex; justify-content: flex-end; margin-top: 12px; }
+.csd-save-pill {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 999px;
+  font-size: 13.5px; font-weight: 700; color: var(--rp-save); font-variant-numeric: tabular-nums;
+  background: var(--rp-soft); border: 1px solid var(--rp-soft-border);   /* the lightest tint: green text 4.5:1 on it */
+}
+.csd-save-pct { font-weight: 600; opacity: .8; }
+/* On a narrow hero the share moves to a line of its own, each half whole. */
+.csd-save-pill { flex-wrap: nowrap; }
+.csd-save-main, .csd-save-pct { white-space: nowrap; }
+/* The pill's pointer: a small square turned 45 degrees, in the pill's own
+   fill and edge, sitting on its top edge under the saving. */
+.csd-save-caret {
+  position: absolute; top: -5px; width: 10px; height: 10px; transform: rotate(45deg); pointer-events: none;
+  background: var(--rp-soft); border-left: 1px solid var(--rp-soft-border); border-top: 1px solid var(--rp-soft-border);
+}
+/* Hover, on a bar, its words or a slice of the donut: that part lights up,
+   its words on a soft highlight, and the rest of the comparison fades back. */
+.csd-bar-head, .csd-bar-fill, .csd-save-pill, .csd-save-caret {
+  transition: opacity .18s ease, filter .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease;
+}
+/* The pill's pointer glides to the part the pill speaks for. */
+.csd-save-caret { transition: opacity .18s ease, border-color .18s ease, right .28s cubic-bezier(.2, .7, .2, 1); }
+/* The pill's words: every wording in one cell, the pill as wide as the
+   longest, and the current one cross-fading in over the last. */
+.csd-save-words-box { display: inline-grid; }
+.csd-save-words {
+  grid-area: 1 / 1; display: inline-flex; flex-wrap: wrap; align-items: baseline; column-gap: 5px;
+  visibility: hidden; opacity: 0; transition: opacity .2s ease, visibility 0s linear .2s;
+}
+.csd-save-words.is-shown { visibility: visible; opacity: 1; transition: opacity .2s ease; }
+.csd-compare .is-off { opacity: .35; }
+.csd-bar-head.is-on {
+  background: color-mix(in srgb, var(--ac) 10%, transparent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--ac) 10%, transparent);
+}
+.csd-bar-head.is-on .csd-bar-label { color: var(--tx); }
+.csd-bar-fill.is-on { filter: brightness(1.12); }
+.csd-bar-fill.is-save.is-on { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 30%, transparent); }
+.csd-bar-fill.is-fix.is-on { box-shadow: 0 0 0 3px color-mix(in srgb, var(--gr) 30%, transparent); }
+/* Lit by an edge and a ring, not a darker fill, so its green text keeps 4.5:1. */
+.csd-save-pill.is-on {
+  border-color: var(--rp-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac) 16%, transparent);
+}
+.csd-save-caret.is-on { border-color: var(--rp-accent); }
+
+/* The hero splits 60/40 with a 40px gap: everything but the donut runs down
+   the left 60%, top to bottom (eyebrow, headline, sub-line, the bars filling
+   their width, the buttons, "How we calculated this"); the donut (the same
+   comparison as a share) sits in the right 40%, centred both ways in the
+   hero's whole height, so the space beside the eyebrow and the headline is
+   its too. The headline wraps where the 60% is narrower than it (1440px and
+   below). The "How we calculated this" text and the card-type table open in
+   rows of their own, full width, under the donut, and the link stays under
+   the buttons: nothing that opens ever lands in the rows the donut is
+   centred in, so it stays put. Where the hero is narrower than 760px the
+   donut goes under the bars. Without a donut, the hero is as it was. */
+.csd-hero-body > * { min-width: 0; }
+.csd-hero-body > .csd-donut { margin-top: 16px; }
+@container csd-hero (min-width: 760px) {
+  .csd-hero-body:has(> .csd-donut) {
+    display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); column-gap: 40px;
+    grid-template-rows: auto auto auto auto auto 1fr;
+  }
+  .csd-hero-body > .csd-hero-top { grid-column: 1; grid-row: 1; }
+  .csd-hero-body > .csd-hero-title { grid-column: 1; grid-row: 2; }
+  .csd-hero-body > .csd-hero-sub { grid-column: 1; grid-row: 3; }
+  /* In a grid the bars' 4px no longer folds into the buttons' 14px. */
+  .csd-hero-body > .csd-compare { grid-column: 1; grid-row: 4; margin-bottom: 0; max-width: none; }
+  .csd-hero-body > .csd-hero-actions { grid-column: 1; grid-row: 5; }
+  .csd-hero-body > .csd-how { grid-column: 1; grid-row: 6; justify-self: start; align-self: start; }
+  /* The whole height, eyebrow to link, centred in it. */
+  .csd-hero-body > .csd-donut { grid-column: 2; grid-row: 1 / span 6; align-self: center; margin-top: 0; }
+  .csd-hero-body > .csd-how-text { grid-column: 1 / -1; grid-row: 7; }
+  .csd-hero-body > .csd-hero-table { grid-column: 1 / -1; grid-row: 8; }
+}
+/* The donut: as wide as its column allows, up to 300px beside the bars, so
+   the ring with its key under it still fits the hero's height beside the
+   left column and stays centred in it; on a narrow screen, under the bars,
+   up to 280px. One ring: today's fees by card type, the key under it, the
+   totals in its middle, a card type's own amounts when it is pointed at. */
+.csd-donut { display: flex; justify-content: center; align-items: center; min-width: 0; }
+.csd-donut-chart { position: relative; width: min(100%, 280px); flex: none; }
+@container csd-hero (min-width: 760px) {
+  .csd-donut-chart { width: min(100% - 16px, 300px); }
+}
+.csd-donut-centre {
+  position: absolute; inset: 0; padding: 0 22%; pointer-events: none;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-align: center;
+}
+.csd-donut-value {
+  font-family: var(--bx-font-display); font-size: 26px; font-weight: 700; line-height: 1.1;
+  color: var(--tx); font-variant-numeric: tabular-nums;
+}
+.csd-donut-centre.is-save .csd-donut-value { color: var(--rp-save); }
+/* The centre's words, held in one box so a change of words fades in
+   rather than snapping (the box is keyed by what it says). */
+.csd-donut-centre-in {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; max-width: 100%;
+  animation: csd-fade-in .22s ease both;
+}
+@keyframes csd-fade-in { from { opacity: 0; } to { opacity: 1; } }
+.csd-donut-label { font-size: 12.5px; font-weight: 600; color: var(--tx2); }
+.csd-donut-hint {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  max-width: 160px; font-size: 12.5px; line-height: 1.4; color: var(--tx2); text-wrap: balance;
+}
+.csd-donut-hint svg { color: var(--rp-accent); }
+.csd-hint-touch { display: none; }
+@media (hover: none) {
+  .csd-hint-mouse { display: none; }
+  .csd-hint-touch { display: inline; }
+}
+/* The 2px card-coloured stroke is the gap between the slices, not a border. */
+.csd-donut-slice { stroke: var(--card); stroke-width: 2px; outline: none; transition: opacity .18s ease, filter .18s ease; }
+.csd-donut-slice.is-save { fill: var(--rp-accent); }
+.csd-donut-slice.is-rp { fill: var(--rp-cost); }
+.csd-donut-slice.is-fix { fill: var(--rp-fix); }
+.csd-donut-slice:hover,
+.csd-donut[data-hl="save"] .csd-donut-slice.is-save,
+.csd-donut[data-hl="fix"] .csd-donut-slice.is-fix,
+.csd-donut[data-hl="rp"] .csd-donut-slice.is-rp { filter: brightness(1.12); }
+.csd-donut[data-hl="kept"] .csd-donut-slice:is(.is-save, .is-fix) { filter: brightness(1.12); }
+.csd-donut[data-hl="kept"] .csd-donut-slice.is-rp,
+.csd-donut[data-hl="save"] .csd-donut-slice:is(.is-rp, .is-fix),
+.csd-donut[data-hl="fix"] .csd-donut-slice:is(.is-rp, .is-save),
+.csd-donut[data-hl="rp"] .csd-donut-slice:is(.is-save, .is-fix) { opacity: .3; }
+
+/* One ring by card type: today's fees in the Card types tab's network
+   colours, its key under the donut, the totals in its middle. Pointing at a
+   card type (its slice or its key) fades the others; pointing at "Paid
+   today" lights them all. Highlighting is all CSS on data attributes, so a
+   hover never redraws the chart. */
+.csd-donut.has-types { flex-direction: column; gap: 10px; }
+.csd-donut-save { color: var(--rp-save); font-weight: 700; }
+.csd-donut-line { font-size: 12.5px; font-weight: 600; color: var(--tx2); line-height: 1.35; }
+.csd-donut[data-hl="type"] .csd-donut-slice.is-type { opacity: .3; }
+.csd-donut[data-ti="0"] .csd-donut-slice.t-0,
+.csd-donut[data-ti="1"] .csd-donut-slice.t-1,
+.csd-donut[data-ti="2"] .csd-donut-slice.t-2,
+.csd-donut[data-ti="3"] .csd-donut-slice.t-3,
+.csd-donut[data-ti="4"] .csd-donut-slice.t-4,
+.csd-donut[data-ti="5"] .csd-donut-slice.t-5,
+.csd-donut[data-ti="6"] .csd-donut-slice.t-6,
+.csd-donut[data-ti="7"] .csd-donut-slice.t-7 { opacity: 1; filter: brightness(1.12); }
+.csd-donut[data-hl="now"] .csd-donut-slice.is-type { filter: brightness(1.08); }
+.csd-donut-key { display: flex; flex-direction: column; align-items: center; gap: 6px; max-width: 340px; }
+.csd-donut-key-title { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--mu); }
+.csd-donut-key ul {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px;
+  font-size: 12.5px; color: var(--tx2);
+}
+.csd-donut-key li { display: inline-flex; align-items: center; gap: 6px; cursor: default; transition: opacity .18s ease; }
+.csd-donut[data-hl="type"] .csd-donut-key li:not(.is-on) { opacity: .45; }
+
+.csd-hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 14px; }
+/* The app's primary button: the primary fill, brightening a touch on hover
+   as "Upload statement" does, so the hover is a state of the one colour. */
+.csd-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  font: inherit; font-size: 13.5px; font-weight: 700; line-height: 20px;
+  padding: 9px 18px; border-radius: 9px; cursor: pointer;
+  color: var(--rp-on-accent); background: var(--rp-accent); border: 1px solid var(--rp-accent);
+  box-shadow: 0 8px 20px -10px color-mix(in srgb, var(--ac) 75%, transparent);
+  transition: filter .15s ease, transform .15s ease;
+}
+.csd-cta:hover { filter: brightness(1.06); }
+.csd-cta:active { filter: brightness(0.94); transform: translateY(1px); }
+/* "See by card type": a secondary button, a plain face with a
+   primary-tinted edge, turning the primary colour on hover. */
+.csd-hero .ref-btn { background: var(--card); border-color: var(--rp-soft-border); }
+.csd-hero .ref-btn:hover:not(:disabled) { color: var(--rp-accent); border-color: var(--rp-accent); }
+.csd-rot { transform: rotate(180deg); }
+.csd-hero-table { margin-top: 14px; }
+.csd-table-note { margin: 8px 2px 0; font-size: 12.5px; color: var(--tx2); line-height: 1.5; }
+
+/* Where the savings come from (D49): switch, the free fix, the total. Each
+   line's year in bold (the figure to lead with), its amount on this statement
+   muted beside it. Three columns that line up; on a narrow hero the name
+   takes a line and the two figures share the next. */
+.csd-split { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto auto; column-gap: 16px; row-gap: 2px; max-width: 760px; }
+.csd-split-row {
+  display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline;
+  padding: 5px 8px; margin: 0 -8px; border-radius: 6px;
+  transition: background-color .18s ease, box-shadow .18s ease;
+}
+.csd-split-row.is-on { background: color-mix(in srgb, var(--ac) 10%, transparent); }
+.csd-split-row.is-total { margin-top: 4px; padding-top: 8px; border-top: 1px solid var(--bd2); border-radius: 0 0 6px 6px; }
+.csd-split-name { display: inline-flex; align-items: center; gap: 8px; min-width: 0; font-size: 13.5px; color: var(--tx2); }
+.csd-split-row.is-total .csd-split-name { color: var(--tx); font-weight: 600; }
+.csd-split-name .mi-group { margin-left: 0; }
+.csd-split-year { font-size: 13.5px; color: var(--tx2); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+.csd-split-year strong { font-size: 16px; font-weight: 700; color: var(--rp-save); }
+.csd-split-row.is-total .csd-split-year strong { font-size: 18px; }
+.csd-split-now { font-size: 12.5px; color: var(--tx2); white-space: nowrap; text-align: right; font-variant-numeric: tabular-nums; }
+.csd-sw.is-save { background: var(--rp-accent); }
+.csd-sw.is-fix { background: var(--rp-fix); }
+.csd-split-one { margin: 0; }
+@container csd-hero (max-width: 560px) {
+  .csd-split { grid-template-columns: auto minmax(0, 1fr); }
+  .csd-split-row { row-gap: 2px; }
+  .csd-split-name { grid-column: 1 / -1; }
+  .csd-split-now { text-align: right; }
+  .csd-split-year { text-align: left; }
+}
+.csd-hero .ref-table tbody tr:hover { background: var(--rp-hover); }
+/* A saving per card type, and the total, in the hero's primary; zero or less
+   keeps .csd-muted. The total row's own rule would otherwise paint it --tx. */
+.csd-hero .ref-table tbody td.ref-good,
+.csd-hero .ref-table tbody tr.csd-total-row td.ref-good { color: var(--rp-accent); }
+
+/* "How we calculated this": a plain-text toggle with the disclosure triangle
+   it had as a <summary>, turned down when open; its text sits below. */
+.csd-how {
+  display: flex; align-items: center; gap: 7px; width: fit-content; margin-top: 14px; padding: 0;
+  font: inherit; font-size: 13px; font-weight: 600; color: var(--rp-accent);
+  background: none; border: 0; cursor: pointer;
+}
+.csd-how::before {
+  content: ''; width: 0; height: 0; transition: transform .15s ease;
+  border-left: 5px solid currentColor; border-top: 4px solid transparent; border-bottom: 4px solid transparent;
+}
+.csd-how[aria-expanded="true"]::before { transform: rotate(90deg); }
+.csd-how-text { font-size: 13px; color: var(--tx2); }
+.csd-how-text p { margin: 8px 0 0; line-height: 1.6; max-width: 80ch; }
+
+/* ── KPI band: six tiles ──────────────────────────────────────────────────── */
+.csd-kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+/* A figure never wraps. Where a tile is still too narrow for it (a wider
+   sidebar, a seven-figure store), it shrinks with its tile instead: each tile
+   is a size container. In the page's tabular figures "$188,657.93" measures
+   159.8px at 26px, 6.15px of width per px of size, so 16cqi holds eleven
+   characters; any tile wide enough for that keeps the full 26px (six a row
+   shrink a little only from 1600px to about 1640px). */
+.csd-kpis > .ref-tile { container-type: inline-size; }
+.csd-kpis .ref-tile-value { white-space: nowrap; font-size: min(26px, 16cqi); }
+.csd-tile { min-width: 0; }
+.csd-tile-value { font-size: 22px; overflow-wrap: anywhere; }
+.csd-tile-value.ref-good { color: var(--gr); }
+.csd-tile .ref-tile-note em { font-style: normal; font-weight: 600; color: var(--mu); margin-left: 3px; }
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+.csd-tabs { margin-bottom: 14px; }
+.csd-panel { min-width: 0; }
+
+/* ── Finding cards ────────────────────────────────────────────────────────── */
+.csd-finding { padding: 18px 20px; }
+.csd-f-head {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 14px;
+  border-top: 2px solid var(--tx); padding-top: 12px; margin-top: -2px;
+}
+/* "FINDING 01 · DEBIT CARD FEES ⓘ" on a line of its own, above the title. */
+.csd-f-eyebrow { flex-basis: 100%; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 4px 7px; min-width: 0; }
+.csd-f-num { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--ac2); white-space: nowrap; }
+.csd-f-dot { color: var(--mu); font-weight: 700; }
+.csd-f-topic { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--tx2); }
+.csd-f-eyebrow .mi-btn { width: 16px; height: 16px; }
+.csd-f-title { margin: 0; font-family: var(--bx-font-display); font-size: 19px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; flex: 1 1 240px; min-width: 0; }
+.csd-f-tags { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; flex-wrap: wrap; }
+
+/* How the check came out (D43), at the end of the line above the title: a
+   flagged check in its severity colour, the rest grey. */
+.csd-standing {
+  margin-left: auto; padding: 2px 9px; border-radius: 999px; white-space: nowrap;
+  font-size: 11.5px; font-weight: 700; letter-spacing: 0; text-transform: none;
+}
+.csd-standing.is-high { color: var(--rd); background: color-mix(in srgb, var(--rd) 13%, transparent); }
+.csd-standing.is-medium { color: var(--am); background: color-mix(in srgb, var(--am) 13%, transparent); }
+.csd-standing.is-low { color: var(--ac2); background: var(--act); }
+.csd-standing.is-quiet { color: var(--tx2); background: color-mix(in srgb, var(--mu) 16%, transparent); }
+
+/* The line over the cards, and the heading the lower-priority checks sit
+   under. */
+.csd-ov-sum { margin: 2px 0 14px; }
+.csd-ov-head { margin: 0; font-family: var(--bx-font-display); font-size: 17px; font-weight: 600; line-height: 1.35; color: var(--tx); }
+.csd-ov-head strong { font-weight: 800; }
+.csd-ov-sub { margin: 3px 0 0; font-size: 13px; line-height: 1.45; color: var(--tx2); }
+/* Why a flagged check has its level (D47), under its title, with the rule
+   behind every level in its ⓘ. */
+.csd-f-why { margin: 10px 0 0; max-width: 980px; font-size: 13.5px; line-height: 1.5; color: var(--tx2); }
+.csd-f-why strong { color: var(--tx); font-weight: 700; }
+.csd-f-why .mi-group { margin-left: 5px; vertical-align: -2px; }
+
+/* How a figure compares with last month or a usual day (D47). The words say
+   up or down; the colour only repeats whether that is good for the owner. */
+.csd-tile-change { display: block; margin-top: 4px; font-size: 12.5px; font-weight: 650; line-height: 1.35; }
+.csd-tile-change.is-good { color: var(--gr); }
+.csd-tile-change.is-bad { color: var(--rd); }
+.csd-tile-change.is-flat { color: var(--tx2); }
+.csd-mathcell-vs { display: block; margin-top: 2px; font-size: 12px; font-weight: 600; color: var(--tx2); }
+.csd-ov-group {
+  display: flex; align-items: center; gap: 10px; margin: 24px 0 10px;
+  font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; color: var(--tx2);
+}
+.csd-ov-group::after { content: ''; flex: 1; height: 1px; background: var(--bd2); }
+
+/* A lower-priority check: smaller and quieter than the ones that need a look,
+   folded to its title until "Show details". */
+.csd-finding.is-quiet { padding: 12px 18px; }
+.csd-finding.is-quiet .csd-f-head { border-top: 1px solid var(--bd2); padding-top: 10px; margin-top: 0; }
+.csd-finding.is-quiet .csd-f-num { color: var(--tx2); }
+.csd-finding.is-quiet .csd-f-title { font-size: 16px; font-weight: 650; }
+.csd-finding.is-quiet .csd-impact .csd-impact-figure { font-size: 18px; color: var(--tx2); }
+.csd-f-more {
+  display: inline-flex; align-items: center; gap: 4px; margin-top: 8px; padding: 4px 8px 4px 0;
+  background: none; border: 0; border-radius: 6px; font: inherit; font-size: 13px; font-weight: 650;
+  color: var(--ac2); cursor: pointer;
+}
+.csd-f-more:hover { text-decoration: underline; text-underline-offset: 3px; }
+.csd-f-more svg { transition: transform .15s ease; }
+.csd-f-more[aria-expanded="true"] svg { transform: rotate(180deg); }
+@media (prefers-reduced-motion: reduce) { .csd-f-more svg { transition: none; } }
+
+/* The impact, the one figure to take from the section: its figure large and
+   in the severity colour (high red, medium amber, low violet, info the text
+   colour), the words after it small, on the title's baseline. */
+.csd-impact { display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; }
+.csd-impact-figure {
+  font-family: var(--bx-font-display); font-size: 24px; font-weight: 750; line-height: 1;
+  letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+}
+.csd-impact-words { font-size: 13px; font-weight: 600; color: var(--tx2); }
+.csd-impact.is-high .csd-impact-figure { color: var(--rd); }
+.csd-impact.is-medium .csd-impact-figure { color: var(--am); }
+.csd-impact.is-low .csd-impact-figure { color: var(--ac2); }
+.csd-impact.is-info .csd-impact-figure { color: var(--tx); }
+/* A label with no figure ("Action needed") carries the colour itself. Keyed on
+   the missing figure (is-words): its ⓘ follows the words, so they are never
+   the only child. */
+.csd-impact.is-words.is-high .csd-impact-words { color: var(--rd); font-size: 14px; font-weight: 700; }
+.csd-impact.is-words.is-medium .csd-impact-words { color: var(--am); font-size: 14px; font-weight: 700; }
+.csd-impact.is-words.is-low .csd-impact-words { color: var(--ac2); font-size: 14px; font-weight: 700; }
+
+/* The one line a card's figures cannot carry (a trend built from uploads, a
+   layout with no customer counts): quiet, under the title. */
+.csd-f-note { margin: 10px 0 0; font-size: 13px; line-height: 1.5; color: var(--tx2); }
+
+/* Each tile as wide as its words, no wider, its text centred: stretched to
+   share the card's width, a "3.00%" sat in a 260px box. They wrap onto a
+   second row on a narrow card. */
+.csd-mathrow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.csd-mathcell {
+  flex: 0 1 auto; min-width: 116px; max-width: 100%;
+  background: var(--bg2); border-radius: 9px; padding: 9px 16px 10px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center;
+}
+.csd-mathcell-k { display: inline-flex; align-items: center; justify-content: center; gap: 5px; font-size: 11.5px; font-weight: 600; color: var(--mu); }
+.csd-mathcell-k .mi-btn { width: 16px; height: 16px; }
+.csd-mathcell-v { font-family: var(--bx-font-display); font-size: 20px; font-weight: 750; letter-spacing: -0.01em; overflow-wrap: anywhere; }
+.csd-mathcell-sub { font-size: 11.5px; color: var(--tx2); }
+.csd-mathcell.is-bad .csd-mathcell-v { color: var(--rd); }
+.csd-mathcell.is-good .csd-mathcell-v { color: var(--gr); }
+
+.csd-chart-panel { margin-top: 12px; min-width: 0; }
+/* A table inside a finding (junk fees, chargebacks) sits 14px under what is
+   above it, like a chart does, in a frame of its own, so its header row
+   never butts against the title or the tiles. A long fee line wraps rather
+   than ending in "...". */
+.csd-finding .ref-table-wrap {
+  margin-top: 12px;
+  padding: 10px 4px 2px;
+  border: 1px solid var(--bd2); border-radius: 10px;
+}
+.csd-finding .ref-table tbody tr:last-child td { border-bottom: 0; }
+.csd-finding .ref-table tbody td.ref-name { white-space: normal; overflow-wrap: anywhere; }
+.csd-legend { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 8px 0 0; padding: 0; font-size: 12.5px; color: var(--tx2); }
+.csd-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.csd-legend strong { color: var(--tx); font-weight: 700; }
+.csd-sw { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+
+/* As wide as its words (a one-line tip no longer spans the card), wrapping
+   at the card's edge when it is longer. */
+.csd-callout {
+  width: fit-content; max-width: 100%; box-sizing: border-box;
+  border-left: 3px solid var(--ac); background: var(--bg2); border-radius: 0 10px 10px 0;
+  padding: 10px 15px; margin-top: 12px; font-size: 13.5px; line-height: 1.6; color: var(--tx2);
+}
+.csd-callout strong { color: var(--tx); }
+.csd-footnote { margin: 12px 0 0; font-size: 12px; line-height: 1.55; color: var(--mu); max-width: 90ch; }
+
+.csd-chip {
+  display: inline-flex; align-items: center; white-space: nowrap;
+  font-size: 11.5px; font-weight: 700; padding: 2px 9px; border-radius: 999px;
+  color: var(--tx2); background: var(--elev); margin-right: 4px;
+}
+.csd-chip.is-up { color: var(--gr); background: color-mix(in srgb, var(--gr) 13%, transparent); }
+.csd-chip.is-down, .csd-chip.is-alert { color: var(--rd); background: color-mix(in srgb, var(--rd) 12%, transparent); }
+.csd-chip.is-attn { color: var(--am); background: color-mix(in srgb, var(--am) 12%, transparent); }
+
+.csd-anomalies, .csd-fine-notices { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.csd-anomalies li, .csd-fine-notices li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-size: 13px; color: var(--tx2); }
+.csd-anom-date { font-weight: 600; color: var(--tx); }
+/* The amount an unusual day or batch is about, highlighted. */
+.csd-anom-amt { font-weight: 700; color: var(--rd); font-variant-numeric: tabular-nums; }
+.csd-anom-detail { flex: 1 1 260px; min-width: 0; }
+.csd-linkbtn { margin-top: 10px; border: none; background: none; padding: 0; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--ac2); cursor: pointer; }
+.csd-linkbtn:hover { text-decoration: underline; }
+
+.csd-na { margin: 10px 0 0; font-size: 13.5px; color: var(--mu); }
+.csd-muted { color: var(--mu); }
+
+/* ── Tags on fee lines ────────────────────────────────────────────────────── */
+.csd-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.csd-tag-penalty { color: var(--rd); background: color-mix(in srgb, var(--rd) 13%, transparent); }
+.csd-tag-negotiable { color: var(--am); background: color-mix(in srgb, var(--am) 13%, transparent); }
+.csd-tag-watch { color: var(--ac2); background: var(--act); }
+.csd-tag-review, .csd-tag-debit { color: var(--tx2); background: var(--elev); }
+@supports not (background: color-mix(in srgb, red, blue)) {
+  .csd-pill, .csd-chip, .csd-tag { background: var(--elev); }
+}
+
+/* ── Tables ───────────────────────────────────────────────────────────────── */
+/* .ref-table is fixed-layout with a 940px floor. The smaller tables here
+   declare their own floor so they fit a card, and still scroll inside it
+   rather than widening the page. */
+.csd .ref-table.csd-table-sm { min-width: 620px; }
+.csd .ref-table.csd-daily-table { min-width: 848px; }
+/* Card mix: the money columns are sized for a six-figure total in bold
+   ("$194,523.58"), which a flat 100px cut to "$194,523..." at laptop widths;
+   counts and the share take less. The floor is the sum, so the table scrolls
+   in its card instead of squeezing a column. */
+.csd .ref-table.csd-mix-table { min-width: 1000px; }
+.csd .ref-table.csd-mix-table thead th { width: 96px; }                  /* Avg ticket, Refund items */
+.csd .ref-table.csd-mix-table thead th:first-child { width: 150px; }     /* Card type   */
+.csd .ref-table.csd-mix-table thead th:nth-child(3) { width: 100px; }    /* Number of sales */
+.csd .ref-table.csd-mix-table thead th:nth-child(4),
+.csd .ref-table.csd-mix-table thead th:nth-child(8) { width: 128px; }    /* Gross, Net  */
+.csd .ref-table.csd-mix-table thead th:nth-child(6) { width: 112px; }    /* Refunds     */
+.csd .ref-table.csd-mix-table thead th:nth-child(7) { width: 90px; }     /* Net items   */
+.csd .ref-table.csd-mix-table thead th:nth-child(9) { width: 100px; }    /* Percent of card sales */
+.csd .ref-table.csd-fees-table { min-width: 1108px; }
+.csd .ref-table.csd-fees-table thead th:first-child { width: 330px; }
+/* 80px: the "Debit" chip is 44px plus the cell's 28px of padding. */
+.csd .ref-table.csd-fees-table thead th:nth-child(4) { width: 80px; }
+.csd .ref-table.csd-fees-table thead th:last-child { width: 200px; }
+.csd .ref-table.csd-daily-table thead th { width: 100px; }
+.csd .ref-table.csd-daily-table thead th:nth-child(5) { width: 128px; } /* Adjustments, with its ⓘ */
+.csd .ref-table.csd-daily-table thead th:nth-child(2) { width: 60px; }
+.csd .ref-table.csd-daily-table thead th:last-child { width: 170px; }
+/* The engine's grid tables (junk fees, chargebacks): text columns take the
+   wide share, figures and tags the narrow one. */
+.csd .ref-table.csd-grid { min-width: 560px; }
+.csd .ref-table.csd-grid thead th { width: 110px; }
+.csd .ref-table.csd-grid thead th.csd-col-text { width: 240px; }
+.csd .ref-table tbody tr.csd-total-row td { font-weight: 700; color: var(--tx); border-top: 1px solid var(--bd); }
+/* On a narrow card (a phone) a grid table's columns scrolled off to the
+   right, so a fee's amounts and fix, and the total's figures, were out of
+   sight. There each row stacks: its first cell as a heading, then one
+   "label  value" line per cell (`data-label`), empty cells left out. The
+   header row is hidden from sight but still read out. */
+.csd-finding { container: csd-card / inline-size; }
+@container csd-card (max-width: 540px) {
+  /* The header row is hidden here, so its ⓘ go too: never a focusable
+     button no one can see. */
+  .csd .ref-table.csd-grid thead .mi-group { display: none; }
+  .csd-finding .ref-table-wrap { padding: 0; }
+  .csd .ref-table.csd-grid { min-width: 0; }
+  .csd .ref-table.csd-grid,
+  .csd .ref-table.csd-grid tbody,
+  .csd .ref-table.csd-grid tr,
+  .csd .ref-table.csd-grid td { display: block; width: auto; }
+  .csd .ref-table.csd-grid thead {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  .csd .ref-table.csd-grid tbody tr { padding: 10px 12px; border-bottom: 1px solid var(--bd2); }
+  .csd .ref-table.csd-grid tbody tr:last-child { border-bottom: 0; }
+  .csd .ref-table.csd-grid tbody td {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 14px;
+    padding: 3px 0; border: 0; white-space: normal; overflow: visible; text-align: right;
+  }
+  .csd .ref-table.csd-grid tbody td::before {
+    content: attr(data-label); flex: none; max-width: 45%;
+    font-size: 12px; font-weight: 600; color: var(--mu); text-align: left;
+  }
+  .csd .ref-table.csd-grid tbody td:first-child { display: block; padding: 0 0 4px; text-align: left; font-weight: 700; }
+  .csd .ref-table.csd-grid tbody td:first-child::before { content: none; }
+  .csd .ref-table.csd-grid tbody td:empty { display: none; }
+  .csd .ref-table.csd-grid tbody tr.csd-total-row td { border-top: 0; }
+  .csd .ref-table.csd-grid tbody tr.csd-total-row { border-top: 1px solid var(--bd); }
+}
+.csd .ref-table tbody tr.csd-row-prior td { color: var(--mu); font-style: italic; }
+.csd .ref-table tbody tr.csd-row-alert td { background: color-mix(in srgb, var(--rd) 6%, transparent); }
+.csd .ref-table-wrap { max-width: 100%; }
+
+/* ── Notices ──────────────────────────────────────────────────────────────── */
+.csd-notices { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.csd-notice { border-bottom: 1px solid var(--bd2); padding-bottom: 14px; }
+.csd-notice:last-child { border-bottom: none; padding-bottom: 0; }
+.csd-notice-top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 12.5px; }
+.csd-notice-text {
+  margin: 8px 0 0; padding: 10px 14px; border-left: 3px solid var(--bd);
+  background: var(--bg2); border-radius: 0 8px 8px 0;
+  font-size: 13px; line-height: 1.6; color: var(--tx2); overflow-wrap: anywhere;
+}
+.csd-notice-action { margin: 8px 0 0; font-size: 13px; color: var(--tx2); }
+.csd-notice-action strong { color: var(--tx); }
+.csd-dispute-sum { margin: 0 0 10px; font-size: 13.5px; color: var(--tx2); }
+.csd-zero { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--gr); }
+
+/* ── Chart tooltip ────────────────────────────────────────────────────────── */
+.csd-tip {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 9px 11px; box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .4);
+  font-size: 12.5px; min-width: 150px; color: var(--text-primary);
+}
+.csd-tip-label { font-weight: 700; margin-bottom: 6px; }
+.csd-tip-row { display: flex; align-items: center; gap: 7px; }
+.csd-tip-dot { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+.csd-tip-name { color: var(--text-secondary); }
+.csd-tip-val { margin-left: auto; padding-left: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.csd-tip-flag { margin-top: 5px; font-size: 11.5px; font-weight: 700; color: var(--text-secondary); }
+.csd-tip-flag.is-alert { color: var(--red); }
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+/* Six tiles a row only from 1600px: below that, with the sidebar open, a
+   tile is ~130-150px and a figure like "$188,657.93" at 26px wrapped onto a
+   second line ("$188,657.9" / "3"). Three a row keeps every figure whole. */
+@media (max-width: 1599px) { .csd-kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+  .csd-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .csd-title { font-size: 22px; }
+  .csd-hero-title { font-size: 19px; }
+  .csd-finding, .csd-hero { padding: 15px 14px; }
+  .csd-finding.is-quiet { padding: 11px 14px; }
+  .csd-f-tags { margin-left: 0; }
+}
+@media (max-width: 420px) {
+  .csd-kpis { grid-template-columns: minmax(0, 1fr); }
+  .csd-actions .ref-btn { padding: 7px 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .csd-cta, .csd-donut-slice, .csd-donut-key li, .csd-bar-head, .csd-bar-fill, .csd-save-pill, .csd-save-caret, .csd-how::before, .csd-split-row { transition: none; }
+  .csd-donut-centre-in { animation: none; }
+  .csd-save-words, .csd-save-words.is-shown { transition: none; }
+  .csd-updated { animation: none; }
+}
+
+/* A table heading with its ⓘ beside it: the heading's own alignment, the
+   icon never wrapping onto a line of its own. */
+.csd-th { display: inline-flex; align-items: center; gap: 5px; vertical-align: bottom; }
+.ref-table thead th.ref-num .csd-th { justify-content: flex-end; }
+.csd-th .mi-btn { width: 15px; height: 15px; text-transform: none; letter-spacing: 0; }
+.csd-est { display: inline-flex; align-items: center; gap: 4px; }
+.csd-est .mi-btn { width: 16px; height: 16px; }
+/* A chip with its ⓘ beside it (anomalies, notices). */
+.csd-chip-group { display: inline-flex; align-items: center; gap: 4px; }
+.csd-chip-group .csd-chip { margin-right: 0; }
+.csd-chip-group .mi-btn { width: 15px; height: 15px; }
+/* A top figure's ⓘ sits a little apart from its label. */
+.csd-tile .ref-tile-label { display: inline-flex; align-items: center; gap: 5px; }
+
+/* ── From the review of the plain words ─────────────────────────────────── */
+/* For a screen reader only. */
+.csd-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+/* The to-date saving on its own line, so it never wraps mid-thought. */
+.csd-hero-todate { display: block; margin-top: 2px; }
+.csd-hero-sub .mi-group, .csd .ref-card-title .mi-group { margin-left: 6px; }
+/* A heading's ⓘ follows its last word, the two never split. */
+.csd-th-end { white-space: nowrap; }
+.ref-table thead th .csd-th-end .mi-group { display: inline-flex; vertical-align: -3px; margin-left: 4px; }
+.ref-table thead th .csd-th-end .mi-btn { width: 15px; height: 15px; text-transform: none; letter-spacing: 0; }
+/* What to do wraps rather than ending in "...": the most useful words. */
+.csd .ref-table.csd-grid tbody td:not(.ref-num) { white-space: normal; overflow-wrap: break-word; }
+.csd .ref-table.csd-fees-table tbody td:last-child { white-space: normal; }
+.csd .ref-table.csd-fees-table thead th:nth-child(6) { width: 140px; } /* Charged on: "1 at $29.95 each" whole */
+/* The impact's ⓘ and the pill's. */
+.csd-impact .mi-group { align-self: center; }
+.csd-impact .mi-btn, .csd-save-pill .mi-btn { width: 16px; height: 16px; }
+/* The donut's middle: each line whole, the words a little wider. */
+.csd-donut-line { white-space: nowrap; }
+.csd-donut.has-types .csd-donut-centre { padding: 0 12%; }
+/* The header line: the layout chip follows the status pill, so it never
+   ends up alone on a second line. */
+.csd-sub > :not(.csd-status):not(.csd-layout-tag) { order: 1; }
+/* On a phone a tile alone on its row fills it; tiles sharing a row split it. */
+@media (max-width: 560px) { .csd-mathcell { flex: 1 1 auto; } }

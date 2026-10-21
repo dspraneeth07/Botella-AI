@@ -1,0 +1,266 @@
+/* ============================================
+   DEMO POPUP - shared (dp- prefix)
+   Used by every "Book a Demo" button site-wide.
+   ============================================ */
+
+.dp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
+  animation: dp-fade-in 0.15s ease;
+}
+
+@keyframes dp-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.dp-popup {
+  background: #12151F;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 440px;
+  padding: 36px 32px 28px;
+  position: relative;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+  color: #f8f9fb;
+  font-family: var(--bx-font-body);
+  animation: dp-pop-in 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes dp-pop-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+[data-theme="light"] .dp-popup {
+  background: #ffffff;
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #0f172a;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.20);
+}
+
+.dp-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  color: #8e94ad;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.12s, color 0.12s;
+}
+
+.dp-close:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f8f9fb;
+}
+
+[data-theme="light"] .dp-close {
+  color: #64748b;
+}
+
+[data-theme="light"] .dp-close:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #0f172a;
+}
+
+.dp-popup h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: -0.3px;
+}
+
+.dp-popup > p {
+  font-size: 14px;
+  color: #c4c9d9;
+  margin: 0 0 22px;
+  line-height: 1.55;
+}
+
+[data-theme="light"] .dp-popup > p {
+  color: #475569;
+}
+
+/* Form */
+.dp-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dp-form input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 15px;
+  color: #f8f9fb;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+
+.dp-form input::placeholder {
+  color: #8e94ad;
+}
+
+.dp-form input:focus {
+  border-color: #B79CFF;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.18);
+}
+
+[data-theme="light"] .dp-form input {
+  background: #f9fafb;
+  border-color: rgba(0, 0, 0, 0.10);
+  color: #0f172a;
+}
+
+[data-theme="light"] .dp-form input:focus {
+  background: #ffffff;
+  border-color: #B79CFF;
+}
+
+.dp-form button[type="submit"] {
+  background: linear-gradient(104deg, #7C3AED 0%, #6D28D9 52%, #9333EA 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.05s;
+  min-height: 46px;
+}
+
+.dp-form button[type="submit"]:hover:not(:disabled) {
+  box-shadow: 0 14px 32px -14px rgba(124, 58, 237, 0.85);
+}
+
+.dp-form button[type="submit"]:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.dp-form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error message */
+.dp-error {
+  margin: 6px 0 0 !important;
+  padding: 10px 12px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.20);
+  border-radius: 8px;
+  font-size: 13px;
+  color: #FF6B8A !important;
+  text-align: center;
+}
+
+[data-theme="light"] .dp-error {
+  background: rgba(239, 68, 68, 0.06);
+  color: #dc2626 !important;
+}
+
+/* Fine print under form */
+.dp-fineprint {
+  margin: 14px 0 0 !important;
+  font-size: 11.5px !important;
+  color: #8e94ad !important;
+  text-align: center;
+  line-height: 1.4;
+}
+
+[data-theme="light"] .dp-fineprint {
+  color: #94a3b8 !important;
+}
+
+/* Success state */
+.dp-success {
+  text-align: center;
+  padding: 12px 0 4px;
+}
+
+.dp-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.15);
+  border: 2px solid rgba(34, 197, 94, 0.35);
+  color: #22c55e;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 auto 18px;
+}
+
+.dp-success h3 {
+  margin-bottom: 8px;
+}
+
+.dp-success p {
+  font-size: 14px;
+  color: #c4c9d9;
+  margin: 0 0 22px;
+  line-height: 1.5;
+}
+
+[data-theme="light"] .dp-success p {
+  color: #475569;
+}
+
+.dp-success-close {
+  background: rgba(167, 139, 250, 0.12);
+  color: #B79CFF;
+  border: 1px solid rgba(167, 139, 250, 0.26);
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.dp-success-close:hover {
+  background: rgba(167, 139, 250, 0.22);
+  color: #c084fc;
+}
+
+[data-theme="light"] .dp-success-close {
+  background: rgba(167, 139, 250, 0.09);
+  color: #6D28D9;
+  border-color: rgba(167, 139, 250, 0.22);
+}
+
+[data-theme="light"] .dp-success-close:hover {
+  background: rgba(167, 139, 250, 0.16);
+}
+
+@media (max-width: 480px) {
+  .dp-popup { padding: 28px 22px 22px; max-width: 360px; }
+  .dp-popup h3 { font-size: 18px; }
+}

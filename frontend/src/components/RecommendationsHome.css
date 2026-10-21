@@ -1,0 +1,553 @@
+/* RecommendationsHome.css - AI Recommendations home (§7.1)
+   -----------------------------------------------------------------------------
+   The short `--ac / --tx / --bd` names below are ALIASES, not a palette. This
+   screen used to carry its own indigo-and-slate token sheet, which is why the
+   product read as a different piece of software from the marketing site and
+   from the screens either side of it. Every alias now resolves to the shared
+   app token published by app-theme.css, so the screen inherits the brand's
+   violet, its ink, its borders and its light/dark flip for free - and there is
+   exactly ONE place (app-theme.css) where a colour is decided.
+
+   Aliases are kept rather than search-replaced because the rules below use them
+   several hundred times, and the short names keep the one-line declarations
+   readable.
+
+   Scoped under .rh-page. No dark-mode override block is needed any more: the
+   tokens being aliased already flip themselves. */
+
+.rh-page {
+  /* Surfaces */
+  --bg: var(--bg-primary);
+  --bg2: var(--bg-secondary);
+  --card: var(--bg-card);
+  --hover: var(--bg-hover);
+  --elev: var(--bg-elevated);
+  --bd: var(--border);
+  --bd2: var(--border-light);
+
+  /* Ink */
+  --tx: var(--text-primary);
+  --tx2: var(--text-secondary);
+  --mu: var(--text-muted);
+
+  /* Accent - the brand violet, in the cut the active theme calls for. */
+  --ac: var(--accent);
+  --ac2: var(--accent-light);
+  --act: var(--accent-glow);
+  --acb: color-mix(in srgb, var(--accent) 42%, transparent);
+
+  /* Semantics. Jade = good, rose = critical, fuchsia = needs attention. There
+     is no amber in the brand system; `--am` is kept as the name the proximity
+     rules use, pointed at the attention cut. */
+  --gr: var(--green);
+  --rd: var(--red);
+  --am: var(--yellow);
+
+  /* Signal domains. Nine arbitrary hues (indigo, purple, sky, amber, teal,
+     pink, green, slate, rose) have been folded into FOUR brand cuts plus a
+     neutral, grouped by what the signal actually is - the chip carries a text
+     label as well, so the colour only has to separate kinds, not instances.
+
+       violet   your own numbers      (your sales, comparable stores)
+       cyan     the calendar/sky      (weather, holidays)
+       fuchsia  things happening      (events, sports)
+       plum     people               (customers, social)
+       neutral  reporting            (news) */
+  --c-sales: var(--accent);
+  --c-comp: var(--accent);
+  --c-weather: var(--bx-cyan);
+  --c-holiday: var(--bx-cyan);
+  --c-events: var(--bx-fuchsia);
+  --c-sports: var(--bx-fuchsia);
+  --c-cust: var(--bx-plum);
+  --c-social: var(--bx-plum);
+  --c-news: var(--text-muted);
+
+  /* Ink to lay ON a filled accent or semantic swatch. It has to flip: the dark
+     register's accent (#B79CFF) and rose (#FF6B8A) are LIGHT cuts, so white
+     text on them is unreadable - the value below resolves to near-black there
+     and to white on the light register's deep violet. */
+  --on-fill: var(--bx-accent-ink);
+
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--bx-font-body);
+  padding: 22px 26px 40px;
+  box-sizing: border-box;
+  font-variant-numeric: tabular-nums;
+
+  /* The breakpoints below query THIS box, not the browser window.
+     They have to: the page is laid out beside a sidebar the user can collapse
+     or drag between 220px and 480px, so the window width says almost nothing
+     about the space this content actually has. At a 1280px window with the
+     sidebar open, .rh-page is about 950px wide - every viewport breakpoint
+     stayed unfired while the card grid was being crushed to ~300px, which is
+     what shredded product names down to one letter per line.
+     Same container-type/container-name pattern as BottleSenseScreen.css. */
+  container-type: inline-size;
+  container-name: rh;
+}
+
+.rh-cols { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 22px; align-items: start; }
+/* A second container, one level in. Page-level decisions (does the rail sit
+   beside the list, how many figure tiles per row) belong to .rh-page, but a
+   CARD's decisions belong to the column the card is actually in - and that
+   column is ~360px narrower whenever the rail is beside it. Querying the page
+   for both meant a 1366px window kept the card in two columns on a 637px
+   track, squeezing the product title to 187px. */
+.rh-main { min-width: 0; container-type: inline-size; container-name: rhmain; }
+.rh-rail { position: sticky; top: 12px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+/* Greeting */
+.rh-eyebrow { display: block; font-family: var(--bx-font-display); font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--mu); }
+/* Store names run from "Zeke's" to "McScrooge's Wines and Spirits", so the
+   greeting must wrap rather than run off the page or force a scrollbar. */
+.rh-hello { font-family: var(--bx-font-display); font-size: 30px; font-weight: 800; letter-spacing: -0.02em; margin: 8px 0 8px; line-height: 1.2; overflow-wrap: anywhere; max-width: 100%; }
+.rh-review { font-size: 14px; line-height: 1.6; color: var(--tx2); margin: 0; max-width: 68ch; }
+
+/* Headline */
+/* A row, so the info control sits beside the headline instead of dropping
+   under it. It was a block, so the button - the only other child - took its
+   own line and appeared to belong to whatever came next. baseline, not
+   centre: the control is 14px against a 19px heading and centring aligns
+   their line boxes, leaving it visibly high. The quiet variant wraps its h2
+   and p in a single child, so it is unaffected. */
+.rh-headline { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; margin: 22px 0 18px; }
+.rh-headline h2 { font-family: var(--bx-font-display); font-size: 19px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+.rh-headline-value { color: var(--ac2); }
+.rh-headline em { font-style: normal; color: var(--mu); font-size: 14px; font-weight: 600; }
+.rh-headline p { font-size: 13px; color: var(--tx2); margin: 6px 0 0; }
+.rh-headline-quiet h2 { color: var(--tx); }
+.rh-chip-link { border: none; background: var(--elev); color: var(--tx2); font: inherit; font-size: 12px; padding: 2px 9px; border-radius: 999px; cursor: pointer; }
+.rh-chip-link:hover { color: var(--ac2); }
+
+/* Key figures */
+/* V1 · V26: one quiet strip - a single bordered container, four cells split by
+   hairlines, tops aligned. No per-tile borders, no coloured left edges, no
+   shadow: the figures are context, not four competing objects. */
+.rh-figures { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-bottom: 20px; background: var(--card); border: 1px solid var(--bd2); border-radius: 12px; overflow: hidden; align-items: start; }
+/* `font: inherit` and an explicit colour are load-bearing, not tidiness: a
+   <button> takes the UA's own font and `color: buttontext` unless told
+   otherwise, so every child that did not name a colour of its own - the VALUE,
+   which is the whole point of the tile - was painting near-black on the dark
+   register and was effectively invisible. */
+/* The grid item is now the cell, not the button, so the dividing rule lives
+   here - on the button it would have sat inside the wrapper and disappeared. */
+.rh-fig-cell { position: relative; display: flex; border-left: 1px solid var(--bd2); height: 100%; }
+.rh-fig-cell:first-child { border-left: none; }
+.rh-fig { position: relative; text-align: left; font: inherit; color: var(--tx); background: none; border: none; border-radius: 0; padding: 14px 16px; cursor: pointer; display: flex; flex-direction: column; gap: 3px; transition: background .15s; height: 100%; flex: 1; min-width: 0; }
+/* Layered over the navigating button, top-right. */
+.rh-fig-meta { position: absolute; top: 12px; right: 12px; z-index: 2; }
+.rh-fig:hover { background: var(--hover); }
+.rh-fig-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.rh-fig-label { font-size: 12px; font-weight: 600; color: var(--mu); padding-right: 46px; }
+.rh-fig-value { font-family: var(--bx-font-display); font-size: 21px; font-weight: 800; line-height: 1.15; color: var(--tx); letter-spacing: -0.02em; margin-top: 2px; font-variant-numeric: tabular-nums; }
+/* "No data" is a sentence, not a number - it should not shout at figure size. */
+.rh-fig-value.is-empty { font-size: 15px; font-weight: 600; color: var(--mu); letter-spacing: 0; }
+/* V25: deltas are uncontained - arrow + text, no pill. */
+.rh-fig-delta { font-size: 12px; font-weight: 700; background: none; padding: 0; border: none; font-variant-numeric: tabular-nums; }
+.rh-fig-delta.is-good { color: var(--gr); } .rh-fig-delta.is-bad { color: var(--rd); }
+.rh-fig-note { font-size: 12px; color: var(--tx2); }
+.rh-fig-link { font-size: 12px; font-weight: 600; color: var(--ac2); display: inline-flex; align-items: center; gap: 3px; margin-top: 4px; }
+
+/* Internal tooling bar (QA / staging builds only) - deliberately looks like a
+   tool rather than a product feature, so nobody mistakes it for one if a build
+   is ever pointed at the wrong environment. */
+.rh-devbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding: 8px 12px;
+  border: 1px dashed var(--bd2);
+  border-radius: 10px;
+  background: var(--card);
+}
+.rh-devbar-tag {
+  font-family: var(--bx-font-display);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--am);
+  border: 1px solid var(--am);
+  border-radius: 999px;
+  padding: 2px 7px;
+}
+.rh-devbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--bx-font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 13px;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--tx);
+  cursor: pointer;
+}
+.rh-devbar-btn:hover:not(:disabled) { border-color: var(--ac); color: var(--ac2); }
+.rh-devbar-btn:disabled { opacity: .6; cursor: progress; }
+.rh-devbar-note { font-size: 11.5px; color: var(--mu); }
+/* Says which engine the button actually runs. Amber rather than grey: a tester
+   pressing Generate to "see the new engine" is looking at the old one, and a
+   note in the same colour as the caption beside it would be read as more of
+   the same sentence. */
+.rh-devbar-warn { color: #b45309; font-weight: 600; }
+@media (prefers-color-scheme: dark) { .rh-devbar-warn { color: #fbbf24; } }
+/* Which engine produced the cards. Green because it is now the rebuilt one;
+   the amber variant above is kept for the day something else needs flagging
+   here, and because deleting a style the moment it stops being used is how
+   the next person writes it again from scratch. */
+.rh-devbar-ok { color: #047857; font-weight: 600; }
+@media (prefers-color-scheme: dark) { .rh-devbar-ok { color: #34d399; } }
+
+/* Sparkline */
+.rh-spark { width: 92px; height: 28px; flex: 0 0 auto; overflow: visible; }
+.rh-spark-line { stroke-width: 1.6; fill: none; }
+.rh-spark-line.rh-spark-ac { stroke: var(--ac); } .rh-spark-line.rh-spark-rd { stroke: var(--rd); } .rh-spark-line.rh-spark-gr { stroke: var(--gr); } .rh-spark-line.rh-spark-am { stroke: var(--am); }
+.rh-spark-area { opacity: .14; }
+.rh-spark-area.rh-spark-ac { fill: var(--ac); } .rh-spark-area.rh-spark-rd { fill: var(--rd); } .rh-spark-area.rh-spark-gr { fill: var(--gr); } .rh-spark-area.rh-spark-am { fill: var(--am); }
+.rh-spark-bar { opacity: .85; }
+.rh-spark-bar.rh-spark-ac { fill: var(--ac); } .rh-spark-bar.rh-spark-rd { fill: var(--rd); } .rh-spark-bar.rh-spark-gr { fill: var(--gr); } .rh-spark-bar.rh-spark-am { fill: var(--am); }
+
+/* Tab row (tabs + ranked-by + type filter) */
+/* A4: never overflow horizontally - the row wraps instead of pushing the page. */
+.rh-tabrow { display: flex; align-items: flex-end; flex-wrap: nowrap; gap: 8px 12px; border-bottom: 1px solid var(--bd2); margin-bottom: 16px; max-width: 100%; }
+.rh-tabrow > .rh-filters { flex: 0 0 auto; display: flex; align-items: flex-end; gap: 8px; }
+.rh-rankedby { font-size: 12px; color: var(--mu); margin-left: 8px; padding-bottom: 9px; min-width: 0; flex: 1 1 auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; }
+.rh-typefilter { position: relative; }
+.rh-typefilter-btn { display: inline-flex; align-items: center; gap: 5px; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--tx2); background: var(--card); border: 1px solid var(--bd); border-radius: 8px; padding: 6px 10px; cursor: pointer; margin-bottom: 6px; }
+.rh-typefilter-btn:hover { border-color: var(--ac); color: var(--ac2); }
+.rh-typefilter-menu { position: absolute; right: 0; top: 100%; z-index: 20; background: var(--card); border: 1px solid var(--bd); border-radius: 10px; box-shadow: 0 12px 34px -16px rgba(0,0,0,.4); padding: 5px; min-width: 160px; max-height: 280px; overflow-y: auto; display: flex; flex-direction: column; gap: 1px; }
+.rh-typefilter-opt { text-align: left; font: inherit; font-size: 13px; color: var(--tx2); background: none; border: none; border-radius: 7px; padding: 7px 10px; cursor: pointer; }
+.rh-typefilter-opt:hover { background: var(--hover); }
+.rh-typefilter-opt.is-on { background: var(--act); color: var(--ac2); font-weight: 600; }
+
+/* Tabs */
+.rh-tabs { display: flex; gap: 4px; }
+.rh-tab { border: none; background: none; font: inherit; font-size: 14px; font-weight: 600; color: var(--mu); padding: 8px 12px; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; display: inline-flex; align-items: center; gap: 7px; }
+.rh-tab:hover { color: var(--tx2); }
+.rh-tab.is-on { color: var(--ac2); border-bottom-color: var(--ac); }
+.rh-tab-count { font-size: 12px; font-weight: 700; background: var(--elev); color: var(--tx2); padding: 1px 8px; border-radius: 999px; }
+.rh-tab.is-on .rh-tab-count { background: var(--act); color: var(--ac2); }
+
+/* Cards */
+.rh-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.rh-card { background: var(--card); border: 1px solid var(--bd2); border-radius: 12px; padding: 16px 18px; }
+.rh-card.is-open { border-color: var(--acb); box-shadow: 0 8px 30px -18px var(--accent-glow); }
+.rh-card-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 340px); gap: 20px; align-items: start; }
+.rh-card-left { min-width: 0; }
+.rh-card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; text-align: right; }
+/* wrap, so a squeezed row moves the title to its own line instead of letting
+   the rank and the type tag hold their width while the title shreds. */
+.rh-card-top { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+.rh-rank { font-size: 12.5px; font-weight: 700; color: var(--mu); flex: 0 0 auto; font-variant-numeric: tabular-nums; margin-top: 3px; }
+.rh-type { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ac2); background: var(--act); padding: 3px 9px; border-radius: 8px; flex: 0 0 auto; margin-top: 1px; }
+/* Title wraps up to TWO lines - never truncated to "J.." (A1).
+   min-width is a FLOOR, not 0: with min-width:0 the title was the only item in
+   .rh-card-top allowed to shrink, so a narrow row kept the rank and the type
+   tag at full width and squeezed "El Jimador Blanco 1L" into a one-letter-wide
+   column reading "E J" down the page. 12ch is narrow enough that the floor only
+   bites when the row genuinely cannot fit, and .rh-card-top now wraps rather
+   than overflowing when it does. */
+.rh-prod { font-size: 16px; font-weight: 700; line-height: 1.3; flex: 1 1 auto; min-width: 12ch; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; overflow-wrap: anywhere; }
+.rh-more { font-style: normal; color: var(--mu); font-weight: 600; font-size: 14px; }
+.rh-caret { border: none; background: none; color: var(--mu); cursor: pointer; padding: 2px; display: grid; place-items: center; flex: 0 0 auto; }
+.rh-chev-open { transform: rotate(180deg); }
+.rh-why { font-size: 14px; line-height: 1.55; color: var(--tx2); margin: 9px 0 11px; }
+.rh-why strong { color: var(--tx); }
+
+.rh-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.rh-chip { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; color: var(--src, var(--ac2)); background: color-mix(in srgb, var(--src, var(--ac)) 12%, transparent); }
+@supports not (background: color-mix(in srgb, red, blue)) { .rh-chip { background: var(--elev); } }
+.rh-src-your_sales { --src: var(--c-sales); } .rh-src-events { --src: var(--c-events); } .rh-src-weather { --src: var(--c-weather); } .rh-src-holiday { --src: var(--c-holiday); } .rh-src-comparable { --src: var(--c-comp); } .rh-src-news { --src: var(--c-news); } .rh-src-sports { --src: var(--c-sports); } .rh-src-social { --src: var(--c-social); }
+
+/* Card right column: value → confidence/deadline → actions */
+.rh-value { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.rh-value-head { font-size: 15px; font-weight: 600; color: var(--tx); line-height: 1.35; }
+.rh-value-head strong { font-size: 17px; font-weight: 800; }
+.rh-value-head em { font-style: normal; color: var(--mu); font-weight: 600; }
+.rh-cost { font-size: 12px; color: var(--mu); }
+.rh-rightmeta { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+.rh-conf { display: inline-flex; align-items: center; gap: 6px; }
+.rh-conf-segs { display: inline-flex; gap: 2px; }
+.rh-seg { width: 6px; height: 13px; border-radius: 2px; background: var(--elev); }
+.rh-seg.on { background: var(--ac); }
+.rh-conf-word { font-size: 12px; font-weight: 600; color: var(--tx2); }
+.rh-deadline { font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 8px; }
+.rh-prox-urgent .rh-deadline, .rh-deadline.rh-prox-urgent { color: var(--rd); background: color-mix(in srgb, var(--rd) 12%, transparent); }
+.rh-prox-soon .rh-deadline, .rh-deadline.rh-prox-soon { color: var(--am); background: color-mix(in srgb, var(--am) 12%, transparent); }
+.rh-deadline.rh-prox-later { color: var(--tx2); background: var(--elev); }
+.rh-prox-overdue .rh-deadline, .rh-deadline.rh-prox-overdue { color: var(--on-fill); background: var(--rd); }
+@supports not (background: color-mix(in srgb, red, blue)) { .rh-deadline { background: var(--elev) !important; } }
+.rh-card-right .rh-actions { justify-content: flex-end; margin-top: 2px; }
+
+/* Detail */
+.rh-detail { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--bd2); }
+.rh-skus { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+.rh-sku { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.rh-sku-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rh-sku-meta { color: var(--mu); white-space: nowrap; }
+.rh-suggested { font-size: 13px; line-height: 1.55; color: var(--tx2); margin: 0 0 12px; padding: 10px 12px; background: var(--bg2); border: 1px solid var(--bd2); border-radius: 10px; }
+.rh-suggested strong { color: var(--tx); }
+.rh-rationale { font-size: 13px; line-height: 1.65; color: var(--tx2); margin: 0 0 12px; }
+.rh-sigchips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+/* The engine's one sentence on what each live signal was found to do to this
+   card's family (043). Muted: it is a disclosure, not the recommendation. */
+.rh-sigimpact { margin: -4px 0 12px; font-size: 12px; line-height: 1.5; color: var(--mu); font-style: italic; text-wrap: pretty; }
+/* A card the Signals rail just pointed at. Transient (2.6 s), distinct from
+   the report highlight below, which marks a cross-screen link. */
+.rh-card-flash { animation: rh-flash 2.6s ease-out; }
+@keyframes rh-flash {
+  0%, 40% { box-shadow: 0 0 0 2px var(--ac2); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.rh-sigchip { font-size: 11.5px; font-weight: 600; color: var(--tx2); background: var(--elev); border: 1px solid var(--bd2); border-radius: 999px; padding: 3px 10px; }
+.rh-detail-foot { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 12.5px; color: var(--tx2); }
+.rh-conf-line strong { color: var(--tx); }
+/* The store-level rate shown when the confidence figure is the same on
+   every card today. Muted and allowed to wrap: it is a caveat about the
+   figure, not a figure, and it must not read as a per-card judgement. */
+.rh-conf-flat { color: var(--mu); font-style: italic; flex: 1 1 100%; }
+.rh-foot-sep { color: var(--mu); }
+.rh-support { border: none; background: none; color: var(--ac2); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 0; margin-left: auto; }
+
+/* Actions */
+.rh-actions { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+.rh-btn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 8px; cursor: pointer; border: 1px solid transparent; }
+.rh-btn-primary { background: var(--bx-grad-signature); color: #FFFFFF; box-shadow: 0 10px 24px -14px rgba(124, 58, 237, .9); }
+.rh-btn-primary:hover { box-shadow: 0 14px 30px -12px rgba(147, 51, 234, .95); }
+.rh-btn-outline { background: transparent; color: var(--tx); border-color: var(--bd); }
+.rh-btn-outline:hover { border-color: var(--ac); color: var(--ac2); }
+.rh-btn-text { background: none; color: var(--mu); }
+.rh-btn-text:hover { color: var(--rd); }
+.rh-accepted { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--gr); }
+.rh-completed { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--ac2); }
+
+.rh-dismiss-menu { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--bd2); }
+.rh-dismiss-q { font-size: 13px; font-weight: 600; color: var(--tx2); margin-right: 4px; }
+.rh-dismiss-opt { font: inherit; font-size: 12px; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--bd); background: var(--bg); color: var(--tx2); cursor: pointer; }
+.rh-dismiss-opt:hover { border-color: var(--ac); color: var(--ac2); }
+.rh-dismiss-cancel { font: inherit; font-size: 12px; color: var(--mu); background: none; border: none; cursor: pointer; margin-left: auto; }
+
+.rh-empty { padding: 40px 20px; text-align: center; color: var(--mu); font-size: 14px; background: var(--card); border: 1px dashed var(--bd); border-radius: 12px; }
+
+/* Disclaimer */
+/* No max-width: the figures strip, the tabs and the card list above all run the
+   full content column, so a paragraph that stopped 380px short of the right
+   edge read as accidentally indented rather than as a deliberate measure. */
+.rh-disclaimer { margin-top: 24px; padding-top: 16px; background: none; border: none; border-top: 1px solid var(--bd2); border-radius: 0; font-size: var(--disclaimer-size); line-height: 1.65; color: var(--tx2); text-wrap: pretty; }
+.rh-disclaimer strong { color: var(--tx); font-weight: 700; }
+
+/* Rail panels */
+.rh-panel { background: var(--card); border: 1px solid var(--bd2); border-radius: 12px; padding: 16px; }
+/* The title wraps to two lines in most of the rail panels, so the badge aligns
+   to the FIRST line rather than to the block's centre, and never wraps or
+   squeezes the title out of the panel. */
+.rh-panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.rh-panel-title { display: inline-flex; align-items: flex-start; gap: 7px; font-family: var(--bx-font-display); font-size: 13px; font-weight: 700; line-height: 1.35; min-width: 0; }
+.rh-panel-title svg { flex: 0 0 auto; margin-top: 2px; }
+.rh-panel-count { flex: 0 0 auto; white-space: nowrap; font-size: 11px; font-weight: 700; line-height: 1.35; color: var(--ac2); background: var(--act); border: 1px solid var(--acb); padding: 2px 9px; border-radius: 999px; }
+
+.rh-sig-list { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.rh-sig-head { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--sig); margin-bottom: 4px; }
+.rh-sig-head em { font-style: normal; color: var(--mu); }
+.rh-sig-item { display: flex; align-items: center; gap: 7px; padding: 3px 0; }
+.rh-sig-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--sig); flex: 0 0 auto; }
+.rh-sig-text { flex: 1 1 auto; min-width: 0; font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rh-sig-when { font-size: 11px; font-weight: 600; color: var(--mu); white-space: nowrap; }
+.rh-sig-more { border: none; background: none; color: var(--ac2); font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer; padding: 2px 0 2px 13px; }
+
+.rh-plan-empty { font-size: 12.5px; color: var(--mu); margin: 0; line-height: 1.5; }
+.rh-plan-viewall { border: none; background: none; color: var(--ac2); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; padding: 6px 0 0; }
+.rh-plan-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rh-plan-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.rh-plan-name { font-size: 12.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rh-plan-done { border: none; background: none; color: var(--ac2); font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap; flex: 0 0 auto; }
+
+/* Effectiveness tile */
+.rh-eff-value { font-family: var(--bx-font-display); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: var(--tx); }
+.rh-eff-value.rh-eff-measuring span { font-size: 13px; font-weight: 600; color: var(--mu); }
+.rh-eff-sub { font-size: 12px; color: var(--tx2); margin-top: 2px; }
+.rh-eff-bar { display: flex; height: 8px; border-radius: 999px; overflow: hidden; background: var(--elev); margin: 10px 0 8px; }
+.rh-eff-seg { display: block; }
+.rh-eff-good { background: var(--gr); } .rh-eff-mid { background: var(--mu); } .rh-eff-bad { background: var(--rd); }
+.rh-eff-legend { display: flex; flex-wrap: wrap; gap: 10px; font-size: 11px; color: var(--tx2); }
+.rh-eff-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 4px; }
+
+/* States */
+.rh-loading { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 60px; color: var(--tx2); }
+.rh-spin { animation: rh-spin .9s linear infinite; }
+@keyframes rh-spin { to { transform: rotate(360deg); } }
+.rh-error { display: flex; align-items: center; gap: 10px; justify-content: center; margin: 50px auto; max-width: 520px; padding: 18px 22px; border: 1px solid var(--bd2); border-radius: 12px; background: var(--card); }
+.rh-error button { margin-left: 6px; font: inherit; font-weight: 600; cursor: pointer; padding: 6px 14px; border-radius: 8px; border: none; color: #FFFFFF; background: var(--bx-grad-signature); }
+
+/* Folded low-value group (A3) */
+.rh-folded { margin-top: 12px; }
+.rh-folded-toggle { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 13px; font-weight: 600; color: var(--tx2); background: none; border: none; cursor: pointer; padding: 6px 2px; }
+.rh-folded-toggle:hover { color: var(--ac2); }
+.rh-folded-list { list-style: none; margin: 6px 0 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.rh-folded-item { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; font-size: 13px; }
+.rh-folded-item:hover { background: var(--hover); }
+.rh-folded-type { font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ac2); background: var(--act); padding: 2px 7px; border-radius: 6px; flex: 0 0 auto; }
+.rh-folded-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.rh-folded-val { color: var(--tx2); white-space: nowrap; } .rh-folded-val em { font-style: normal; color: var(--mu); font-size: 11px; }
+.rh-folded-accept { border: 1px solid var(--bd); background: transparent; color: var(--tx); font: inherit; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 7px; cursor: pointer; flex: 0 0 auto; }
+.rh-folded-accept:hover { border-color: var(--ac); color: var(--ac2); }
+
+/* Responsive.
+   Thresholds are measured against .rh-page (see container-name: rh above), so
+   they fire on the width this content really has rather than the window's.
+   The numbers themselves are unchanged - they were always the right sizes,
+   just compared against the wrong box. */
+
+/* The rail stacks under the list once the two columns can no longer both hold
+   their content. 340px of rail plus a 22px gap needs ~920px to sit beside a
+   readable main column; below that the main column is the one that suffers. */
+@container rh (max-width: 920px) {
+  .rh-cols { grid-template-columns: minmax(0, 1fr); }
+  .rh-rail { position: static; }
+}
+@container rh (max-width: 1080px) {
+  .rh-figures { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rh-fig:nth-child(odd) { border-left: none; }
+  .rh-fig:nth-child(n+3) { border-top: 1px solid var(--bd2); }
+}
+
+/* Card internals stack BEFORE the left column gets too narrow to set a product
+   name. Queried against .rh-main, not the page: the card's right column
+   reserves up to 340px out of THIS track, so what matters is the track's width,
+   not the window's or the page's. 700px leaves the title roughly 340px to work
+   with before stacking - a readable measure rather than a collapsed one. */
+@container rhmain (max-width: 700px) {
+  .rh-card-grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .rh-card-right { align-items: flex-start; text-align: left; }
+  .rh-value { align-items: flex-start; }
+  .rh-rightmeta, .rh-card-right .rh-actions { justify-content: flex-start; }
+}
+@container rh (max-width: 620px) {
+  .rh-figures { grid-template-columns: minmax(0, 1fr); }
+  .rh-fig { border-left: none; }
+  .rh-fig:not(:first-child) { border-top: 1px solid var(--bd2); }
+  .rh-tabrow { flex-wrap: wrap; }
+  .rh-rankedby { display: none; }
+}
+
+/* Page padding stays a MEDIA query on purpose. .rh-page is the container
+   itself, and a container cannot query its own size - a @container rule here
+   would silently never apply. Padding against the viewport is also the right
+   comparison: it is about the device edge, not the column. */
+@media (max-width: 620px) {
+  .rh-page { padding: 16px 12px 32px; }
+}
+@media (prefers-reduced-motion: reduce) { .rh-spin { animation: none; } }
+
+/* V14 · V22: one small round ⓘ everywhere an explainer is offered - 16px,
+   hairline circle, muted. Replaces the mix of "i" chips and pill links. */
+.rh-info {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 7px;
+  padding: 0;
+  font: inherit;
+  font-size: 10.5px;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--mu);
+  background: none;
+  border: 1px solid var(--bd);
+  border-radius: 50%;
+  cursor: help;
+  vertical-align: middle;
+}
+.rh-info:hover { color: var(--ac2); border-color: var(--ac); }
+
+/* Arrived from "N recommendations →" on a report screen (utils/crossLink).
+   The marked cards need to be findable at a glance without shouting: a left
+   rail in the accent plus a faint wash, which is the same visual language the
+   Purchasing table uses for the reverse direction. */
+.rh-fromreport {
+  display: flex; align-items: center; gap: 9px;
+  margin: 0 0 12px; padding: 9px 14px;
+  background: var(--act); border: 1px solid var(--bd2);
+  border-radius: 10px; font-size: 13px; color: var(--tx2);
+}
+.rh-fromreport strong { color: var(--tx); }
+.rh-fromreport-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--ac); flex: 0 0 auto;
+}
+.rh-card-hi {
+  border-left: 3px solid var(--ac);
+  background: color-mix(in srgb, var(--ac) 5%, var(--card));
+}
+@supports not (background: color-mix(in srgb, red, blue)) {
+  .rh-card-hi { background: var(--elev); }
+}
+
+/* ── Sheet 18: provenance, evidence and constraint reasons ─────────────────
+ *
+ * Quieter than the card's own copy, deliberately. These lines are context for
+ * the recommendation rather than part of it - an owner should be able to read
+ * the card without them and find them when they ask "says who?".
+ */
+.rh-provenance {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--rh-muted, #6b7280);
+  font-style: italic;
+}
+
+/* The store-level sentence, said once at the top rather than on every card. */
+.rh-evidence {
+  margin: 2px 0 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--rh-muted, #6b7280);
+}
+
+/* Why the number is 24 and not 25. Not italic - this is part of the
+ * instruction, not a footnote to it. */
+.rh-constraint {
+  margin: 4px 0 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--rh-muted, #6b7280);
+}
+
+/* A cohort-weighted card that arrived without its provenance line is a
+ * PIPELINE bug. Loud on purpose, and only ever rendered on an internal build -
+ * IS_INTERNAL is QA/staging, never a store. */
+.rh-provenance-bug {
+  margin: 4px 0 0;
+  padding: 4px 8px;
+  border-left: 3px solid #dc2626;
+  background: #fef2f2;
+  color: #991b1b;
+  font-size: 11px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  .rh-provenance-bug { background: #2a1214; color: #fca5a5; }
+}
+
+/* ── Fulfilment (migration 039) ─────────────────────────────────────────────
+   Completed is the DATA's word (trophy, accent); Marked done is the OWNER's
+   word awaiting confirmation (hollow, violet); Not followed is a measured
+   absence (amber). Three looks for three different facts. */
+.rh-claimed { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #8B6CF0; }
+.rh-notfollowed { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #B8860B; }
+.rh-fulfil { flex-basis: 100%; margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--tx2); }
+.rh-fulfil-note { font-size: 12px; color: var(--mu); }

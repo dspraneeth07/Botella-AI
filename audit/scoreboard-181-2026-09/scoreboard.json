@@ -1,0 +1,103 @@
+{
+  "month": "2026-09",
+  "store": {
+    "client_id": 181,
+    "location_id": 181,
+    "name": "Cork Runner Wine & Spirits CA"
+  },
+  "window_days": 30,
+  "month_rule": "a card belongs to the calendar month its 30-day window ended in",
+  "generated_at": "2026-10-08T12:47:55.343Z",
+  "data_through": null,
+  "accuracy": {
+    "what_this_board_measures": "Did what the card predicted come true. Graded on the prediction alone; needs no owner action, and reads neither the arm, the inferred action, the votes nor the money.",
+    "window_days": 30,
+    "both_arms_counted": true,
+    "hit_rule": "lift >= 1.0: the product sold at least what its own trailing rate projected over the 30-day window",
+    "summary": {
+      "cards": 0,
+      "products": 0,
+      "measured_on": 0,
+      "hits": 0,
+      "hit_rate": null,
+      "hit_rate_interval_95": null,
+      "mean_lift": null,
+      "promise_fill": {
+        "cards_with_quantity": 0,
+        "recommended_units": 0,
+        "sold_units": 0,
+        "fill_ratio": null
+      },
+      "interval_coverage": {
+        "cards_with_range": 0,
+        "inside_range": 0,
+        "range_refused": 0,
+        "coverage": null
+      },
+      "stockout_grade": {
+        "cards": 0,
+        "sold_through": 0,
+        "not_sold_through": 0,
+        "ungraded": 0
+      }
+    },
+    "lines": [],
+    "refusals": [
+      "no card's 30-day window closed in this month",
+      "promise fill: no card asked for a quantity",
+      "interval coverage: no range stored on any card this month",
+      "stockout grade: no stockout card closed this month"
+    ]
+  },
+  "holdout": {
+    "what_this_board_measures": "Did telling the store change anything. Shown against withheld, per product; dollars are per product, never totals; the action is inferred from the purchases feed, an uploaded invoice, the stock delta or a price drop. This board states no hit rate.",
+    "window_days": 30,
+    "min_measured_per_arm_for_a_difference": 5,
+    "dollars_are_per_product": true,
+    "summary": {
+      "shown": {
+        "products": 0,
+        "measurable": 0,
+        "avg_lift": null,
+        "priced": 0,
+        "dollars": null,
+        "dollars_per_product": null
+      },
+      "withheld": {
+        "products": 0,
+        "measurable": 0,
+        "avg_lift": null,
+        "priced": 0,
+        "dollars": null,
+        "dollars_per_product": null
+      },
+      "difference": {
+        "lift": null,
+        "dollars_per_product": null,
+        "refused_reason": "needs 5 measured outcomes per arm; have 0 shown and 0 withheld"
+      },
+      "totals_for_the_record": {
+        "shown_dollars_total": null,
+        "withheld_dollars_total": null,
+        "note": "The arms are different sizes by design; the difference is taken per product above."
+      },
+      "action_inferred_on_shown": {
+        "acted": 0,
+        "not_acted": 0,
+        "unobservable": 0,
+        "detectors": {}
+      },
+      "line": "holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 0 shown and 0 withheld"
+    },
+    "by_family": [],
+    "lines": [],
+    "refusals": [
+      "no product-window's 30-day window closed in this month",
+      "difference: needs 5 measured outcomes per arm; have 0 shown and 0 withheld"
+    ]
+  },
+  "refusals": [
+    "data_through: no evaluation row behind any card this month"
+  ],
+  "pilot_store": true
+}

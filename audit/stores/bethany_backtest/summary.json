@@ -1,0 +1,432 @@
+{
+ "generated": "2026-10-19T15:00:27",
+ "dates": [
+  "2024-01-08",
+  "2024-01-24",
+  "2024-02-09",
+  "2024-02-26",
+  "2024-03-13",
+  "2024-03-29",
+  "2024-04-15",
+  "2024-05-01",
+  "2024-05-17",
+  "2024-06-03",
+  "2024-06-19",
+  "2024-07-05",
+  "2024-07-22",
+  "2024-08-07",
+  "2024-08-23",
+  "2024-09-09",
+  "2024-09-24",
+  "2024-10-10",
+  "2024-10-26",
+  "2024-11-12",
+  "2024-11-29",
+  "2024-12-16",
+  "2025-01-03",
+  "2025-01-20",
+  "2025-02-05",
+  "2025-02-21",
+  "2025-03-10",
+  "2025-03-26",
+  "2025-04-11",
+  "2025-04-28",
+  "2025-05-14",
+  "2025-05-30",
+  "2025-06-16",
+  "2025-07-02",
+  "2025-07-18",
+  "2025-08-04",
+  "2025-08-20",
+  "2025-09-05",
+  "2025-09-22",
+  "2025-10-08",
+  "2025-10-24",
+  "2025-11-10",
+  "2025-11-26",
+  "2025-12-12",
+  "2025-12-30",
+  "2026-01-16",
+  "2026-02-02",
+  "2026-02-18",
+  "2026-03-06",
+  "2026-03-23",
+  "2026-04-08",
+  "2026-04-24",
+  "2026-05-11",
+  "2026-05-27",
+  "2026-06-12"
+ ],
+ "horizons": [
+  30,
+  60,
+  90,
+  120
+ ],
+ "sheet20": {
+  "n": 1040,
+  "hits": 811,
+  "hit_rate": 77.98076923076923,
+  "ci_lo": 75.36186801138304,
+  "ci_hi": 80.39371789360486,
+  "median_lift": 1.49,
+  "margin_impact": 55735.064094,
+  "margin_captured": 160501.8306,
+  "median_size": 14.0,
+  "impact_per_card": 53.59140778269231
+ },
+ "old_ordering": {
+  "n": 2200,
+  "hits": 695,
+  "hit_rate": 31.590909090909093,
+  "ci_lo": 29.681830317209833,
+  "ci_hi": 33.564167035775974,
+  "median_lift": 0.82,
+  "margin_impact": -1760730.4939279999,
+  "margin_captured": 2154089.4976999997,
+  "median_size": 36.0,
+  "impact_per_card": -800.3320426945454
+ },
+ "clustered_ci": [
+  72.93388429752066,
+  82.76892430278885
+ ],
+ "null_volume": 31.61778846153846,
+ "null_reversion": 59.18942307692308,
+ "percentile": 74.795625,
+ "p_value": 0.0004997501249375312,
+ "cards_per_run": 4.7272727272727275,
+ "runs": 220,
+ "fisher_p": 1.5101677086535539e-05,
+ "null_margin": 21987.963056019493,
+ "by_horizon": {
+  "30": {
+   "n": 260,
+   "hits": 193,
+   "hit_rate": 74.23076923076923,
+   "ci_lo": 68.58869689178735,
+   "ci_hi": 79.1672293912552,
+   "median_lift": 1.48,
+   "margin_impact": 5568.135867,
+   "margin_captured": 16048.3748,
+   "median_size": 14.0,
+   "impact_per_card": 21.41590718076923,
+   "null_reversion": 51.99903846153846
+  },
+  "60": {
+   "n": 260,
+   "hits": 206,
+   "hit_rate": 79.23076923076923,
+   "ci_lo": 73.89181885183051,
+   "ci_hi": 83.71850491818907,
+   "median_lift": 1.43,
+   "margin_impact": 10991.612806,
+   "margin_captured": 31937.614299999997,
+   "median_size": 14.0,
+   "impact_per_card": 42.27543386923077,
+   "null_reversion": 59.84903846153846
+  },
+  "90": {
+   "n": 260,
+   "hits": 209,
+   "hit_rate": 80.38461538461539,
+   "ci_lo": 75.13035083942235,
+   "ci_hi": 84.75406465836117,
+   "median_lift": 1.51,
+   "margin_impact": 16680.091147,
+   "margin_captured": 48068.5269,
+   "median_size": 14.0,
+   "impact_per_card": 64.15419671923077,
+   "null_reversion": 61.613461538461536
+  },
+  "120": {
+   "n": 260,
+   "hits": 203,
+   "hit_rate": 78.07692307692308,
+   "ci_lo": 72.65915333353045,
+   "ci_hi": 82.6770787087252,
+   "median_lift": 1.56,
+   "margin_impact": 22495.224274,
+   "margin_captured": 64447.3146,
+   "median_size": 14.0,
+   "impact_per_card": 86.52009336153846,
+   "null_reversion": 63.29615384615385
+  }
+ },
+ "refusals": {
+  "not_merchandise_catalogue": 120,
+  "below_materiality_floor": 552472,
+  "not_merchandise_category": 16048,
+  "trailing_window_inflated": 31252,
+  "p_hit_below_floor": 10964,
+  "not_merchandise_blocklist": 420
+ },
+ "store_name": "Bethany Discount Liquor",
+ "lines": 266348,
+ "products": 4964,
+ "cost_coverage": 0.9977204380618497,
+ "dropped_lines": [
+  {
+   "date": "2023-10-04",
+   "sku": "721059897501",
+   "quantity": 200.0,
+   "product": "Wild Turkey 101 750ml",
+   "reason": "200 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-11-01",
+   "sku": "080244002039",
+   "quantity": 186.0,
+   "product": "BLANTON BOURBON 750ML",
+   "reason": "186 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-12-12",
+   "sku": "088004063702",
+   "quantity": 120.0,
+   "product": "Buffalo Trace Single Barrel",
+   "reason": "120 against this SKU's own threshold of 48"
+  },
+  {
+   "date": "2026-07-03",
+   "sku": "854493005710",
+   "quantity": 102.0,
+   "product": "Ironroot Industrial Luciano",
+   "reason": "102 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2023-10-02",
+   "sku": "721059897501",
+   "quantity": 100.0,
+   "product": "Wild Turkey 101 750ml",
+   "reason": "100 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2026-04-14",
+   "sku": "096749007028",
+   "quantity": 90.0,
+   "product": "Evan Williams SB 250th 117.76",
+   "reason": "90 against this SKU's own threshold of 36"
+  },
+  {
+   "date": "2024-07-25",
+   "sku": "088004063849",
+   "quantity": 87.0,
+   "product": "Eh Taylor Single BDL SSW",
+   "reason": "87 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-12-10",
+   "sku": "096749005413",
+   "quantity": 72.0,
+   "product": "Elijah Craig Toasted Single BR",
+   "reason": "72 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2023-10-19",
+   "sku": "088004025649",
+   "quantity": 70.0,
+   "product": "Weller Antique 107",
+   "reason": "70 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2026-02-17",
+   "sku": "850067163237",
+   "quantity": 69.0,
+   "product": "Hard Truth Bourbon Real Talk",
+   "reason": "69 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-11-21",
+   "sku": "088004063702",
+   "quantity": 67.0,
+   "product": "Buffalo Trace SSW Bourbon",
+   "reason": "67 against this SKU's own threshold of 48"
+  },
+  {
+   "date": "2023-08-18",
+   "sku": "644216575329",
+   "quantity": 66.0,
+   "product": "Lucky Seven Single Barrel",
+   "reason": "66 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-09-18",
+   "sku": "619947000037",
+   "quantity": 60.0,
+   "product": "Titos 1.75L",
+   "reason": "60 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-09-18",
+   "sku": "619947000020",
+   "quantity": 60.0,
+   "product": "Titos 750ML",
+   "reason": "60 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2026-07-03",
+   "sku": "854493005710",
+   "quantity": 60.0,
+   "product": "Ironroot Industrial Luciano",
+   "reason": "60 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2023-10-19",
+   "sku": "853192006295",
+   "quantity": 56.0,
+   "product": "Chattanooga Single Barrel",
+   "reason": "56 against this SKU's own threshold of 36"
+  },
+  {
+   "date": "2024-10-02",
+   "sku": "085246500460",
+   "quantity": 51.0,
+   "product": "Maker's Mark Private Select",
+   "reason": "51 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2023-04-04",
+   "sku": "858349004162",
+   "quantity": 50.0,
+   "product": "Woodinville SSW-BDL 750ml",
+   "reason": "50 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2023-04-04",
+   "sku": "858349004209",
+   "quantity": 49.0,
+   "product": "Woodinville Rye Bethany SSW",
+   "reason": "49 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-10-03",
+   "sku": "811538018241",
+   "quantity": 48.0,
+   "product": "1800 Silver 100 ml",
+   "reason": "48 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2026-05-15",
+   "sku": "858349004162",
+   "quantity": 48.0,
+   "product": "Woodinville Bourbon Real Talk",
+   "reason": "48 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-09-04",
+   "sku": "040063400294",
+   "quantity": 42.0,
+   "product": "Four Roses Single Barrel",
+   "reason": "42 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-12-10",
+   "sku": "089540122748",
+   "quantity": 40.0,
+   "product": "Kahlua 50ml",
+   "reason": "40 against this SKU's own threshold of 36"
+  },
+  {
+   "date": "2023-10-20",
+   "sku": "088004025649",
+   "quantity": 36.0,
+   "product": "Weller Antique 107",
+   "reason": "36 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-09-14",
+   "sku": "080480280024",
+   "quantity": 36.0,
+   "product": "Grey Goose 750ML",
+   "reason": "36 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-04-02",
+   "sku": "871990",
+   "quantity": 36.0,
+   "product": "CROWN ROYAL 50ml",
+   "reason": "36 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-08-04",
+   "sku": "080686011620",
+   "quantity": 36.0,
+   "product": "Old Grand-Dad 7 Year BIB",
+   "reason": "36 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-02-07",
+   "sku": "810080550407",
+   "quantity": 33.0,
+   "product": "Whistlepig Creamee & Spice",
+   "reason": "33 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-12-19",
+   "sku": "082184004296",
+   "quantity": 33.0,
+   "product": "Jack Daniels Barrel Proof SSW",
+   "reason": "33 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-12-05",
+   "sku": "088004041656",
+   "quantity": 32.0,
+   "product": "Benchmark Full Proof 750ml",
+   "reason": "32 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-06-13",
+   "sku": "856724006237",
+   "quantity": 31.0,
+   "product": "Casamigos Reposado 50ml",
+   "reason": "31 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2024-09-27",
+   "sku": "085246500460",
+   "quantity": 30.0,
+   "product": "Maker's Mark Private Select",
+   "reason": "30 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-06-19",
+   "sku": "810183690123",
+   "quantity": 30.0,
+   "product": "Green River 250 Anniversary",
+   "reason": "30 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-11-12",
+   "sku": "080686010760",
+   "quantity": 30.0,
+   "product": "Knob Creek CS Single Barrel",
+   "reason": "30 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2025-11-20",
+   "sku": "857552008554",
+   "quantity": 30.0,
+   "product": "Green River BBN",
+   "reason": "30 against this SKU's own threshold of 24"
+  },
+  {
+   "date": "2023-11-30",
+   "sku": "080244009250",
+   "quantity": 28.0,
+   "product": "Buffalo Trace 375ml",
+   "reason": "28 against this SKU's own threshold of 24"
+  }
+ ],
+ "trading_days": 1177,
+ "settings": {
+  "materiality_floor_units": 8,
+  "min_hit_probability": 0.5,
+  "baseline_window_days": 28,
+  "n_recs": 10,
+  "null_baskets": 400,
+  "permutation_draws": 2000,
+  "p_value_floor": 0.0004997501249375312
+ }
+}

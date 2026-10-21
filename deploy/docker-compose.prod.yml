@@ -1,0 +1,65 @@
+# PRODUCTION stack for the EC2 box. Pulls pre-built images from the GitLab
+# Container Registry — it never builds here. The image paths and tags come from
+# the ./.env file the deploy pipeline writes:
+#   BACKEND_IMAGE / FRONTEND_IMAGE = registry.gitlab.com/<group>/<project>/botella-*
+#   BACKEND_TAG   / FRONTEND_TAG   = the deployed git SHA
+#
+# App secrets are read from ./backend.env (rendered on the server by the deploy
+# pipeline from the BACKEND_ENV_B64 CI/CD variable). The Python recommendation
+# service runs in its own compose; this stack reaches it over the host loopback.
+services:
+  backend:
+    image: ${BACKEND_IMAGE}:${BACKEND_TAG:-latest}
+    env_file: ./backend.env
+    environment:
+      # Container networking overrides (these win over backend.env).
+      # BOTH of these must be set: the Python service is published on the HOST at
+      # :8000, so any code default of 127.0.0.1/localhost resolves to this
+      # container (where nothing listens) and fails with an instant connection
+      # refusal. Store-intelligence and recommendations are separate call paths
+      # with separate variables — setting only one silently breaks the other.
+      STOREAGENT_API_URL: http://host.docker.internal:8000/storeagent
+      REC_SERVICE_URL: http://host.docker.internal:8000
+    extra_hosts:
+      # Reach host-published services: Python (:8000) and any Postgres on the
+      # EC2 host. IMPORTANT: in backend.env, set ANALYTICS_PG_HOST (and any other
+      # localhost DB host) to host.docker.internal — "localhost" inside a
+      # container is the container itself, not the EC2 host.
+      - "host.docker.internal:host-gateway"
+    ports:
+      # Published on ALL host interfaces (NOT 127.0.0.1) so the Python container
+      # can reach it at host.docker.internal:3000 for its callback. That name
+      # resolves to the docker bridge gateway, which a loopback-only bind is NOT
+      # reachable from. Still private in practice: the EC2 security group must
+      # not open 3000 to the internet (only 22/80/443).
+      - "3000:3000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3
+    volumes:
+      - backend_logs:/app/logs
+      - backend_data:/app/data      # generated imagegen output (served static)
+    networks: [botella]
+
+  frontend:
+    image: ${FRONTEND_IMAGE}:${FRONTEND_TAG:-latest}
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      # Host nginx (TLS) proxies to this. Loopback only.
+      - "127.0.0.1:8080:80"
+    restart: unless-stopped
+    networks: [botella]
+
+volumes:
+  backend_logs:
+  backend_data:
+
+networks:
+  botella:
+    driver: bridge

@@ -1,0 +1,242 @@
+{
+  "generated_at": "2026-10-15T11:57:44.283Z",
+  "assumption": "every recommendation was accepted and ordered in full",
+  "measured": "daily units per SKU from sale_items, unchanged",
+  "simulated": "the inventory trajectory only (engine_on_hand + recommended qty, depleted by real daily units)",
+  "window": {
+    "mode": "fixed",
+    "open_days": 7,
+    "note": "open days, never calendar days"
+  },
+  "settings": {
+    "safety_cover_days": 7,
+    "overstock_tolerance": 0.25,
+    "rate_window_open_days": 28,
+    "holding_cost_annual_rate": 0.25,
+    "since_days": 90
+  },
+  "scope": {
+    "stores": [
+      173
+    ],
+    "cards_examined": 5
+  },
+  "metrics": {
+    "counts": {
+      "successful": 0,
+      "partial_absorption": 0,
+      "overstocked": 0,
+      "understocked": 0,
+      "unutilized": 0,
+      "no_data": 0,
+      "pending": 5
+    },
+    "evaluated": 0,
+    "pending": 5,
+    "no_data": 0,
+    "recommendation_accuracy_rate_pct": null,
+    "rar_ci95": [
+      null,
+      null
+    ],
+    "met_forecast_rate_pct": null,
+    "met_forecast_rate_ci95": [
+      null,
+      null
+    ],
+    "median_velocity_ratio": null,
+    "cards_with_velocity": 0,
+    "inventory_turnover_efficiency": null,
+    "units_recommended": 0,
+    "units_sold": 0,
+    "realised_margin": 0,
+    "holding_cost": 0,
+    "net_financial_impact": 0,
+    "cards_with_money": 0,
+    "simulatable": 0,
+    "calibration": [
+      {
+        "band": "0.00-0.30",
+        "cards": 0,
+        "stated_mean": null,
+        "observed_met_rate_pct": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      {
+        "band": "0.30-0.40",
+        "cards": 0,
+        "stated_mean": null,
+        "observed_met_rate_pct": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      {
+        "band": "0.40-0.50",
+        "cards": 0,
+        "stated_mean": null,
+        "observed_met_rate_pct": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      {
+        "band": "0.50-0.70",
+        "cards": 0,
+        "stated_mean": null,
+        "observed_met_rate_pct": null,
+        "ci95": [
+          null,
+          null
+        ]
+      },
+      {
+        "band": "0.70-1.00",
+        "cards": 0,
+        "stated_mean": null,
+        "observed_met_rate_pct": null,
+        "ci95": [
+          null,
+          null
+        ]
+      }
+    ]
+  },
+  "cards": [
+    {
+      "rec_id": "1835",
+      "store_id": 173,
+      "location_id": 173,
+      "rec_date": "2026-10-13",
+      "action_type": "reorder",
+      "engine_family": "stockout",
+      "was_visible": true,
+      "stated_confidence": 0.231,
+      "product_id": "90050141",
+      "product_name": "1800 SILVER",
+      "category": "200ML & 375ML",
+      "recommended_qty": 4,
+      "window_open_days_requested": 7,
+      "daily_rate": 0.233,
+      "daily_rate_basis": "engine_daily_rate recorded on the card",
+      "intended_cover_open_days": 18,
+      "window_mode": "fixed",
+      "window_open_days_available": 1,
+      "window_start": "2026-10-14",
+      "window_end": "2026-10-14",
+      "outcome": "pending",
+      "reason": "window needs 7 open days, only 1 have elapsed since the card was issued",
+      "actual_sold": null,
+      "variance": null
+    },
+    {
+      "rec_id": "1836",
+      "store_id": 173,
+      "location_id": 173,
+      "rec_date": "2026-10-13",
+      "action_type": "reorder",
+      "engine_family": "stockout",
+      "was_visible": true,
+      "stated_confidence": 0.364,
+      "product_id": "90052256",
+      "product_name": "WHITE CLAW BLACK CHERRY",
+      "category": "SELTZER",
+      "recommended_qty": 6,
+      "window_open_days_requested": 7,
+      "daily_rate": 0.374,
+      "daily_rate_basis": "engine_daily_rate recorded on the card",
+      "intended_cover_open_days": 17,
+      "window_mode": "fixed",
+      "window_open_days_available": 1,
+      "window_start": "2026-10-14",
+      "window_end": "2026-10-14",
+      "outcome": "pending",
+      "reason": "window needs 7 open days, only 1 have elapsed since the card was issued",
+      "actual_sold": null,
+      "variance": null
+    },
+    {
+      "rec_id": "1837",
+      "store_id": 173,
+      "location_id": 173,
+      "rec_date": "2026-10-13",
+      "action_type": "reorder",
+      "engine_family": "stockout",
+      "was_visible": true,
+      "stated_confidence": 0.356,
+      "product_id": "90053855",
+      "product_name": "MONSTER THE BEA MIX 12PK",
+      "category": "CIDER",
+      "recommended_qty": 8,
+      "window_open_days_requested": 7,
+      "daily_rate": 0.462,
+      "daily_rate_basis": "engine_daily_rate recorded on the card",
+      "intended_cover_open_days": 18,
+      "window_mode": "fixed",
+      "window_open_days_available": 1,
+      "window_start": "2026-10-14",
+      "window_end": "2026-10-14",
+      "outcome": "pending",
+      "reason": "window needs 7 open days, only 1 have elapsed since the card was issued",
+      "actual_sold": null,
+      "variance": null
+    },
+    {
+      "rec_id": "1838",
+      "store_id": 173,
+      "location_id": 173,
+      "rec_date": "2026-10-13",
+      "action_type": "reorder",
+      "engine_family": "stockout",
+      "was_visible": true,
+      "stated_confidence": 0.238,
+      "product_id": "90056535",
+      "product_name": "SMIRNOFF CHERRY",
+      "category": "VODKA-AMERICAN",
+      "recommended_qty": 2,
+      "window_open_days_requested": 7,
+      "daily_rate": 0.181,
+      "daily_rate_basis": "engine_daily_rate recorded on the card",
+      "intended_cover_open_days": 12,
+      "window_mode": "fixed",
+      "window_open_days_available": 1,
+      "window_start": "2026-10-14",
+      "window_end": "2026-10-14",
+      "outcome": "pending",
+      "reason": "window needs 7 open days, only 1 have elapsed since the card was issued",
+      "actual_sold": null,
+      "variance": null
+    },
+    {
+      "rec_id": "1839",
+      "store_id": 173,
+      "location_id": 173,
+      "rec_date": "2026-10-13",
+      "action_type": "reorder",
+      "engine_family": "stockout",
+      "was_visible": true,
+      "stated_confidence": 0.289,
+      "product_id": "90058546",
+      "product_name": "BUZZBALL HOLE IN FUN",
+      "category": "PREP COCKTAILS",
+      "recommended_qty": 5,
+      "window_open_days_requested": 7,
+      "daily_rate": 0.263,
+      "daily_rate_basis": "engine_daily_rate recorded on the card",
+      "intended_cover_open_days": 20,
+      "window_mode": "fixed",
+      "window_open_days_available": 1,
+      "window_start": "2026-10-14",
+      "window_end": "2026-10-14",
+      "outcome": "pending",
+      "reason": "window needs 7 open days, only 1 have elapsed since the card was issued",
+      "actual_sold": null,
+      "variance": null
+    }
+  ]
+}

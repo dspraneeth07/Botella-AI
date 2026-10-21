@@ -1,0 +1,48 @@
+{
+  "estate": [
+    {
+      "basis": "not_recorded",
+      "cards": 303,
+      "stores": 13,
+      "lo": 0.064,
+      "hi": 0.999
+    },
+    {
+      "basis": "isotonic_flat_slate",
+      "cards": 84,
+      "stores": 4,
+      "lo": 0.444,
+      "hi": 0.444
+    },
+    {
+      "basis": "isotonic",
+      "cards": 55,
+      "stores": 2,
+      "lo": 0.444,
+      "hi": 0.444
+    },
+    {
+      "basis": "raw_ranking_score",
+      "cards": 33,
+      "stores": 4,
+      "lo": 0.173,
+      "hi": 0.454
+    }
+  ],
+  "tuscany": [
+    {
+      "basis": "raw_ranking_score",
+      "cards": 9,
+      "lo": 0.231,
+      "hi": 0.432
+    },
+    {
+      "basis": "not_recorded",
+      "cards": 1,
+      "lo": 0.921,
+      "hi": 0.921
+    }
+  ],
+  "admission_floor": 0.35,
+  "generated_at": "2026-10-15T12:15:38.498Z"
+}

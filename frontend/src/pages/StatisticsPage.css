@@ -1,0 +1,413 @@
+/* StatisticsPage.css
+   -----------------------------------------------------------------------------
+   The Reports surface. Scoped under .sx-page, and every colour is an alias onto
+   the shared app tokens - see the block below - so it flips with the theme and
+   matches the screen on either side of it.
+   ------------------------------------------------------------------------- */
+
+.sx-page {
+  /* ALIASES onto the shared app tokens, exactly as .rh-page and .ref-page do.
+     Reports used to carry its own blue (#2563EB) + teal (#10B981) palette on
+     its own near-black ground (#0B0E13), which is why it read as a different
+     product from the screen on either side of it. Nothing here decides a
+     colour; app-theme.css does that once, for every screen. */
+
+  /* Surfaces */
+  --sx-bg: var(--bg-primary);
+  --sx-card: var(--bg-card);
+  --sx-border: var(--border);
+  --sx-border-soft: var(--border-light);
+  --sx-chip: var(--bg-elevated);
+  --sx-chip-hi: var(--bg-hover);
+  --sx-track: var(--bg-elevated);
+  --sx-grid: var(--border-light);
+
+  /* Ink */
+  --sx-text: var(--text-primary);
+  --sx-text-soft: var(--text-secondary);
+  --sx-muted: var(--text-muted);
+  --sx-axis: var(--text-muted);
+
+  /* Accent + semantics. The old `--sx-blue` / `--sx-teal` names are kept
+     because ~40 rules below reference them; both now resolve to the brand
+     accent and the brand jade. */
+  --sx-blue: var(--accent);
+  --sx-blue-ink: var(--accent-light);
+  --sx-teal: var(--green);
+  --sx-red: var(--red);
+  --sx-border-hover: color-mix(in srgb, var(--accent) 42%, transparent);
+  --sx-row-hover: var(--accent-glow);
+
+  /* Ink to lay ON a filled accent - flips with the register, because the dark
+     cut of the accent is a LIGHT violet that white text disappears into. */
+  --sx-on-fill: var(--bx-accent-ink);
+
+  --sx-shadow: 0 1px 2px rgba(0, 0, 0, 0.18), 0 8px 30px -18px rgba(0, 0, 0, 0.5);
+  --sx-shadow-hover: 0 10px 34px -16px var(--accent-glow);
+
+  background: var(--sx-bg);
+  color: var(--sx-text);
+  /* Own scroll container: .chat-page is a fixed-height (100dvh) flex column
+     that does NOT scroll - each view scrolls itself, the same way
+     .dash-container does. Without this the page overflows and the app's
+     html.no-scroll lock simply clips it. */
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* Same gutter as .rh-page / .ref-page, so the title, the KPI row and the
+     header controls above all land on one vertical line across every screen. */
+  padding: 22px 26px 40px;
+  box-sizing: border-box;
+  font-family: var(--bx-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.sx-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;  /* matches .ref-head / .po-head / .bs-head */
+  flex-wrap: wrap;
+}
+/* Same treatment as .ref-title / .po-title / .bs-title, so the icon sits on
+   the text's centre line rather than on its baseline. */
+.sx-title { display: flex; align-items: center; gap: 9px; font-family: var(--bx-font-display); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; }
+.sx-sub { margin: 5px 0 0; font-size: 0.85rem; color: var(--sx-text-soft); }
+.sx-crumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--sx-muted); margin-bottom: 10px; }
+.sx-crumb-sep { opacity: 0.5; }
+.sx-crumb-here { color: var(--sx-text); font-weight: 600; }
+/* Mirrors .ref-return on the other reference screens. */
+.sx-return { margin-left: auto; border: none; background: none; color: var(--sx-blue-ink); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+.sx-return:hover { text-decoration: underline; }
+
+/* ── Shared card ─────────────────────────────────────────────────────────── */
+.sx-card {
+  background: var(--sx-card);
+  border: 1px solid var(--sx-border);
+  border-radius: 18px;
+  padding: 20px 20px 18px;
+  box-shadow: var(--sx-shadow);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  animation: sx-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+.sx-card:hover { box-shadow: var(--sx-shadow-hover); border-color: var(--sx-border-hover); }
+
+@keyframes sx-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+.sx-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  /* When the title and its controls cannot share a line, the CONTROLS drop to
+     their own row and the title keeps the full width. Previously the title just
+     shrank, so "Category Performance" broke across two lines next to a
+     segmented control that had plenty of room to move. */
+  flex-wrap: wrap;
+}
+.sx-card-titles { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1 1 210px; }
+.sx-kicker { font-family: var(--bx-font-display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--sx-muted); }
+.sx-card-title { font-family: var(--bx-font-display); font-size: 1.02rem; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+.sx-card-actions { flex: 0 0 auto; }
+
+/* ── KPI row ─────────────────────────────────────────────────────────────── */
+.sx-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.sx-kpi {
+  background: var(--sx-card);
+  border: 1px solid var(--sx-border);
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  box-shadow: var(--sx-shadow);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  animation: sx-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+.sx-kpi:hover { transform: translateY(-3px); box-shadow: var(--sx-shadow-hover); }
+.sx-kpi-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.sx-kpi-label { font-family: var(--bx-font-display); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sx-text-soft); }
+.sx-kpi-icon {
+  display: grid; place-items: center;
+  width: 38px; height: 38px; border-radius: 11px;
+  color: #FFFFFF; flex: 0 0 auto;
+  background: var(--bx-grad-signature);
+  box-shadow: 0 6px 16px -8px rgba(124, 58, 237, 0.7);
+}
+.sx-kpi-value { font-family: var(--bx-font-display); font-size: 1.9rem; font-weight: 800; color: var(--sx-text); letter-spacing: -0.03em; margin: 14px 0 0; line-height: 1.05; }
+.sx-kpi-foot { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.sx-kpi-meta { font-size: 0.76rem; color: var(--sx-muted); }
+
+.sx-badge {
+  font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 7px; line-height: 1.4;
+}
+.sx-badge-up { color: var(--green); background: color-mix(in srgb, var(--green) 14%, transparent); }
+.sx-badge-down { color: var(--red); background: color-mix(in srgb, var(--red) 14%, transparent); }
+
+/* ── Chart rows ──────────────────────────────────────────────────────────── */
+.sx-row-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+/* One column. This was a 1.2fr / 1fr pair carrying a second card that has since
+   gone, so its only remaining child - Top Products - took 1.2 of 2.2 columns
+   and the other 45% of the row sat empty beside it. */
+.sx-row-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+/* An explicit height and a min-width floor.
+   Recharts' ResponsiveContainer measures its parent on first paint; inside a
+   CSS grid track whose width is still resolving it can measure 0 and render an
+   empty SVG that never recovers, which is how a card could show "12 categories
+   / $6.64M" above a blank chart. A stated height and min-width:0 give it
+   something real to measure against. */
+.sx-chart { position: relative; width: 100%; min-width: 0; min-height: 230px; }
+
+/* Donut centre label */
+.sx-donut { display: grid; place-items: center; }
+.sx-donut-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.sx-donut-value { font-family: var(--bx-font-display); color: var(--sx-text); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
+.sx-donut-label { font-family: var(--bx-font-display); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sx-muted); margin-top: 2px; }
+
+/* Stat strip under a chart */
+.sx-stat-row {
+  display: flex;
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--sx-border-soft);
+}
+.sx-stat { flex: 1 1 0; min-width: 0; }
+.sx-stat-value { font-family: var(--bx-font-display); color: var(--sx-text); font-size: 1.02rem; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sx-stat-label { font-size: 0.72rem; color: var(--sx-muted); margin-top: 2px; }
+
+/* ── Segmented control ───────────────────────────────────────────────────── */
+.sx-seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  background: var(--sx-chip);
+  border: 1px solid var(--sx-border-soft);
+  border-radius: 10px;
+}
+.sx-seg-btn {
+  appearance: none; border: none; cursor: pointer;
+  font: inherit; font-size: 0.78rem; font-weight: 600;
+  padding: 5px 11px; border-radius: 8px;
+  color: var(--sx-text-soft); background: transparent;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.sx-seg-btn:hover:not(:disabled) { color: var(--sx-text); }
+.sx-seg-btn.is-on {
+  background: var(--sx-card);
+  color: var(--sx-blue-ink);
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.12);
+}
+.sx-seg-btn:disabled { opacity: 0.4; cursor: default; }
+.sx-seg-btn em { font-style: normal; opacity: 0.7; font-size: 0.9em; margin-left: 2px; }
+.sx-seg-pills { flex-wrap: wrap; }
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.sx-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: inherit; font-size: 0.82rem; font-weight: 600;
+  padding: 7px 13px; border-radius: 9px; cursor: pointer;
+  color: var(--sx-text); background: var(--sx-chip);
+  border: 1px solid var(--sx-border);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.sx-btn:hover:not(:disabled) { color: var(--sx-blue-ink); border-color: var(--sx-border-hover); }
+.sx-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* ── Top products table ──────────────────────────────────────────────────── */
+.sx-table-wrap { overflow-x: auto; }
+/* No scroll box any more.
+   The height cap existed because the list was hard-cut to eight rows with no
+   way to reach nine and ten, so a scroll was better than nothing. The table is
+   paginated now - ten rows a page with a pager stating the range - which is a
+   better answer to the same problem, and leaving the cap in place put a second
+   scrollbar inside a page that already scrolls. Ten rows simply fit. */
+.sx-table-scroll {
+  max-height: none;
+  overflow-y: visible;
+}
+.sx-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+.sx-table thead th {
+  /* `static`, not `sticky`. Sticky inside a box that no longer scrolls pins the
+     header to the PAGE's scroll instead, so the column names detach and ride
+     over the rows below them. */
+  position: static;
+  background: var(--sx-card);
+  text-align: left; font-family: var(--bx-font-display); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; color: var(--sx-muted);
+  padding: 6px 14px 10px; border-bottom: 1px solid var(--sx-border);
+  white-space: nowrap;
+}
+.sx-th-num, .sx-td-num { text-align: right; }
+.sx-th-rank { width: 30px; }
+.sx-th-bar { width: 26%; min-width: 132px; white-space: nowrap; }
+.sx-table tbody td { padding: 11px 14px; border-bottom: 1px solid var(--sx-border-soft); vertical-align: middle; }
+.sx-table tbody tr:last-child td { border-bottom: none; }
+.sx-table tbody tr { transition: background 0.15s ease; }
+.sx-table tbody tr:hover { background: var(--sx-row-hover); }
+.sx-td-rank { color: var(--sx-muted); font-variant-numeric: tabular-nums; font-weight: 600; }
+.sx-td-name { font-weight: 600; color: var(--sx-text); max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sx-td-num { font-variant-numeric: tabular-nums; color: var(--sx-text-soft); }
+.sx-td-rev { font-weight: 700; color: var(--sx-text); }
+
+.sx-bar-wrap { display: flex; align-items: center; gap: 9px; }
+.sx-bar-track {
+  display: block; flex: 1 1 auto; min-width: 0; height: 7px; border-radius: 999px;
+  background: var(--sx-track); overflow: hidden;
+}
+/* A bar with no number is a picture of a fact, not the fact. */
+.sx-bar-pct {
+  flex: 0 0 auto; width: 34px; text-align: right;
+  font-size: 0.76rem; font-weight: 600; color: var(--sx-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+.sx-bar-fill {
+  display: block; height: 100%; border-radius: 999px;
+  background: var(--bx-grad-signature);
+}
+
+/* ── What Changed intel grid ─────────────────────────────────────────────── */
+.sx-intel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.sx-intel-card {
+  border: 1px solid var(--sx-border);
+  border-radius: 13px;
+  padding: 13px 14px;
+  background: var(--sx-card);
+  position: relative;
+  overflow: hidden;
+}
+.sx-intel-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+}
+.sx-intel-brief::before { background: var(--sx-teal); }
+.sx-intel-pnl::before { background: var(--sx-blue); }
+.sx-intel-kicker {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--sx-muted);
+}
+.sx-intel-value { font-family: var(--bx-font-display); color: var(--sx-text); font-size: 1.12rem; font-weight: 700; letter-spacing: -0.01em; margin: 5px 0 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sx-intel-label { font-size: 0.78rem; color: var(--sx-text-soft); line-height: 1.35; }
+.sx-intel-foot {
+  display: flex; align-items: center; gap: 5px;
+  margin-top: 9px; font-size: 0.7rem; color: var(--sx-muted);
+}
+
+/* ── CTA ─────────────────────────────────────────────────────────────────── */
+.sx-cta {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; margin-top: 4px;
+  font: inherit; font-size: 1rem; font-weight: 700; letter-spacing: 0.01em;
+  color: #fff; cursor: pointer; border: none;
+  padding: 17px 20px; border-radius: 15px;
+  background: var(--bx-grad-signature);
+  box-shadow: 0 12px 30px -12px rgba(124, 58, 237, 0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+.sx-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -14px rgba(147, 51, 234, 0.7); }
+.sx-cta-go { transition: transform 0.2s ease; }
+.sx-cta:hover .sx-cta-go { transform: translate(2px, -2px); }
+
+.sx-foot-note {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  margin: 16px 0 0; font-size: 0.75rem; color: var(--sx-muted); text-align: center;
+}
+
+/* ── Chart tooltip ───────────────────────────────────────────────────────── */
+.sx-tip {
+  background: var(--sx-card);
+  border: 1px solid var(--sx-border);
+  border-radius: 11px;
+  padding: 9px 11px;
+  box-shadow: 0 10px 30px -12px rgba(16, 24, 40, 0.35);
+  font-size: 0.8rem;
+  min-width: 120px;
+}
+.sx-tip-label { font-weight: 700; margin-bottom: 6px; color: var(--sx-text); }
+.sx-tip-row { display: flex; align-items: center; gap: 7px; }
+.sx-tip-dot { width: 9px; height: 9px; border-radius: 3px; flex: 0 0 auto; }
+.sx-tip-name { color: var(--sx-text-soft); }
+.sx-tip-val { margin-left: auto; font-weight: 700; color: var(--sx-text); font-variant-numeric: tabular-nums; }
+
+/* ── Empty / error / skeleton ────────────────────────────────────────────── */
+.sx-empty {
+  display: grid; place-items: center; min-height: 200px;
+  color: var(--sx-muted); font-size: 0.88rem; text-align: center; padding: 20px;
+}
+.sx-error {
+  display: flex; align-items: center; gap: 10px; justify-content: center;
+  margin: 60px auto; max-width: 520px; padding: 18px 22px;
+  border: 1px solid var(--sx-border); border-radius: 14px; background: var(--sx-card);
+  color: var(--sx-text);
+}
+.sx-error button {
+  margin-left: 6px; font: inherit; font-weight: 600; cursor: pointer;
+  padding: 6px 14px; border-radius: 9px; border: none; color: #FFFFFF; background: var(--bx-grad-signature);
+}
+.sx-skel {
+  border-radius: 8px;
+  background: linear-gradient(100deg, var(--sx-chip) 30%, var(--sx-chip-hi) 50%, var(--sx-chip) 70%);
+  background-size: 200% 100%;
+  animation: sx-shimmer 1.3s ease-in-out infinite;
+}
+@keyframes sx-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 1180px) {
+  .sx-row-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sx-row-3 > .sx-card:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 960px) {
+  .sx-kpi-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sx-row-2 { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .sx-row-3 { grid-template-columns: minmax(0, 1fr); }
+  .sx-row-3 > .sx-card:last-child { grid-column: auto; }
+  .sx-intel-grid { grid-template-columns: minmax(0, 1fr); }
+}
+/* Same breakpoint and same gutter as .rh-page / .ref-page. */
+@media (max-width: 620px) {
+  .sx-page { padding: 16px 12px 32px; }
+  .sx-title { font-size: 22px; }
+}
+@media (max-width: 480px) {
+  .sx-kpi-row { grid-template-columns: minmax(0, 1fr); }
+  .sx-stat-row { flex-wrap: wrap; }
+}
+
+/* Respect reduced-motion. */
+@media (prefers-reduced-motion: reduce) {
+  .sx-card, .sx-kpi { animation: none; }
+  .sx-kpi:hover, .sx-cta:hover { transform: none; }
+  .sx-skel { animation: none; }
+}

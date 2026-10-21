@@ -1,0 +1,366 @@
+/* =============================================================================
+   SUB PAGES  (sp- prefix)  -  /platform and /company
+   Layout only; colour, type and motion come from styles/brand.css, and several
+   shared blocks (hp-sec-head, hp-pillar, hp-proof) are reused from HomePage.css
+   so the two page types cannot drift apart.
+   ============================================================================= */
+
+/* ── Hero ───────────────────────────────────────────────────────────── */
+.sp-hero {
+  position: relative;
+  padding-block: clamp(52px, 7vw, 104px) clamp(48px, 6vw, 92px);
+  overflow: hidden;
+  isolation: isolate;
+}
+.sp-hero-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(36px, 4.5vw, 68px);
+}
+/* Split hero: the headline shares the row with the visual, so it is sized
+   against its column rather than the viewport. The centred variant (Company)
+   gets the full display ramp back. */
+.sp-hero-inner .bx-h1 { font-size: clamp(2.1rem, 3.2vw, 3rem); }
+.sp-hero .bx-lead { margin-top: 24px; }
+.sp-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(26px, 3vw, 36px);
+}
+@media (max-width: 1080px) {
+  .sp-hero-inner .bx-h1 { font-size: clamp(2.3rem, 6.4vw, 3.6rem); }
+}
+
+.sp-hero-center { text-align: center; }
+.sp-hero-center .bx-eyebrow::before { display: none; }
+.sp-hero-center .bx-lead { margin-inline: auto; }
+.sp-hero-center .sp-hero-cta { justify-content: center; }
+
+/* ── Numbered steps (How it works / How we engage) ──────────────────── */
+.sp-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 2.2vw, 32px);
+  counter-reset: none;
+}
+.sp-step {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  border-top: 1px solid var(--bx-border);
+  padding-top: 22px;
+  position: relative;
+}
+.sp-step::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 38%;
+  height: 1px;
+  background: var(--bx-grad-signature);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.65s var(--bx-ease);
+}
+.sp-step.is-in::after { transform: scaleX(1); }
+.sp-step h3 { margin: 0; }
+.sp-step p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--bx-text-2);
+}
+.sp-step-n {
+  font-family: var(--bx-font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--bx-accent);
+}
+
+/* ── Capability grid ────────────────────────────────────────────────── */
+.sp-cap-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.5vw, 22px);
+}
+.hp-tone-plum { --tone: var(--bx-plum); }
+
+/* ── Automation grid ────────────────────────────────────────────────── */
+.sp-auto-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--bx-border);
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
+  overflow: hidden;
+}
+.sp-auto {
+  background: var(--bx-ink-950, #07080D);
+  padding: clamp(22px, 2.4vw, 32px);
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  transition: background 0.3s ease;
+}
+.sp-auto:hover { background: rgba(255, 255, 255, 0.035); }
+.sp-auto-t {
+  font-family: var(--bx-font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  color: var(--bx-text);
+}
+.sp-auto-d {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--bx-text-2);
+}
+
+/* ── Reporting split ────────────────────────────────────────────────── */
+.sp-report {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 4vw, 68px);
+  align-items: center;
+}
+.sp-report-card {
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
+  background:
+    radial-gradient(120% 90% at 90% -10%, rgba(31, 163, 126, 0.12), transparent 62%),
+    var(--bx-surface);
+  overflow: hidden;
+  box-shadow: var(--bx-shadow-sm);
+}
+.sp-report-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--bx-border);
+}
+.sp-report-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--bx-font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bx-jade);
+}
+.sp-report-body { padding: 8px 20px 20px; }
+.sp-report-body p {
+  margin: 0;
+  padding: 12px 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--bx-text-2);
+  border-bottom: 1px solid var(--bx-border);
+}
+.sp-report-body p:last-child { border-bottom: 0; padding-bottom: 0; }
+.sp-report-body strong { color: var(--bx-text); font-weight: 600; }
+
+/* ── Comparison table ───────────────────────────────────────────────── */
+.sp-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
+  background: var(--bx-surface);
+}
+.sp-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+.sp-table th,
+.sp-table td {
+  text-align: left;
+  padding: 16px clamp(16px, 2vw, 26px);
+  border-bottom: 1px solid var(--bx-border);
+  font-size: 0.92rem;
+}
+.sp-table tbody tr:last-child th,
+.sp-table tbody tr:last-child td { border-bottom: 0; }
+.sp-table thead th {
+  font-family: var(--bx-font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--bx-muted);
+}
+.sp-table tbody th {
+  font-weight: 500;
+  color: var(--bx-text);
+}
+/* The Botella column carries NO block treatment at all: no fill, and no rules
+   down its sides either. Both ran the column's full height and boxed it off,
+   which read as a selected or disabled region rather than as emphasis - the
+   fill was removed first and the side rules turned out to be drawing the same
+   box on their own.
+   The column is still marked, just not with a box: its header is the accent
+   colour and semibold (below), and every value in it is a jade tick against a
+   grey cross opposite. */
+.sp-table thead .is-us {
+  color: var(--bx-accent);
+  font-weight: 600;
+}
+.sp-yes {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 600;
+  color: var(--bx-muted);
+}
+.sp-yes.is-us { color: var(--bx-jade); }
+.sp-no {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--bx-muted);
+  opacity: 0.75;
+}
+.sp-badge {
+  display: inline-flex;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  border: 1px solid var(--bx-border-strong);
+  color: var(--bx-muted);
+}
+.sp-badge.is-us {
+  color: var(--bx-accent);
+  border-color: rgba(167, 139, 250, 0.45);
+  background: rgba(167, 139, 250, 0.1);
+}
+
+/* ── Company: research pillars ──────────────────────────────────────── */
+.sp-pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.sp-pillar {
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
+  padding: clamp(24px, 2.6vw, 36px);
+  background: var(--bx-surface);
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  transition: border-color 0.3s ease, transform 0.45s var(--bx-ease);
+}
+.sp-pillar:hover { border-color: var(--bx-border-strong); transform: translateY(-4px); }
+.sp-pillar h3 { margin: 0; }
+.sp-pillar-lab {
+  margin: 0;
+  font-family: var(--bx-font-editorial);
+  font-style: italic;
+  font-size: 1.08rem;
+  line-height: 1.4;
+  color: var(--bx-accent);
+}
+.sp-pillar-buyer {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--bx-text-2);
+  padding-top: 12px;
+  border-top: 1px solid var(--bx-border);
+}
+
+/* ── Company: quote ─────────────────────────────────────────────────── */
+.sp-quote { text-align: left; }
+
+/* ── Company: products ──────────────────────────────────────────────── */
+.sp-prod-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--bx-border);
+}
+.sp-prod {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+  gap: clamp(18px, 3vw, 52px);
+  padding: clamp(24px, 3vw, 40px) 0;
+  border-bottom: 1px solid var(--bx-border);
+}
+.sp-prod-l { display: grid; gap: 10px; align-content: start; }
+.sp-prod-l h3 { margin: 0; }
+.sp-prod-l .hp-labs-status { justify-self: start; }
+.sp-prod-d {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--bx-text-2);
+  max-width: 72ch;
+}
+
+/* ── Company: services ──────────────────────────────────────────────── */
+.sp-svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.sp-svc {
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius);
+  padding: clamp(24px, 2.6vw, 34px);
+  background: var(--bx-surface);
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+.sp-svc h3 { margin: 0; }
+.sp-svc p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.62;
+  color: var(--bx-text-2);
+}
+.sp-svc-note {
+  padding-top: 14px;
+  border-top: 1px solid var(--bx-border);
+  font-family: var(--bx-font-editorial) !important;
+  font-style: italic;
+  font-size: 1.02rem !important;
+  color: var(--bx-accent) !important;
+}
+
+/* ── CTA ────────────────────────────────────────────────────────────── */
+.sp-cta-inner { text-align: center; }
+.sp-cta-inner .bx-eyebrow::before { display: none; }
+.sp-cta-inner .bx-lead { margin: 22px auto 0; }
+.sp-cta-inner .sp-hero-cta { justify-content: center; }
+.sp-cta-inner .hp-close-note { text-align: center; }
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .sp-hero-inner { grid-template-columns: 1fr; }
+  .sp-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sp-cap-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sp-auto-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sp-report { grid-template-columns: 1fr; }
+  .sp-svc-grid { grid-template-columns: 1fr; }
+  .sp-prod { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 620px) {
+  .sp-steps { grid-template-columns: 1fr; }
+  .sp-cap-grid { grid-template-columns: 1fr; }
+  .sp-auto-grid { grid-template-columns: 1fr; }
+  .sp-pillar-grid { grid-template-columns: 1fr; }
+  .sp-hero-cta .bx-btn { width: 100%; }
+}

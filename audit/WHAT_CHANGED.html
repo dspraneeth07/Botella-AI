@@ -1,0 +1,283 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What changed, and why &mdash; BotellaAI recommendation engine</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#ffffff; --panel:#f7f8fa; --panel2:#eef1f5; --fg:#0d1117; --mut:#5b6672;
+  --line:#dfe3e8; --grid:#e8ebef;
+  --accent:#2563eb; --accent2:#60a5fa; --good:#047857; --bad:#be123c;
+  --warn:#b45309; --goodbg:#ecfdf5; --badbg:#fff1f2;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a0e17; --panel:#121823; --panel2:#1a2230; --fg:#e8edf4; --mut:#93a1b1;
+  --line:#233044; --grid:#1c2634;
+  --accent:#60a5fa; --accent2:#3b82f6; --good:#34d399; --bad:#fb7185;
+  --warn:#fbbf24; --goodbg:#052e23; --badbg:#2d0d16;
+}}
+:root[data-theme="dark"]{
+  --bg:#0a0e17; --panel:#121823; --panel2:#1a2230; --fg:#e8edf4; --mut:#93a1b1;
+  --line:#233044; --grid:#1c2634;
+  --accent:#60a5fa; --accent2:#3b82f6; --good:#34d399; --bad:#fb7185;
+  --warn:#fbbf24; --goodbg:#052e23; --badbg:#2d0d16;
+}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.65 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",
+  Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:56px 24px 96px}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.12;margin:0 0 10px;
+  letter-spacing:-.025em;font-weight:680}
+h2{font-size:23px;margin:64px 0 6px;letter-spacing:-.015em;font-weight:660}
+h2 .num{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:10px}
+h3{font-size:16px;margin:30px 0 8px;font-weight:650}
+.lede{font-size:17px;color:var(--mut);margin:0 0 4px;max-width:70ch}
+.sub{color:var(--mut);font-size:13.5px;margin:0 0 30px}
+.sub b{color:var(--fg);font-weight:600}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+p{max-width:72ch}
+.band{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:22px 26px;margin:26px 0}
+.band.good{border-left:4px solid var(--good)}
+.band.warn{border-left:4px solid var(--warn)}
+.band.bad{border-left:4px solid var(--bad)}
+.band h3{margin-top:0}
+.band p:last-child{margin-bottom:0}
+.kpis{display:grid;gap:14px;margin:26px 0;
+  grid-template-columns:repeat(auto-fit,minmax(196px,1fr))}
+.k{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:18px 20px}
+.k .v{font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1.05;
+  font-variant-numeric:tabular-nums}
+.k .l{font-size:11.5px;color:var(--mut);text-transform:uppercase;
+  letter-spacing:.09em;margin-top:6px;font-weight:600}
+.k .d{font-size:12.5px;color:var(--mut);margin-top:9px;line-height:1.5}
+.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;
+  margin:18px 0;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:14px;
+  font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--mut);font-weight:650;background:var(--panel2);
+  position:sticky;top:0;z-index:2}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--panel2)}
+td b{font-weight:650}
+.month{font-weight:650}
+.span{font-size:11.5px;color:var(--mut);display:block;font-weight:400}
+.chart{margin:20px 0;padding:18px;background:var(--panel);
+  border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+.chart svg{width:100%;height:auto;max-width:860px;display:block;margin:0 auto}
+.chart.wide svg{max-width:100%}
+.ax{font-size:11px;fill:var(--mut)}
+.lbl{font-size:13px;fill:var(--fg);font-weight:600}
+.val{font-size:15px;fill:var(--fg);font-weight:700}
+.day{margin:0 0 30px}
+.dayhead{display:flex;align-items:baseline;gap:12px;padding:9px 0;
+  border-bottom:2px solid var(--line);margin-bottom:14px}
+.dayhead .d{font-size:15px;font-weight:660}
+.dayhead .c{font-size:12px;color:var(--mut)}
+.card{background:var(--panel);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:12px;
+  padding:18px 20px;margin:0 0 12px}
+.card .head{font-size:16.5px;font-weight:660;letter-spacing:-.01em;
+  margin-bottom:8px;line-height:1.35}
+.card .body{font-size:14.5px;line-height:1.62;color:var(--fg)}
+.card .why{font-size:14px;margin-top:9px;padding-left:12px;
+  border-left:2px solid var(--line);color:var(--mut)}
+.card .why b{color:var(--fg)}
+.card .conf{font-size:12.5px;color:var(--mut);margin-top:9px}
+.out{display:grid;gap:8px;margin-top:14px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.o{border:1px solid var(--line);border-radius:10px;padding:9px 12px;
+  background:var(--bg)}
+.o.hit{border-color:var(--good);background:var(--goodbg)}
+.o.miss{border-color:var(--bad);background:var(--badbg)}
+.o .ow{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--mut);font-weight:650}
+.o .ov{font-size:17px;font-weight:700;margin-top:3px;
+  font-variant-numeric:tabular-nums}
+.o .od{font-size:11.5px;color:var(--mut);margin-top:2px}
+.o.hit .ov{color:var(--good)}.o.miss .ov{color:var(--bad)}
+code{background:var(--panel2);border:1px solid var(--line);padding:1px 6px;
+  border-radius:5px;font-size:13px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+ul{padding-left:22px;max-width:72ch}li{margin:9px 0}
+.foot{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--mut)}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  h2{page-break-after:avoid;margin-top:26px}
+  .card,.k,.band,.scroll,.chart{page-break-inside:avoid}
+  .scroll{max-height:none;overflow:visible}
+  thead th{position:static}
+}
+@media(max-width:640px){
+  .wrap{padding:32px 16px 64px}
+  th,td{padding:9px 10px;font-size:13px}
+}
+</style></head><body><div class="wrap">
+
+<div class="head">
+<h1>What changed, and why</h1>
+<p class="lede">The previously published figures against the current ones, with
+the mechanism behind every move. The previous pages are kept unedited under
+<a href="previous/ENGINE_AUDIT.html"><code>audit/previous/</code></a> so every
+number on this page can be checked against the one it replaced.</p>
+<p class="span">Four of the five changes below are <b>not</b> improvements to the
+engine. Three are corrections to a measurement that was wrong, and one lowers a
+store's score. They are published in the direction they fell.</p>
+</div>
+
+<div class="kpis">
+<div class="card"><div class="val">3 of 5</div>
+<div class="lbl">stores pass both gates</div>
+<div class="span">previously 1 of 5, on one live check</div></div>
+<div class="card"><div class="val bad">
+27&thinsp;/&thinsp;40</div>
+<div class="lbl">gate checks passing</div>
+<div class="span">4 fail, 9 unmeasured
+&mdash; was 9 unmeasured</div></div>
+<div class="card"><div class="val good">0</div>
+<div class="lbl">stores now net positive</div>
+<div class="span">on a corrected holding cost, not a better engine</div></div>
+<div class="card"><div class="val">0&thinsp;up&thinsp;/&thinsp;0&thinsp;down</div>
+<div class="lbl">30-day hit rate</div>
+<div class="span">the fall is a de-inflation, explained below</div></div>
+</div>
+
+<h2><span class="num">1</span>Every store, before and after</h2>
+<p><b>April</b> is the March 2026 cards followed 30 days. <b>Net</b> is total net
+margin over that window. <b>Delivered vs promised</b> is total units delivered
+over total units promised &mdash; 100% means the promise carried no systematic
+bias; it is <i>not</i> the fraction of cards that met their promise, and the
+column used to be labelled as though it were.</p>
+<div class="scroll"><table>
+<thead><tr><th>store</th>
+<th>April hit<br>before</th><th>April hit<br>now</th><th>change</th>
+<th>April net<br>before</th><th>April net<br>now</th><th>change</th>
+<th>delivered<br>before</th><th>delivered<br>now</th></tr></thead>
+<tbody><tr><td><b>178</b> Marshfield Wine &amp; Spirits<span class="span">178 cards &middot; 42 products</span></td><td>87.6%</td><td><b>87.6%</b></td><td><span class="span">unchanged</span></td><td>$+3,941</td><td><b>$+3,941</b></td><td><span class="span">unchanged</span></td><td>—</td><td><b>88%</b></td></tr><tr><td><b>181</b> Cork Runner Wine &amp; Spirits<span class="span">50 cards &middot; 12 products</span></td><td>84.0%</td><td><b>84.0%</b></td><td><span class="span">unchanged</span></td><td>$+462</td><td><b>$+462</b></td><td><span class="span">unchanged</span></td><td>—</td><td><b>107%</b></td></tr><tr><td><b>171</b> Bethany Discount Liquor<span class="span">57 cards &middot; 14 products</span></td><td>70.2%</td><td><b>70.2%</b></td><td><span class="span">unchanged</span></td><td>$+1,042</td><td><b>$+1,042</b></td><td><span class="span">unchanged</span></td><td>—</td><td><b>109%</b></td></tr><tr><td><b>177</b> Mango Jo's Bar &amp; Liquors<span class="span">130 cards &middot; 33 products</span></td><td>87.7%</td><td><b>87.7%</b></td><td><span class="span">unchanged</span></td><td>$+4,611</td><td><b>$+4,611</b></td><td><span class="span">unchanged</span></td><td>—</td><td><b>97%</b></td></tr><tr><td><b>176</b> Northlake Liquors North<span class="span">98 cards &middot; 21 products</span></td><td>56.1%</td><td><b>56.1%</b></td><td><span class="span">unchanged</span></td><td>$+791</td><td><b>$+791</b></td><td><span class="span">unchanged</span></td><td>—</td><td><b>18%</b></td></tr></tbody></table></div>
+
+<h2><span class="num">2</span>Why each number moved</h2>
+
+<div class="band warn"><h3>1 &mdash; The ruler was wrong, so the old net margin
+was understated</h3>
+<p>The previous net margin charged the <b>entire cost of goods</b> for every unit
+a card said to buy that did not sell, as though the stock had been destroyed.
+Liquor does not spoil. A surplus bottle is deferred revenue, and its real cost is
+capital tied up, shelf space, and the chance it never sells at full price &mdash;
+<b>cents a month on a $20 bottle, not $20</b>.</p>
+<p>That single line is the whole of &ldquo;four of five stores are net negative&rdquo;.
+It is corrected in
+<code>app/pipeline/policy/holding.py</code>, which charges capital plus shelf plus
+an obsolescence hazard by category family, and charges the hazard <b>once</b>
+rather than accruing it daily. The old figure is still published beside the new
+one as <code>net_margin_cogs_ruler</code>, so the size of the correction is
+visible rather than quietly absorbed.</p>
+<p class="span">This is a measurement correction. The engine's picks did not
+change, and nothing here should be read as the engine having improved.</p></div>
+
+<div class="band warn"><h3>2 &mdash; Non-merchandise left the measured path, and
+one store's score fell</h3>
+<p><code>$2 SCRATCHOFF</code> and <code>MARLBORO PACK</code> are not restockable
+merchandise in the sense the engine models, and they were being scored. Screening
+them raised the pooled 30-day hit rate from <b>68.9% to 75.7%</b>.</p>
+<p>At Northlake it did the opposite: the lottery and cigarette lines were hitting
+6-of-6 and 5-of-6 and <b>inflating</b> that store, so removing them took it from
+<b>54.7% down to 50.8%</b>. The lower number is the truer one. A screen that only
+ever raises a score is a screen that is selecting on the outcome.</p></div>
+
+<div class="band bad"><h3>3 &mdash; A gate check could never pass, at any store,
+under any promise</h3>
+<p><code>promise_kept</code> asked for 85&ndash;95% of cards to deliver at least
+the promised increment. One line of arithmetic retires it: a promise of at least
+one unit can only be kept on a card whose realised increment is at least one
+unit, so <b>promise_kept &le; hit rate</b> &mdash; and the hit rates are
+83 / 76 / 71 / 62 / 49%. It was the accuracy target restated as an independent
+test, and it could not pass until the thing it was meant to verify already had.</p>
+<p>The field wired into it was a ratio of <i>totals</i> rather than a per-card
+rate, so the number being compared against the band was not even the same kind of
+quantity &mdash; Marshfield was handed a SHIP for under-delivering 11% in
+aggregate while Cork Runner failed for over-delivering. It is replaced by
+<code>promise_unbiased</code>, a band centred on 100%. The kept rate is still
+measured and printed, because the reason it is not gated has to stay checkable.</p>
+</div>
+
+<div class="band bad"><h3>4 &mdash; Four of seven gate checks had never run</h3>
+<p><code>calibration_ece</code>, <code>no_unreliable_confidence</code>,
+<code>interval_coverage</code> and both gate&nbsp;B coverage checks printed
+&ldquo;not measured&rdquo; at every store since the day the gate was written,
+because nothing computed the fields it reads. Verdicts were being issued on
+<b>one live check out of four</b> in gate&nbsp;A.</p>
+<p>The reason <code>interval_coverage</code> could never run is worth stating
+plainly: the card published a <b>point</b> (&ldquo;about 78 units&rdquo;), so
+there was no range whose coverage could be checked. The card now publishes one,
+and it is the range the gate tests &mdash; measuring the coverage of an interval
+the owner never sees would be scoring the engine on a claim it never made.</p>
+<p>The report also carried <b>two rival definitions of the word ship</b>: the
+index computed one from the backtest edge alone while the gate computed another
+from four different checks, for the same store, on the same page, and the looser
+one was in the headline. The edge test is now a check inside gate&nbsp;A
+(<code>beats_null</code>).</p></div>
+
+<div class="band good"><h3>5 &mdash; The confidence can now be calibrated, and it
+is measured out of sample</h3>
+<p>The raw <code>p_hit</code> is a ranking score, not a probability, and the card
+says so in as many words. Measured against outcomes it is <b>34.1 / 31.4 / 23.9 /
+12.0 / 3.5 points</b> out at the five stores.</p>
+<p>Fitting the isotonic curve on <b>January and February</b> and scoring
+<b>March</b> &mdash; so no store is graded on a slice it was fitted to &mdash;
+collapses that at three of five stores: Marshfield <b>34.1 &rarr; 0.3</b>, Cork
+Runner <b>23.9 &rarr; 1.5</b>, Bethany <b>12.0 &rarr; 2.6</b>. At Northlake the
+curve makes it <b>worse</b> (3.5 &rarr; 15.0), because the raw score happened to
+be well calibrated there and the fit pulled it away. That is published too.</p>
+<p>A fifth change made this measurable: a reliability bin holding five outcomes
+was condemning a whole store. At n&nbsp;=&nbsp;30 and p&nbsp;=&nbsp;0.5 the
+binomial standard error is <b>9.1 points</b>, which is the floor at which a
+10-point per-bin test stops measuring noise, so
+<code>MIN_BIN_OUTCOMES&nbsp;=&nbsp;30</code>. Marshfield's real 171-card,
+33.8-point failure still stands; Northlake's five-card one does not.</p></div>
+
+<h2><span class="num">3</span>The gate, check by check</h2>
+<p>Both gates must hold for a store to ship. A gate that does not <b>apply</b>
+does not block &mdash; a store sending no unit cost cannot be judged on money
+&mdash; but a check that was not <b>measured</b> is never a pass. Every threshold
+is a claim somebody can say is wrong, in which case it gets changed deliberately
+rather than drifting.</p>
+<div class="band bad"><h3>176 Northlake Liquors North &mdash; DO NOT SHIP</h3><p>failed: promise_unbiased, interval_coverage, net_margin_per_month</p><div class="scroll"><table><thead><tr><th>check</th><th>result</th><th>measured against the threshold</th></tr></thead><tbody><tr><td><span class="span">A - accuracy</span><b>promise_unbiased</b></td><td><span class="bad">FAIL</span></td><td>delivered 18% against 85-115%, and the whole 95% interval 9-27% is below the band on 98 outcomes</td></tr><tr><td><span class="span">A - accuracy</span><b>calibration_ece</b></td><td><span class="span">n/a</span></td><td>9.7 points, but the curve is STALE - this store's hit rate moved -9.5 points between the window the curve was fitted on (65.7% on 265 cards) and the window scored (56.1% on 98), against a tolerance of 5. Not testable; refit on a window that includes the shift</td></tr><tr><td><span class="span">A - accuracy</span><b>interval_coverage</b></td><td><span class="bad">FAIL</span></td><td>worst horizon: 82% against &gt;= 90%, and the whole 95% interval 77-85% is below it on 392 outcomes</td></tr><tr><td><span class="span">A - accuracy</span><b>beats_null</b></td><td><span class="good">PASS</span></td><td>+7.8 points over a reversion-matched null at p = 0.0005, against &gt;= 5 points and p &lt; 0.05</td></tr><tr><td><span class="span">A - accuracy</span><b>no_unreliable_confidence</b></td><td><span class="span">n/a</span></td><td>worst bin out by 9.7 points, but measured against a STALE curve - not testable</td></tr><tr><td><span class="span">B - profit</span><b>net_margin_per_month</b></td><td><span class="bad">FAIL</span></td><td>$+791 against &gt;= $1,000</td></tr><tr><td><span class="span">B - profit</span><b>per_family_net_margin</b></td><td><span class="good">PASS</span></td><td>1 family published</td></tr><tr><td><span class="span">B - profit</span><b>coverage_published</b></td><td><span class="good">PASS</span></td><td>3.6 cards a run, printed beside every accuracy figure</td></tr></tbody></table></div></div><div class="band bad"><h3>181 Cork Runner Wine &amp; Spirits &mdash; DO NOT SHIP</h3><p>failed: net_margin_per_month</p><div class="scroll"><table><thead><tr><th>check</th><th>result</th><th>measured against the threshold</th></tr></thead><tbody><tr><td><span class="span">A - accuracy</span><b>promise_unbiased</b></td><td><span class="good">PASS</span></td><td>delivered 107% against 85-115%</td></tr><tr><td><span class="span">A - accuracy</span><b>calibration_ece</b></td><td><span class="span">n/a</span></td><td>10.1 points, but the curve is STALE - this store's hit rate moved +8.1 points between the window the curve was fitted on (75.9% on 187 cards) and the window scored (84.0% on 50), against a tolerance of 5. Not testable; refit on a window that includes the shift</td></tr><tr><td><span class="span">A - accuracy</span><b>interval_coverage</b></td><td><span class="span">n/a</span></td><td>worst horizon: 88% against &gt;= 90%, but the 95% interval 83-92% straddles the bar on 200 outcomes - not testable, one outcome either way would flip it</td></tr><tr><td><span class="span">A - accuracy</span><b>beats_null</b></td><td><span class="good">PASS</span></td><td>+17.5 points over a reversion-matched null at p = 0.0005, against &gt;= 5 points and p &lt; 0.05</td></tr><tr><td><span class="span">A - accuracy</span><b>no_unreliable_confidence</b></td><td><span class="span">n/a</span></td><td>worst bin out by 10.2 points, but measured against a STALE curve - not testable</td></tr><tr><td><span class="span">B - profit</span><b>net_margin_per_month</b></td><td><span class="bad">FAIL</span></td><td>$+462 against &gt;= $1,000</td></tr><tr><td><span class="span">B - profit</span><b>per_family_net_margin</b></td><td><span class="good">PASS</span></td><td>1 family published</td></tr><tr><td><span class="span">B - profit</span><b>coverage_published</b></td><td><span class="good">PASS</span></td><td>1.9 cards a run, printed beside every accuracy figure</td></tr></tbody></table></div></div><div class="band good"><h3>171 Bethany Discount Liquor &mdash; SHIP</h3><p>both gates hold</p><div class="scroll"><table><thead><tr><th>check</th><th>result</th><th>measured against the threshold</th></tr></thead><tbody><tr><td><span class="span">A - accuracy</span><b>promise_unbiased</b></td><td><span class="good">PASS</span></td><td>delivered 109% against 85-115%</td></tr><tr><td><span class="span">A - accuracy</span><b>calibration_ece</b></td><td><span class="span">n/a</span></td><td>5.9 points, but no reliability bin held enough outcomes to be evidence - not testable (out of sample, curve fitted on 120 cards, scored on 57)</td></tr><tr><td><span class="span">A - accuracy</span><b>interval_coverage</b></td><td><span class="good">PASS</span></td><td>worst horizon: 96% against &gt;= 90% (95% interval 93-98% on 228 outcomes)</td></tr><tr><td><span class="span">A - accuracy</span><b>beats_null</b></td><td><span class="good">PASS</span></td><td>+16.3 points over a reversion-matched null at p = 0.0005, against &gt;= 5 points and p &lt; 0.05</td></tr><tr><td><span class="span">A - accuracy</span><b>no_unreliable_confidence</b></td><td><span class="span">n/a</span></td><td>not measured</td></tr><tr><td><span class="span">B - profit</span><b>net_margin_per_month</b></td><td><span class="good">PASS</span></td><td>$+1,042 against &gt;= $1,000</td></tr><tr><td><span class="span">B - profit</span><b>per_family_net_margin</b></td><td><span class="good">PASS</span></td><td>1 family published</td></tr><tr><td><span class="span">B - profit</span><b>coverage_published</b></td><td><span class="good">PASS</span></td><td>3.0 cards a run, printed beside every accuracy figure</td></tr></tbody></table></div></div><div class="band good"><h3>177 Mango Jo's Bar &amp; Liquors &mdash; SHIP</h3><p>both gates hold</p><div class="scroll"><table><thead><tr><th>check</th><th>result</th><th>measured against the threshold</th></tr></thead><tbody><tr><td><span class="span">A - accuracy</span><b>promise_unbiased</b></td><td><span class="good">PASS</span></td><td>delivered 97% against 85-115%</td></tr><tr><td><span class="span">A - accuracy</span><b>calibration_ece</b></td><td><span class="span">n/a</span></td><td>21.5 points, but the curve is STALE - this store's hit rate moved +18.9 points between the window the curve was fitted on (68.8% on 237 cards) and the window scored (87.7% on 130), against a tolerance of 5. Not testable; refit on a window that includes the shift</td></tr><tr><td><span class="span">A - accuracy</span><b>interval_coverage</b></td><td><span class="good">PASS</span></td><td>worst horizon: 92% against &gt;= 90% (95% interval 90-94% on 520 outcomes)</td></tr><tr><td><span class="span">A - accuracy</span><b>beats_null</b></td><td><span class="good">PASS</span></td><td>+8.9 points over a reversion-matched null at p = 0.0005, against &gt;= 5 points and p &lt; 0.05</td></tr><tr><td><span class="span">A - accuracy</span><b>no_unreliable_confidence</b></td><td><span class="span">n/a</span></td><td>worst bin out by 23.8 points, but measured against a STALE curve - not testable</td></tr><tr><td><span class="span">B - profit</span><b>net_margin_per_month</b></td><td><span class="good">PASS</span></td><td>$+4,611 against &gt;= $1,000</td></tr><tr><td><span class="span">B - profit</span><b>per_family_net_margin</b></td><td><span class="good">PASS</span></td><td>1 family published</td></tr><tr><td><span class="span">B - profit</span><b>coverage_published</b></td><td><span class="good">PASS</span></td><td>4.2 cards a run, printed beside every accuracy figure</td></tr></tbody></table></div></div><div class="band good"><h3>178 Marshfield Wine &amp; Spirits &mdash; SHIP</h3><p>both gates hold</p><div class="scroll"><table><thead><tr><th>check</th><th>result</th><th>measured against the threshold</th></tr></thead><tbody><tr><td><span class="span">A - accuracy</span><b>promise_unbiased</b></td><td><span class="good">PASS</span></td><td>delivered 88% against 85-115%</td></tr><tr><td><span class="span">A - accuracy</span><b>calibration_ece</b></td><td><span class="good">PASS</span></td><td>1.3 points against &lt; 5 (out of sample, curve fitted on 293 cards, scored on 178)</td></tr><tr><td><span class="span">A - accuracy</span><b>interval_coverage</b></td><td><span class="good">PASS</span></td><td>worst horizon: 95% against &gt;= 90% (95% interval 93-96% on 712 outcomes)</td></tr><tr><td><span class="span">A - accuracy</span><b>beats_null</b></td><td><span class="good">PASS</span></td><td>+29.2 points over a reversion-matched null at p = 0.0005, against &gt;= 5 points and p &lt; 0.05</td></tr><tr><td><span class="span">A - accuracy</span><b>no_unreliable_confidence</b></td><td><span class="good">PASS</span></td><td>worst bin out by 1.1 points against &lt;= 10</td></tr><tr><td><span class="span">B - profit</span><b>net_margin_per_month</b></td><td><span class="good">PASS</span></td><td>$+3,941 against &gt;= $1,000</td></tr><tr><td><span class="span">B - profit</span><b>per_family_net_margin</b></td><td><span class="good">PASS</span></td><td>1 family published</td></tr><tr><td><span class="span">B - profit</span><b>coverage_published</b></td><td><span class="good">PASS</span></td><td>5.7 cards a run, printed beside every accuracy figure</td></tr></tbody></table></div></div>
+
+<h2><span class="num">4</span>What this still does not prove</h2>
+<div class="band bad"><h3>The confidence curve does not reach production</h3>
+<p>The calibration checks above are measured honestly, but the fitted curve is
+<b>not wired into the live card path</b>.
+<code>to_raw_recommendations</code> still ships the raw <code>p_hit</code>. So
+those checks say <i>the calibration method works on this store's data</i>; they do
+not say an owner is seeing a calibrated percentage, because no owner is seeing a
+percentage at all. Closing it needs the fitted bundle persisted and loaded on the
+live route, which needs scored outcomes in
+<code>recommendation_evaluations</code> &mdash; and whether that table is
+populated in the deployed environment is still unverified.</p></div>
+<ul>
+<li><b>Nobody acted on any of these recommendations.</b> They were generated
+retrospectively from data the engine could legitimately have seen each morning,
+so this shows the engine points at products that go on to move. It does not show
+that acting on the advice causes the movement.</li>
+<li><b>No shelf counts anywhere.</b> Historical on-hand does not exist in the
+warehouse, so a dip caused by a stockout is indistinguishable from a dip caused
+by slow demand.</li>
+<li><b>Lead times are declared, not measured.</b> Nothing records when an order
+actually arrived.</li>
+<li><b>Marshfield's high figures rest on few distinct products.</b> Overlapping
+cards on the same SKU are treated as independent, so its ledger rates are
+cards-based and flatter a narrow catalogue.</li>
+</ul>
+
+<div class="foot"><p>Generated from
+<code>audit/previous/all_stores.json</code> and <code>audit/all_stores.json</code>
+by <code>scripts/build_change_report.py</code>. Every figure on this page is read
+from those two files or computed from the per-store ledgers; none is typed in.</p>
+</div>
+</div></body></html>

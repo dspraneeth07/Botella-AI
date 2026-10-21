@@ -1,0 +1,52 @@
+/* =============================================================================
+   WORDMARK - "Botella.ai"
+   One mark, three sizes: nav (site header), footer, sidebar (signed-in app).
+   Same tokens everywhere: display face, ink for the name, the signature
+   gradient for the .ai.
+   ============================================================================= */
+
+.wm {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--bx-font-display);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.wm-name { color: var(--bx-text); }
+
+.wm-tld {
+  background: var(--bx-grad-display);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Nav: sized to sit on the same optical line as the nav links. */
+.wm-nav { font-size: 1.42rem; }
+
+/* Footer: the footer is always the dark register, so the name is always cream. */
+.wm-footer {
+  font-size: 1.72rem;
+  color: #FFFFFF;
+}
+.wm-footer .wm-name { color: #FFFFFF; }
+
+/* Sidebar: the signed-in app. The app shell publishes its palette as
+   `--text-primary` rather than `--bx-text`, so the name is pinned to the app
+   token - otherwise the mark would fall back to the site's ink and vanish
+   against the sidebar in one of the two themes. */
+.wm-sidebar {
+  font-size: 1.34rem;
+  letter-spacing: -0.04em;
+}
+.wm-sidebar .wm-name { color: var(--text-primary); }
+
+@media (max-width: 620px) {
+  .wm-nav { font-size: 1.28rem; }
+}

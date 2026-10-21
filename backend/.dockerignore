@@ -1,0 +1,24 @@
+# NO LONGER USED - see /.dockerignore at the repository root.
+#
+# Docker reads .dockerignore from the build CONTEXT root. The backend image now
+# builds from the repository root (it carries the pipeline scripts the nightly
+# gate and calibration jobs run), so this file is never consulted and editing it
+# has no effect. Every rule below lives in the root file with a backend/ prefix.
+# Kept only so a `docker build ./backend` run by hand still behaves.
+
+node_modules
+npm-debug.log
+.env
+.env.*
+logs
+*.log
+database/*.sqlite
+database/*.db
+data/imagegen/*
+data/card-statements/
+eval-results
+coverage
+.git
+.gitignore
+Dockerfile
+.dockerignore

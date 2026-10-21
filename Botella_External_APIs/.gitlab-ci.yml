@@ -1,0 +1,70 @@
+# GitLab CI/CD for the StoreAgent / recommendation service.
+#
+# Deploys ON the EC2 box via the self-hosted runner (tag: ec2, shell executor) —
+# the same runner the BottleAI repo uses. No SSH, no open port 22. The runner
+# checks the repo out on the box and runs docker compose --build locally.
+#
+# Prereqs on the box:
+#   - self-hosted runner registered with tag `ec2` (shared with BottleAI)
+#   - prod env file at /opt/botella/storeagent.env  (readable by gitlab-runner),
+#     with NODE_API_BASE_URL=http://host.docker.internal:3000
+#
+# $CI_REGISTRY* are provided automatically (unused here — this service builds
+# locally rather than pulling from the registry).
+
+stages:
+  - test
+  - deploy
+
+# ── Sheet 00 guards ──────────────────────────────────────────────────────────
+# This job used to be WHEN: MANUAL on the box's shell runner, because nobody
+# had confirmed that runner carried a Python toolchain - so in practice it never
+# ran, and the deploy below needed nothing. It now runs on a shared runner in a
+# python image on every merge request and branch push, and the deploy needs it.
+# The suite is pure logic: conftest.py pins every network and model key to a
+# test value and HTTP is mocked with respx, so no credentials are required.
+test:
+  stage: test
+  image: python:3.12-slim
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH'
+  variables:
+    PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  script:
+    - cd "$CI_PROJECT_DIR"
+    - python -m pip install -q -e ".[dev]"
+    # The three build guards. Rule 3: no new magic numbers; nothing branches on
+    # evidence state; every card family quotes a price.
+    - python scripts/check_no_literals.py
+    - python scripts/check_no_state_branches.py
+    - python scripts/check_families_quote_ev.py
+    # "how much of this engine is still guesswork" - printed on every run.
+    - python scripts/config_report.py
+    - python -m pytest -q
+    # ruff carries pre-existing findings (129 when this was written) outside any
+    # checklist item. Printed so the count is seen on every run; blocking once
+    # it is clean.
+    - python -m ruff check app storeagent || echo "ruff findings above are advisory until the backlog is cleared"
+
+deploy:
+  stage: deploy
+  tags: [ec2]                     # run on the box's self-hosted runner
+  resource_group: production      # serialize deploys within this project
+  needs: [test]
+  rules:
+    # Main only, manual. Runs docker compose ON the box (no SSH). Binds host
+    # :8000, so stop the old StoreAgent container first at cutover. Drop
+    # `when: manual` to auto-deploy on merge once you're confident.
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: manual
+  script:
+    # The shell executor already checked the repo out here — build from source.
+    - cd "$CI_PROJECT_DIR"
+    # Prod secrets (kept on the box, never in git). docker compose reads ./.env.
+    - cp /opt/botella/storeagent.env .env
+    # Stable project name so state persists across deploys.
+    - docker compose -p storeagent up -d --build
+    - sleep 8
+    - curl -fsS http://127.0.0.1:8000/health
+    - docker image prune -f

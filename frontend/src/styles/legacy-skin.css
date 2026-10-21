@@ -1,0 +1,158 @@
+/* =============================================================================
+   LEGACY SKIN
+   -----------------------------------------------------------------------------
+   The SEO / content / blog / contact pages predate the brand system and still
+   use the `.cp-*` and `.lp-*` class families. Their palette has been remapped
+   onto the brand tokens, but a few components need more than a colour swap:
+
+   1. Solid "fill" buttons were white-on-indigo. White on Botella Amber fails
+      contrast, so every fill button switches to the signature gradient with
+      ink text - the same button the new pages use.
+   2. Section headings, eyebrows and stat numbers get the new type treatment so
+      a visitor moving between /platform and /ai-inventory-management-liquor-stores
+      cannot tell the pages were built at different times.
+
+   Loaded LAST from ContentLayout so it wins the cascade; selectors are prefixed
+   with `html` where an equal-specificity legacy rule would otherwise tie.
+   ============================================================================= */
+
+/* ── Fill buttons: gradient + ink text (AA on both themes) ───────────── */
+html .cp-btn-fill,
+html .cp-cta-btn,
+html .lp-btn-fill,
+html .contact-submit,
+html .blog-cta-btn {
+  background: var(--bx-grad-signature);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 12px 30px -16px rgba(124, 58, 237, 0.75);
+  transition: transform 0.3s var(--bx-ease), box-shadow 0.3s var(--bx-ease);
+}
+html .cp-btn-fill:hover,
+html .cp-cta-btn:hover,
+html .lp-btn-fill:hover,
+html .contact-submit:hover,
+html .blog-cta-btn:hover {
+  background: var(--bx-grad-signature);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -16px rgba(124, 58, 237, 0.85);
+}
+
+/* ── Outline buttons: match the new ghost button ─────────────────────── */
+html .cp-btn-line,
+html .lp-btn-line {
+  border-radius: 999px;
+  border-color: var(--bx-border-strong);
+  font-weight: 600;
+  transition: border-color 0.24s ease, background 0.24s ease, transform 0.3s var(--bx-ease);
+}
+html .cp-btn-line:hover,
+html .lp-btn-line:hover {
+  border-color: var(--bx-accent);
+  background: var(--bx-surface-2);
+  transform: translateY(-2px);
+}
+
+/* ── Type: content pages adopt the display + editorial pairing ───────── */
+html .cp h1,
+html .cp h2 { letter-spacing: -0.035em; line-height: 1.06; }
+html .cp h1 i,
+html .cp h2 i,
+html .cp h3 i {
+  font-family: var(--bx-font-editorial);
+  font-style: italic;
+  font-weight: 400;
+  background: var(--bx-grad-display);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  padding-right: 0.05em;
+}
+
+/* Eyebrows / kickers across the legacy pages. */
+html .cp-eyebrow-v2,
+html .lp-eyebrow,
+html .blog-eyebrow {
+  font-family: var(--bx-font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--bx-accent);
+}
+
+/* Big stat numbers pick up the signature gradient. */
+html .cp-stat-n,
+html .cp-hero-bignum-val,
+html .lp-mbar-n {
+  background: var(--bx-grad-display);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  font-family: var(--bx-font-display);
+  letter-spacing: -0.05em;
+}
+
+/* Callouts and pull quotes read as editorial, not as alert boxes. */
+html .cp-pull-text,
+html .cp-float-callout {
+  font-family: var(--bx-font-editorial);
+  font-style: italic;
+}
+
+/* Legacy cards inherit the new radius so nothing looks a generation older. */
+html .cp-feat-card,
+html .cp-faq-card,
+html .cp-stat,
+html .lp-feat,
+html .lp-automate-card,
+html .lp-why-card {
+  border-radius: var(--bx-radius);
+}
+
+/* ── The old page-wide custom cursor is a gimmick against this register;
+      the site now leads with type and motion instead. ────────────────── */
+html .cursor-glow { display: none !important; }
+
+/* ── Product screenshots ──────────────────────────────────────────────
+   The legacy hero image used `object-fit: cover` inside a capped box, which
+   sliced the left and right edges off dense dashboard captures - column
+   headers and values were being cut mid-word. `contain` letterboxes instead,
+   so the screenshot stays fully readable, which is the entire point of it. */
+html .cp-hero-shot {
+  object-fit: contain;
+  object-position: center;
+  background: var(--bx-surface);
+  padding: 10px;
+  border-radius: var(--bx-radius);
+}
+
+/* ── Mobile overflow ─────────────────────────────────────────────────
+   `.cp-rich::before` is a decorative glow pinned at a hard 900px width and
+   centred with translateX(-50%). Once the column is narrower than 900px -
+   i.e. any phone - it hangs ~128px past each edge and drags the whole
+   document sideways, so every content page could be scrolled horizontally.
+   Capping it at the column width fixes all four page-variant overrides at
+   once and changes nothing at desktop, where the column is wider than 900. */
+html .cp-rich::before { max-width: 100%; }
+
+/* Some page-variant blocks re-declare a 2-column grid AFTER the responsive
+   media query that collapses it, so those grids stayed two-up on small phones
+   and pushed the page sideways. Loaded last, this wins for every variant. */
+@media (max-width: 640px) {
+  html [class*="page-"] .cp-faq-grid,
+  html [class*="page-"] .cp-feat-grid,
+  html [class*="page-"] .cp-stats,
+  html .cp-faq-grid,
+  html .cp-feat-grid,
+  html .cp-stats,
+  html .cp-compare-pair,
+  html .cp-image-list {
+    grid-template-columns: 1fr;
+  }
+}

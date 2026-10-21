@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accuracy, five stores, March 2026</title>
+<style>
+:root{--bg:#fbfaf8;--pa:#fff;--tx:#1b1b1a;--tx2:#55534e;--mu:#8a8780;
+--bd:#e6e3dd;--bd2:#d6d2c9;--ac:#1f5c3d;--bad:#8c2f21;--warn:#8a6d1f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);
+font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 20px 80px}
+h1{font-size:30px;line-height:1.25;margin:0 0 10px;letter-spacing:-.02em}
+h2{font-size:21px;margin:44px 0 6px;letter-spacing:-.01em}
+h3{font-size:16px;margin:26px 0 6px}
+.lede{font-size:17px;color:var(--tx2);margin:0 0 6px;max-width:68ch}
+.sub{color:var(--mu);font-size:13.5px;margin:0 0 22px}
+table{border-collapse:collapse;width:100%;font-size:13.5px;margin:10px 0 4px;
+background:var(--pa)}
+th,td{border:1px solid var(--bd);padding:7px 9px;text-align:right;
+font-variant-numeric:tabular-nums}
+th{background:#f3f1ec;font-weight:600;text-align:right;color:var(--tx2)}
+th:first-child,td:first-child{text-align:left;font-variant-numeric:normal}
+caption{caption-side:top;text-align:left;color:var(--mu);font-size:12.5px;
+padding:4px 0 6px}
+.win{color:var(--ac);font-weight:600}
+.lose{color:var(--bad);font-weight:600}
+.na{color:var(--mu)}
+.note{color:var(--tx2);font-size:13px;max-width:72ch;margin:8px 0 0}
+.miss{background:#fdf6e9;border:1px solid #e8dcc0;padding:10px 12px;
+border-radius:6px;color:var(--warn);font-size:13.5px;margin:10px 0}
+.scroll{overflow-x:auto}
+a{color:var(--ac)}
+</style></head><body><div class="wrap">
+
+<h1>How accurate was the engine on March 2026 cards?</h1>
+<p class="lede">Three layers, kept apart because they answer different
+questions and have different denominators. Cards issued in March 2026 are
+scored at 30, 60, 90 and 120 days, which means outcomes measured in
+April, May, June and July.</p>
+<p class="sub"><b>513</b> cards across <b>5</b> store(s)
+&middot; pooled 30-day hit rate <b>79.3%</b> (407 of 513 scored)
+&middot; generated 2026-10-08 18:30</p>
+
+
+<h2>1. The month &mdash; the cards it actually issued</h2>
+<p class="note">Counted per card. This is the figure an owner experiences,
+and the smallest sample of the three: one month of one store is tens of
+cards, so read the interval and not the point.</p>
+<div class='scroll'><table><caption>One row per store. The hit rule is lift &ge; 1.0: the product sold at least what its own trailing rate projected over the 30 days after the card. Net margin is margin captured less the cost of holding what did not sell.</caption><tr><th>store</th><th>cards</th><th>scored</th><th>hits</th><th>hit rate, April</th><th>95% interval</th><th>median lift</th><th>net margin</th><th>per card</th></tr><tr><td>Bethany Discount Liquor</td><td>57</td><td>57</td><td>40</td><td><b>70.2%</b></td><td>57.3&ndash;80.5</td><td>1.82</td><td>$1,042</td><td>$18</td></tr><tr><td>Northlake Liquors</td><td>98</td><td>98</td><td>55</td><td><b>56.1%</b></td><td>46.3&ndash;65.5</td><td>1.16</td><td>$791</td><td>$8</td></tr><tr><td>Mango Jo's Bar &amp; Liquors</td><td>130</td><td>130</td><td>114</td><td><b>87.7%</b></td><td>80.9&ndash;92.3</td><td>1.45</td><td>$4,611</td><td>$36</td></tr><tr><td>Marshfield Wine &amp; Spirits</td><td>178</td><td>178</td><td>156</td><td><b>87.6%</b></td><td>82.0&ndash;91.7</td><td>1.57</td><td>$3,941</td><td>$22</td></tr><tr><td>Cork Runner Wine &amp; Spirits</td><td>50</td><td>50</td><td>42</td><td><b>84.0%</b></td><td>71.5&ndash;91.7</td><td>1.70</td><td>$462</td><td>$9</td></tr></table></div>
+
+<h2>2. The forecast &mdash; how wrong the quantity was</h2>
+<p class="note">Counted per store-product-horizon, which is thousands of
+observations rather than tens, and measured against three baselines on the
+same rows. An engine error means nothing alone; it means something next to
+what a year average achieves on identical data.</p>
+<h3>Bethany Discount Liquor <span class="na">&middot; Allen, TX</span></h3><div class='scroll'><table><caption>WAPE on units, lower is better, measured on every store-product-horizon rather than on cards. A baseline shown in red beat the engine on that horizon. Bias is the signed error: positive over-forecasts.</caption><tr><th>horizon</th><th>the engine</th><th>year average</th><th>trailing 28d</th><th>same weeks last year</th><th>engine bias</th><th>n</th></tr><tr><td>30 days</td><td><b>43.2%</b></td><td class="win">48.4%</td><td class="win">52.5%</td><td class="win">69.9%</td><td>1.8%</td><td>4,157</td></tr><tr><td>60 days</td><td><b>40.3%</b></td><td class="win">44.9%</td><td class="win">52.5%</td><td class="win">63.7%</td><td>4.1%</td><td>4,157</td></tr><tr><td>90 days</td><td><b>40.0%</b></td><td class="win">43.8%</td><td class="win">54.4%</td><td class="win">60.3%</td><td>6.8%</td><td>4,157</td></tr><tr><td>120 days</td><td><b>40.4%</b></td><td class="win">43.5%</td><td class="win">56.1%</td><td class="win">58.1%</td><td>8.8%</td><td>4,157</td></tr></table></div><p class="sub">21 scored decision dates, 6 held back to fit the confidence curve - the curve is never scored on the dates it was fitted on.</p><h3>Northlake Liquors <span class="na">&middot; North Palm Beach, FL</span></h3><div class='scroll'><table><caption>WAPE on units, lower is better, measured on every store-product-horizon rather than on cards. A baseline shown in red beat the engine on that horizon. Bias is the signed error: positive over-forecasts.</caption><tr><th>horizon</th><th>the engine</th><th>year average</th><th>trailing 28d</th><th>same weeks last year</th><th>engine bias</th><th>n</th></tr><tr><td>30 days</td><td><b>28.2%</b></td><td class="win">32.5%</td><td class="win">30.6%</td><td class="win">45.1%</td><td>2.2%</td><td>7,831</td></tr><tr><td>60 days</td><td><b>26.1%</b></td><td class="win">29.7%</td><td class="win">29.7%</td><td class="win">40.9%</td><td>2.9%</td><td>7,831</td></tr><tr><td>90 days</td><td><b>25.5%</b></td><td class="win">28.3%</td><td class="win">29.9%</td><td class="win">38.4%</td><td>3.1%</td><td>7,831</td></tr><tr><td>120 days</td><td><b>25.4%</b></td><td class="win">27.9%</td><td class="win">30.3%</td><td class="win">37.0%</td><td>4.1%</td><td>7,831</td></tr></table></div><p class="sub">24 scored decision dates, 8 held back to fit the confidence curve - the curve is never scored on the dates it was fitted on.</p><h3>Mango Jo's Bar &amp; Liquors <span class="na">&middot; Ruskin, FL</span></h3><div class='scroll'><table><caption>WAPE on units, lower is better, measured on every store-product-horizon rather than on cards. A baseline shown in red beat the engine on that horizon. Bias is the signed error: positive over-forecasts.</caption><tr><th>horizon</th><th>the engine</th><th>year average</th><th>trailing 28d</th><th>same weeks last year</th><th>engine bias</th><th>n</th></tr><tr><td>30 days</td><td><b>24.1%</b></td><td class="win">30.6%</td><td class="win">24.2%</td><td class="win">47.8%</td><td>1.8%</td><td>11,407</td></tr><tr><td>60 days</td><td><b>22.1%</b></td><td class="win">27.7%</td><td class="win">23.8%</td><td class="win">43.3%</td><td>0.8%</td><td>11,407</td></tr><tr><td>90 days</td><td><b>21.2%</b></td><td class="win">26.9%</td><td class="win">24.1%</td><td class="win">40.9%</td><td>1.5%</td><td>11,407</td></tr><tr><td>120 days</td><td><b>21.4%</b></td><td class="win">26.9%</td><td class="win">24.8%</td><td class="win">38.9%</td><td>1.9%</td><td>11,407</td></tr></table></div><p class="sub">24 scored decision dates, 8 held back to fit the confidence curve - the curve is never scored on the dates it was fitted on.</p><h3>Marshfield Wine &amp; Spirits <span class="na">&middot; Calumet Park, IL</span></h3><div class='scroll'><table><caption>WAPE on units, lower is better, measured on every store-product-horizon rather than on cards. A baseline shown in red beat the engine on that horizon. Bias is the signed error: positive over-forecasts.</caption><tr><th>horizon</th><th>the engine</th><th>year average</th><th>trailing 28d</th><th>same weeks last year</th><th>engine bias</th><th>n</th></tr></table></div><p class="sub">0 scored decision dates, 3 held back to fit the confidence curve - the curve is never scored on the dates it was fitted on.</p><h3>Cork Runner Wine &amp; Spirits <span class="na">&middot; Los Angeles, CA</span></h3><div class='scroll'><table><caption>WAPE on units, lower is better, measured on every store-product-horizon rather than on cards. A baseline shown in red beat the engine on that horizon. Bias is the signed error: positive over-forecasts.</caption><tr><th>horizon</th><th>the engine</th><th>year average</th><th>trailing 28d</th><th>same weeks last year</th><th>engine bias</th><th>n</th></tr><tr><td>30 days</td><td><b>31.0%</b></td><td class="win">35.7%</td><td class="win">36.4%</td><td class="win">51.2%</td><td>1.1%</td><td>13,395</td></tr><tr><td>60 days</td><td><b>28.4%</b></td><td class="win">32.4%</td><td class="win">36.0%</td><td class="win">45.6%</td><td>3.0%</td><td>13,395</td></tr><tr><td>90 days</td><td><b>27.7%</b></td><td class="win">30.8%</td><td class="win">37.0%</td><td class="win">42.2%</td><td>4.1%</td><td>13,395</td></tr><tr><td>120 days</td><td><b>27.6%</b></td><td class="win">29.8%</td><td class="win">38.2%</td><td class="win">39.9%</td><td>6.0%</td><td>13,395</td></tr></table></div><p class="sub">24 scored decision dates, 8 held back to fit the confidence curve - the curve is never scored on the dates it was fitted on.</p>
+
+<h2>3. The backtest &mdash; many months, not one</h2>
+<p class="note">The quotable headline, because a single month at a single
+store cannot separate the engine from the weather. Compared against its own
+null: the same selection with the reversion signal removed.</p>
+<div class='scroll'><table><caption>Walk-forward over the whole export at fortnightly spacing - the quotable figure, because it is many months rather than one. The null is the same selection rule with the reversion signal removed; the edge is the engine less that null, and p is the randomisation test against it.</caption><tr><th>store</th><th>cards</th><th>hit rate</th><th>clustered 95%</th><th>reversion null</th><th>edge</th><th>p</th><th>cards/run</th></tr><tr><td>Bethany Discount Liquor</td><td>1,072</td><td><b>75.7%</b></td><td>70.4&ndash;80.8</td><td>59.1%</td><td class="win">+16.6</td><td>0.0005</td><td>5.06</td></tr><tr><td>Northlake Liquors</td><td>1,832</td><td><b>71.6%</b></td><td>67.9&ndash;74.9</td><td>63.7%</td><td class="win">+7.8</td><td>0.0005</td><td>7.27</td></tr><tr><td>Mango Jo's Bar &amp; Liquors</td><td>1,848</td><td><b>79.2%</b></td><td>76.0&ndash;82.1</td><td>70.3%</td><td class="win">+8.9</td><td>0.0005</td><td>7.33</td></tr><tr><td>Marshfield Wine &amp; Spirits</td><td>240</td><td><b>92.9%</b></td><td>90.0&ndash;95.8</td><td>63.7%</td><td class="win">+29.2</td><td>0.0005</td><td>10.00</td></tr><tr><td>Cork Runner Wine &amp; Spirits</td><td>1,664</td><td><b>77.5%</b></td><td>74.0&ndash;81.0</td><td>60.0%</td><td class="win">+17.5</td><td>0.0005</td><td>6.60</td></tr></table></div>
+
+<h2>What this page does not say</h2>
+<p class="note">It states no holdout effect. Separating &ldquo;the engine
+picked products that were going to sell&rdquo; from &ldquo;recommending them
+changed what sold&rdquo; needs the withheld arm, and that lives on the
+scoreboards, which refuse the comparison until both arms carry five measured
+product-windows. Nothing here is evidence that showing a card caused a
+sale.</p>
+</div></body></html>

@@ -1,0 +1,101 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Botella - Pilot Store Audit</title><style>
+:root{background:#fff;--bg:#fff;--fg:#0f172a;--mut:#64748b;--line:#e2e8f0;
+--card:#f8fafc;--good:#059669;--bad:#dc2626;--warn:#d97706}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1120;
+--fg:#e2e8f0;--mut:#94a3b8;--line:#1e293b;--card:#111827}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+font:15px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 22px 80px}
+h1{font-size:30px;margin:0 0 6px;letter-spacing:-.02em}
+h2{font-size:20px;margin:40px 0 12px;padding-top:20px;
+border-top:1px solid var(--line)}
+.sub{color:var(--mut);font-size:13px;margin:0 0 24px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+th,td{text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);
+vertical-align:top}
+th:first-child,td:first-child{text-align:left}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;
+color:var(--mut)}
+a{color:#2563eb;text-decoration:none}a:hover{text-decoration:underline}
+.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.sm{font-size:11px;color:var(--mut)}
+.flag{font-size:11px;color:var(--warn)}
+.note{background:var(--card);border:1px solid var(--line);border-radius:8px;
+padding:14px 18px;margin:18px 0;font-size:14px}
+.warnbox{border-left:4px solid var(--warn)}
+.scroll{overflow-x:auto}
+code{background:var(--card);border:1px solid var(--line);padding:1px 5px;
+border-radius:4px;font-size:13px}
+</style></head><body><div class="wrap">
+
+<h1>Second-cohort store audit</h1>
+<p class="sub">Five stores, each backtested separately against the production
+modules in <code>app/pipeline</code> &middot; generated
+25 September 2026</p>
+
+<div class="note"><b>Per store, not pooled.</b> The engine is switched on one
+store at a time, so it is judged one store at a time. A pooled average would
+also let the largest store carry the result. <b>Click any store for its full
+report.</b><p><b>These five were graded POOR</b> on ecosystem data - customers, purchases and suppliers all zero. That grade does not measure what this engine reads: it uses sales history and nothing else. Whether that makes them unusable is a question to answer by running them, which is what this page is.</p></div>
+
+<div class="scroll"><table>
+<tr><th>store</th><th>hit rate<br><span class="sm">95% CI</span></th>
+<th>hard null</th><th>edge</th><th>p</th><th>cards</th>
+<th>cards/run</th><th>$/card</th><th>verdict</th></tr>
+<tr><td><a href="105-localvine/REAL_ENGINE_REPORT.html"><b>105</b> Local Vine - Atlanta</a></td><td><b>83.7%</b><br><span class="sm">79&ndash;88</span></td><td>64.7%</td><td class="good"><b>+19.0</b></td><td>0.0005</td><td>912</td><td>7.9</td><td><span class='sm'>no cost data</span></td><td class="good">SHIP</td></tr><tr><td><a href="125-route106/REAL_ENGINE_REPORT.html"><b>125</b> Route 106 Wine & Spirits</a></td><td><b>75.5%</b><br><span class="sm">72&ndash;79</span></td><td>63.9%</td><td class="good"><b>+11.6</b></td><td>0.0005</td><td>2,440</td><td>10.0</td><td><span class='sm'>no cost data</span></td><td class="good">SHIP</td></tr><tr><td><a href="119-smartmart/REAL_ENGINE_REPORT.html"><b>119</b> Smart Mart</a></td><td><b>67.7%</b><br><span class="sm">64&ndash;71</span></td><td>62.5%</td><td class="good"><b>+5.3</b></td><td>0.0005</td><td>2,444</td><td>9.7</td><td><span class='sm'>no cost data</span></td><td class="good">SHIP - smaller edge</td></tr><tr><td><a href="122-bighollow/REAL_ENGINE_REPORT.html"><b>122</b> Big Hollow Convenient</a></td><td><b>66.5%</b><br><span class="sm">63&ndash;70</span></td><td>61.5%</td><td class="good"><b>+5.0</b></td><td>0.0005</td><td>2,472</td><td>9.8</td><td><span class='sm'>no cost data</span></td><td class="good">SHIP - smaller edge</td></tr><tr><td><a href="111-hanson/REAL_ENGINE_REPORT.html"><b>111</b> Hanson Market & Liquors</a></td><td><b>57.0%</b><br><span class="sm">52&ndash;62</span></td><td>62.3%</td><td class="bad"><b>-5.3</b></td><td>1.0000</td><td>2,404</td><td>9.5</td><td><span class='sm'>no cost data</span></td><td class="bad">DO NOT SHIP</td></tr></table></div>
+
+<p class="sm"><b>hard null</b> = the same measurement on randomly chosen
+products that were <em>equally primed to revert</em>. It is deliberately harder
+than a plain random baseline, because the engine picks products whose recent
+sales have dipped and the metric asks whether they bounce &mdash; so part of any
+edge is regression to the mean, free to anyone. <b>The edge column is the
+number that survives scrutiny.</b></p>
+
+<h2>What this says</h2>
+<ul>
+<li><b>4 of 5 stores clear the bar</b> &mdash; a
+statistically significant edge of at least 5 points over the hard null.</li>
+<li><b>Strongest: Local Vine - Atlanta</b> at
++19.0 points.</li>
+<li><b>Weakest: Hanson Market & Liquors</b> at
+-5.3 points. Published
+rather than dropped &mdash; a store where the engine adds little is the most
+useful row here.</li>
+</ul>
+
+
+
+<h2>How to reproduce every number here</h2>
+<div class="scroll"><pre style="background:var(--card);border:1px solid
+var(--line);border-radius:8px;padding:14px;font-size:13px;overflow-x:auto"
+>cd backend
+node scripts/export-store-sales.js all --out ../audit/data
+
+cd ../Botella_External_APIs
+python scripts/run_pilot_audit.py --data ../audit/data --out ../audit</pre></div>
+<p class="sm">The export is one SELECT against <code>syncgo</code>, which is
+read-only by design. Everything after it is a pure function of those files, so
+this whole audit replays months from now from the same inputs.</p>
+
+<h2>What none of this proves</h2>
+<div class="note warnbox"><b>This measures forecasting, not causation.</b>
+Nobody acted on these recommendations &mdash; they were generated
+retrospectively. It shows the engine can point at products that were about to
+move. It does not show that following the advice causes extra sales. Only a
+live holdout, where some recommendations are shown and others deliberately
+withheld, proves that. The mechanism exists in production
+(<code>REC_HOLDOUT_PCT</code>) and needs switching on.</div>
+<ul>
+<li><b>No live inventory.</b> No historical shelf counts exist, so understock
+and overstock recommendations are absent from every figure here. The engine is
+judged on less than it normally sees.</li>
+<li><b>The 7-day lead time is declared, never measured.</b> Nothing in the
+warehouse records when an order actually arrived.</li>
+<li><b>Marshfield has only 568 trading days</b>, starting February 2025. It
+needs a year of history before a decision date, so it yields far fewer decision
+dates than the others and its interval is correspondingly weaker.</li>
+</ul>
+</div></body></html>

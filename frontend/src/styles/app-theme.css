@@ -1,0 +1,325 @@
+/* =============================================================================
+   APP THEME - the signed-in product, on the website's design system
+   -----------------------------------------------------------------------------
+   The marketing site and the product used to be two different-looking things:
+   indigo tokens and flat cards inside the app, violet and glass outside it.
+   This file closes that gap without rewriting every component.
+
+   Two jobs:
+
+   1. TOKEN BRIDGE. global.css defines the app's palette as `--bg-*`, `--text-*`,
+      `--accent`, `--green/--yellow/--red`. Every app component already reads
+      those, so re-pointing them at the brand tokens re-skins chat, the sidebar,
+      recommendations, market analysis, effectiveness and store agent in one
+      move. Selectors are `html:root` / `html[data-theme="light"]` so they
+      out-rank the originals regardless of import order.
+
+   2. GLASS SURFACES. One shared treatment for the things that carry data -
+      cards, chart panels, tables, list rows - so the product reads as the same
+      material as the site: a translucent pane over a violet-lit ground, a
+      hairline top highlight, and a soft lift on hover.
+
+   Loaded after global.css in index.js.
+   ============================================================================= */
+
+html:root {
+    /* THREE colours carry the dark register: BLACK, PURPLE, WHITE.
+     The ground is black and stays black - it climbs in NEUTRAL greys as a
+     surface is raised, and never picks up a violet cast. Purple is reserved for
+     the accent (the one thing being pointed at) and white for the type. The
+     previous ramp tinted every surface violet, so "dark mode" read as dark
+     purple rather than black, which is what this replaces. */
+  --bg-primary: #000000;   /* the ground: true black */
+  --bg-secondary: #0A0A0C;
+  --bg-card: #121215;
+  --bg-hover: #1B1B20;
+  --bg-elevated: #24242B;
+  /* Neutral hairlines. A violet-tinted border on a black ground is the single
+     biggest source of an all-over purple cast, because borders are the
+     most-repeated element on the page. */
+  --border: rgba(255, 255, 255, 0.14);
+  --border-light: rgba(255, 255, 255, 0.08);
+
+  /* ── Type ────────────────────────────────────────────────────────────── */
+  /* White, not lilac-white. */
+  --text-primary: #FFFFFF;      /* 21:1 on black */
+  --text-secondary: #C8C8D0;    /* 12.5:1 */
+  --text-muted: #90909C;        /*  6.4:1 - clears AA for the small labels */
+
+  /* ── Accent + semantics.
+        Jade = good, fuchsia = needs attention, rose = critical. Amber is gone
+        with the rest of the warm palette; fuchsia carries "attention" instead,
+        and it stays distinguishable from rose because the two sit far enough
+        apart in hue at these luminances. ─────────────────────────────────── */
+  --accent: #B79CFF;
+  --accent-light: #D6BBFF;
+  --accent-glow: rgba(139, 92, 246, 0.26);
+  --green: #2FBF97;
+  --yellow: #F0ABFC;
+  --red: #FF6B8A;
+  /* Text that sits ON one of those three as a fill. They invert between the
+     themes - light fills here, dark fills in light mode - so anything painted
+     on them needs a token rather than a fixed colour. A badge hard-coding one
+     is legible in the theme it was written in and invisible in the other. */
+  --on-semantic: #14101F;
+
+  /* ── Brand surfaces the app-side glass builds on ─────────────────────── */
+  --glass-bg: linear-gradient(168deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
+  --glass-border: rgba(255, 255, 255, 0.13);
+  --glass-shine: rgba(255, 255, 255, 0.42);
+  --glass-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.9);
+  --glass-blur: 14px;
+
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 20px;
+
+  /* The "Important:" legal note that sits at the foot of every screen. It was
+     11px on four screens and 13px on a fifth, which is both hard to read and
+     visibly inconsistent as you move between them. One token so the size is
+     decided once - raise this and every screen follows. */
+  --disclaimer-size: 13.5px;
+
+  /* Tells the BROWSER which register it is painting into, which our own tokens
+     cannot do. Without it Chrome keeps drawing its own chrome light: scrollbars,
+     <select> popups, date pickers, autofill highlight, and the white flash
+     before first paint - all of it against a black page. */
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+  --bg-primary: #FBFAFE;
+  --bg-secondary: #F3F0FB;
+  --bg-card: #FFFFFF;
+  --bg-hover: #EFEAFB;
+  --bg-elevated: #F7F4FE;
+  --border: rgba(46, 16, 101, 0.13);
+  --border-light: rgba(46, 16, 101, 0.07);
+
+  --text-primary: #0C0814;
+  --text-secondary: #3B3550;
+  --text-muted: #524B66;
+
+  --accent: #6D28D9;
+  --accent-light: #7C3AED;
+  --accent-glow: rgba(109, 40, 217, 0.12);
+  --green: #15795C;
+  --yellow: #A21CAF;
+  --red: #BE123C;
+  --on-semantic: #FFFFFF;   /* the fills are dark here */
+
+  --glass-bg: linear-gradient(168deg, rgba(255, 255, 255, 0.96), rgba(247, 244, 254, 0.86));
+  --glass-border: rgba(46, 16, 101, 0.12);
+  --glass-shine: rgba(124, 58, 237, 0.28);
+  --glass-shadow: 0 22px 48px -30px rgba(38, 16, 66, 0.34);
+}
+
+/* The app shell gets the same violet-lit ground the site hero uses, so the
+   glass panes have something to sit on instead of flat black. */
+/* Black means black. Two big violet radials over the whole app were the other
+   half of the purple cast; one very faint accent breath at the top corner keeps
+   the page from being a flat void, at about a quarter of the old strength. */
+html:root .app-chat-layout {
+  background:
+    radial-gradient(52% 40% at 88% -8%, rgba(139, 92, 246, 0.055), transparent 70%),
+    var(--bg-primary);
+  background-attachment: fixed;
+}
+html[data-theme="light"] .app-chat-layout {
+  background:
+    radial-gradient(46% 38% at 84% -6%, rgba(139, 92, 246, 0.13), transparent 68%),
+    radial-gradient(40% 34% at 4% 2%, rgba(217, 70, 239, 0.08), transparent 70%),
+    var(--bg-primary);
+  background-attachment: fixed;
+}
+
+/* =============================================================================
+   GLASS - one material, applied to every surface that carries data
+   ============================================================================= */
+
+.glass,
+html .dash-chart-card,
+html .dash-kpi-card,
+html .st-card,
+html .sp-rec-row,
+html .sp-panel,
+html .ma-card,
+html .eff-card,
+html .sa-card {
+  position: relative;
+  background: var(--glass-bg);
+  background-color: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  backdrop-filter: blur(var(--glass-blur)) saturate(150%);
+  box-shadow: var(--glass-shadow);
+  overflow: hidden;
+}
+
+/* The hairline along the top edge is what makes a pane read as glass rather
+   than as a flat card with a border. */
+.glass::before,
+html .dash-chart-card::before,
+html .dash-kpi-card::before,
+html .st-card::before,
+html .sa-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass-shine), transparent);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.glass-hover {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.3s ease, box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.glass-hover:hover {
+  transform: translateY(-3px);
+  border-color: rgba(183, 156, 255, 0.34);
+  box-shadow: 0 26px 60px -28px rgba(0, 0, 0, 0.95);
+}
+html[data-theme="light"] .glass-hover:hover {
+  border-color: rgba(109, 40, 217, 0.3);
+  box-shadow: 0 26px 54px -30px rgba(38, 16, 66, 0.4);
+}
+
+/* =============================================================================
+   TABLES - sleek, hairline-ruled, no heavy chrome
+   ============================================================================= */
+html .app-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+html .app-table thead th {
+  text-align: left;
+  font-family: var(--bx-font-display);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+html .app-table tbody td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-secondary);
+}
+html .app-table tbody tr:last-child td { border-bottom: 0; }
+html .app-table tbody tr { transition: background 0.18s ease; }
+html .app-table tbody tr:hover { background: var(--bg-hover); }
+html .app-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* =============================================================================
+   CHARTS - recharts chrome pulled onto the palette
+   ============================================================================= */
+html .recharts-cartesian-grid line {
+  stroke: var(--border);
+}
+html .recharts-cartesian-axis-line,
+html .recharts-cartesian-axis-tick-line {
+  stroke: var(--border);
+}
+html .recharts-text { fill: var(--text-muted); }
+html .recharts-tooltip-wrapper { outline: none; }
+html .recharts-surface { overflow: visible; }
+
+/* =============================================================================
+   SCROLLBARS - thin, violet, so scroll regions do not look like leftovers
+   ============================================================================= */
+html .app-scroll,
+html .dash-inv-list-scroll,
+html .si-feed {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.26) transparent;
+}
+html .app-scroll::-webkit-scrollbar,
+html .dash-inv-list-scroll::-webkit-scrollbar,
+html .si-feed::-webkit-scrollbar { width: 7px; height: 7px; }
+html .app-scroll::-webkit-scrollbar-track,
+html .dash-inv-list-scroll::-webkit-scrollbar-track,
+html .si-feed::-webkit-scrollbar-track { background: transparent; }
+html .app-scroll::-webkit-scrollbar-thumb,
+html .dash-inv-list-scroll::-webkit-scrollbar-thumb,
+html .si-feed::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.20);
+  border-radius: 99px;
+}
+html .app-scroll::-webkit-scrollbar-thumb:hover,
+html .dash-inv-list-scroll::-webkit-scrollbar-thumb:hover,
+html .si-feed::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.36);
+}
+
+/* =============================================================================
+   SHARED APP TYPE - the product borrows the site's display + mono faces
+   ============================================================================= */
+html .app-chat-layout h1,
+html .app-chat-layout h2,
+html .app-chat-layout h3,
+html .app-chat-layout h4 {
+  font-family: var(--bx-font-display);
+  letter-spacing: -0.028em;
+}
+html .app-kicker {
+  font-family: var(--bx-font-display);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Primary action, matching the site's button. */
+html .app-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+html .app-btn:hover {
+  transform: translateY(-1px);
+  border-color: var(--accent);
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+html .app-btn-primary {
+  background: linear-gradient(104deg, #7C3AED 0%, #6D28D9 52%, #9333EA 100%);
+  border-color: transparent;
+  color: #FFFFFF;
+  box-shadow: 0 10px 26px -14px rgba(124, 58, 237, 0.9);
+}
+html .app-btn-primary:hover {
+  color: #FFFFFF;
+  background: linear-gradient(104deg, #7C3AED 0%, #6D28D9 52%, #9333EA 100%);
+  box-shadow: 0 16px 34px -14px rgba(147, 51, 234, 0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-hover,
+  html .app-btn { transition: none; }
+  .glass-hover:hover,
+  html .app-btn:hover { transform: none; }
+}

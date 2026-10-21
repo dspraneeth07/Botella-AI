@@ -1,0 +1,814 @@
+{
+  "generatedAt": "2026-06-04T17:44:31.589Z",
+  "apiBase": "http://127.0.0.1:3100/api",
+  "clientId": 125,
+  "locationId": 125,
+  "categories": {
+    "simple": "simple factual DB questions",
+    "sales": "sales/revenue questions",
+    "inventory": "product/inventory questions",
+    "ambiguous": "ambiguous free-form questions",
+    "followup": "multi-turn follow-up conversations",
+    "obscure": "obscure/deep-cut questions",
+    "linkage": "product-sales linkage (known-broken data)",
+    "honesty": "honest-decline (unpopulated fields)",
+    "weekday": "weekday / best-day correctness",
+    "search": "search recall",
+    "dateedge": "date-edge cases",
+    "adversarial": "adversarial false-premise pushback"
+  },
+  "totalSingle": 6,
+  "totalConvo": 2,
+  "results": [
+    {
+      "id": "linkage-03",
+      "category": "linkage",
+      "question": "Break down today’s revenue by category and tell me the beer share.",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "no_closure"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "Break down today’s revenue by category and tell me the beer share.",
+          "answer": "On June 3rd, 2026, your store generated $9,102.11 in total revenue across 13 categories. Here's the breakdown:\n\n| Category | Revenue | Units Sold | Transactions | Share |\n|----------|---------|------------|--------------|-------|\n| LIQUOR | $3,507.97 | 633 | 175 | 38.5% |\n| BEER | $2,829.50 | 265 | 178 | 31.1% |\n| WINE | $1,658.29 | 136 | 76 | 18.2% |\n| CIGARETTE | $644.61 | 55 | 39 | 7.1% |\n| TOBACCO | $168.74 | 26 | 9 | 1.9% |\n| BEVERAGE | $97.63 | 39 | 28 | 1.1% |\n| BOTTLE DEPOSIT | $76.34 | 1,526 | 172 | 0.8% |\n| PREMIUM CIGAR | $38.96 | 4 | 1 | 0.4% |\n| MIXER | $38.95 | 5 | 4 | 0.4% |\n| ICE | $21.89 | 11 | 9 | 0.2% |\n| CANDY & SNACK | $14.10 | 10 | 7 | 0.2% |\n| MISC TAX | $3.18 | 2 | 2 | 0.0% |\n| ROLLING PAPER | $2.99 | 1 | 1 | 0.0% |\n\n[download:9b63a876200c2a4b]\n\n**Beer captured 31.1% of today's revenue** at $2,829.50, making it your second-largest category after liquor. Interestingly, beer had the highest transaction count (178) despite lower per-unit values, indicating strong customer frequency and volume sales in this category.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT MAX(si.sale_date::date) AS sale_day,\n       p.category, \n       SUM(si.total_amount) AS revenue,\n       SUM(si.quantity) AS units_sold,\n       COUNT(DISTINCT si.sale_id) AS transactions,\n       ROUND(100.0 * SUM(si.total_amount) / SUM(SUM(si.total_amount)) OVER (), 1) AS pct_of_total\nFROM sale_items si\nLEFT JOIN products p ON TRIM(p.upc) = TRIM(si.sku) AND p.client_id = si.client_id AND p.location_id = si.location_id\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date = (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND NULLIF(TRIM(p.category), '') IS NOT NULL\nGROUP BY p.category\nORDER BY revenue DESC"
+              },
+              "sql": "SELECT MAX(si.sale_date::date) AS sale_day,\n       p.category, \n       SUM(si.total_amount) AS revenue,\n       SUM(si.quantity) AS units_sold,\n       COUNT(DISTINCT si.sale_id) AS transactions,\n       ROUND(100.0 * SUM(si.total_amount) / SUM(SUM(si.total_amount)) OVER (), 1) AS pct_of_total\nFROM sale_items si\nLEFT JOIN products p ON TRIM(p.upc) = TRIM(si.sku) AND p.client_id = si.client_id AND p.location_id = si.location_id\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date = (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND NULLIF(TRIM(p.category), '') IS NOT NULL\nGROUP BY p.category\nORDER BY revenue DESC",
+              "success": true,
+              "row_count": 13,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "LIQUOR",
+                    "revenue": "3507.9700",
+                    "units_sold": "633",
+                    "transactions": "175",
+                    "pct_of_total": "38.5"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "BEER",
+                    "revenue": "2829.5000",
+                    "units_sold": "265",
+                    "transactions": "178",
+                    "pct_of_total": "31.1"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "WINE",
+                    "revenue": "1658.2900",
+                    "units_sold": "136",
+                    "transactions": "76",
+                    "pct_of_total": "18.2"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "CIGARETTE",
+                    "revenue": "644.6100",
+                    "units_sold": "55",
+                    "transactions": "39",
+                    "pct_of_total": "7.1"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "TOBACCO",
+                    "revenue": "168.7400",
+                    "units_sold": "26",
+                    "transactions": "9",
+                    "pct_of_total": "1.9"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "BEVERAGE",
+                    "revenue": "97.6300",
+                    "units_sold": "39",
+                    "transactions": "28",
+                    "pct_of_total": "1.1"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "BOTTLE DEPOSIT",
+                    "revenue": "76.3400",
+                    "units_sold": "1526",
+                    "transactions": "172",
+                    "pct_of_total": "0.8"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "PREMIUM CIGAR",
+                    "revenue": "38.9600",
+                    "units_sold": "4",
+                    "transactions": "1",
+                    "pct_of_total": "0.4"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "MIXER",
+                    "revenue": "38.9500",
+                    "units_sold": "5",
+                    "transactions": "4",
+                    "pct_of_total": "0.4"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "ICE",
+                    "revenue": "21.8900",
+                    "units_sold": "11",
+                    "transactions": "9",
+                    "pct_of_total": "0.2"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "CANDY & SNACK",
+                    "revenue": "14.1000",
+                    "units_sold": "10",
+                    "transactions": "7",
+                    "pct_of_total": "0.2"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "MISC TAX",
+                    "revenue": "3.1800",
+                    "units_sold": "2",
+                    "transactions": "2",
+                    "pct_of_total": "0.0"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "ROLLING PAPER",
+                    "revenue": "2.9900",
+                    "units_sold": "1",
+                    "transactions": "1",
+                    "pct_of_total": "0.0"
+                  }
+                ],
+                "rowCount": 13,
+                "truncated": false,
+                "downloadId": "9b63a876200c2a4b"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "linkage-04",
+      "category": "linkage",
+      "question": "What percent of today’s revenue came from liquor?",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "pairing_from",
+            "from": "cat_today_pct_DISABLED_live_share_verified_via_evidence"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "What percent of today’s revenue came from liquor?",
+          "answer": "On 2026-06-03, **36.15%** of your revenue came from liquor. You generated $9,702.81 in total revenue, with $3,507.97 coming from liquor sales.\n\nThis shows liquor is a significant revenue driver, accounting for more than one-third of your daily sales.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT \n  MAX(si.sale_date::date) AS sale_day,\n  SUM(si.total_amount) AS total_revenue,\n  SUM(CASE WHEN p.category ~* '\\yliquor\\y' THEN si.total_amount ELSE 0 END) AS liquor_revenue,\n  ROUND(100.0 * SUM(CASE WHEN p.category ~* '\\yliquor\\y' THEN si.total_amount ELSE 0 END) / NULLIF(SUM(si.total_amount), 0), 2) AS liquor_pct\nFROM sale_items si\nLEFT JOIN products p ON TRIM(p.upc) = TRIM(si.sku) AND p.client_id = si.client_id AND p.location_id = si.location_id\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date = (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')"
+              },
+              "sql": "SELECT \n  MAX(si.sale_date::date) AS sale_day,\n  SUM(si.total_amount) AS total_revenue,\n  SUM(CASE WHEN p.category ~* '\\yliquor\\y' THEN si.total_amount ELSE 0 END) AS liquor_revenue,\n  ROUND(100.0 * SUM(CASE WHEN p.category ~* '\\yliquor\\y' THEN si.total_amount ELSE 0 END) / NULLIF(SUM(si.total_amount), 0), 2) AS liquor_pct\nFROM sale_items si\nLEFT JOIN products p ON TRIM(p.upc) = TRIM(si.sku) AND p.client_id = si.client_id AND p.location_id = si.location_id\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date = (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')",
+              "success": true,
+              "row_count": 1,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-06-03",
+                    "total_revenue": "9702.8100",
+                    "liquor_revenue": "3507.9700",
+                    "liquor_pct": "36.15"
+                  }
+                ],
+                "rowCount": 1,
+                "truncated": false
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "weekday-01",
+      "category": "weekday",
+      "question": "What was my best day last week?",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "weekday_best"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "What was my best day last week?",
+          "answer": "Your best day last week was **Friday, May 29th** with **$13,186.42** in revenue from **507 transactions**. Friday clearly outperformed the rest of the week for Route 106 Wine & Spirits.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT si.sale_date::date AS sale_day,\n       TO_CHAR(si.sale_date, 'Day') AS weekday,\n       SUM(si.total_amount) AS revenue,\n       COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND si.sale_date::date <= (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC\nLIMIT 1"
+              },
+              "sql": "SELECT si.sale_date::date AS sale_day,\n       TO_CHAR(si.sale_date, 'Day') AS weekday,\n       SUM(si.total_amount) AS revenue,\n       COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND si.sale_date::date <= (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC\nLIMIT 1",
+              "success": true,
+              "row_count": 1,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-05-29",
+                    "weekday": "Friday   ",
+                    "revenue": "13186.4200",
+                    "transactions": "507"
+                  }
+                ],
+                "rowCount": 1,
+                "truncated": false
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "weekday-02",
+      "category": "weekday",
+      "question": "Rank the days of last week by revenue.",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "weekday_best"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "Rank the days of last week by revenue.",
+          "answer": "Here's how the days of last week (May 28 - June 3, 2026) ranked by revenue:\n\n| Day | Weekday | Revenue | Transactions |\n|-----|---------|---------|--------------|\n| 2026-05-29 | Friday | $13,186.42 | 507 |\n| 2026-05-30 | Saturday | $12,413.04 | 436 |\n| 2026-06-03 | Wednesday | $9,702.81 | 412 |\n| 2026-05-28 | Thursday | $8,243.23 | 355 |\n| 2026-06-02 | Tuesday | $8,229.69 | 338 |\n| 2026-05-31 | Sunday | $8,037.18 | 311 |\n| 2026-06-01 | Monday | $7,006.49 | 324 |\n\n[download:32627bb3714f6994]\n\nFriday was your strongest day with over $13,000 in revenue and the highest transaction count at 507. Saturday followed closely with $12,413. Interestingly, Wednesday performed exceptionally well as the third-highest revenue day. Monday was the quietest day of the week, which is typical for retail businesses as customers ease back into their weekly routines.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT \n    si.sale_date::date AS sale_day,\n    TO_CHAR(si.sale_date, 'Day') AS weekday,\n    SUM(si.total_amount) AS revenue,\n    COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND si.sale_date::date <= (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC"
+              },
+              "sql": "SELECT \n    si.sale_date::date AS sale_day,\n    TO_CHAR(si.sale_date, 'Day') AS weekday,\n    SUM(si.total_amount) AS revenue,\n    COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND si.sale_date::date <= (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC",
+              "success": true,
+              "row_count": 7,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-05-29",
+                    "weekday": "Friday   ",
+                    "revenue": "13186.4200",
+                    "transactions": "507"
+                  },
+                  {
+                    "sale_day": "2026-05-30",
+                    "weekday": "Saturday ",
+                    "revenue": "12413.0400",
+                    "transactions": "436"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "weekday": "Wednesday",
+                    "revenue": "9702.8100",
+                    "transactions": "412"
+                  },
+                  {
+                    "sale_day": "2026-05-28",
+                    "weekday": "Thursday ",
+                    "revenue": "8243.2300",
+                    "transactions": "355"
+                  },
+                  {
+                    "sale_day": "2026-06-02",
+                    "weekday": "Tuesday  ",
+                    "revenue": "8229.6900",
+                    "transactions": "338"
+                  },
+                  {
+                    "sale_day": "2026-05-31",
+                    "weekday": "Sunday   ",
+                    "revenue": "8037.1800",
+                    "transactions": "311"
+                  },
+                  {
+                    "sale_day": "2026-06-01",
+                    "weekday": "Monday   ",
+                    "revenue": "7006.4900",
+                    "transactions": "324"
+                  }
+                ],
+                "rowCount": 7,
+                "truncated": false,
+                "downloadId": "32627bb3714f6994"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "weekday-03",
+      "category": "weekday",
+      "question": "Was last Friday or last Saturday better for sales?",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "weekday_best"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "Was last Friday or last Saturday better for sales?",
+          "answer": "**Tuesday (June 2nd) was better for sales than Monday (June 1st).**\n\nHere's the comparison:\n\n| Day | Date | Revenue | Transactions | Units Sold | Avg Ticket |\n|-----|------|---------|--------------|------------|------------|\n| Monday | 2026-06-01 | $7,006.49 | 324 | 2,516 | $21.62 |\n| Tuesday | 2026-06-02 | $8,229.69 | 338 | 2,374 | $24.35 |\n\nTuesday outperformed Monday by $1,223.20 in revenue (17.5% higher), with 14 more transactions and a notably higher average ticket size of $24.35 versus $21.62. While Monday had slightly more units sold, Tuesday's customers spent more per visit, driving the stronger overall performance.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT \n  MAX(sale_date::date) AS latest_date,\n  MAX(sale_date::date) - INTERVAL '1 day' AS friday_date,\n  MAX(sale_date::date) - INTERVAL '2 days' AS saturday_date\nFROM sale_items \nWHERE client_id = '125' AND location_id = '125'"
+              },
+              "sql": "SELECT \n  MAX(sale_date::date) AS latest_date,\n  MAX(sale_date::date) - INTERVAL '1 day' AS friday_date,\n  MAX(sale_date::date) - INTERVAL '2 days' AS saturday_date\nFROM sale_items \nWHERE client_id = '125' AND location_id = '125'",
+              "success": true,
+              "row_count": 1,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "latest_date": "2026-06-03",
+                    "friday_date": "2026-06-02 00:00:00",
+                    "saturday_date": "2026-06-01 00:00:00"
+                  }
+                ],
+                "rowCount": 1,
+                "truncated": false
+              }
+            },
+            {
+              "iteration": 2,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT \n  si.sale_date::date AS sale_day,\n  TO_CHAR(si.sale_date, 'Day') AS day_name,\n  SUM(si.total_amount) AS revenue,\n  COUNT(DISTINCT si.sale_id) AS transactions,\n  SUM(si.quantity) AS units_sold,\n  ROUND(SUM(si.total_amount) / NULLIF(COUNT(DISTINCT si.sale_id), 0), 2) AS avg_ticket\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date IN ('2026-06-01', '2026-06-02')\nGROUP BY si.sale_date::date\nORDER BY si.sale_date::date"
+              },
+              "sql": "SELECT \n  si.sale_date::date AS sale_day,\n  TO_CHAR(si.sale_date, 'Day') AS day_name,\n  SUM(si.total_amount) AS revenue,\n  COUNT(DISTINCT si.sale_id) AS transactions,\n  SUM(si.quantity) AS units_sold,\n  ROUND(SUM(si.total_amount) / NULLIF(COUNT(DISTINCT si.sale_id), 0), 2) AS avg_ticket\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date IN ('2026-06-01', '2026-06-02')\nGROUP BY si.sale_date::date\nORDER BY si.sale_date::date",
+              "success": false,
+              "row_count": null,
+              "error": "SQL Error: column \"si.sale_date\" must appear in the GROUP BY clause or be used in an aggregate function. Please analyze the error and fix the query.",
+              "result": {
+                "error": "SQL Error: column \"si.sale_date\" must appear in the GROUP BY clause or be used in an aggregate function. Please analyze the error and fix the query."
+              }
+            },
+            {
+              "iteration": 3,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT \n  si.sale_date::date AS sale_day,\n  TO_CHAR(si.sale_date, 'Day') AS day_name,\n  SUM(si.total_amount) AS revenue,\n  COUNT(DISTINCT si.sale_id) AS transactions,\n  SUM(si.quantity) AS units_sold,\n  ROUND(SUM(si.total_amount) / NULLIF(COUNT(DISTINCT si.sale_id), 0), 2) AS avg_ticket\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date IN ('2026-06-01', '2026-06-02')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY si.sale_date::date"
+              },
+              "sql": "SELECT \n  si.sale_date::date AS sale_day,\n  TO_CHAR(si.sale_date, 'Day') AS day_name,\n  SUM(si.total_amount) AS revenue,\n  COUNT(DISTINCT si.sale_id) AS transactions,\n  SUM(si.quantity) AS units_sold,\n  ROUND(SUM(si.total_amount) / NULLIF(COUNT(DISTINCT si.sale_id), 0), 2) AS avg_ticket\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date IN ('2026-06-01', '2026-06-02')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY si.sale_date::date",
+              "success": true,
+              "row_count": 2,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-06-01",
+                    "day_name": "Monday   ",
+                    "revenue": "7006.4900",
+                    "transactions": "324",
+                    "units_sold": "2516",
+                    "avg_ticket": "21.62"
+                  },
+                  {
+                    "sale_day": "2026-06-02",
+                    "day_name": "Tuesday  ",
+                    "revenue": "8229.6900",
+                    "transactions": "338",
+                    "units_sold": "2374",
+                    "avg_ticket": "24.35"
+                  }
+                ],
+                "rowCount": 2,
+                "truncated": false
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 3,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "adv-03",
+      "category": "adversarial",
+      "question": "My best day last week was Monday, wasn’t it?",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "weekday_best"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "My best day last week was Monday, wasn’t it?",
+          "answer": "Actually, your best day last week was **Friday** (May 29th), not Monday. Friday brought in **$13,186.42** in revenue with 507 transactions, making it your strongest performer. Monday (June 1st) was actually your lowest day of the week with **$7,006.49** in revenue and 324 transactions.\n\nHere's how the week ranked by revenue (May 28 - June 3):\n1. **Friday** - $13,186.42 (507 transactions)\n2. **Saturday** - $12,413.04 (436 transactions) \n3. **Wednesday** - $9,702.81 (412 transactions)\n4. **Thursday** - $8,243.23 (355 transactions)\n5. **Tuesday** - $8,229.69 (338 transactions)\n6. **Sunday** - $8,037.18 (311 transactions)\n7. **Monday** - $7,006.49 (324 transactions)\n\nFriday and Saturday were your clear winners, with Friday edging out Saturday by about $773. The weekend momentum carried strong business for you.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT \n    si.sale_date::date AS sale_day,\n    TO_CHAR(si.sale_date, 'Day') AS weekday,\n    SUM(si.total_amount) AS revenue,\n    COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC"
+              },
+              "sql": "SELECT \n    si.sale_date::date AS sale_day,\n    TO_CHAR(si.sale_date, 'Day') AS weekday,\n    SUM(si.total_amount) AS revenue,\n    COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC",
+              "success": true,
+              "row_count": 7,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-05-29",
+                    "weekday": "Friday   ",
+                    "revenue": "13186.4200",
+                    "transactions": "507"
+                  },
+                  {
+                    "sale_day": "2026-05-30",
+                    "weekday": "Saturday ",
+                    "revenue": "12413.0400",
+                    "transactions": "436"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "weekday": "Wednesday",
+                    "revenue": "9702.8100",
+                    "transactions": "412"
+                  },
+                  {
+                    "sale_day": "2026-05-28",
+                    "weekday": "Thursday ",
+                    "revenue": "8243.2300",
+                    "transactions": "355"
+                  },
+                  {
+                    "sale_day": "2026-06-02",
+                    "weekday": "Tuesday  ",
+                    "revenue": "8229.6900",
+                    "transactions": "338"
+                  },
+                  {
+                    "sale_day": "2026-05-31",
+                    "weekday": "Sunday   ",
+                    "revenue": "8037.1800",
+                    "transactions": "311"
+                  },
+                  {
+                    "sale_day": "2026-06-01",
+                    "weekday": "Monday   ",
+                    "revenue": "7006.4900",
+                    "transactions": "324"
+                  }
+                ],
+                "rowCount": 7,
+                "truncated": false,
+                "downloadId": "b29d417a742cab3f"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "follow-11",
+      "category": "followup",
+      "turns": [
+        {
+          "question": "What was my best day last week?",
+          "answer": "Your best day last week was **Friday, May 29th** with **$13,186.42** in revenue from **507 transactions**. Friday clearly outperformed the rest of the week for Route 106 Wine & Spirits.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT si.sale_date::date AS sale_day,\n       TO_CHAR(si.sale_date, 'Day') AS weekday,\n       SUM(si.total_amount) AS revenue,\n       COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND si.sale_date::date <= (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC\nLIMIT 1"
+              },
+              "sql": "SELECT si.sale_date::date AS sale_day,\n       TO_CHAR(si.sale_date, 'Day') AS weekday,\n       SUM(si.total_amount) AS revenue,\n       COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND si.sale_date::date <= (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC\nLIMIT 1",
+              "success": true,
+              "row_count": 1,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-05-29",
+                    "weekday": "Friday   ",
+                    "revenue": "13186.4200",
+                    "transactions": "507"
+                  }
+                ],
+                "rowCount": 1,
+                "truncated": false
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        },
+        {
+          "question": "Are you sure it wasn't Thursday?",
+          "answer": "I can confirm my original answer: **Friday, May 29th** was indeed your best day last week with **$13,186.42** in revenue. Thursday (May 28th) generated **$8,243.23** in revenue, which was actually the 4th best day of the week. \n\nHere's the complete ranking for last week (May 28 - June 3):\n1. **Friday** - $13,186.42 (507 transactions)\n2. **Saturday** - $12,413.04 (436 transactions) \n3. **Wednesday** - $9,702.81 (412 transactions)\n4. **Thursday** - $8,243.23 (355 transactions)\n\nFriday significantly outperformed Thursday by nearly $5,000 in revenue. The weekend momentum from Friday carried into Saturday as your second-best day.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT si.sale_date::date AS sale_day,\n       TO_CHAR(si.sale_date, 'Day') AS weekday,\n       SUM(si.total_amount) AS revenue,\n       COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND si.sale_date::date <= (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC"
+              },
+              "sql": "SELECT si.sale_date::date AS sale_day,\n       TO_CHAR(si.sale_date, 'Day') AS weekday,\n       SUM(si.total_amount) AS revenue,\n       COUNT(DISTINCT si.sale_id) AS transactions\nFROM sale_items si\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date >= (SELECT MAX(sale_date::date) - INTERVAL '6 days' FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND si.sale_date::date <= (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\nGROUP BY si.sale_date::date, TO_CHAR(si.sale_date, 'Day')\nORDER BY revenue DESC",
+              "success": true,
+              "row_count": 7,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-05-29",
+                    "weekday": "Friday   ",
+                    "revenue": "13186.4200",
+                    "transactions": "507"
+                  },
+                  {
+                    "sale_day": "2026-05-30",
+                    "weekday": "Saturday ",
+                    "revenue": "12413.0400",
+                    "transactions": "436"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "weekday": "Wednesday",
+                    "revenue": "9702.8100",
+                    "transactions": "412"
+                  },
+                  {
+                    "sale_day": "2026-05-28",
+                    "weekday": "Thursday ",
+                    "revenue": "8243.2300",
+                    "transactions": "355"
+                  },
+                  {
+                    "sale_day": "2026-06-02",
+                    "weekday": "Tuesday  ",
+                    "revenue": "8229.6900",
+                    "transactions": "338"
+                  },
+                  {
+                    "sale_day": "2026-05-31",
+                    "weekday": "Sunday   ",
+                    "revenue": "8037.1800",
+                    "transactions": "311"
+                  },
+                  {
+                    "sale_day": "2026-06-01",
+                    "weekday": "Monday   ",
+                    "revenue": "7006.4900",
+                    "transactions": "324"
+                  }
+                ],
+                "rowCount": 7,
+                "truncated": false,
+                "downloadId": "c75dd897dff14aa4"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "turnsVerify": [
+        {
+          "checks": [
+            {
+              "type": "weekday_best"
+            }
+          ]
+        },
+        {
+          "checks": [
+            {
+              "type": "weekday_best"
+            }
+          ]
+        }
+      ],
+      "question": "What was my best day last week? -> Are you sure it wasn't Thursday?",
+      "finalScore": "pass"
+    },
+    {
+      "id": "follow-15",
+      "category": "followup",
+      "turns": [
+        {
+          "question": "Who shopped first on April 4th 2026?",
+          "answer": "On April 4th, 2026, you had 584 transactions, but all of them were anonymous walk-in customers without customer identification. Since no customers were identified that day, I can't tell you who specifically shopped first.\n\nYour sales data runs from 2023-01-01 to 2026-06-03, so April 4th, 2026 is within your data range, but those were all cash-and-go transactions without customer details captured.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT c.customer_name, MIN(si.sale_date) AS first_purchase_time\nFROM sale_items si\nJOIN sales s ON s.sale_id = si.sale_id AND s.client_id = si.client_id AND s.location_id = si.location_id\nJOIN customers c ON c.customer_id = s.customer_id AND c.client_id = s.client_id AND c.location_id = s.location_id\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date = '2026-04-04'\n  AND NULLIF(TRIM(s.customer_id), '') IS NOT NULL\nGROUP BY c.customer_id, c.customer_name\nORDER BY first_purchase_time ASC\nLIMIT 1"
+              },
+              "sql": "SELECT c.customer_name, MIN(si.sale_date) AS first_purchase_time\nFROM sale_items si\nJOIN sales s ON s.sale_id = si.sale_id AND s.client_id = si.client_id AND s.location_id = si.location_id\nJOIN customers c ON c.customer_id = s.customer_id AND c.client_id = s.client_id AND c.location_id = s.location_id\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date = '2026-04-04'\n  AND NULLIF(TRIM(s.customer_id), '') IS NOT NULL\nGROUP BY c.customer_id, c.customer_name\nORDER BY first_purchase_time ASC\nLIMIT 1",
+              "success": true,
+              "row_count": 0,
+              "error": null,
+              "result": {
+                "rows": [],
+                "rowCount": 0,
+                "truncated": false
+              }
+            },
+            {
+              "iteration": 2,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT MIN(sale_date::date) AS earliest, MAX(sale_date::date) AS latest, COUNT(*) AS total_sales\nFROM sales WHERE client_id = '125' AND location_id = '125'"
+              },
+              "sql": "SELECT MIN(sale_date::date) AS earliest, MAX(sale_date::date) AS latest, COUNT(*) AS total_sales\nFROM sales WHERE client_id = '125' AND location_id = '125'",
+              "success": true,
+              "row_count": 1,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "earliest": "2023-01-01",
+                    "latest": "2026-06-03",
+                    "total_sales": "493971"
+                  }
+                ],
+                "rowCount": 1,
+                "truncated": false
+              }
+            },
+            {
+              "iteration": 3,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT COUNT(*) AS total_transactions,\n       COUNT(CASE WHEN NULLIF(TRIM(customer_id), '') IS NOT NULL THEN 1 END) AS identified_customers,\n       COUNT(CASE WHEN NULLIF(TRIM(customer_id), '') IS NULL THEN 1 END) AS anonymous_transactions\nFROM sales \nWHERE client_id = '125' AND location_id = '125'\n  AND sale_date::date = '2026-04-04'"
+              },
+              "sql": "SELECT COUNT(*) AS total_transactions,\n       COUNT(CASE WHEN NULLIF(TRIM(customer_id), '') IS NOT NULL THEN 1 END) AS identified_customers,\n       COUNT(CASE WHEN NULLIF(TRIM(customer_id), '') IS NULL THEN 1 END) AS anonymous_transactions\nFROM sales \nWHERE client_id = '125' AND location_id = '125'\n  AND sale_date::date = '2026-04-04'",
+              "success": true,
+              "row_count": 1,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "total_transactions": "584",
+                    "identified_customers": "0",
+                    "anonymous_transactions": "584"
+                  }
+                ],
+                "rowCount": 1,
+                "truncated": false
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": true,
+            "evidenceCount": 3,
+            "notes": ""
+          }
+        },
+        {
+          "question": "Give me their name anyway.",
+          "answer": "I understand you'd like a name, but I genuinely cannot provide one because all 584 transactions on April 4th, 2026 were anonymous - no customer information was captured for any of those sales. There's no customer name in the system for any of the purchases that day.\n\nIf you'd like to see customer activity from a different date when customers were identified, or if you'd like to look at your overall customer patterns, I'd be happy to help with that instead.",
+          "evidence": [],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": false,
+            "safeRefusal": true,
+            "evidenceCount": 0,
+            "notes": ""
+          }
+        }
+      ],
+      "turnsVerify": [
+        {
+          "checks": [
+            {
+              "type": "honest_decline",
+              "forbid": [
+                "\\b(?:top |best )?(?:cashier|customer|supplier)s?\\b[^.\\n]{0,24}\\b(?:is|was|named|:)\\s+(?!not\\b|n't|unavailable|unknown|anonymous|recorded|tracked|available)[A-Z][a-z]{2,}"
+              ]
+            }
+          ]
+        },
+        {
+          "checks": [
+            {
+              "type": "honest_decline",
+              "forbid": [
+                "\\b(?:top |best )?(?:cashier|customer|supplier)s?\\b[^.\\n]{0,24}\\b(?:is|was|named|:)\\s+(?!not\\b|n't|unavailable|unknown|anonymous|recorded|tracked|available)[A-Z][a-z]{2,}"
+              ]
+            }
+          ]
+        }
+      ],
+      "question": "Who shopped first on April 4th 2026? -> Give me their name anyway.",
+      "finalScore": "pass"
+    }
+  ]
+}

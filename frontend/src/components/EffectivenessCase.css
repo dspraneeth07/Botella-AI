@@ -1,0 +1,256 @@
+/* EffectivenessCase - the expandable per-recommendation case file.
+   Collapsed: one line with verdict chip + gist + measured numbers.
+   Expanded: the four-beat RECOMMENDED → YOU ACTED → SALES ANSWERED → VERDICT
+   timeline. Theming rides the app CSS variables (global.css). */
+
+/* De-jargoning tooltips - the InfoTip component exported from
+   EffectivenessCase.js (also used by EffectivenessPage's Follow-Through
+   strip); the styles live here so the tip travels with the module. */
+.ep-tip { position: relative; display: inline-flex; }
+.ep-tip-btn {
+  display: inline-flex; align-items: center; padding: 0; margin: 0 0 0 4px;
+  background: none; border: none; cursor: help;
+  color: var(--text-muted, #9ca3af);
+}
+.ep-tip-btn:hover, .ep-tip-btn:focus-visible { color: var(--accent-light, #B79CFF); }
+.ep-tip-bubble {
+  position: absolute; bottom: calc(100% + 7px); left: 50%; transform: translateX(-50%);
+  width: 210px; padding: 8px 10px; border-radius: 8px; z-index: 20;
+  background: var(--bg-elevated, #2A2145);
+  border: 1px solid var(--border, rgba(255,255,255,0.12));
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  color: var(--text-secondary, #C6C2DC);
+  font-size: 11.5px; font-weight: 400; line-height: 1.5; text-align: left;
+  text-transform: none; letter-spacing: normal; white-space: normal;
+  visibility: hidden; opacity: 0; transition: opacity 0.12s ease;
+  pointer-events: none;
+}
+.ep-tip:hover .ep-tip-bubble,
+.ep-tip:focus-within .ep-tip-bubble { visibility: visible; opacity: 1; }
+
+.ec-row {
+  border-top: 1px solid var(--border, rgba(255, 255, 255, 0.05));
+}
+.ec-row-open {
+  background: var(--bg-hover, rgba(255, 255, 255, 0.03));
+  border-radius: 10px;
+  border-top-color: transparent;
+  margin: 4px -8px;
+  padding: 0 8px;
+}
+
+/* Collapsed summary line - the whole line is the toggle. */
+.ec-summary {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 8px;
+  width: 100%; padding: 9px 0; margin: 0;
+  background: none; border: none; color: inherit; font: inherit;
+  font-size: 12.5px; text-align: left; cursor: pointer;
+}
+.ec-chip {
+  font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--vc, var(--accent-light, #B79CFF));
+  border: 1px solid color-mix(in srgb, var(--vc, var(--accent-light, #B79CFF)) 45%, transparent);
+  padding: 1px 7px; border-radius: 999px; flex-shrink: 0; white-space: nowrap;
+}
+.ec-summary-gist { flex: 1 1 100%; line-height: 1.45; }
+.ec-summary-meta {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  color: var(--text-muted, #9ca3af); font-size: 11.5px;
+}
+.ec-summary-meta em { font-style: normal; display: inline-flex; align-items: center; gap: 3px; }
+.ec-acted { color: var(--green, #2FBF97); }
+/* Ledger-row extras (additive Phase-1 backend fields; absent → hidden) */
+.ec-money { color: var(--green, #2FBF97); font-weight: 600; }
+.ec-money-neg { color: var(--red, #FF6B8A); }
+.ec-partial-mark {
+  font-style: normal; font-size: 9px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--yellow, #F0ABFC);
+  border: 1px solid color-mix(in srgb, var(--yellow, #F0ABFC) 45%, transparent);
+  padding: 1px 6px; border-radius: 999px;
+}
+.ec-date { color: var(--text-muted, #9ca3af); }
+.ec-chevron {
+  margin-left: auto; flex-shrink: 0; align-self: center;
+  color: var(--text-muted, #9ca3af); transition: transform 0.16s ease;
+}
+.ec-row-open > .ec-summary .ec-chevron { transform: rotate(180deg); }
+
+/* Expanded detail */
+.ec-detail { padding: 2px 0 12px; }
+.ec-wait {
+  display: flex; align-items: center; gap: 8px; padding: 8px 2px;
+  color: var(--text-muted, #9ca3af); font-size: 12.5px;
+}
+.ec-spin { animation: ec-rot 1s linear infinite; }
+@keyframes ec-rot { to { transform: rotate(360deg); } }
+.ec-retry {
+  display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px;
+  border-radius: 8px; border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: var(--bg-hover, rgba(255, 255, 255, 0.05)); color: inherit;
+  font-size: 11.5px; cursor: pointer;
+}
+
+/* Window pills - one per evaluated window; "partial" is flagged, never hidden. */
+.ec-windows { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 10px; }
+.ec-window {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 10px; font-size: 11.5px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: transparent; color: var(--text-muted, #9ca3af);
+}
+.ec-window-active {
+  background: color-mix(in srgb, var(--accent, #8B5CF6) 16%, transparent);
+  color: var(--accent-light, #D6BBFF); border-color: var(--accent, #8B5CF6);
+}
+.ec-window-partial {
+  font-style: normal; font-size: 9px; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--yellow, #F0ABFC);
+}
+
+/* The four-beat timeline */
+.ec-timeline { list-style: none; margin: 0; padding: 0; }
+.ec-beat { display: flex; gap: 10px; position: relative; padding-bottom: 12px; }
+.ec-beat:last-child { padding-bottom: 0; }
+/* connector line between beat icons */
+.ec-beat:not(:last-child)::before {
+  content: ''; position: absolute; left: 11px; top: 24px; bottom: 0;
+  width: 1px; background: var(--border, rgba(255, 255, 255, 0.08));
+}
+.ec-beat-icon {
+  width: 23px; height: 23px; border-radius: 50%; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--bg-card, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  color: var(--text-muted, #9ca3af); margin-top: 1px;
+}
+.ec-bi-rec { color: var(--accent-light, #B79CFF); }
+.ec-bi-yes { color: var(--green, #2FBF97); }
+.ec-bi-no { color: var(--yellow, #F0ABFC); }
+.ec-bi-unknown { color: var(--text-muted, #9ca3af); }
+.ec-bi-sales { color: var(--accent-light, #B79CFF); }
+.ec-bi-verdict { color: var(--vc, var(--accent-light, #B79CFF)); }
+
+.ec-beat-body { min-width: 0; font-size: 12.5px; line-height: 1.5; }
+.ec-beat-tag {
+  display: block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--text-muted, #9ca3af); margin-bottom: 2px;
+}
+.ec-beat-main { margin: 0 0 2px; }
+.ec-beat-main strong { font-weight: 600; }
+.ec-gist { margin: 4px 0 0; color: var(--text-secondary, #C6C2DC); }
+.ec-evidence { margin: 2px 0 0; color: var(--text-secondary, #C6C2DC); }
+.ec-dim { margin: 2px 0 0; color: var(--text-muted, #9ca3af); font-size: 11.5px; }
+.ec-partial {
+  margin: 4px 0 0; font-size: 11.5px; color: var(--yellow, #F0ABFC);
+}
+
+/* ── "Why this call" trigger chips (case file, Phase 2) ─────────────────────
+   --chip carries the signal-kind color (SIGNAL_KIND_META - the SignalStrip's
+   own palette); unresolved bare-key chips have no --chip and read muted. */
+.ec-triggers { margin-top: 8px; }
+.ec-triggers-tag {
+  display: block; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.07em; color: var(--text-muted, #9ca3af); margin-bottom: 4px;
+}
+.ec-trigger-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.ec-trig {
+  display: inline-flex; align-items: center; gap: 5px; max-width: 100%;
+  padding: 3px 9px; border-radius: 999px; font-size: 11.5px; line-height: 1.3;
+  color: var(--chip, var(--text-muted, #9ca3af));
+  border: 1px solid color-mix(in srgb, var(--chip, var(--text-muted, #9ca3af)) 40%, transparent);
+  background: color-mix(in srgb, var(--chip, var(--text-muted, #9ca3af)) 8%, transparent);
+  text-decoration: none;
+}
+.ec-trig > span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 260px; }
+.ec-trig svg { flex-shrink: 0; }
+a.ec-trig:hover, a.ec-trig:focus-visible {
+  border-color: var(--chip, var(--text-muted, #9ca3af)); filter: brightness(1.12);
+}
+
+/* ── Sales trace chart (case file, Phase 2) ─────────────────────────────────
+   Theme-aware via CSS variables: these rules OVERRIDE the recharts hex
+   presentation attributes (CSS beats attributes in the cascade), so the chart
+   follows [data-theme] live. Emphasis form: after = accent, baseline = the
+   de-emphasis gray - context, not a competing series. */
+.est-wrap { margin: 8px 0 4px; max-width: 560px; }
+.est-legend {
+  display: flex; flex-wrap: wrap; gap: 10px 14px; margin-bottom: 2px;
+  font-size: 10.5px; color: var(--text-muted, #9ca3af);
+}
+.est-key { display: inline-flex; align-items: center; gap: 5px; }
+.est-key::before { content: ''; width: 14px; border-top: 2px solid; border-radius: 1px; }
+.est-key-base::before { border-color: var(--text-muted, #8E88AC); }
+.est-key-after::before { border-color: var(--accent, #8B5CF6); }
+.est-key-exp::before { border-top-style: dashed; border-top-width: 1px; border-color: var(--text-muted, #8E88AC); }
+.est-key-valid::before {
+  width: 12px; height: 10px; border: none; border-radius: 2px;
+  background: color-mix(in srgb, var(--accent, #8B5CF6) 14%, transparent);
+}
+.est-chart .recharts-cartesian-axis-tick text { fill: var(--text-muted, #8E88AC); }
+.est-chart .recharts-cartesian-axis-line { stroke: var(--border, #2E2547); }
+.est-chart .recharts-tooltip-cursor { stroke: var(--border-light, #3A2F58); }
+.est-base path.recharts-area-curve { stroke: var(--text-muted, #8E88AC); }
+.est-base path.recharts-area-area { fill: var(--text-muted, #8E88AC); }
+.est-after path.recharts-area-curve { stroke: var(--accent, #8B5CF6); }
+.est-after path.recharts-area-area { fill: var(--accent, #8B5CF6); }
+.est-exp line { stroke: var(--text-muted, #8E88AC); }
+.est-rec line { stroke: var(--accent, #8B5CF6); }
+.est-valid rect { fill: var(--accent, #8B5CF6); }
+.est-skel {
+  height: 128px; border-radius: 8px; margin: 8px 0 4px; max-width: 560px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-hover, rgba(255, 255, 255, 0.05)) 25%,
+    var(--bg-elevated, rgba(255, 255, 255, 0.09)) 50%,
+    var(--bg-hover, rgba(255, 255, 255, 0.05)) 75%
+  );
+  background-size: 200% 100%;
+  animation: est-shimmer 1.2s ease-in-out infinite;
+}
+@keyframes est-shimmer { to { background-position: -200% 0; } }
+.est-error {
+  display: flex; align-items: center; gap: 8px; margin: 6px 0 2px;
+  color: var(--text-muted, #9ca3af); font-size: 11.5px;
+}
+.est-tip {
+  display: flex; flex-direction: column; gap: 1px; padding: 6px 9px;
+  background: var(--bg-elevated, #2A2145);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  border-radius: 8px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  font-size: 11px; color: var(--text-secondary, #C6C2DC);
+}
+.est-tip strong { font-size: 12.5px; color: var(--text-primary, #F3F1FA); }
+.est-tip-dim { color: var(--text-muted, #9ca3af); font-size: 10.5px; }
+
+/* ── Your take - the thumbs review on the verdict beat ─────────────────── */
+.ec-review {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px dashed var(--border, rgba(255, 255, 255, 0.1));
+}
+.ec-review-lead { font-size: 12px; color: var(--text-secondary, #C6C2DC); }
+.ec-review-btns { display: inline-flex; gap: 5px; }
+.ec-vote {
+  display: inline-flex; padding: 6px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: transparent; color: var(--text-muted, #9ca3af);
+}
+.ec-vote:hover { background: var(--bg-hover, rgba(255, 255, 255, 0.06)); }
+.ec-vote-on-up {
+  color: var(--green, #2FBF97);
+  border-color: var(--green, #2FBF97);
+  background: color-mix(in srgb, var(--green, #2FBF97) 12%, transparent);
+}
+.ec-vote-on-down {
+  color: var(--yellow, #F0ABFC);
+  border-color: var(--yellow, #F0ABFC);
+  background: color-mix(in srgb, var(--yellow, #F0ABFC) 12%, transparent);
+}
+.ec-review-note { font-size: 11px; color: var(--text-muted, #9ca3af); }
+
+/* Fulfilment chips (migration 039): the owner's unconfirmed word, and a
+   measured absence, each kept apart from the green "you did this". */
+.ec-claimed { color: var(--accent, #B79CFF); }
+.ec-notfollowed { color: var(--yellow, #F0ABFC); }
+.ec-bi-claimed { background: color-mix(in srgb, var(--accent, #B79CFF) 18%, transparent); color: var(--accent, #B79CFF); }
+.ec-claim-note { margin: 4px 0 0; font-size: 12px; color: var(--text-muted, #9ca3af); }

@@ -1,0 +1,117 @@
+{
+  "store": {
+    "client_id": 188,
+    "location_id": 188,
+    "name": "Grapes and Grains"
+  },
+  "generated_at": "2026-10-19T09:37:12.924Z",
+  "summary": {
+    "since_days": 120,
+    "cards_shown": 0,
+    "cards_withheld": 0,
+    "distinct_product_windows": 0,
+    "duplicate_cards": 0,
+    "confirmed": 0,
+    "closed": 0,
+    "verdicts": {
+      "lost_money": 0,
+      "made_money": 0,
+      "broke_even": 0,
+      "exposure_unconfirmed": 0,
+      "not_followed_no_exposure": 0,
+      "window_open": 0,
+      "unmeasurable": 0
+    },
+    "verdicts_distinct": {
+      "lost_money": 0,
+      "made_money": 0,
+      "broke_even": 0,
+      "exposure_unconfirmed": 0,
+      "not_followed_no_exposure": 0,
+      "window_open": 0,
+      "unmeasurable": 0
+    },
+    "windows_used": {},
+    "realised_net": {
+      "cards": 0,
+      "settled_cards_including_repeats": 0,
+      "sum": null,
+      "mean": null,
+      "ci95": null,
+      "ci_reason": "no closed confirmed card carries a full net yet",
+      "decision_dates": 0,
+      "bounded_only_losses": 0,
+      "bounded_only_losses_at_least": null,
+      "statement": "no closed, confirmed card carries a full net yet (no closed confirmed card carries a full net yet)"
+    },
+    "largest_loss": {
+      "rec_id": null,
+      "sku": null,
+      "amount": null,
+      "why": "no confirmed card with a closed window has a negative net"
+    },
+    "unattributed_closed_net": {
+      "cards": 0,
+      "sum": null,
+      "note": "every closed card with a computable net, whatever its fulfilment state - what the products did, not what the cards earned"
+    },
+    "profit_floor": {
+      "rec_min_profit_usd_in_force": 0,
+      "env_value": "0",
+      "note": "REC_MIN_PROFIT_USD=0 in this environment: the dollar floor is switched off, so cards below $1 expected profit were shown",
+      "issued_below_one_dollar": 0,
+      "issued_without_admission_row": 0,
+      "issued_without_profit_figure": 0
+    },
+    "holdout": {
+      "window_days": 30,
+      "lookback_days": 120,
+      "month": null,
+      "min_per_arm": 5,
+      "overall": {
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 0 shown and 0 withheld"
+        }
+      },
+      "by_family": []
+    },
+    "holdout_line": "holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 0 shown and 0 withheld"
+  },
+  "answer": [
+    "Grapes and Grains has been shown no recommendation in the last 120 days, so there is no recommendation it could be losing money on - and none it could be making money on."
+  ],
+  "cards": [],
+  "withheld": [],
+  "definitions": {
+    "realised_net": "incremental margin (recommendation_evaluations.margin_impact: (sold - expected) x (price - cost)) minus the holding cost incurred",
+    "holding_cost_incurred": "the engine's holding_cost_if_unsold x units_unsold / suggested_order_qty - an approximation, stated on each row",
+    "units_unsold": "recommended units not sold inside the window (recommended_qty - units_sold, floored at 0); a count against the order, not a shelf count",
+    "window": "the 30-day window where closed, else the longest closed window; closed means the evaluator's data_through has passed rec_date + window",
+    "lost_money": "closed window, fulfilment confirmed, net < 0 (or incremental margin < 0 with holding cost unknown: a loss of at least that much)",
+    "made_money": "closed window, fulfilment confirmed, net > 0",
+    "exposure_unconfirmed": "closed window with a net, but fulfilment pending / claimed / unobservable: not attributed as gain or loss",
+    "not_followed_no_exposure": "fulfilment not_followed or expired: nothing was bought, so no money was at risk",
+    "unmeasurable": "closed window but no net can be computed: the reason names the missing input (cost, lift, unsold capture, holding figure)",
+    "ci95": "date-clustered bootstrap over decision dates, 2000 draws, seeded; needs 10 cards on 2 dates",
+    "duplicate_of": "a later card for the same SKU on the same day reading the same window: listed with its own verdict, but its dollars are counted once, under the first card",
+    "lost_money_meaning": "a confirmed restock after which the product sold BELOW its own baseline (negative incremental margin), plus the holding cost of the units left - deferred revenue on spirits, not destroyed stock; the engine's holding model prices that"
+  }
+}

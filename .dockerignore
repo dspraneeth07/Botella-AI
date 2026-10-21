@@ -1,0 +1,48 @@
+# Context for the BACKEND image, which builds from the repository root so it can
+# carry the pipeline scripts the nightly gate and calibration jobs run.
+#
+# THIS FILE REPLACES backend/.dockerignore. Docker reads .dockerignore from the
+# CONTEXT ROOT only, so moving the context from ./backend to . retired that file
+# silently - every rule it held had to move here with a backend/ prefix, or the
+# image would have started shipping the things it was written to keep out
+# (the .env holding the warehouse password, the local sqlite databases, the
+# generated imagegen output).
+#
+# The frontend and Python images build from their own directories, so their
+# contexts are unaffected by this file.
+
+# ── Secrets. Never in an image layer: the .env files hold the warehouse
+# ── password, the JWT signing secret and three vendor API keys, and these
+# ── images are pushed to the GitLab registry.
+**/.env
+**/.env.*
+
+# ── Never useful, sometimes enormous
+.git
+.gitignore
+**/node_modules
+**/.venv
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+**/Dockerfile
+**/.dockerignore
+**/.DS_Store
+
+# ── Local state and generated output (was backend/.dockerignore)
+backend/database/*.sqlite
+backend/database/*.db
+backend/data/imagegen/*
+backend/data/card-statements/
+backend/eval-results
+backend/coverage
+backend/logs
+**/npm-debug.log
+**/*.log
+
+# ── Not needed by the backend image. Botella_External_APIs is NOT listed: the
+# ── image copies app/__init__.py, app/pipeline and scripts out of it.
+frontend
+audit
+docs
+deploy

@@ -1,0 +1,156 @@
+/* Recommendation Effectiveness tab - measured outcomes, no projections.
+   Layout is a 30-second read: hero (what the advice EARNED) → up to three
+   insight sentences → one tabbed list of calls. A feedback drawer slides in
+   from the right once per session (EffectivenessFeedback.css). */
+
+/* The rec-subpanel parent is a flex column that expects the child to flex-fill
+   and OWN its scrolling (same contract as .sp-container / .sa-panel). */
+.ep-root {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 18px 24px 40px;
+}
+
+.ep-center {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 48px 16px; color: var(--text-muted, #9ca3af); text-align: center;
+}
+.ep-spin { animation: ep-rot 1s linear infinite; }
+@keyframes ep-rot { to { transform: rotate(360deg); } }
+
+.ep-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px;
+  border-radius: 8px; border: 1px solid var(--border, rgba(255,255,255,0.1));
+  background: var(--bg-hover, rgba(255,255,255,0.05)); color: inherit;
+  cursor: pointer; font-size: 13px;
+}
+
+/* Header + evaluation-window selector + the rate-recent-calls reopener */
+.ep-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+.ep-title { display: flex; gap: 10px; align-items: flex-start; }
+.ep-title svg { margin-top: 3px; color: var(--accent, #B79CFF); flex-shrink: 0; }
+.ep-title h3 { margin: 0; font-size: 16px; }
+.ep-title p { margin: 2px 0 0; font-size: 12.5px; color: var(--text-muted, #9ca3af); }
+.ep-head-controls { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ep-rate-btn {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+  font-size: 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border, rgba(255,255,255,0.1));
+  background: transparent; color: var(--text-muted, #9ca3af);
+}
+.ep-rate-btn:hover { border-color: var(--accent, #B79CFF); color: var(--accent-light, #D6BBFF); }
+.ep-windows { display: flex; gap: 4px; align-items: center; }
+.ep-window {
+  padding: 5px 11px; font-size: 12.5px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border, rgba(255,255,255,0.1));
+  background: transparent; color: var(--text-muted, #9ca3af);
+}
+.ep-window-active {
+  background: color-mix(in srgb, var(--accent, #B79CFF) 16%, transparent);
+  color: var(--accent-light, #D6BBFF); border-color: var(--accent, #B79CFF);
+}
+.ep-history-label {
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--text-muted, #9ca3af); margin-right: 2px;
+}
+
+/* Empty state */
+.ep-empty {
+  display: flex; gap: 10px; align-items: flex-start; padding: 18px;
+  border-radius: 12px; border: 1px dashed var(--border, rgba(255,255,255,0.12));
+  color: var(--text-muted, #9ca3af); font-size: 13.5px; line-height: 1.55;
+}
+.ep-empty svg { flex-shrink: 0; margin-top: 2px; }
+.ep-empty p { margin: 0; }
+
+/* ── Hero - what the advice earned ─────────────────────────────────────────
+   Text wears text tokens; the win meter is the only colored mark, and its
+   ratio is always duplicated in the label beside it (never color-alone). */
+.ep-hero {
+  padding: 20px 22px 16px; border-radius: 14px;
+  background: var(--bg-card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+}
+.ep-hero-num {
+  font-size: 48px; font-weight: 700; line-height: 1.05;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+}
+.ep-hero-cap { margin-top: 4px; font-size: 12.5px; color: var(--text-muted, #9ca3af); }
+.ep-hero-meterrow { display: flex; align-items: center; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.ep-hero-meter {
+  flex: 0 1 220px; min-width: 120px; height: 6px; border-radius: 3px;
+  background: var(--bg-hover, rgba(255,255,255,0.07)); overflow: hidden;
+}
+.ep-hero-meterfill {
+  display: block; height: 100%; border-radius: 3px; min-width: 2px;
+  background: var(--green, #2FBF97);
+}
+.ep-hero-meterlabel { font-size: 12.5px; color: var(--text-secondary, #C6C2DC); }
+.ep-hero-acted { margin: 10px 0 0; font-size: 13.5px; line-height: 1.5; }
+
+/* The misses line - honest, never blame-y: acted-on misses invite a review,
+   un-acted misses cost nothing. */
+.ep-hero-misses {
+  margin: 10px 0 0; padding: 10px 12px; border-radius: 10px;
+  font-size: 12.5px; line-height: 1.55; color: var(--text-secondary, #C6C2DC);
+  background: color-mix(in srgb, var(--yellow, #F0ABFC) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--yellow, #F0ABFC) 22%, transparent);
+}
+.ep-hero-review {
+  display: inline-flex; margin-left: 8px; padding: 2px 11px;
+  font-size: 11.5px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--yellow, #F0ABFC);
+  background: transparent; color: var(--yellow, #F0ABFC);
+  vertical-align: baseline;
+}
+.ep-hero-review:hover { background: color-mix(in srgb, var(--yellow, #F0ABFC) 14%, transparent); }
+.ep-hero-fresh { margin: 10px 0 0; font-size: 11px; color: var(--text-muted, #9ca3af); }
+
+/* ── Insights - at most three one-sentence cards ───────────────────────── */
+.ep-insights {
+  display: grid; gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+.ep-insight {
+  display: flex; gap: 9px; align-items: flex-start; text-align: left;
+  padding: 12px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5;
+  background: var(--bg-card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+  color: var(--text-secondary, #C6C2DC);
+}
+.ep-insight svg { flex-shrink: 0; margin-top: 2px; color: var(--accent, #B79CFF); }
+.ep-insight-btn { cursor: pointer; font: inherit; }
+.ep-insight-btn:hover { border-color: var(--accent, #B79CFF); }
+
+/* ── The calls - one tabbed list ───────────────────────────────────────── */
+.ep-calls {
+  scroll-margin-top: 8px;
+  padding: 14px 16px; border-radius: 14px;
+  background: var(--bg-card, rgba(255,255,255,0.03));
+  border: 1px solid var(--border, rgba(255,255,255,0.08));
+}
+.ep-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.ep-tab {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 13px; font-size: 13px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border, rgba(255,255,255,0.1));
+  background: transparent; color: var(--text-muted, #9ca3af);
+}
+.ep-tab-active {
+  background: color-mix(in srgb, var(--accent, #B79CFF) 16%, transparent);
+  color: var(--accent-light, #D6BBFF); border-color: var(--accent, #B79CFF);
+}
+.ep-tab-count {
+  font-size: 11px; padding: 1px 7px; border-radius: 999px;
+  background: var(--bg-hover, rgba(255,255,255,0.07));
+  font-variant-numeric: tabular-nums;
+}
+.ep-fallback-rows { display: flex; flex-direction: column; }
+.ep-quiet { margin: 0; font-size: 12px; color: var(--text-muted, #9ca3af); }
+
+/* De-jargoning tooltips (.ep-tip): defined in EffectivenessCase.css - the
+   InfoTip component lives in EffectivenessCase.js and is shared with this page */

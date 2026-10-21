@@ -1,0 +1,85 @@
+# Node.js
+node_modules/
+
+# Secrets. A bare ".env" does NOT match a BACKUP of one, and this repo makes
+# them: the QA deploy copies backend/.env to .env.bak-<date> before touching
+# anything, and three such files already sit beside it untracked. One
+# "git add -A" would have committed live database and service credentials.
+# No secret file has ever reached this history; these patterns keep it that way.
+.env
+.env.*
+*.env
+!.env.example
+!*.env.example
+
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Logs
+logs/
+*.log
+backend/logs/
+
+# Dependency directories
+backend/node_modules/
+frontend/node_modules/
+
+# Build output
+# frontend/build/ is COMMITTED on request, so a clone can serve the UI from the
+# backend (http://localhost:3000) without running a build first. It is compiled
+# output, so it goes stale the moment anyone edits a component - rebuild and
+# commit it again, or the site serves the previous version.
+#   npm run build --prefix frontend
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Misc
+*.sublime-workspace
+*.sublime-project
+
+# Database files
+backend/database/*.sqlite
+backend/database/*.db
+
+# Coverage
+coverage/
+
+# Others
+# The two ~280 MB archives of this directory used to sit one level up, outside
+# the reach of this file. Now that this IS the repository root, these cover them.
+*.tgz
+*.zip
+*.tar
+*.tar.gz
+
+# Local-only docs (not for the repo)
+ARCHITECTURE.md
+architecture.md
+context.md
+agent-log.md
+node-backend-key.ppk
+
+# CRA output. `build` was already ignored, but the per-environment copies used
+# to diff a QA bundle against a production one are the same artifact and were
+# not - about 4 MB of compiled bundle went into a commit before this line did.
+build-*/
+
+# Invoices and purchase orders uploaded by stores. Customer documents, kept on
+# the box (and, in production, on the mounted volume) - never in the repo.
+backend/data/purchase-orders/
+backend/scripts/.token
+
+# Card-processing statements uploaded by owners (CARD-STATEMENTS.md). Real
+# merchant documents: kept on the box and the production volume, never in git.
+backend/data/card-statements/
+
+# The repo root has no package.json; an npm command run there by mistake
+# leaves an empty lockfile behind. backend/ and frontend/ keep their own.
+/package-lock.json

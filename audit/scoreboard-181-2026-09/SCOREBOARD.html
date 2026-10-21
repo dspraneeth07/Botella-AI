@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scoreboard 2026-09 - Cork Runner Wine &amp; Spirits CA</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#fff;--panel:#f7f8fa;--fg:#0d1117;--mut:#5b6672;--line:#dfe3e8;--accent:#2563eb;--warn:#b45309}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0e17;--panel:#121823;--fg:#e8edf4;--mut:#93a1b1;--line:#233044;--accent:#60a5fa;--warn:#fbbf24}}
+:root[data-theme="dark"]{--bg:#0a0e17;--panel:#121823;--fg:#e8edf4;--mut:#93a1b1;--line:#233044;--accent:#60a5fa;--warn:#fbbf24}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 16px 80px}
+h1{font-size:28px;margin:0 0 6px;letter-spacing:-.02em}
+h2{font-size:21px;margin:56px 0 4px}
+h3{font-size:15px;margin:24px 0 6px}
+.lede{color:var(--mut);margin:0 0 20px;max-width:78ch}
+.band{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;margin:16px 0;max-width:90ch}
+.band.warn{border-left-color:var(--warn)}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:14px 0}
+.k{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.k .v{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.k .l{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-top:4px}
+.k .d{font-size:12px;color:var(--mut);margin-top:6px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:14px 0;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+th.name,td.name,th.why,td.why{text-align:left}
+td.why{max-width:34ch;font-size:12.5px;color:var(--mut)}
+.sku,.sub{font-size:11.5px;color:var(--mut);font-weight:400}
+.na{color:var(--mut);font-style:italic}
+ul.refusals{margin:4px 0 0;padding-left:16px}
+.arm{border-left:2px solid var(--line)}
+footer{color:var(--mut);font-size:12.5px;margin-top:48px}
+</style></head><body><div class="wrap">
+<h1>Cork Runner Wine &amp; Spirits CA - 2026-09</h1>
+<p class="lede">Pilot scoreboard. Two boards, kept apart. a card belongs to the calendar month its 30-day window ended in. Data through <b>n/a</b>; generated 2026-10-08T12:47:55.343Z.</p>
+<ul class="refusals"><li>data_through: no evaluation row behind any card this month</li></ul>
+
+<h2 id="board-a">Board A - Prediction accuracy</h2>
+<p class="lede">Did what the card predicted come true. Graded on the prediction alone; needs no owner action, and reads neither the arm, the inferred action, the votes nor the money. Both arms count: a withheld card is still a prediction. Hit rule: lift &gt;= 1.0: the product sold at least what its own trailing rate projected over the 30-day window.</p>
+<div class="band"><b>This board needs no owner action.</b> It grades the forecast on the forecast and never reads whether the store acted, voted, or what it earned.</div>
+<h3>Store summary</h3>
+<div class="summary">
+  <div class="k"><div class="v"><span class="na">n/a</span></div><div class="l">hit rate</div><div class="d">no interval: nothing measured; 0 of 0 measured</div></div>
+  <div class="k"><div class="v">0</div><div class="l">cards</div><div class="d">0 products; measured on 0</div></div>
+  <div class="k"><div class="v"><span class="na">n/a</span></div><div class="l">mean lift</div><div class="d">over the measured cards</div></div>
+  <div class="k"><div class="v"><span class="na">n/a</span></div><div class="l">promise fill</div><div class="d">0 sold of 0 asked on 0 cards</div></div>
+  <div class="k"><div class="v"><span class="na">n/a</span></div><div class="l">interval coverage</div><div class="d">0 of 0 stated ranges held</div></div>
+  <div class="k"><div class="v">0 / 0 / 0</div><div class="l">stockout grade</div><div class="d">sold through / did not / ungraded, of 0 stockout cards</div></div>
+</div>
+<div class="band warn"><b>Not stated, and why</b><ul class="refusals"><li>no card&#39;s 30-day window closed in this month</li><li>promise fill: no card asked for a quantity</li><li>interval coverage: no range stored on any card this month</li><li>stockout grade: no stockout card closed this month</li></ul></div>
+<h3>One line per product</h3>
+<div class="scroll"><table>
+<thead><tr><th class="name">Product</th><th>Cards</th><th>Measured</th><th>Hits</th><th>Hit rate</th><th>Mean lift</th><th>Promise fill</th><th>Interval coverage</th><th>Stockout: sold through / not / ungraded</th><th class="why">Not stated</th></tr></thead>
+<tbody><tr><td colspan="10" class="na">no card closed this month</td></tr></tbody>
+</table></div>
+
+<h2 id="board-b">Board B - Holdout money</h2>
+<p class="lede">Did telling the store change anything. Shown against withheld, per product; dollars are per product, never totals; the action is inferred from the purchases feed, an uploaded invoice, the stock delta or a price drop. This board states no hit rate.</p>
+<div class="band"><b>This board compares arms.</b> Shown against withheld, per product. A difference is stated only when both arms have at least 5 measured product-windows; below that it is refused with the reason, never zero.</div>
+<h3>Store summary</h3>
+<p>holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 0 shown and 0 withheld</p>
+<div class="summary">
+  <div class="k"><div class="v"><span class="na">unpriced</span></div><div class="l">shown, per product</div><div class="d">0 product-windows, 0 measurable, 0 priced; avg lift <span class="na">n/a</span></div></div>
+  <div class="k"><div class="v"><span class="na">unpriced</span></div><div class="l">withheld, per product</div><div class="d">0 product-windows, 0 measurable, 0 priced; avg lift <span class="na">n/a</span></div></div>
+  <div class="k"><div class="v"><span class="na">refused</span></div><div class="l">difference in lift</div><div class="d">needs 5 measured outcomes per arm; have 0 shown and 0 withheld</div></div>
+  <div class="k"><div class="v">0 / 0 / 0</div><div class="l">acted / not / unobservable</div><div class="d">shown arm; no detector asserted an action</div></div>
+</div>
+<p class="sub">Totals, for the record only: shown <span class="na">unpriced</span>, withheld <span class="na">unpriced</span>. The arms are different sizes by design; the difference is taken per product above.</p>
+<div class="band warn"><b>Not stated, and why</b><ul class="refusals"><li>no product-window&#39;s 30-day window closed in this month</li><li>difference: needs 5 measured outcomes per arm; have 0 shown and 0 withheld</li></ul></div>
+<h3>By family</h3>
+<div class="scroll"><table>
+<thead><tr><th class="name">Family</th><th class="arm">Shown windows</th><th>Shown lift</th><th>Shown $/product</th><th class="arm">Withheld windows</th><th>Withheld lift</th><th>Withheld $/product</th><th class="why">Difference</th></tr></thead>
+<tbody><tr><td colspan="8" class="na">no product-window closed this month</td></tr></tbody>
+</table></div>
+<h3>One line per product</h3>
+<div class="scroll"><table>
+<thead><tr><th class="name">Product</th><th class="arm">Shown windows</th><th>Shown lift</th><th>Shown $/product</th><th class="arm">Withheld windows</th><th>Withheld lift</th><th>Withheld $/product</th><th>Action inferred (shown)</th><th class="why">Note</th></tr></thead>
+<tbody><tr><td colspan="9" class="na">no product-window closed this month</td></tr></tbody>
+</table></div>
+
+<footer>Built by backend/services/pilotScoreboardService.js from recommendation_outcomes, recommendation_evaluations and recommendations. Every n/a carries its reason on the row or in the band above the table.</footer>
+</div></body></html>

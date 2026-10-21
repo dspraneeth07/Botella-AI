@@ -1,0 +1,1122 @@
+/* ============================================
+   Dashboard - Botella V1
+   Uses V1 CSS variables for dark/light theming
+   ============================================ */
+
+.dash-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 32px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  background: var(--bg-primary);
+}
+
+/* Header */
+.dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.dash-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dash-header-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.dash-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.dash-header-date {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.dash-refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.dash-refresh-btn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.dash-refresh-btn.spinning svg {
+  animation: dashSpin 0.8s linear infinite;
+}
+
+@keyframes dashSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* KPI Row */
+.dash-kpi-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+
+.dash-kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  transition: all 0.2s;
+  animation: dashFadeUp 0.35s ease-out both;
+}
+
+.dash-kpi-card:hover {
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.dash-kpi-card.accent-green { border-left-color: var(--green); }
+.dash-kpi-card.accent-yellow { border-left-color: var(--yellow); }
+.dash-kpi-card.accent-red { border-left-color: var(--red); }
+
+.dash-kpi-card.pulse-warning {
+  animation: dashPulseWarn 2s ease-in-out infinite;
+}
+
+@keyframes dashPulseWarn {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(240, 171, 252, 0); }
+  50% { box-shadow: 0 0 0 4px rgba(240, 171, 252, 0.15); }
+}
+
+.dash-kpi-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.dash-kpi-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.dash-kpi-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Charts Row */
+.dash-charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.dash-chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  animation: dashFadeUp 0.4s ease-out both;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dash-chart-card > *:last-child:not(h3) {
+  margin-bottom: 0;
+}
+
+.dash-chart-card h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Time-window chip on card headings ("All time", "Past 30 days", ...) so every
+   tile states the scope of its numbers. */
+.dash-window-tag {
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg-secondary);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* A slow diagonal sheen across the pane, so the polished marks sit on a
+   polished surface instead of a flat one. Purely decorative: it is behind the
+   content and takes no pointer events. app-theme.css already owns the pane's
+   glass material and its hairline top edge - this only adds the sweep. */
+html .dash-chart-card::after,
+html .dash-kpi-card::after,
+html .st-card::after,
+html .dp-kpi::after,
+html .dp-task-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(152deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.02) 26%, rgba(255, 255, 255, 0) 52%);
+  pointer-events: none;
+  z-index: 0;
+}
+html[data-theme="light"] .dash-chart-card::after,
+html[data-theme="light"] .dash-kpi-card::after,
+html[data-theme="light"] .st-card::after,
+html[data-theme="light"] .dp-kpi::after,
+html[data-theme="light"] .dp-task-card::after {
+  background: linear-gradient(152deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.28) 24%, rgba(255, 255, 255, 0) 50%);
+}
+/* Content sits above the sweep. */
+html .dash-chart-card > *,
+html .dash-kpi-card > *,
+html .st-card > *,
+html .dp-kpi > *,
+html .dp-task-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Custom Recharts Tooltip - the one chart surface that floats over the page,
+   so unlike the marks it takes the real frosted material: a translucent pane
+   with backdrop blur and the same hairline top edge the cards carry. */
+.dash-tooltip {
+  position: relative;
+  background: rgba(24, 19, 40, 0.72);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+html[data-theme="light"] .dash-tooltip {
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 38px -24px rgba(38, 16, 66, 0.42);
+}
+.dash-tooltip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14%;
+  right: 14%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--glass-shine), transparent);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.dash-tooltip-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.dash-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+/* Swatches are HTML, so they cannot reference the SVG slice gradient - they
+   carry the same lit-to-deep ramp as an inline background instead, plus the
+   rim and lift that make the slices read as glass. */
+.dash-tooltip-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 2px 5px -1px rgba(0, 0, 0, 0.45);
+}
+
+.dash-tooltip-name {
+  color: var(--text-secondary);
+}
+
+.dash-tooltip-value {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pie Chart Layout - chart left, legend right */
+.dash-pie-layout {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  min-height: 0;
+}
+
+.dash-pie-chart {
+  flex: 0 0 220px;
+  min-width: 180px;
+}
+
+.dash-pie-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.dash-pie-legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.dash-pie-legend-dot {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.20),
+    0 2px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+/* The specular cap - an ellipse across the upper half, which is what reads as
+   "polished" rather than merely "coloured". Same geometry as the sheen pass on
+   the SVG slices. */
+.dash-pie-legend-dot::after,
+.dash-tooltip-dot::after {
+  content: "";
+  position: absolute;
+  top: 8%;
+  left: 16%;
+  width: 68%;
+  height: 42%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.06));
+  pointer-events: none;
+}
+
+html[data-theme="light"] .dash-pie-legend-dot,
+html[data-theme="light"] .dash-tooltip-dot {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 0 0 1px rgba(46, 16, 101, 0.10),
+    0 2px 5px -1px rgba(38, 16, 66, 0.25);
+}
+html[data-theme="light"] .dash-pie-legend-dot::after,
+html[data-theme="light"] .dash-tooltip-dot::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.10));
+}
+
+.dash-pie-legend-name {
+  flex: 1;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-pie-legend-pct {
+  font-weight: 600;
+  color: var(--text-primary);
+  min-width: 38px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.dash-pie-legend-rev {
+  color: var(--text-muted);
+  min-width: 60px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 768px) {
+  .dash-pie-layout {
+    flex-direction: column;
+  }
+  .dash-pie-chart {
+    flex: none;
+    width: 100%;
+  }
+}
+
+/* Category Remaining List */
+.dash-cat-rest {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+}
+
+.dash-cat-rest-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.dash-cat-rest-list {
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.dash-cat-rest-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  gap: 8px;
+}
+
+.dash-cat-rest-item:last-child {
+  border-bottom: none;
+}
+
+.dash-cat-rest-name {
+  flex: 1;
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dash-cat-rest-rev {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  min-width: 70px;
+  text-align: right;
+}
+
+.dash-cat-rest-pct {
+  color: var(--text-muted);
+  min-width: 40px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Alerts Section */
+.dash-alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dash-alert-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s;
+}
+
+.dash-alert-item:hover {
+  background: var(--bg-hover);
+}
+
+.dash-alert-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash-alert-icon.red { background: rgba(255, 107, 138, 0.12); color: var(--red); }
+.dash-alert-icon.yellow { background: rgba(240, 171, 252, 0.12); color: var(--yellow); }
+.dash-alert-icon.green { background: rgba(47, 191, 151, 0.12); color: var(--green); }
+
+.dash-alert-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.dash-alert-text strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.dash-no-alerts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Inventory Health */
+.dash-inv-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.dash-inv-metric {
+  padding: 14px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.dash-inv-metric-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.dash-inv-metric-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Footnote under a metric (e.g. items with no cost on file excluded from Cost Value) */
+.dash-inv-metric-note {
+  margin-top: 6px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.dash-inv-lists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.dash-inv-list h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin: 0 0 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Stock Velocity - its own card. Each class row is a button that opens the
+   products behind its bar; the drill-down reuses the .dash-inv-head /
+   .dash-inv-item row styles so it matches the inventory lists above. */
+.dash-vel-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash-vel-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.dash-vel-row:hover {
+  background: var(--bg-hover);
+}
+
+.dash-vel-row.is-open {
+  background: var(--bg-hover);
+  border-color: var(--border);
+}
+
+.dash-vel-caret {
+  flex: 0 0 12px;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+/* Drill-down: indented under its class row so the grouping is obvious. */
+.dash-vel-drill {
+  padding: 4px 8px 12px 8px;
+}
+
+.dash-vel-drill-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.dash-vel-empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  padding: 4px 8px 12px 8px;
+}
+
+.dash-vel-label {
+  flex: 0 0 74px;
+  color: var(--text-secondary);
+}
+
+.dash-vel-track {
+  flex: 1;
+  height: 8px;
+  min-width: 0;
+  border-radius: 999px;
+  background: var(--bg-hover);
+  overflow: hidden;
+}
+
+.dash-vel-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+}
+
+.dash-vel-fill.vel-fast { background: var(--green); }
+.dash-vel-fill.vel-normal { background: var(--accent); }
+.dash-vel-fill.vel-slow { background: var(--yellow); }
+.dash-vel-fill.vel-dead { background: var(--red); }
+.dash-vel-fill.vel-never_sold { background: var(--text-muted); }
+
+.dash-vel-count {
+  flex: 0 0 54px;
+  text-align: right;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Scrollable container - shows ~5 rows by default with a hint of the next row
+   visible at the bottom edge so the user knows to scroll. Heading sits outside
+   the scroll area so it stays pinned while rows scroll. */
+.dash-inv-list-scroll {
+  max-height: 200px;
+  overflow-y: auto;
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.dash-inv-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.dash-inv-list-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dash-inv-list-scroll::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.dash-inv-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+.dash-inv-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+
+/* Column header row - same widths as .dash-inv-item cells so labels align. */
+.dash-inv-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 10px 6px;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+.dash-inv-head-name { flex: 1; min-width: 0; }
+.dash-inv-head-qty { min-width: 50px; text-align: right; }
+.dash-inv-head-price { min-width: 65px; text-align: right; }
+
+.dash-inv-item:last-child {
+  border-bottom: none;
+}
+
+.dash-inv-item-name {
+  color: var(--text-primary);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.dash-inv-item-qty {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  min-width: 50px;
+  text-align: right;
+}
+
+.dash-inv-item-qty.low { color: var(--red); }
+.dash-inv-item-qty.over { color: var(--yellow); }
+
+.dash-inv-item-price {
+  color: var(--text-muted);
+  font-size: 12px;
+  min-width: 65px;
+  text-align: right;
+}
+
+.dash-kpi-value-wrap {
+  display: flex;
+  align-items: center;
+}
+
+/* Loading State */
+.dash-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.dash-loading svg {
+  animation: dashSpin 1s linear infinite;
+}
+
+/* Error State */
+.dash-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+  background: rgba(255, 107, 138, 0.08);
+  border: 1px solid rgba(255, 107, 138, 0.2);
+  border-radius: var(--radius);
+  color: var(--red);
+  font-size: 14px;
+}
+
+.dash-error button {
+  margin-left: 12px;
+  padding: 4px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 107, 138, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--red);
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+
+.dash-error button:hover {
+  background: rgba(255, 107, 138, 0.1);
+}
+
+/* ---- Skeleton Shimmer (V3 style) ---- */
+.dash-skel {
+  background: linear-gradient(
+    90deg,
+    var(--bg-hover) 25%,
+    var(--bg-elevated) 50%,
+    var(--bg-hover) 75%
+  );
+  background-size: 200% 100%;
+  border-radius: 6px;
+  animation: dashShimmer 1.5s ease-in-out infinite;
+}
+
+.dash-skel-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius);
+  flex-shrink: 0;
+}
+
+.dash-skel-circle {
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  margin: 20px auto;
+}
+
+.dash-skel-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  animation: dashFadeUp 0.35s ease-out both;
+}
+
+@keyframes dashShimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Fade Up Animation */
+@keyframes dashFadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer */
+.dash-footer {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding: 16px 0 8px;
+  border-top: 1px solid var(--border);
+  opacity: 0.6;
+}
+
+/* ---- Responsive ---- */
+
+/* Tablet / iPad (1024-1366px) - stack charts vertically for readability */
+@media (max-width: 1366px) {
+  .dash-container {
+    padding: 20px 24px;
+  }
+
+  .dash-charts-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* Pie chart stays horizontal at this width if space allows */
+  .dash-pie-layout {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .dash-pie-chart {
+    flex: 0 0 260px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .dash-kpi-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dash-pie-chart {
+    flex: 0 0 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dash-container {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .dash-kpi-row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .dash-kpi-card {
+    padding: 14px 12px;
+  }
+
+  .dash-kpi-value {
+    font-size: 20px;
+  }
+
+  .dash-charts-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-chart-card {
+    padding: 16px;
+  }
+
+  .dash-chart-card h3 {
+    font-size: 13px;
+  }
+
+  .dash-inv-lists {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-inv-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .dash-header-icon {
+    width: 36px;
+    height: 36px;
+  }
+
+  .dash-header h2 {
+    font-size: 17px;
+  }
+
+  .dash-refresh-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  /* Pie chart: stack chart above legend */
+  .dash-pie-layout {
+    flex-direction: column;
+  }
+
+  .dash-pie-chart {
+    flex: none;
+    width: 100%;
+  }
+
+  .dash-pie-legend {
+    gap: 6px;
+  }
+
+  .dash-pie-legend-row {
+    font-size: 11px;
+  }
+
+  /* Alert items */
+  .dash-alert-item {
+    padding: 12px;
+  }
+
+  .dash-alert-text {
+    font-size: 12px;
+  }
+
+  /* Inventory items */
+  .dash-inv-item-name {
+    font-size: 12px;
+  }
+
+  /* Skeleton adjustments */
+  .dash-skel-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .dash-kpi-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .dash-kpi-card {
+    padding: 12px 10px;
+  }
+
+  .dash-kpi-value {
+    font-size: 18px;
+  }
+
+  .dash-kpi-sub {
+    font-size: 10px;
+  }
+
+  .dash-container {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .dash-chart-card {
+    padding: 14px 12px;
+  }
+
+  .dash-inv-item {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  .dash-cat-rest-item {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .dash-kpi-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-kpi-value {
+    font-size: 22px;
+  }
+}
+
+/* =============================================================================
+   CHART DETAIL - the table behind each chart
+   -----------------------------------------------------------------------------
+   Charts answer "what shape is this"; acting on one needs "what exactly are the
+   numbers". Each chart card carries its own table a click away, rather than
+   sending the owner off to another page for it.
+   ============================================================================= */
+.dash-detail {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-light);
+}
+.dash-detail-btn { font-size: 0.74rem; padding: 7px 14px; }
+.dash-detail-chev {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  font-size: 0.7rem;
+}
+.dash-detail-chev.is-open { transform: rotate(180deg); }
+.dash-detail-wrap {
+  margin-top: 12px;
+  max-height: 260px;
+  overflow: auto;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  animation: dash-detail-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes dash-detail-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+/* Sticky header so the columns stay readable while the body scrolls. */
+.dash-detail-wrap thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-detail-wrap { animation: none; }
+  .dash-detail-chev { transition: none; }
+}
+
+/* =============================================================================
+   ANSWER ROW - the four numbers beside the queue they generate
+   -----------------------------------------------------------------------------
+   Asymmetric on purpose: the KPI column is the quieter half and the task queue
+   needs the room for three cards of real text.
+   ============================================================================= */
+.dash-answer-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: stretch;
+  margin-bottom: 16px;
+}
+
+/* Left is the work, right is the context. Each column stacks in its own order
+   and every panel is the height of its own content. */
+.dash-answer-left,
+.dash-answer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  min-height: 0;
+}
+
+/* Store Intelligence owns the full right half: it is the only panel there, so
+   it fills the row's height (matched to the KPI + tasks column on the left) and
+   its feed scrolls inside its own body rather than stretching the page down. */
+.dash-answer-right > .dp-panel { flex: 1 1 auto; height: 100%; min-height: 0; }
+.dash-answer-right > .dp-panel > .dp-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+
+.dash-header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.dash-stats-link {
+  gap: 8px;
+  align-self: center;
+}
+
+@media (max-width: 1080px) {
+  .dash-answer-row { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 700px) {
+  .dash-stats-link { margin-left: 0; }
+}

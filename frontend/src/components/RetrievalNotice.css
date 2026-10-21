@@ -1,0 +1,55 @@
+/* RetrievalNotice.css
+   -----------------------------------------------------------------------------
+   The "your store does not have this data" notice, styled on the GLOBAL theme
+   tokens rather than any one screen's aliases (--bd2, --mu and friends are
+   re-declared per screen, so a notice built on them renders unstyled anywhere
+   it is reused). This message appears on every page, so it has to look the
+   same on every page and depend on none of them.
+
+   Deliberately calmer than an error box: this is not a fault, it is a fact
+   about the store. Attention-coloured, not alarm-coloured.
+   ----------------------------------------------------------------------------- */
+
+.rn-unavail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin: 32px auto;
+  max-width: 560px;
+  padding: 32px 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--yellow);
+  border-radius: 12px;
+  color: var(--text-muted);
+}
+
+.rn-unavail > svg { color: var(--yellow); flex: none; }
+
+.rn-unavail-title {
+  font-family: var(--bx-font-display, inherit);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.rn-unavail p {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.rn-unavail-detail {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  max-width: 56ch;
+  opacity: 0.7;
+  word-break: break-word;
+}
+
+@media (max-width: 620px) { .rn-unavail { margin: 20px auto; padding: 24px 16px; } }

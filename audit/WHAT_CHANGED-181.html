@@ -1,0 +1,200 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cork Runner Wine &amp; Spirits &mdash; what changed, and why</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#ffffff; --panel:#f7f8fa; --panel2:#eef1f5; --fg:#0d1117; --mut:#5b6672;
+  --line:#dfe3e8; --grid:#e8ebef;
+  --accent:#2563eb; --accent2:#60a5fa; --good:#047857; --bad:#be123c;
+  --warn:#b45309; --goodbg:#ecfdf5; --badbg:#fff1f2;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a0e17; --panel:#121823; --panel2:#1a2230; --fg:#e8edf4; --mut:#93a1b1;
+  --line:#233044; --grid:#1c2634;
+  --accent:#60a5fa; --accent2:#3b82f6; --good:#34d399; --bad:#fb7185;
+  --warn:#fbbf24; --goodbg:#052e23; --badbg:#2d0d16;
+}}
+:root[data-theme="dark"]{
+  --bg:#0a0e17; --panel:#121823; --panel2:#1a2230; --fg:#e8edf4; --mut:#93a1b1;
+  --line:#233044; --grid:#1c2634;
+  --accent:#60a5fa; --accent2:#3b82f6; --good:#34d399; --bad:#fb7185;
+  --warn:#fbbf24; --goodbg:#052e23; --badbg:#2d0d16;
+}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.65 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",
+  Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:56px 24px 96px}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.12;margin:0 0 10px;
+  letter-spacing:-.025em;font-weight:680}
+h2{font-size:23px;margin:64px 0 6px;letter-spacing:-.015em;font-weight:660}
+h2 .num{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:10px}
+h3{font-size:16px;margin:30px 0 8px;font-weight:650}
+.lede{font-size:17px;color:var(--mut);margin:0 0 4px;max-width:70ch}
+.sub{color:var(--mut);font-size:13.5px;margin:0 0 30px}
+.sub b{color:var(--fg);font-weight:600}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+p{max-width:72ch}
+.band{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:22px 26px;margin:26px 0}
+.band.good{border-left:4px solid var(--good)}
+.band.warn{border-left:4px solid var(--warn)}
+.band.bad{border-left:4px solid var(--bad)}
+.band h3{margin-top:0}
+.band p:last-child{margin-bottom:0}
+.kpis{display:grid;gap:14px;margin:26px 0;
+  grid-template-columns:repeat(auto-fit,minmax(196px,1fr))}
+.k{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:18px 20px}
+.k .v{font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1.05;
+  font-variant-numeric:tabular-nums}
+.k .l{font-size:11.5px;color:var(--mut);text-transform:uppercase;
+  letter-spacing:.09em;margin-top:6px;font-weight:600}
+.k .d{font-size:12.5px;color:var(--mut);margin-top:9px;line-height:1.5}
+.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;
+  margin:18px 0;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:14px;
+  font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--mut);font-weight:650;background:var(--panel2);
+  position:sticky;top:0;z-index:2}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--panel2)}
+td b{font-weight:650}
+.month{font-weight:650}
+.span{font-size:11.5px;color:var(--mut);display:block;font-weight:400}
+.chart{margin:20px 0;padding:18px;background:var(--panel);
+  border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+.chart svg{width:100%;height:auto;max-width:860px;display:block;margin:0 auto}
+.chart.wide svg{max-width:100%}
+.ax{font-size:11px;fill:var(--mut)}
+.lbl{font-size:13px;fill:var(--fg);font-weight:600}
+.val{font-size:15px;fill:var(--fg);font-weight:700}
+.day{margin:0 0 30px}
+.dayhead{display:flex;align-items:baseline;gap:12px;padding:9px 0;
+  border-bottom:2px solid var(--line);margin-bottom:14px}
+.dayhead .d{font-size:15px;font-weight:660}
+.dayhead .c{font-size:12px;color:var(--mut)}
+.card{background:var(--panel);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:12px;
+  padding:18px 20px;margin:0 0 12px}
+.card .head{font-size:16.5px;font-weight:660;letter-spacing:-.01em;
+  margin-bottom:8px;line-height:1.35}
+.card .body{font-size:14.5px;line-height:1.62;color:var(--fg)}
+.card .why{font-size:14px;margin-top:9px;padding-left:12px;
+  border-left:2px solid var(--line);color:var(--mut)}
+.card .why b{color:var(--fg)}
+.card .conf{font-size:12.5px;color:var(--mut);margin-top:9px}
+.out{display:grid;gap:8px;margin-top:14px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.o{border:1px solid var(--line);border-radius:10px;padding:9px 12px;
+  background:var(--bg)}
+.o.hit{border-color:var(--good);background:var(--goodbg)}
+.o.miss{border-color:var(--bad);background:var(--badbg)}
+.o .ow{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--mut);font-weight:650}
+.o .ov{font-size:17px;font-weight:700;margin-top:3px;
+  font-variant-numeric:tabular-nums}
+.o .od{font-size:11.5px;color:var(--mut);margin-top:2px}
+.o.hit .ov{color:var(--good)}.o.miss .ov{color:var(--bad)}
+code{background:var(--panel2);border:1px solid var(--line);padding:1px 6px;
+  border-radius:5px;font-size:13px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+ul{padding-left:22px;max-width:72ch}li{margin:9px 0}
+.foot{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--mut)}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  h2{page-break-after:avoid;margin-top:26px}
+  .card,.k,.band,.scroll,.chart{page-break-inside:avoid}
+  .scroll{max-height:none;overflow:visible}
+  thead th{position:static}
+}
+@media(max-width:640px){
+  .wrap{padding:32px 16px 64px}
+  th,td{padding:9px 10px;font-size:13px}
+}
+</style></head><body><div class="wrap">
+
+<div class="head">
+<h1>181 Cork Runner Wine &amp; Spirits</h1>
+<p class="lede">What changed since the last published report, and the mechanism
+behind every move. March 2026 cards, followed 30 to 120 days.</p>
+<p class="span">
+<a href="ledger-181-2026-03/RECOMMENDATION_LEDGER.html">Full card-by-card
+ledger</a> &middot;
+<a href="previous/ledger-181-2026-03/RECOMMENDATION_LEDGER.html">The previous
+version of this report, unedited</a> &middot;
+<a href="WHAT_CHANGED.html">All five stores</a></p>
+</div>
+
+<div class="kpis">
+<div class="card"><div class="val bad">DO NOT SHIP</div>
+<div class="lbl">gate verdict</div>
+<div class="span">failed: net_margin_per_month</div></div>
+<div class="card"><div class="val">84.0%</div>
+<div class="lbl">30-day hit rate</div>
+<div class="span">was 84.0% on 50 cards</div>
+</div>
+<div class="card"><div class="val">$+462</div>
+<div class="lbl">30-day net margin</div>
+<div class="span">was $+462</div></div>
+<div class="card"><div class="val">77.5%</div>
+<div class="lbl">2.3-year backtest</div>
+<div class="span">+17.5 points over a matched null,
+p = 0.0005</div></div>
+</div>
+
+<div class="band good"><h3>Net margin per card: $+9.24 &mdash; significantly positive</h3><p>95% interval $+6.42 to $+12.22, clustered by decision date because two cards issued on the same morning share a market. Measured on 50 of 50 cards &mdash; a card with no unit cost is excluded, not counted as zero.</p></div>
+
+<h2><span class="num">1</span>The same cards, followed for longer</h2>
+<p>These four rows are <b>one</b> decision watched for longer, not four separate
+decisions. That is why all four are published rather than whichever reads best.</p>
+<div class="scroll"><table>
+<thead><tr><th>horizon</th><th>hit rate<br>before</th><th>hit rate<br>now</th>
+<th>change</th><th>net<br>before</th><th>net<br>now</th><th>change</th></tr>
+</thead><tbody><tr><td><b>30 days</b><span class="span">after each decision</span></td><td>84.0%<span class="span">n=50</span></td><td><b>84.0%</b><span class="span">n=50</span></td><td><span class="span">unchanged</span></td><td>$+462</td><td><b>$+462</b></td><td><span class="span">unchanged</span></td></tr><tr><td><b>60 days</b><span class="span">after each decision</span></td><td>74.0%<span class="span">n=50</span></td><td><b>74.0%</b><span class="span">n=50</span></td><td><span class="span">unchanged</span></td><td>$+854</td><td><b>$+854</b></td><td><span class="span">unchanged</span></td></tr><tr><td><b>90 days</b><span class="span">after each decision</span></td><td>82.0%<span class="span">n=50</span></td><td><b>82.0%</b><span class="span">n=50</span></td><td><span class="span">unchanged</span></td><td>$+1,687</td><td><b>$+1,687</b></td><td><span class="span">unchanged</span></td></tr><tr><td><b>120 days</b><span class="span">after each decision</span></td><td>84.0%<span class="span">n=50</span></td><td><b>84.0%</b><span class="span">n=50</span></td><td><span class="span">unchanged</span></td><td>$+2,350</td><td><b>$+2,350</b></td><td><span class="span">unchanged</span></td></tr></tbody>
+</table></div>
+
+<h2><span class="num">2</span>Why this store&rsquo;s numbers moved</h2>
+<div class="band warn"><h3>1 &mdash; The money moved because the ruler was wrong, not because the picks changed</h3><p>This store read <b>$+462</b> and now reads <b>$+462</b>. The old figure charged the <b>entire cost of goods</b> for every unit a card said to buy that did not sell, as though the stock had been destroyed. Liquor does not spoil: a surplus bottle is deferred revenue, and its real cost is capital tied up, shelf space and the chance it never sells at full price &mdash; cents a month on a $20 bottle, not $20. On the old ruler the same month reads $-432, so the correction here is worth $+894.</p><p class="span">The engine picked the same products. Nothing in this row should be read as the engine having improved.</p></div><div class="band"><h3>2 &mdash; The card set did not change</h3><p>50 cards before and after, and the 30-day hit rate is <b>84.0%</b> either way. This store had no lottery or cigarette lines among its recommendations, so the merchandise screen had nothing to remove here. Its money still moved, for the reason above.</p></div><div class="band bad"><h3>3 &mdash; The promise column changed its meaning, not just its value</h3><p>It read <b>—</b> and now reads <b>107%</b>, and it was labelled <i>promise kept</i>. It never was a kept rate: it is total units delivered over total units promised, so <b>100% means the promise carried no systematic bias</b>, below means over-promising and above means under-promising. For comparison, the fraction of individual cards that met their promise is <b>42.0%</b> &mdash; a different statistic, bounded above by the hit rate, and the one the retired check was demanding 85&ndash;95% of.</p><p>The old gate banded this 85&ndash;95%, which excluded an unbiased promise and demanded a permanent 5&ndash;15% shortfall. It is now banded 85&ndash;115% and renamed <code>promise_unbiased</code>.</p></div><div class="band bad"><h3>4 &mdash; The stated confidence is now a measured probability &mdash; and it fails</h3><p>The raw <code>p_hit</code> is a ranking score, not a probability, and the card says so in as many words. Fitting the isotonic curve on <b>187 cards from January and February</b> and scoring <b>50 cards in March</b> &mdash; so this store is not graded on a slice it was fitted to &mdash; gives an expected calibration error of <b>10.1 points</b> against a bar of 5. That is a real failure and it is published.</p><p class="span">A reliability bin needs 30 outcomes to count: at n=30 and p=0.5 the binomial standard error is 9.1 points, which is the floor at which a 10-point per-bin test stops measuring noise. A five-card bin was condemning a whole store before this.</p></div><div class="band good"><h3>5 &mdash; The card now publishes a range it can be held to</h3><p>Every card used to state a point &mdash; &ldquo;about 78 units&rdquo; &mdash; which invites &ldquo;you said 78 and I got 61, you were wrong&rdquo;. It now also states a two-sided 90% range sized to that product&rsquo;s own measured scatter, and that range is what the <code>interval_coverage</code> check tests. Measuring the coverage of an interval the owner never sees would be scoring the engine on a claim it never made.</p></div>
+
+<h2><span class="num">3</span>The gate for this store</h2>
+<p>Both gates must hold to ship. A gate that does not <b>apply</b> does not block,
+but a check that was not <b>measured</b> is never a pass. Four of these checks
+printed &ldquo;not measured&rdquo; at every store until this run.</p>
+<div class="band bad"><h3>DO NOT SHIP</h3><p>failed: net_margin_per_month</p>
+<div class="scroll"><table><thead><tr><th>check</th><th>result</th>
+<th>measured against the threshold</th></tr></thead>
+<tbody><tr><td><span class="span">A - accuracy</span><b>promise_unbiased</b></td><td><span class="good">PASS</span></td><td>delivered 107% against 85-115%</td></tr><tr><td><span class="span">A - accuracy</span><b>calibration_ece</b></td><td><span class="span">n/a</span></td><td>10.1 points, but the curve is STALE - this store's hit rate moved +8.1 points between the window the curve was fitted on (75.9% on 187 cards) and the window scored (84.0% on 50), against a tolerance of 5. Not testable; refit on a window that includes the shift</td></tr><tr><td><span class="span">A - accuracy</span><b>interval_coverage</b></td><td><span class="span">n/a</span></td><td>worst horizon: 88% against &gt;= 90%, but the 95% interval 83-92% straddles the bar on 200 outcomes - not testable, one outcome either way would flip it</td></tr><tr><td><span class="span">A - accuracy</span><b>beats_null</b></td><td><span class="good">PASS</span></td><td>+17.5 points over a reversion-matched null at p = 0.0005, against &gt;= 5 points and p &lt; 0.05</td></tr><tr><td><span class="span">A - accuracy</span><b>no_unreliable_confidence</b></td><td><span class="span">n/a</span></td><td>worst bin out by 10.2 points, but measured against a STALE curve - not testable</td></tr><tr><td><span class="span">B - profit</span><b>net_margin_per_month</b></td><td><span class="bad">FAIL</span></td><td>$+462 against &gt;= $1,000</td></tr><tr><td><span class="span">B - profit</span><b>per_family_net_margin</b></td><td><span class="good">PASS</span></td><td>1 family published</td></tr><tr><td><span class="span">B - profit</span><b>coverage_published</b></td><td><span class="good">PASS</span></td><td>1.9 cards a run, printed beside every accuracy figure</td></tr></tbody></table></div></div>
+
+<h2><span class="num">4</span>What these numbers do not prove</h2>
+<div class="band bad"><h3>The confidence curve does not reach production</h3>
+<p>The calibration checks above are measured out of sample, but the fitted curve
+is <b>not wired into the live card path</b>. <code>to_raw_recommendations</code>
+still ships the raw <code>p_hit</code>. So they say the method works on this
+store&rsquo;s data; they do not say an owner is seeing a calibrated percentage,
+because no owner is seeing a percentage at all.</p></div>
+<ul>
+<li><b>Nobody acted on any of these recommendations.</b> They were generated
+retrospectively from data the engine could legitimately have seen each morning.
+This shows the engine points at products that go on to move; it does not show that
+acting on the advice causes the movement.</li>
+<li><b>No shelf counts.</b> Historical on-hand does not exist in the warehouse, so
+a dip caused by a stockout is indistinguishable from a dip caused by slow
+demand.</li>
+<li><b>Lead times are declared, not measured.</b> Nothing records when an order
+actually arrived, so every order quantity rests on an assumption.</li>
+<li><b>50 cards across 12 products.</b>
+Overlapping cards on the same product are treated as independent, so a narrow
+catalogue flatters these rates.</li>
+</ul>
+
+<div class="foot"><p>Generated by <code>scripts/build_change_report.py</code> from
+<code>audit/all_stores.json</code> and this store&rsquo;s ledger. Every figure is
+read from those files; none is typed in.</p></div>
+</div></body></html>

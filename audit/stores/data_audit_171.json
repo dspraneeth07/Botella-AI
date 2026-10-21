@@ -1,0 +1,518 @@
+{
+  "store_id": 171,
+  "username": "bethanydiscountliquor",
+  "location_id": 171,
+  "generated_at": "2026-10-16",
+  "census": [
+    {
+      "table": "client_activity_log",
+      "rows": 710,
+      "date_column": "created_at",
+      "first": "2026-09-16",
+      "last": "2026-10-16",
+      "distinct_days": 31,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_alerts",
+      "rows": 1,
+      "date_column": "raised_at",
+      "first": "2026-08-24",
+      "last": "2026-08-24",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_credentials",
+      "rows": 1,
+      "date_column": "created_at",
+      "first": "2026-07-15",
+      "last": "2026-07-15",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_log_entries",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_pull_state",
+      "rows": 1,
+      "date_column": "updated_at",
+      "first": "2026-10-16",
+      "last": "2026-10-16",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_schedule",
+      "rows": 1,
+      "date_column": "updated_at",
+      "first": "2026-08-24",
+      "last": "2026-08-24",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_locations",
+      "rows": 1,
+      "date_column": "updated_at",
+      "first": "2026-08-24",
+      "last": "2026-08-24",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_pos_config",
+      "rows": 1,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_push_state",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "clients",
+      "rows": 1,
+      "date_column": "updated_at",
+      "first": "2026-07-14",
+      "last": "2026-07-14",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "customers",
+      "rows": 7909,
+      "date_column": "updated_at",
+      "first": "2026-07-15",
+      "last": "2026-08-15",
+      "distinct_days": 10,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "job_runs_history",
+      "rows": 2228,
+      "date_column": "started_at",
+      "first": "2026-07-15",
+      "last": "2026-10-16",
+      "distinct_days": 94,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "jobs",
+      "rows": 5,
+      "date_column": "started_at",
+      "first": "2026-10-16",
+      "last": "2026-10-16",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "pending_jobs",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "products",
+      "rows": 9805,
+      "date_column": "last_updated",
+      "first": "2026-07-16",
+      "last": "2026-10-16",
+      "distinct_days": 64,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "purchases",
+      "rows": 2,
+      "date_column": "date",
+      "first": "2020-05-13",
+      "last": "2020-05-13",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "sale_items",
+      "rows": 266348,
+      "date_column": "sale_date",
+      "first": "2023-01-03",
+      "last": "2026-10-15",
+      "distinct_days": 1178,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "sales",
+      "rows": 153047,
+      "date_column": "sale_date",
+      "first": "2023-01-03",
+      "last": "2026-10-15",
+      "distinct_days": 1178,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "suppliers",
+      "rows": 14,
+      "date_column": "updated_at",
+      "first": "2026-07-16",
+      "last": "2026-07-16",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "users",
+      "rows": 1,
+      "date_column": "created_at",
+      "first": "2026-07-14",
+      "last": "2026-07-14",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    }
+  ],
+  "quality": {
+    "receipts": {
+      "rows": 153047,
+      "trading_days": 1178,
+      "first": "2023-01-03",
+      "last": "2026-10-15",
+      "voids": 0,
+      "null_subtotal": 0,
+      "with_customer": 153047
+    },
+    "lines": {
+      "rows": 266348,
+      "distinct_skus": 4970,
+      "sold": 266155,
+      "null_qty": 0,
+      "nonpositive_qty": 403,
+      "with_price": 249279,
+      "with_cost": 248598,
+      "blank_sku": 0
+    },
+    "products": {
+      "rows": 9805,
+      "named": 9805,
+      "with_cost": 8821,
+      "with_stock": 9805,
+      "with_category": 9805,
+      "newest": "2026-10-16"
+    },
+    "customers": {
+      "rows": 7909,
+      "contactable": 4398,
+      "deleted": 0
+    },
+    "purchases": {
+      "rows": 2,
+      "suppliers": 1,
+      "skus": 2,
+      "first": "2020-05-13",
+      "last": "2020-05-13",
+      "non_finite_dates": 0,
+      "with_cost": 2
+    }
+  },
+  "sku_depth": {
+    "distinct_skus": 4970,
+    "sold_on_1_day_only": 492,
+    "at_least_2_days": 4478,
+    "at_least_5_days": 3340,
+    "at_least_10_days": 2386,
+    "at_least_20_days": 1589,
+    "at_least_30_days": 1236
+  },
+  "monthly": [
+    {
+      "month": "2023-01",
+      "trading_days": 25,
+      "receipts": 3314,
+      "revenue": 109286.22
+    },
+    {
+      "month": "2023-02",
+      "trading_days": 24,
+      "receipts": 3178,
+      "revenue": 119047.34
+    },
+    {
+      "month": "2023-03",
+      "trading_days": 27,
+      "receipts": 3546,
+      "revenue": 122245.66
+    },
+    {
+      "month": "2023-04",
+      "trading_days": 25,
+      "receipts": 3718,
+      "revenue": 146442.52
+    },
+    {
+      "month": "2023-05",
+      "trading_days": 27,
+      "receipts": 3632,
+      "revenue": 132508.55
+    },
+    {
+      "month": "2023-06",
+      "trading_days": 26,
+      "receipts": 3508,
+      "revenue": 139266.82
+    },
+    {
+      "month": "2023-07",
+      "trading_days": 26,
+      "receipts": 3341,
+      "revenue": 138568.6
+    },
+    {
+      "month": "2023-08",
+      "trading_days": 28,
+      "receipts": 3497,
+      "revenue": 171949.77
+    },
+    {
+      "month": "2023-09",
+      "trading_days": 26,
+      "receipts": 3503,
+      "revenue": 178517.46
+    },
+    {
+      "month": "2023-10",
+      "trading_days": 26,
+      "receipts": 3385,
+      "revenue": 167688.74
+    },
+    {
+      "month": "2023-11",
+      "trading_days": 25,
+      "receipts": 3742,
+      "revenue": 179126.41
+    },
+    {
+      "month": "2023-12",
+      "trading_days": 25,
+      "receipts": 4196,
+      "revenue": 234856.24
+    },
+    {
+      "month": "2024-01",
+      "trading_days": 26,
+      "receipts": 3179,
+      "revenue": 114420.8
+    },
+    {
+      "month": "2024-02",
+      "trading_days": 25,
+      "receipts": 3351,
+      "revenue": 146797.95
+    },
+    {
+      "month": "2024-03",
+      "trading_days": 26,
+      "receipts": 3529,
+      "revenue": 155367.4
+    },
+    {
+      "month": "2024-04",
+      "trading_days": 26,
+      "receipts": 3357,
+      "revenue": 139463.42
+    },
+    {
+      "month": "2024-05",
+      "trading_days": 27,
+      "receipts": 3885,
+      "revenue": 197225.56
+    },
+    {
+      "month": "2024-06",
+      "trading_days": 25,
+      "receipts": 3575,
+      "revenue": 166943.47
+    },
+    {
+      "month": "2024-07",
+      "trading_days": 27,
+      "receipts": 3607,
+      "revenue": 172472.08
+    },
+    {
+      "month": "2024-08",
+      "trading_days": 27,
+      "receipts": 3568,
+      "revenue": 164189.22
+    },
+    {
+      "month": "2024-09",
+      "trading_days": 26,
+      "receipts": 3273,
+      "revenue": 192582.68
+    },
+    {
+      "month": "2024-10",
+      "trading_days": 27,
+      "receipts": 3515,
+      "revenue": 159382.9
+    },
+    {
+      "month": "2024-11",
+      "trading_days": 25,
+      "receipts": 3635,
+      "revenue": 199704.74
+    },
+    {
+      "month": "2024-12",
+      "trading_days": 25,
+      "receipts": 4091,
+      "revenue": 228151.59
+    },
+    {
+      "month": "2025-01",
+      "trading_days": 26,
+      "receipts": 3099,
+      "revenue": 124433.35
+    },
+    {
+      "month": "2025-02",
+      "trading_days": 24,
+      "receipts": 2971,
+      "revenue": 130052.85
+    },
+    {
+      "month": "2025-03",
+      "trading_days": 26,
+      "receipts": 3172,
+      "revenue": 149608.4
+    },
+    {
+      "month": "2025-04",
+      "trading_days": 26,
+      "receipts": 3196,
+      "revenue": 143958.56
+    },
+    {
+      "month": "2025-05",
+      "trading_days": 27,
+      "receipts": 3615,
+      "revenue": 157842.94
+    },
+    {
+      "month": "2025-06",
+      "trading_days": 25,
+      "receipts": 3118,
+      "revenue": 137626.95
+    },
+    {
+      "month": "2025-07",
+      "trading_days": 27,
+      "receipts": 3245,
+      "revenue": 140346.02
+    },
+    {
+      "month": "2025-08",
+      "trading_days": 26,
+      "receipts": 3297,
+      "revenue": 139629.32
+    },
+    {
+      "month": "2025-09",
+      "trading_days": 26,
+      "receipts": 3141,
+      "revenue": 120372.37
+    },
+    {
+      "month": "2025-10",
+      "trading_days": 27,
+      "receipts": 3479,
+      "revenue": 142503.3
+    },
+    {
+      "month": "2025-11",
+      "trading_days": 25,
+      "receipts": 3551,
+      "revenue": 226195.63
+    },
+    {
+      "month": "2025-12",
+      "trading_days": 26,
+      "receipts": 4056,
+      "revenue": 233460.48
+    },
+    {
+      "month": "2026-01",
+      "trading_days": 26,
+      "receipts": 2959,
+      "revenue": 115599.14
+    },
+    {
+      "month": "2026-02",
+      "trading_days": 24,
+      "receipts": 2586,
+      "revenue": 105304.04
+    },
+    {
+      "month": "2026-03",
+      "trading_days": 26,
+      "receipts": 2944,
+      "revenue": 110933.72
+    },
+    {
+      "month": "2026-04",
+      "trading_days": 26,
+      "receipts": 3097,
+      "revenue": 140641.53
+    },
+    {
+      "month": "2026-05",
+      "trading_days": 26,
+      "receipts": 3252,
+      "revenue": 124761.51
+    },
+    {
+      "month": "2026-06",
+      "trading_days": 26,
+      "receipts": 3011,
+      "revenue": 133252.81
+    },
+    {
+      "month": "2026-07",
+      "trading_days": 27,
+      "receipts": 3258,
+      "revenue": 166147.26
+    },
+    {
+      "month": "2026-08",
+      "trading_days": 26,
+      "receipts": 2848,
+      "revenue": 117674.43
+    },
+    {
+      "month": "2026-09",
+      "trading_days": 26,
+      "receipts": 2772,
+      "revenue": 115303.03
+    },
+    {
+      "month": "2026-10",
+      "trading_days": 12,
+      "receipts": 1255,
+      "revenue": 52271.5
+    }
+  ]
+}

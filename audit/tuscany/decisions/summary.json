@@ -1,0 +1,118 @@
+{
+ "generated": "2026-10-15T12:27:56",
+ "dates": [
+  "2026-08-19",
+  "2026-08-21",
+  "2026-08-23",
+  "2026-08-25",
+  "2026-08-27",
+  "2026-08-29",
+  "2026-08-31",
+  "2026-09-02",
+  "2026-09-04",
+  "2026-09-06",
+  "2026-09-08",
+  "2026-09-10"
+ ],
+ "horizons": [
+  10,
+  20,
+  30
+ ],
+ "sheet20": {
+  "n": 18,
+  "hits": 4,
+  "hit_rate": 22.22222222222222,
+  "ci_lo": 9.000781913382,
+  "ci_hi": 45.21502645230549,
+  "median_lift": 0.41,
+  "margin_impact": -21.77974199999999,
+  "margin_captured": 196.79500000000002,
+  "median_size": 10.0,
+  "impact_per_card": -1.2099856666666662
+ },
+ "old_ordering": {
+  "n": 360,
+  "hits": 110,
+  "hit_rate": 30.555555555555557,
+  "ci_lo": 26.02311139770829,
+  "ci_hi": 35.49860574513629,
+  "median_lift": 0.76,
+  "margin_impact": -11050.840642000001,
+  "margin_captured": 52697.2821,
+  "median_size": 30.0,
+  "impact_per_card": -30.696779561111114
+ },
+ "clustered_ci": [
+  0.0,
+  44.44444444444444
+ ],
+ "null_volume": 38.041666666666664,
+ "null_reversion": 53.166666666666664,
+ "percentile": 32.09861111111111,
+ "p_value": 0.999000499750125,
+ "cards_per_run": 1.2,
+ "runs": 15,
+ "by_horizon": {
+  "10": {
+   "n": 6,
+   "hits": 1,
+   "hit_rate": 16.666666666666664,
+   "ci_lo": 3.0052585871730284,
+   "ci_hi": 56.350943656364606,
+   "median_lift": 0.31,
+   "margin_impact": -23.885745999999997,
+   "margin_captured": 12.5591,
+   "median_size": 10.0,
+   "impact_per_card": -3.9809576666666664,
+   "null_reversion": 50.5
+  },
+  "20": {
+   "n": 6,
+   "hits": 2,
+   "hit_rate": 33.33333333333333,
+   "ci_lo": 9.676933255921684,
+   "ci_hi": 70.00116786584712,
+   "median_lift": 0.47,
+   "margin_impact": -0.8799249999999952,
+   "margin_captured": 71.96260000000001,
+   "median_size": 10.0,
+   "impact_per_card": -0.14665416666666586,
+   "null_reversion": 57.791666666666664
+  },
+  "30": {
+   "n": 6,
+   "hits": 1,
+   "hit_rate": 16.666666666666664,
+   "ci_lo": 3.0052585871730284,
+   "ci_hi": 56.350943656364606,
+   "median_lift": 0.84,
+   "margin_impact": 2.985929000000003,
+   "margin_captured": 112.2733,
+   "median_size": 10.0,
+   "impact_per_card": 0.4976548333333339,
+   "null_reversion": 51.208333333333336
+  }
+ },
+ "refusals": {
+  "below_materiality_floor": 108147,
+  "trailing_window_inflated": 8082,
+  "p_hit_below_floor": 3600,
+  "not_merchandise_blocklist": 72,
+  "not_merchandise_category": 774,
+  "not_merchandise_catalogue": 72
+ },
+ "store_name": "Tuscany Liquors",
+ "lines": 37035,
+ "products": 4132,
+ "cost_coverage": 0.9977528698288932,
+ "dropped_lines": [],
+ "trading_days": 101,
+ "settings": {
+  "materiality_floor_units": 8,
+  "min_hit_probability": 0.5,
+  "baseline_window_days": 28,
+  "n_recs": 10,
+  "null_baskets": 400
+ }
+}

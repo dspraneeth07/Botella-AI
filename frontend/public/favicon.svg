@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Favicon for botella.ai.
+
+  Scalable, brand-aligned, ~1 KB. Renders pixel-perfectly at any size
+  because it's vector — modern browsers prefer this over the PNGs.
+
+  Design:
+    - Rounded-square background using the brand gradient (#6366f1 → #a855f7)
+      which matches the wordmark and accent colour on the site.
+    - Bold uppercase "B" centred, in pure white, drawn as a <path> (not
+      SVG <text>) so it renders identically regardless of the user's
+      system fonts.
+    - Subtle inner shadow on the gradient via a stop at 40% to give a
+      touch of depth without complexity that breaks at tiny sizes.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background — rounded square, 14px corner radius for that iOS-app feel -->
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+
+  <!-- Stylized "B" — geometric letterform drawn as a path so it doesn't
+       depend on system fonts. Two stacked half-circle bumps form the B's
+       classic shape; the vertical stem on the left is the bold rectangle. -->
+  <path fill="#ffffff" d="
+    M 19 14
+    L 19 50
+    L 35 50
+    C 41.5 50 45 46.5 45 41
+    C 45 37.5 43 35 40 33.7
+    C 42 32.5 43.5 30 43.5 27
+    C 43.5 22 40 19 34 19
+    L 19 19
+    Z
+    M 25.5 24
+    L 33 24
+    C 35.5 24 37 25.2 37 27.5
+    C 37 29.8 35.5 31 33 31
+    L 25.5 31
+    Z
+    M 25.5 36
+    L 34 36
+    C 36.8 36 38.5 37.2 38.5 40
+    C 38.5 42.8 36.8 44 34 44
+    L 25.5 44
+    Z
+  "/>
+</svg>

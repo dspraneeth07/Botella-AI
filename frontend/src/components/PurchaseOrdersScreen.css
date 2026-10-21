@@ -1,0 +1,939 @@
+/* PurchaseOrdersScreen.css - Quick PO
+   -----------------------------------------------------------------------------
+   Builds on ReferenceScreen.css: this screen imports that too, so .ref-card,
+   .ref-table, .ref-crumb and .ref-btn are already styled and already aliased
+   onto the shared app tokens. Only what is genuinely new to this screen lives
+   here, so the document table looks like every other table in the product.
+   ============================================================================= */
+
+.po-page {
+  /* Same aliases and the same gutter as .ref-page / .rh-page / .sx-page. */
+  --bg: var(--bg-primary);
+  --bg2: var(--bg-secondary);
+  --card: var(--bg-card);
+  --hover: var(--bg-hover);
+  --elev: var(--bg-elevated);
+  --bd: var(--border);
+  --bd2: var(--border-light);
+  --tx: var(--text-primary);
+  --tx2: var(--text-secondary);
+  --mu: var(--text-muted);
+  --ac: var(--accent);
+  --ac2: var(--accent-light);
+  --act: var(--accent-glow);
+  --gr: var(--green);
+  --rd: var(--red);
+  --am: var(--yellow);
+  --on-fill: var(--bx-accent-ink);
+
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--bg);
+  color: var(--tx);
+  font-family: var(--bx-font-body);
+  padding: 22px 26px 40px;
+  box-sizing: border-box;
+  font-variant-numeric: tabular-nums;
+}
+
+.po-head { margin-bottom: 16px; }
+.po-title {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--bx-font-display);
+  font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0;
+}
+.po-sub { font-size: 13px; color: var(--tx2); margin: 6px 0 0; max-width: 78ch; }
+
+.po-back {
+  border: none; background: none; color: var(--ac2); font: inherit;
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 5px; padding: 0;
+}
+
+/* ── Upload target ────────────────────────────────────────────────────────── */
+.po-drop {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 7px; text-align: center;
+  padding: 34px 20px;
+  margin-bottom: 18px;
+  border: 1px dashed var(--bd);
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--tx2);
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease;
+}
+.po-drop:hover, .po-drop:focus-visible { border-color: var(--ac); background: var(--hover); }
+.po-drop.is-dragging { border-color: var(--ac); background: var(--act); border-style: solid; }
+.po-drop.is-busy { cursor: progress; border-style: solid; border-color: var(--ac); }
+.po-drop strong { font-family: var(--bx-font-display); font-size: 15px; color: var(--tx); }
+.po-drop span { font-size: 12.5px; color: var(--mu); }
+.po-drop svg { color: var(--ac); }
+
+/* ── Feedback ─────────────────────────────────────────────────────────────── */
+.po-error, .po-warn {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px; margin-bottom: 16px;
+  border-radius: 10px; font-size: 13px; line-height: 1.55;
+}
+.po-error {
+  color: var(--rd);
+  background: color-mix(in srgb, var(--rd) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rd) 30%, transparent);
+}
+.po-error strong, .po-warn strong { display: block; color: var(--tx); }
+.po-error-hint { color: var(--mu); margin-top: 4px; }
+.po-warn {
+  color: var(--tx2);
+  background: color-mix(in srgb, var(--am) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--am) 30%, transparent);
+}
+.po-warn svg { color: var(--am); flex: none; margin-top: 2px; }
+.po-error svg { flex: none; margin-top: 2px; }
+
+.po-loading, .po-empty {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 46px 20px; color: var(--mu); font-size: 13.5px;
+  border: 1px dashed var(--bd); border-radius: 12px; background: var(--card);
+}
+.po-loading { flex-direction: row; justify-content: center; }
+.po-empty p { margin: 0; }
+.po-spin { animation: po-spin .9s linear infinite; }
+@keyframes po-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .po-spin { animation: none; } }
+
+/* ── Document list ────────────────────────────────────────────────────────── */
+/* No cursor:pointer any more - the row itself does nothing. Only the View
+   button, the Log button and Delete are targets, and a hand cursor over dead
+   space is a promise the row cannot keep. The hover tint stays: it tracks which
+   line the eye is on across nine columns, which is useful whether or not the
+   row is clickable. */
+.po-row:hover { background: var(--hover); }
+.po-doctype {
+  margin-left: 8px; font-size: 10px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ac2);
+  background: var(--act); padding: 2px 7px; border-radius: 6px;
+}
+.po-td-line { /* colour set below; width lives with the items column model */ }
+.po-td-line { color: var(--mu); }
+
+.po-chip {
+  display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+}
+.po-chip-ok { color: var(--gr); background: color-mix(in srgb, var(--gr) 15%, transparent); }
+.po-chip-bad { color: var(--rd); background: color-mix(in srgb, var(--rd) 15%, transparent); }
+.po-chip-wait { color: var(--ac2); background: var(--act); }
+
+/* ── Detail ───────────────────────────────────────────────────────────────── */
+.po-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.po-btn-danger { color: var(--rd); }
+.po-btn-danger:hover { border-color: var(--rd); }
+
+.po-totals {
+  display: flex; flex-wrap: wrap; gap: 0;
+  background: var(--card); border: 1px solid var(--bd2);
+  border-radius: 12px; overflow: hidden; margin-bottom: 16px;
+}
+.po-total {
+  flex: 1 1 0; min-width: 130px;
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 13px 16px; border-left: 1px solid var(--bd2);
+}
+.po-total:first-child { border-left: none; }
+.po-total-label { font-size: 11.5px; font-weight: 600; color: var(--mu); }
+.po-total-value { font-family: var(--bx-font-display); font-size: 17px; font-weight: 700; color: var(--tx); }
+.po-total.is-strong .po-total-value { font-size: 21px; font-weight: 800; color: var(--ac2); }
+
+/* An unmatched line is the whole point of the screen, so it is tinted rather
+   than merely annotated - it has to be findable by scrolling, not by reading. */
+.po-row-unmatched { background: color-mix(in srgb, var(--am) 7%, transparent); }
+.po-row-unmatched:hover { background: color-mix(in srgb, var(--am) 12%, transparent); }
+
+.po-note {
+  margin-left: 7px; font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--am);
+  background: color-mix(in srgb, var(--am) 15%, transparent);
+  padding: 1px 6px; border-radius: 5px;
+}
+
+.po-match {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; color: var(--gr); font-weight: 600;
+  max-width: 100%; overflow: hidden;
+}
+.po-match svg { flex: none; }
+.po-match-sku { color: var(--mu); font-weight: 500; }
+
+.po-fix { display: inline-flex; gap: 6px; }
+.po-mini {
+  display: inline-flex; align-items: center; gap: 5px; white-space: nowrap;
+  font: inherit; font-size: 11.5px; font-weight: 600;
+  padding: 4px 9px; border-radius: 7px; cursor: pointer;
+  border: 1px solid var(--bd); background: transparent; color: var(--tx2);
+}
+.po-mini:hover { border-color: var(--ac); color: var(--ac2); }
+.po-mini-primary { border-color: var(--ac); color: var(--ac2); }
+.po-mini-primary:hover { background: var(--act); }
+
+/* ── Modal ────────────────────────────────────────────────────────────────── */
+.po-modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  background: rgba(0, 0, 0, 0.62);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+}
+.po-modal {
+  width: min(560px, 100%); max-height: 86vh; overflow-y: auto;
+  background: var(--bg-card); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 16px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+}
+.po-modal-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px 18px; border-bottom: 1px solid var(--border-light);
+}
+.po-modal-head h3 { margin: 0; font-family: var(--bx-font-display); font-size: 16px; font-weight: 700; }
+.po-modal-x {
+  border: none; background: none; color: var(--text-muted); cursor: pointer;
+  display: grid; place-items: center; padding: 4px;
+}
+.po-modal-x:hover { color: var(--text-primary); }
+.po-modal-body { padding: 16px 18px 18px; }
+.po-modal-sub { margin: 0 0 14px; font-size: 13px; color: var(--text-secondary); line-height: 1.55; }
+.po-modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 18px; }
+
+.po-btn-primary {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: inherit; font-size: 13px; font-weight: 600;
+  padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer;
+  color: #FFFFFF; background: var(--bx-grad-signature);
+}
+.po-btn-primary:disabled { opacity: .45; cursor: not-allowed; }
+
+/* ── Search + results ─────────────────────────────────────────────────────── */
+.po-search {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; border: 1px solid var(--border); border-radius: 9px;
+  background: var(--bg-primary); color: var(--text-muted);
+}
+.po-search input {
+  flex: 1; min-width: 0; border: 0; outline: none; background: transparent;
+  font: inherit; font-size: 13px; color: var(--text-primary);
+}
+.po-results { margin-top: 12px; display: flex; flex-direction: column; gap: 4px; max-height: 320px; overflow-y: auto; }
+.po-results-note { font-size: 12.5px; color: var(--text-muted); padding: 10px 2px; line-height: 1.55; }
+.po-result {
+  display: flex; flex-direction: column; gap: 2px; text-align: left;
+  padding: 9px 11px; border-radius: 8px; cursor: pointer;
+  border: 1px solid var(--border-light); background: var(--bg-secondary);
+  font: inherit;
+}
+.po-result:hover { border-color: var(--accent); background: var(--bg-hover); }
+.po-result-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+.po-result-meta { font-size: 11.5px; color: var(--text-muted); }
+
+/* ── Create form ──────────────────────────────────────────────────────────── */
+.po-form { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.po-field { display: flex; flex-direction: column; gap: 5px; }
+.po-field:nth-child(2) { grid-column: 1 / -1; }
+.po-field-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+.po-field-label em { font-style: normal; color: var(--red); font-size: 10.5px; margin-left: 5px; }
+.po-field input {
+  padding: 9px 11px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg-primary); color: var(--text-primary);
+  font: inherit; font-size: 13px; outline: none;
+}
+.po-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.po-field-hint { font-size: 11px; color: var(--text-muted); line-height: 1.45; }
+
+@media (max-width: 620px) {
+  .po-page { padding: 16px 12px 32px; }
+  .po-title { font-size: 22px; }
+  .po-form { grid-template-columns: 1fr; }
+  .po-field:nth-child(2) { grid-column: auto; }
+}
+
+/* ── Editable line cells ──────────────────────────────────────────────────────
+   The numbers a model read off a scan are exactly the ones a person needs to be
+   able to fix. The affordance stays quiet until hover so the table still reads
+   as a table rather than as a form. */
+.po-editable { position: relative; }
+.po-cell-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  cursor: text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ref-num .po-cell-btn { justify-content: flex-end; width: 100%; }
+.po-cell-btn:hover { border-color: var(--bd); background: var(--hover); }
+.po-cell-pencil { opacity: 0; flex: none; color: var(--mu); transition: opacity .12s; }
+.po-cell-btn:hover .po-cell-pencil { opacity: 1; }
+.po-cell-input {
+  width: 100%;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  color: var(--tx);
+  padding: 3px 6px;
+  border: 1px solid var(--ac);
+  border-radius: 6px;
+  background: var(--bg2);
+  outline: none;
+}
+.ref-num .po-cell-input { text-align: right; }
+
+/* ── Match suggestions ────────────────────────────────────────────────────────
+   Proposals, never applied automatically. Dashed so they never read as a match
+   that has already happened. */
+.po-match-cell { min-width: 220px; }
+.po-suggests { display: flex; flex-direction: column; gap: 4px; margin-bottom: 6px; }
+.po-suggest {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 100%;
+  font: inherit;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border: 1px dashed var(--bd);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tx2);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.po-suggest:hover { border-color: var(--ac); color: var(--ac2); background: var(--hover); }
+/* Only the clear leader is drawn as one; three near-identical sizes of the same
+   product must read as a choice, not as an answer. */
+.po-suggest.is-confident { border-style: solid; border-color: var(--ac); color: var(--ac2); }
+
+/* ── List: header row, toolbar, pager ─────────────────────────────────────────
+   Added with the Invoices-style list. The toolbar is a sibling of the table,
+   not a child of it, so it survives an empty result - a search box that
+   disappears when nothing matches leaves no way back except a page reload. */
+
+.po-head-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.po-head-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* Matched to .ref-btn, the button every other screen uses: same 12.5px, same
+   7px 13px, same 8px radius. These had drifted to 13px / 8px 13px / 9px, which
+   is not a different button so much as the same button slightly wrong.
+   line-height is pinned so Refresh and Upload are the same height whether or
+   not their icon is mid-spin. */
+.po-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 13px;
+  font-family: var(--bx-font-body); font-size: 12.5px; font-weight: 600;
+  line-height: 20px;
+  color: var(--text-primary);
+  background: var(--bg-elevated, var(--bg-card));
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+}
+.po-btn:hover:not(:disabled) { color: var(--accent-light, var(--accent)); border-color: var(--accent); }
+.po-btn:disabled { opacity: 0.5; cursor: default; }
+/* --on-fill, not #fff: the accent is a light violet in dark mode, where white
+   text on it fails contrast. It is the same token .ref-subtab.is-on uses. */
+.po-btn-primary {
+  color: var(--on-fill);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.po-btn-primary:hover:not(:disabled) {
+  color: var(--on-fill);
+  background: var(--accent);
+  filter: brightness(1.05);
+}
+
+.po-toolbar {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+}
+
+.po-search {
+  position: relative;
+  display: flex; align-items: center; gap: 8px;
+  flex: 1 1 260px; min-width: 200px;
+  padding: 7px 10px;
+  color: var(--text-muted);
+  background: var(--bg-secondary, var(--bg));
+  border: 1px solid var(--border-light);
+  border-radius: 9px;
+}
+.po-search input {
+  flex: 1; min-width: 0;
+  font-family: var(--bx-font-body); font-size: 13px;
+  color: var(--text-primary);
+  background: none; border: 0; outline: none;
+}
+.po-search-clear {
+  display: grid; place-items: center; padding: 2px;
+  color: var(--text-muted); background: none; border: 0; cursor: pointer;
+}
+.po-search-clear:hover { color: var(--text-primary); }
+
+.po-filter { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-secondary); }
+.po-filter select {
+  font-family: var(--bx-font-body); font-size: 13px;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.po-pager { display: flex; align-items: center; gap: 10px; margin-left: auto; flex-wrap: wrap; }
+.po-count { font-size: 12.5px; color: var(--text-secondary); white-space: nowrap; }
+.po-page-of { font-size: 12.5px; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+.po-page-btn {
+  display: grid; place-items: center;
+  width: 28px; height: 28px; padding: 0;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.po-page-btn:hover:not(:disabled) { background: var(--bg-hover); color: var(--text-primary); }
+.po-page-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ── List: rows ───────────────────────────────────────────────────────────── */
+
+.po-table-note {
+  padding: 34px 16px;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+.po-table-note .po-spin { vertical-align: -3px; margin-right: 6px; }
+
+.po-muted { color: var(--text-muted); }
+
+.po-chip-warn { color: var(--am); background: color-mix(in srgb, var(--am) 16%, transparent); }
+
+.po-row-actions { width: 44px; text-align: right; }
+.po-icon-btn {
+  display: inline-grid; place-items: center;
+  width: 28px; height: 28px; padding: 0;
+  color: var(--text-muted);
+  background: none; border: 0; border-radius: 7px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, color 0.12s ease, background 0.12s ease;
+}
+.po-row:hover .po-icon-btn,
+.po-icon-btn:focus-visible { opacity: 1; }
+.po-icon-btn:hover { color: var(--rd); background: color-mix(in srgb, var(--rd) 12%, transparent); }
+/* No hover to reveal it with, so it is always there. */
+@media (hover: none) { .po-icon-btn { opacity: 1; } }
+/* The dialog's close button is not inside a row and must never be hidden. */
+.po-modal-head .po-icon-btn { opacity: 1; }
+
+/* ── Upload dialog ────────────────────────────────────────────────────────── */
+
+.po-modal-title { margin: 0; font-family: var(--bx-font-display); font-size: 16px; font-weight: 700; }
+.po-modal .po-drop { margin: 16px 18px; }
+.po-modal-note {
+  margin: 0 18px 16px;
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.po-queue { list-style: none; margin: 0 18px 16px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.po-queue-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  color: var(--text-muted);
+  background: var(--bg-secondary, var(--bg));
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+.po-queue-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.po-queue-name {
+  font-size: 13px; font-weight: 600; color: var(--text-primary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.po-queue-meta { font-size: 11.5px; color: var(--text-muted); }
+.po-queue-chip {
+  display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 700;
+  color: var(--text-secondary); background: var(--bg-hover);
+}
+.po-queue-row.is-reading .po-queue-chip { color: var(--ac2); background: var(--act); }
+.po-queue-row.is-done .po-queue-chip { color: var(--gr); background: color-mix(in srgb, var(--gr) 15%, transparent); }
+.po-queue-row.is-failed .po-queue-chip { color: var(--rd); background: color-mix(in srgb, var(--rd) 15%, transparent); }
+.po-queue-row.is-failed { border-color: color-mix(in srgb, var(--rd) 34%, transparent); }
+
+/* ── Parser log ───────────────────────────────────────────────────────────── */
+
+.po-log-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  font-family: var(--bx-font-body); font-size: 12px; font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 7px;
+  cursor: pointer;
+}
+.po-log-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+
+.po-modal-log { width: min(680px, 100%); }
+.po-log-body { padding: 4px 18px 18px; }
+
+.po-log-summary {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  background: var(--bg-secondary, var(--bg));
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+/* Each row is its own grid item pair, so a long value wraps under itself
+   rather than pushing the label column wider for every other row. */
+.po-log-summary > div { display: contents; }
+.po-log-summary dt {
+  padding: 5px 24px 5px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+.po-log-summary dd {
+  margin: 0;
+  padding: 5px 0;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--text-primary);
+  text-align: right;
+}
+
+.po-log-section { margin-bottom: 16px; }
+.po-log-head {
+  margin: 0 0 8px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.po-log-notes {
+  margin: 0;
+  font-size: 13px; line-height: 1.55;
+  color: var(--text-primary);
+}
+.po-log-empty { margin: 0; font-size: 13px; color: var(--text-muted); }
+
+.po-log-events { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.po-log-event {
+  padding: 11px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+.po-log-event-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.po-log-tag {
+  padding: 2px 8px; border-radius: 6px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em;
+  color: var(--text-secondary); background: var(--bg-hover);
+}
+.po-log-actor { font-size: 12.5px; color: var(--text-secondary); }
+/* Pushed right so the times form a column the eye can run down. */
+.po-log-when { margin-left: auto; font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+
+.po-log-payload {
+  margin: 9px 0 0;
+  padding: 9px 11px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11.5px; line-height: 1.5;
+  color: var(--text-secondary);
+  background: var(--bg-secondary, var(--bg));
+  border-radius: 8px;
+}
+
+/* ── Detail: header, stats, tabs, two-column body ────────────────────────── */
+
+.po-back-top {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-bottom: 14px;
+  padding: 0;
+  font-family: var(--bx-font-body); font-size: 13px; font-weight: 600;
+  color: var(--text-secondary);
+  background: none; border: 0; cursor: pointer;
+}
+.po-back-top:hover { color: var(--text-primary); }
+
+.po-dhead {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.po-dhead-titles { min-width: 0; }
+.po-dtitle {
+  margin: 0;
+  font-family: var(--bx-font-display);
+  font-size: 26px; font-weight: 750; letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.po-dsub { margin: 4px 0 0; font-size: 13.5px; color: var(--text-secondary); }
+.po-dhead-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* auto-fit rather than a fixed four: Delivery appears only on invoices that
+   have one, and the row should close up rather than leave a gap. */
+.po-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.po-stat {
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+}
+.po-stat-label {
+  display: block;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.po-stat-value {
+  display: block; margin-top: 6px;
+  font-family: var(--bx-font-display);
+  font-size: 22px; font-weight: 750; letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+.po-stat.is-strong .po-stat-value { color: var(--accent); }
+
+.po-tabs { display: flex; gap: 8px; margin-bottom: 14px; }
+.po-tab {
+  padding: 8px 14px;
+  font-family: var(--bx-font-body); font-size: 13px; font-weight: 650;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 9px;
+  cursor: pointer;
+}
+.po-tab:hover { background: var(--bg-hover); }
+.po-tab.is-on { color: #fff; background: var(--accent); border-color: var(--accent); }
+
+/* The sidebar drops under the table below 1100px rather than squeezing the
+   line items, which are the reason anyone opened this screen. */
+.po-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 16px;
+  align-items: start;
+}
+@media (max-width: 1100px) { .po-detail-grid { grid-template-columns: minmax(0, 1fr); } }
+.po-detail-main { min-width: 0; }
+
+.po-side { display: flex; flex-direction: column; gap: 14px; }
+.po-side-card { padding: 14px 16px; }
+.po-side-title {
+  margin: 0 0 10px;
+  font-family: var(--bx-font-display);
+  font-size: 15px; font-weight: 700;
+  color: var(--text-primary);
+}
+.po-side-list { display: grid; grid-template-columns: max-content 1fr; margin: 0; }
+.po-side-list > div { display: contents; }
+.po-side-list dt { padding: 5px 16px 5px 0; font-size: 12.5px; color: var(--text-secondary); }
+.po-side-list dd {
+  margin: 0; padding: 5px 0;
+  font-size: 12.5px; font-weight: 650;
+  color: var(--text-primary);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.po-side-file { font-weight: 500; font-size: 11.5px; color: var(--text-secondary); }
+.po-side-notes { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--text-secondary); }
+
+/* ── Detail: line items card ─────────────────────────────────────────────── */
+
+.po-card-head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+.po-card-title { margin: 0; font-family: var(--bx-font-display); font-size: 16px; font-weight: 700; }
+.po-card-sub { margin: 5px 0 0; max-width: 76ch; font-size: 12.5px; line-height: 1.55; color: var(--text-secondary); }
+
+.po-td-product { min-width: 230px; }
+.po-prod-name { display: block; font-weight: 650; color: var(--text-primary); }
+.po-prod-no { display: block; margin-top: 1px; font-size: 11.5px; color: var(--text-muted); }
+.po-prod-chip { margin-top: 5px; }
+.po-prod-map {
+  display: block; margin-top: 3px;
+  font-size: 11.5px; color: var(--text-secondary);
+  overflow-wrap: anywhere;
+}
+
+.po-td-dim { color: var(--text-secondary); white-space: nowrap; }
+.po-td-cost { white-space: nowrap; }
+
+/* Red is the invoice costing MORE than the POS expects - the direction that
+   costs money - so it is the one that has to catch the eye. */
+.po-up { color: var(--rd); font-weight: 650; }
+.po-down { color: var(--gr); font-weight: 650; }
+.po-pos-cost {
+  display: block;
+  font-size: 10.5px; font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ── Detail: the line-items table needs its own column model ──────────────────
+   .ref-table is table-layout:fixed and assumes column ONE is the name, so it
+   gives that column the leftover width and every other column 130px. Here
+   column one is the line number and column two is the product, so inheriting
+   that assumption collapsed "#" to nothing (its header printed on top of
+   PRODUCT) and squeezed the product into 130px, where the shared
+   `white-space: nowrap; overflow: hidden` clipped the name, the chip, the
+   suggestion and the buttons.
+
+   Both halves have to be undone: the widths, and the one-line-per-row rule.
+   The product cell is the one place in this app where a cell is a small stack
+   - name, code, status, mapping, actions - so it wraps and the row grows. */
+
+.po-items-table { min-width: 980px; }
+
+.po-items-table thead th:first-child { width: 44px; }
+.po-items-table thead th:nth-child(2) { width: auto; }   /* Product - takes the rest */
+/* Wide enough for a real pack string: "4/6/12 BTL CIDER" is what these read
+   like, and 128px clipped it to "4/6/12 BTL CID...". */
+.po-items-table thead th:nth-child(3) { width: 156px; }  /* Pack  */
+.po-items-table thead th:nth-child(4) { width: 84px; }   /* Size  */
+.po-items-table thead th:nth-child(5) { width: 74px; }   /* Pk/Cs */
+.po-items-table thead th:nth-child(6) { width: 64px; }   /* Qty   */
+.po-items-table thead th:nth-child(7) { width: 108px; }  /* Cost  */
+.po-items-table thead th:nth-child(8) { width: 84px; }   /* Tax   */
+.po-items-table thead th:nth-child(9) { width: 104px; }  /* Ext   */
+.po-items-table thead th:last-child   { width: 48px; }   /* actions */
+
+/* Top, not middle: a five-line product cell beside a one-line price should
+   line the two up at the top, the way the reference does. */
+.po-items-table tbody td { vertical-align: top; padding-top: 12px; padding-bottom: 12px; }
+
+/* The product cell is a stack, so it must be allowed to wrap and to overflow
+   its single line. Everything else keeps the shared truncation. */
+.po-items-table tbody td.po-td-product {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+.po-td-product .po-prod-name { overflow-wrap: anywhere; }
+
+/* Chips and buttons wrap inside the cell instead of running past its edge. */
+.po-td-product .po-suggests { margin-top: 6px; align-items: flex-start; }
+.po-td-product .po-suggest { max-width: 100%; white-space: normal; text-align: left; }
+.po-td-product .po-fix { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+
+/* The line number column, now that it has a width again. */
+.po-items-table .po-td-line { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+
+/* Two lines in one right-aligned cell (the cost and the POS figure under it)
+   must not inherit the row's single-line clipping either. */
+.po-items-table tbody td.po-td-cost { white-space: normal; overflow: visible; }
+
+/* The actions cell holds a button, not text. Inheriting `text-overflow:
+   ellipsis` drew a stray ".." beside it in every mapped row. */
+.po-items-table tbody td.po-row-actions { overflow: visible; text-overflow: clip; }
+
+/* Skeleton rows while the line items are on their way. Rows rather than a
+   spinner, and the same height as the real ones, so the page does not jump
+   when they arrive. */
+.po-skel-rows { padding: 12px 16px 16px; display: flex; flex-direction: column; gap: 10px; }
+.po-skel-row {
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--bg-hover) 25%, var(--bg-secondary, var(--bg)) 37%, var(--bg-hover) 63%);
+  background-size: 400% 100%;
+  animation: po-skel 1.4s ease infinite;
+}
+@keyframes po-skel { from { background-position: 100% 50%; } to { background-position: 0 50%; } }
+@media (prefers-reduced-motion: reduce) { .po-skel-row { animation: none; } }
+
+/* The invoice number, drawn as the button it always was. The row stays
+   clickable; this just gives the eye something to aim at. */
+.po-invoice-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  max-width: 100%;
+  padding: 5px 11px;
+  font-family: var(--bx-font-body); font-size: 12.5px; font-weight: 650;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
+}
+.po-invoice-btn:hover:not(:disabled) {
+  color: var(--ac2, var(--accent));
+  border-color: var(--accent);
+  background: var(--accent-glow, var(--bg-hover));
+}
+.po-invoice-btn:disabled { opacity: 0.6; cursor: default; }
+.po-invoice-btn svg { flex-shrink: 0; }
+
+/* ── List: column model ───────────────────────────────────────────────────────
+   Same correction as the items table. .ref-table hands the leftover width to
+   column one, which here is a fixed-size invoice pill, and gives the vendor the
+   130px default - so real distributor names ("SHORE POINT DISTRIBUTING CO INC")
+   truncated while the pill sat in a column twice the width it needs.
+   The vendor is the widest real value in this table, so the vendor flexes. */
+.po-list-table { min-width: 1040px; }
+/* Wide enough for the pill AND the type tag beside it - a long number like
+   "SB-2026-44817" pushed the tag onto a second line at 210px. */
+.po-list-table thead th:first-child { width: 246px; }  /* Invoice # */
+.po-list-table thead th:nth-child(2) { width: auto; }  /* Vendor - takes the rest */
+.po-list-table thead th:nth-child(3) { width: 116px; } /* Date   */
+.po-list-table thead th:nth-child(4) { width: 104px; } /* Total  */
+.po-list-table thead th:nth-child(5) { width: 72px; }  /* Items  */
+.po-list-table thead th:nth-child(6) { width: 104px; } /* Parsed */
+.po-list-table thead th:nth-child(7) { width: 152px; } /* Status */
+.po-list-table thead th:nth-child(8) { width: 78px; }  /* Log    */
+.po-list-table thead th:last-child   { width: 48px; }
+
+/* The invoice cell holds a pill and a type tag, not a line of text, so it must
+   not inherit the row's single-line clipping. */
+.po-list-table tbody td.ref-name { white-space: normal; overflow: visible; }
+.po-list-table tbody td.po-row-actions { overflow: visible; text-overflow: clip; }
+
+
+/* ── Invoice list: its own column widths ─────────────────────────────────────
+   .ref-table declares a generic 130px per column and 240px for the name, which
+   over-subscribed this nine-column table. Under `table-layout: fixed` the
+   browser then scales every declared width down to fit, and the columns holding
+   phrases are the ones that suffer: "Could not read" clipped to "Could not r"
+   and "Mapping required" to "Mapping requir". Widths below sum to the
+   min-width, so nothing is scaled and the wrapper scrolls instead. */
+.po-list-table { min-width: 1120px; }
+.po-list-table thead th:nth-child(1) { width: 200px; }  /* Invoice #  */
+.po-list-table thead th:nth-child(2) { width: 190px; }  /* Vendor     */
+.po-list-table thead th:nth-child(3) { width: 110px; }  /* Date       */
+.po-list-table thead th:nth-child(4) { width: 100px; }  /* Total      */
+.po-list-table thead th:nth-child(5) { width: 70px;  }  /* Items      */
+.po-list-table thead th:nth-child(6) { width: 150px; }  /* Parsed     */
+.po-list-table thead th:nth-child(7) { width: 160px; }  /* Status     */
+.po-list-table thead th:nth-child(8) { width: 84px;  }  /* Log        */
+.po-list-table thead th:nth-child(9) { width: 56px;  }  /* Actions    */
+
+/* A chip is a shape, not a run of text. `overflow: visible` kept it whole but
+   let it spill across the column boundary and sit over its neighbour; the chip
+   has to FIT instead. nowrap plus a width that holds the longest label
+   ("Could not read", "Mapping required") means nothing is cut and nothing
+   escapes. The columns beside them opt out of the ellipsis too: an ellipsis on
+   a one-word cell renders as a lone dot, which is what made the Parsed and Log
+   columns look like they ended in full stops. */
+.po-list-table tbody td:nth-child(6),
+.po-list-table tbody td:nth-child(7),
+.po-list-table tbody td:nth-child(8),
+.po-list-table tbody td:nth-child(9) {
+  overflow: hidden;
+  text-overflow: clip;
+  white-space: nowrap;
+}
+.po-list-table .po-chip { max-width: 100%; }
+
+/* When there is no invoice number the file name identifies the row, under the
+   column rather than inside it - see the note in PurchaseOrdersScreen.js. */
+.po-filename {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* The name column holds a button, a doc-type tag and sometimes a file name, so
+   it needs room; Vendor carries names like "Breakthru Beverage Illinois, LLC". */
+.po-list-table thead th:nth-child(1) { width: 210px; }
+.po-list-table thead th:nth-child(2) { width: 210px; }
+.po-list-table { min-width: 1160px; }
+
+
+/* ── Line items: its own column model ────────────────────────────────────────
+   Two reasons the "#" column rendered "1..." for every line past 9.
+
+   First, `.ref-table thead th:first-child { width: 240px }` out-specifies a
+   bare `.po-th-line`, and the "#" column IS the first child here - the generic
+   rule assumes column one is a product name, which is true of every other
+   table sharing this stylesheet and false of this one.
+
+   Second, the ten declared widths over-subscribed the table, so `table-layout:
+   fixed` scaled them all down and the narrowest column had least to give: 44px,
+   or 16px of content after padding. Enough for one digit and an ellipsis.
+
+   Widths below sum to the min-width, so nothing scales, and the selector
+   carries the table class so it beats the generic first-child rule. */
+.po-items-table { min-width: 980px; }
+.po-items-table thead th:nth-child(1)  { width: 64px;  }   /* #      */
+.po-items-table thead th:nth-child(2)  { width: 260px; }   /* PRODUCT */
+.po-items-table thead th:nth-child(3)  { width: 90px;  }   /* PACK   */
+.po-items-table thead th:nth-child(4)  { width: 90px;  }   /* SIZE   */
+.po-items-table thead th:nth-child(5)  { width: 80px;  }   /* PK/CS  */
+.po-items-table thead th:nth-child(6)  { width: 80px;  }   /* QTY    */
+.po-items-table thead th:nth-child(7)  { width: 90px;  }   /* COST   */
+.po-items-table thead th:nth-child(8)  { width: 80px;  }   /* TAX    */
+.po-items-table thead th:nth-child(9)  { width: 90px;  }   /* EXT    */
+.po-items-table thead th:nth-child(10) { width: 56px;  }   /* actions */
+
+/* A line number is never truncated - it is the row's name. */
+.po-items-table tbody td.po-td-line {
+  overflow: visible;
+  text-overflow: clip;
+  color: var(--mu);
+}
+
+/* A recognised re-upload. Not an error - nothing went wrong and nothing was
+   lost - but not "Read" either, because no document was added. Its own state,
+   in the attention cut rather than the failure one. */
+.po-queue-row.is-duplicate .po-queue-chip {
+  color: var(--yellow);
+  background: color-mix(in srgb, var(--yellow) 12%, transparent);
+}
+@supports not (background: color-mix(in srgb, red, blue)) {
+  .po-queue-row.is-duplicate .po-queue-chip { background: var(--bg-elevated); }
+}
+
+/* Uploaded and queued for reading. The document is in the table already and the
+   list polls until it settles, so this is progress rather than completion. */
+.po-queue-row.is-queued .po-queue-chip {
+  color: var(--accent-light);
+  background: var(--accent-glow);
+}

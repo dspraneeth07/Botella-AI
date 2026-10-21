@@ -1,0 +1,3044 @@
+{
+  "generatedAt": "2026-06-04T23:01:52.644Z",
+  "apiBase": "http://127.0.0.1:3100/api",
+  "clientId": 125,
+  "locationId": 125,
+  "categories": {
+    "simple": "simple factual DB questions",
+    "sales": "sales/revenue questions",
+    "inventory": "product/inventory questions",
+    "ambiguous": "ambiguous free-form questions",
+    "followup": "multi-turn follow-up conversations",
+    "obscure": "obscure/deep-cut questions",
+    "linkage": "product-sales linkage (known-broken data)",
+    "honesty": "honest-decline (unpopulated fields)",
+    "weekday": "weekday / best-day correctness",
+    "search": "search recall",
+    "dateedge": "date-edge cases",
+    "adversarial": "adversarial false-premise pushback"
+  },
+  "totalSingle": 3,
+  "totalConvo": 1,
+  "results": [
+    {
+      "id": "inv-06",
+      "category": "inventory",
+      "question": "Which bourbons are currently in stock?",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "min_count",
+            "from": "bourbonInStock"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "Which bourbons are currently in stock?",
+          "answer": "You have **106 bourbons currently in stock**. Here are your bourbon selections organized by price, from highest to lowest:\n\n| Product Name | Price | Stock Qty |\n|--------------|-------|-----------|\n| WILLETT BOURBON 8YRS 750ML | $399.99 | 3 |\n| JOS MAGNUS CIGAR BOURB 750 | $249.99 | 2 |\n| GLENFIDDICH BOURBON BARREL 19 YEARS | $189.99 | 1 |\n| RARE HARE BOURBON 15YR | $149.99 | 1 |\n| BOOKER'S BOURBON 2023-02 | $129.99 | 5 |\n| BOOKERS BOURBON 2022 | $119.99 | 1 |\n| BOOKER'S BOURBON 2023-04 | $119.99 | 6 |\n| BOOKER'S BOURBON 2024-04 | $119.99 | 1 |\n| EAGLE RARE BOURBON | $119.99 | 5 |\n| BOOKER'S BOURBON 2023-01 | $119.99 | 2 |\n| HEAVEN HILL BOURBON | $114.99 | 7 |\n| JOS.A.MAGNUS MURRAY HILL CLUB | $109.99 | 3 |\n| JOSEPH MAGNUS TRIPLE CASK FINISHED | $109.99 | 4 |\n| BLANTON'S BOURBON | $99.99 | 4 |\n| BEN HOLLADAY 1856 ORIGINAL ONE BARREL BOURBON 8YR | $99.99 | 6 |\n| KINGS COUNTY BOURBON | $74.99 | 8 |\n| OLD ELK WHEATED BOURBON 750ML | $71.99 | 3 |\n| CHARLES GOODNIGHT TEXAS BOURBON | $69.99 | 1 |\n| RARE HARE BOURBON 7YR | $69.99 | 7 |\n| PUNCHER'S CHANCE BOURBON | $69.99 | 3 |\n\n[download:b0b06c7f2f640701]\n\nYour bourbon selection spans from premium bottles like the Willett 8-year at $399.99 down to everyday options under $15. You have particularly strong inventory in popular mid-range bourbons like Eagle Rare, Elijah Craig, and various Booker's releases. The collection includes both traditional Kentucky bourbons and craft distillery offerings from across the country.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT product_name, price, stock_qty, COALESCE(sale_price, 0) as sale_price\nFROM products \nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\n  AND stock_qty > 0\nORDER BY price DESC"
+              },
+              "sql": "SELECT product_name, price, stock_qty, COALESCE(sale_price, 0) as sale_price\nFROM products \nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\n  AND stock_qty > 0\nORDER BY price DESC",
+              "success": true,
+              "row_count": 106,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "product_name": "WILLETT BOURBON  8YRS 750ML",
+                    "price": "399.9900",
+                    "stock_qty": 3,
+                    "sale_price": "399.9900"
+                  },
+                  {
+                    "product_name": "JOS MAGNUS CIGAR BOURB 750",
+                    "price": "249.9900",
+                    "stock_qty": 2,
+                    "sale_price": "249.9900"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 19 YEARS",
+                    "price": "189.9900",
+                    "stock_qty": 1,
+                    "sale_price": "189.9900"
+                  },
+                  {
+                    "product_name": "RARE HARE BOURBON 15YR",
+                    "price": "149.9900",
+                    "stock_qty": 1,
+                    "sale_price": "149.9900"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-02",
+                    "price": "129.9900",
+                    "stock_qty": 5,
+                    "sale_price": "129.9900"
+                  },
+                  {
+                    "product_name": "BOOKERS BOURBON 2022",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "sale_price": "119.9900"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-04",
+                    "price": "119.9900",
+                    "stock_qty": 6,
+                    "sale_price": "119.9900"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2024-04",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "sale_price": "119.9900"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "119.9900",
+                    "stock_qty": 5,
+                    "sale_price": "119.9900"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-01",
+                    "price": "119.9900",
+                    "stock_qty": 2,
+                    "sale_price": "119.9900"
+                  },
+                  {
+                    "product_name": "HEAVEN HILL BOURBON",
+                    "price": "114.9900",
+                    "stock_qty": 7,
+                    "sale_price": "114.9900"
+                  },
+                  {
+                    "product_name": "JOS.A.MAGNUS MURRAY HILL CLUB",
+                    "price": "109.9900",
+                    "stock_qty": 3,
+                    "sale_price": "109.9900"
+                  },
+                  {
+                    "product_name": "JOSEPH MAGNUS TRIPLE CASK FINISHED",
+                    "price": "109.9900",
+                    "stock_qty": 4,
+                    "sale_price": "109.9900"
+                  },
+                  {
+                    "product_name": "BLANTON'S BOURBON",
+                    "price": "99.9900",
+                    "stock_qty": 4,
+                    "sale_price": "99.9900"
+                  },
+                  {
+                    "product_name": "BEN HOLLADAY 1856 ORIGINAL ONE BARREL BOURBON 8YR",
+                    "price": "99.9900",
+                    "stock_qty": 6,
+                    "sale_price": "99.9900"
+                  },
+                  {
+                    "product_name": "KINGS COUNTY BOURBON",
+                    "price": "74.9900",
+                    "stock_qty": 8,
+                    "sale_price": "74.9900"
+                  },
+                  {
+                    "product_name": "OLD ELK  WHEATED BOURBON 750ML",
+                    "price": "71.9900",
+                    "stock_qty": 3,
+                    "sale_price": "71.9900"
+                  },
+                  {
+                    "product_name": "CHARLES GOODNIGHT TEXAS BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 1,
+                    "sale_price": "69.9900"
+                  },
+                  {
+                    "product_name": "RARE HARE BOURBON 7YR",
+                    "price": "69.9900",
+                    "stock_qty": 7,
+                    "sale_price": "69.9900"
+                  },
+                  {
+                    "product_name": "PUNCHER'S CHANCE BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 3,
+                    "sale_price": "69.9900"
+                  },
+                  {
+                    "product_name": "WILLETT BOURBON 4YR",
+                    "price": "65.9900",
+                    "stock_qty": 5,
+                    "sale_price": "65.9900"
+                  },
+                  {
+                    "product_name": "KNOB CREEK BOURBON 12YR",
+                    "price": "64.9900",
+                    "stock_qty": 9,
+                    "sale_price": "64.9900"
+                  },
+                  {
+                    "product_name": "COPPER & CASK WHEATED BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 6,
+                    "sale_price": "62.9900"
+                  },
+                  {
+                    "product_name": "BELLE MEADE RESERVE BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 1,
+                    "sale_price": "62.9900"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S RESERVE BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 6,
+                    "sale_price": "59.9900"
+                  },
+                  {
+                    "product_name": "COPPER & CASK STRAIGHT BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 13,
+                    "sale_price": "59.9900"
+                  },
+                  {
+                    "product_name": "CHICKEN COCK BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "sale_price": "59.9900"
+                  },
+                  {
+                    "product_name": "COPPER & CASK BOURBON 6 YERS 7",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "sale_price": "59.9900"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH RYE BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "sale_price": "54.9900"
+                  },
+                  {
+                    "product_name": "NOAH’S MILL BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 8,
+                    "sale_price": "54.9900"
+                  },
+                  {
+                    "product_name": "WHEAT PENNY BOURBON 75O",
+                    "price": "54.9900",
+                    "stock_qty": 8,
+                    "sale_price": "54.9900"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 14YR",
+                    "price": "54.9900",
+                    "stock_qty": 37,
+                    "sale_price": "54.9900"
+                  },
+                  {
+                    "product_name": "BRECKENRIDGE BOURBON WHISKEY",
+                    "price": "54.9900",
+                    "stock_qty": 3,
+                    "sale_price": "54.9900"
+                  },
+                  {
+                    "product_name": "PINHOOK BOURBON WAR 5YR",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "sale_price": "54.9900"
+                  },
+                  {
+                    "product_name": "ERIC LEGRAND BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "sale_price": "54.9900"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH WHEAT BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "sale_price": "54.9900"
+                  },
+                  {
+                    "product_name": "BLUESTONE MANOR BOURBON",
+                    "price": "52.9900",
+                    "stock_qty": 4,
+                    "sale_price": "52.9900"
+                  },
+                  {
+                    "product_name": "OLD ELK BLENDED STRAIGHT BOURBON",
+                    "price": "52.9900",
+                    "stock_qty": 2,
+                    "sale_price": "52.9900"
+                  },
+                  {
+                    "product_name": "GREEN RIVER FULL PROOF BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 4,
+                    "sale_price": "49.9900"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 8,
+                    "sale_price": "49.9900"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 60,
+                    "sale_price": "49.9900"
+                  },
+                  {
+                    "product_name": "F.E.W.BOURBON WHISKEY",
+                    "price": "49.9900",
+                    "stock_qty": 5,
+                    "sale_price": "49.9900"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON 10YR",
+                    "price": "49.9900",
+                    "stock_qty": 4,
+                    "sale_price": "49.9900"
+                  },
+                  {
+                    "product_name": "GREEN RIVER BOURBON SPECIAL 250TH ANNIVERSARY RELEASE",
+                    "price": "49.9900",
+                    "stock_qty": 5,
+                    "sale_price": "49.9900"
+                  },
+                  {
+                    "product_name": "BARDSTOWN ORGIN SERIES BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 7,
+                    "sale_price": "49.9900"
+                  },
+                  {
+                    "product_name": "DEXTER THREE WOOD BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 3,
+                    "sale_price": "49.9900"
+                  },
+                  {
+                    "product_name": "LEGENT BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 15,
+                    "sale_price": "44.9900"
+                  },
+                  {
+                    "product_name": "NEW RIFF BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 1,
+                    "sale_price": "44.9900"
+                  },
+                  {
+                    "product_name": "MICHTER'S SMALL BATCH BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 5,
+                    "sale_price": "44.9900"
+                  },
+                  {
+                    "product_name": "WILLETT BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 6,
+                    "sale_price": "44.9900"
+                  },
+                  {
+                    "product_name": "FOUR ROSES BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 8,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "PENELOPE STR BOURBON 750",
+                    "price": "39.9900",
+                    "stock_qty": 4,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "YELLOWSTONE BOURBON WHISKEY",
+                    "price": "39.9900",
+                    "stock_qty": 12,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "ROWAN’S CREEK BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 9,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "BROTHER’S BOND BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 2,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "OLD BARDSTOWN SOUR MASH BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 1,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "WHISTLEPIG PIGGYBACK BOURBON 6YR",
+                    "price": "39.9900",
+                    "stock_qty": 27,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "GREEN RIVER WHEATED BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 3,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "YELLOWSTONE BOURBON SMALL BATCH 6YR",
+                    "price": "39.9900",
+                    "stock_qty": 6,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "BARRELL FOUNDATION BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 3,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "BUFFALO TRACE BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 4,
+                    "sale_price": "39.9900"
+                  },
+                  {
+                    "product_name": "BASIL HAYDEN BOURBON 8 YEARS",
+                    "price": "36.9900",
+                    "stock_qty": 17,
+                    "sale_price": "36.9900"
+                  },
+                  {
+                    "product_name": "HIGH WEST BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 1,
+                    "sale_price": "34.9900"
+                  },
+                  {
+                    "product_name": "GREEN RIVER BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 4,
+                    "sale_price": "34.9900"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 5,
+                    "sale_price": "34.9900"
+                  },
+                  {
+                    "product_name": "PUNCHER'S CHANCE BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 10,
+                    "sale_price": "34.9900"
+                  },
+                  {
+                    "product_name": "SMOOTH AMBLER. CONTRADICTION BOURBON",
+                    "price": "33.9900",
+                    "stock_qty": 1,
+                    "sale_price": "33.9900"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "31.9900",
+                    "stock_qty": 16,
+                    "sale_price": "31.9900"
+                  },
+                  {
+                    "product_name": "OLD GRAND-DAD BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 1,
+                    "sale_price": "29.9900"
+                  },
+                  {
+                    "product_name": "SMUGGLERS NOTCH VERMONT MAPLE BOURBON CREAM",
+                    "price": "29.9900",
+                    "stock_qty": 9,
+                    "sale_price": "29.9900"
+                  },
+                  {
+                    "product_name": "ELIJAH CRAIG BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 52,
+                    "sale_price": "29.9900"
+                  },
+                  {
+                    "product_name": "VIRGINIA GENTLEMAN BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 2,
+                    "sale_price": "29.9900"
+                  },
+                  {
+                    "product_name": "WEST CORK BOURBON CASK MATURED",
+                    "price": "28.9900",
+                    "stock_qty": 6,
+                    "sale_price": "28.9900"
+                  },
+                  {
+                    "product_name": "TINCUP STRAIGHT BOURBON",
+                    "price": "27.9900",
+                    "stock_qty": 3,
+                    "sale_price": "27.9900"
+                  },
+                  {
+                    "product_name": "BUFFALO TRACE BOURBON CREAM",
+                    "price": "26.9900",
+                    "stock_qty": 13,
+                    "sale_price": "26.9900"
+                  },
+                  {
+                    "product_name": "BASIL HAYDEN BOURBON 8 YRS",
+                    "price": "26.9900",
+                    "stock_qty": 3,
+                    "sale_price": "26.9900"
+                  },
+                  {
+                    "product_name": "REDEMPTION BOURBON",
+                    "price": "25.9900",
+                    "stock_qty": 22,
+                    "sale_price": "25.9900"
+                  },
+                  {
+                    "product_name": "OLD TUB UNFILTERED BOURBON",
+                    "price": "24.9900",
+                    "stock_qty": 7,
+                    "sale_price": "24.9900"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY BACKYARD STOUT",
+                    "price": "24.9900",
+                    "stock_qty": 4,
+                    "sale_price": "24.9900"
+                  },
+                  {
+                    "product_name": "HINCH SMALL BATCH BOURBON CASK",
+                    "price": "24.9900",
+                    "stock_qty": 8,
+                    "sale_price": "24.9900"
+                  },
+                  {
+                    "product_name": "BIRDDOG BOURBON",
+                    "price": "24.9900",
+                    "stock_qty": 1,
+                    "sale_price": "24.9900"
+                  },
+                  {
+                    "product_name": "REBEL BOURBON 100 PROOF",
+                    "price": "24.9900",
+                    "stock_qty": 6,
+                    "sale_price": "24.9900"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "22.9900",
+                    "stock_qty": 6,
+                    "sale_price": "22.9900"
+                  },
+                  {
+                    "product_name": "JOSH RES BOURBON CAB 750",
+                    "price": "19.9900",
+                    "stock_qty": 13,
+                    "sale_price": "19.9900"
+                  },
+                  {
+                    "product_name": "MIDDLE WEST BOURBON CREAM",
+                    "price": "19.9900",
+                    "stock_qty": 2,
+                    "sale_price": "19.9900"
+                  },
+                  {
+                    "product_name": "JEREMIAH WEED SWEET TEA VODKA & BOURBON WHISKEY",
+                    "price": "19.9900",
+                    "stock_qty": 1,
+                    "sale_price": "19.9900"
+                  },
+                  {
+                    "product_name": "FIGHTING COCK BOURBON",
+                    "price": "19.9900",
+                    "stock_qty": 5,
+                    "sale_price": "19.9900"
+                  },
+                  {
+                    "product_name": "FOUR ROSES BOURBON",
+                    "price": "19.9900",
+                    "stock_qty": 6,
+                    "sale_price": "19.9900"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL STOUT",
+                    "price": "18.9900",
+                    "stock_qty": 3,
+                    "sale_price": "18.9900"
+                  },
+                  {
+                    "product_name": "BOTA BOX NIGHTHAWK BOURBON CAB",
+                    "price": "18.9900",
+                    "stock_qty": 17,
+                    "sale_price": "18.9900"
+                  },
+                  {
+                    "product_name": "JOSH RES BOURBON ZIN 750",
+                    "price": "18.9900",
+                    "stock_qty": 16,
+                    "sale_price": "18.9900"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL-AGED STOUT BOTTLE",
+                    "price": "17.9900",
+                    "stock_qty": 1,
+                    "sale_price": "17.9900"
+                  },
+                  {
+                    "product_name": "EZRA BROOKS BOURBON CREAM LIQUEUR",
+                    "price": "15.9900",
+                    "stock_qty": 10,
+                    "sale_price": "15.9900"
+                  },
+                  {
+                    "product_name": "WILD TURKEY 101 BOURBON",
+                    "price": "14.9900",
+                    "stock_qty": 13,
+                    "sale_price": "14.9900"
+                  },
+                  {
+                    "product_name": "KENTUCKY BOURBON BARREL",
+                    "price": "14.9900",
+                    "stock_qty": 7,
+                    "sale_price": "14.9900"
+                  },
+                  {
+                    "product_name": "WILD TURKEY BOURBON",
+                    "price": "13.9900",
+                    "stock_qty": 12,
+                    "sale_price": "13.9900"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY STOUT 2022",
+                    "price": "13.9900",
+                    "stock_qty": 15,
+                    "sale_price": "13.9900"
+                  },
+                  {
+                    "product_name": "FOUNDER'S ORIGINAL BOURBON SOUR",
+                    "price": "13.9900",
+                    "stock_qty": 12,
+                    "sale_price": "13.9900"
+                  },
+                  {
+                    "product_name": "MIXED-UP APPLE BOURBON MULE",
+                    "price": "13.9900",
+                    "stock_qty": 1,
+                    "sale_price": "13.9900"
+                  },
+                  {
+                    "product_name": "MONDAVI PS BOURBON CAB 750",
+                    "price": "12.9900",
+                    "stock_qty": 9,
+                    "sale_price": "12.9900"
+                  }
+                ],
+                "rowCount": 106,
+                "truncated": true,
+                "downloadId": "b0b06c7f2f640701"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "search-01",
+      "category": "search",
+      "question": "List your scotch selection.",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "min_count",
+            "from": "scotchCount"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "List your scotch selection.",
+          "answer": "Here's your complete scotch selection, sorted by price from highest to lowest:\n\n| Product Name | Price | Stock Qty |\n|--------------|-------|-----------|\n| HOUSE LANNISTER 750 | $74.99 | 0 |\n| GLENKINCHIE DBL MATURED SCOTCH | $71.99 | 0 |\n| HOUSE GREY JOY 750 | $53.99 | 0 |\n| HOUSE STARK 750 | $47.99 | 0 |\n| HOUSE TARGARYEN 750 | $47.99 | 0 |\n| GLENKINCHIE SGL MALT SCOTCH 10 | $45.99 | 0 |\n| THE DEACON BLENDED SCOTCH WHISKY | $39.99 | 0 |\n| J&B SCOTCH 175 | $39.99 | 0 |\n| GLEN MORAY SCOTCH 750 | $35.99 | 0 |\n| GRANTS SCOTCH 175 | $26.99 | 0 |\n| CLUNY SCOTCH 1.75 | $22.99 | 0 |\n| J&B SCOTCH 750 | $21.99 | 0 |\n| CHIVAS SCOTCH 12YR | $21.99 | 6 |\n| MCGREGORS SCOTCH 175 | $20.99 | 0 |\n| ISLAY MIST BLENDED SCOTCH WHIS | $20.99 | 0 |\n| HEATHER GLEN SCOTCH 175 | $19.99 | 0 |\n| SHIPYARD SCOTCH ALE 750 | $14.99 | 0 |\n| B&B GLENFIDDICH SCOTCH MANHATT | $14.99 | 0 |\n| J&B SCOTCH 375 | $13.99 | 0 |\n| LAUDER'S SCOTCH | $12.99 | 4 |\n| BBC SCOTCH ALE 4PK CN | $10.99 | 0 |\n| CHIVAS SCOTCH | $10.99 | 9 |\n| MAYFLOWER SCOTCH ALE 4PK | $10.49 | 0 |\n| OLD CHUB SCOTCH ALE 6PK CN | $10.29 | 0 |\n| MCGREGORS SCOTCH LT | $9.99 | 0 |\n| CHIVAS SCOTCH NIP 18YR | $7.99 | 0 |\n| QUEEN CITY SCOTCH ALE 22OZ | $6.49 | 0 |\n| CHIVAS SCOTCH NIP EXTRA | $5.99 | 0 |\n| CHIVAS SCOTCH NIP | $3.99 | 55 |\n| 99 BUTTER SCOTCH 50 ML | $1.00 | 215 |\n\n[download:af481b6c4ae23199]\n\nYou have 30 scotch products in your catalog, ranging from premium single malts like the Glenkinchie expressions down to nips and flavored options. Currently, only 5 items are in stock: Chivas 12YR (6 bottles), Lauder's Scotch (4 bottles), regular Chivas (9 bottles), Chivas nips (55 units), and 99 Butterscotch 50ml bottles (215 units). The Game of Thrones themed bottles and most premium options are currently out of stock.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT product_name, price, stock_qty\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\yscotch\\y' OR sub_category ~* '\\yscotch\\y' OR category ~* '\\yscotch\\y')\nORDER BY price DESC"
+              },
+              "sql": "SELECT product_name, price, stock_qty\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\yscotch\\y' OR sub_category ~* '\\yscotch\\y' OR category ~* '\\yscotch\\y')\nORDER BY price DESC",
+              "success": true,
+              "row_count": 30,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "product_name": "HOUSE LANNISTER 750",
+                    "price": "74.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "GLENKINCHIE DBL MATURED SCOTCH",
+                    "price": "71.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "HOUSE GREY JOY 750",
+                    "price": "53.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "HOUSE STARK 750",
+                    "price": "47.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "HOUSE TARGARYEN 750",
+                    "price": "47.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "GLENKINCHIE SGL MALT SCOTCH 10",
+                    "price": "45.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "THE DEACON BLENDED SCOTCH WHISKY",
+                    "price": "39.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "J&B SCOTCH 175",
+                    "price": "39.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "GLEN MORAY SCOTCH 750",
+                    "price": "35.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "GRANTS SCOTCH 175",
+                    "price": "26.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "CLUNY SCOTCH  1.75",
+                    "price": "22.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "J&B SCOTCH 750",
+                    "price": "21.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "CHIVAS SCOTCH 12YR",
+                    "price": "21.9900",
+                    "stock_qty": 6
+                  },
+                  {
+                    "product_name": "MCGREGORS SCOTCH 175",
+                    "price": "20.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "ISLAY MIST BLENDED SCOTCH WHIS",
+                    "price": "20.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "HEATHER GLEN SCOTCH 175",
+                    "price": "19.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "SHIPYARD SCOTCH ALE 750",
+                    "price": "14.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "B&B GLENFIDDICH SCOTCH MANHATT",
+                    "price": "14.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "J&B SCOTCH 375",
+                    "price": "13.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "LAUDER'S SCOTCH",
+                    "price": "12.9900",
+                    "stock_qty": 4
+                  },
+                  {
+                    "product_name": "BBC SCOTCH ALE 4PK CN",
+                    "price": "10.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "CHIVAS SCOTCH",
+                    "price": "10.9900",
+                    "stock_qty": 9
+                  },
+                  {
+                    "product_name": "MAYFLOWER SCOTCH ALE 4PK",
+                    "price": "10.4900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "OLD CHUB SCOTCH ALE 6PK CN",
+                    "price": "10.2900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "MCGREGORS SCOTCH LT",
+                    "price": "9.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "CHIVAS SCOTCH NIP 18YR",
+                    "price": "7.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "QUEEN CITY SCOTCH ALE 22OZ",
+                    "price": "6.4900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "CHIVAS SCOTCH NIP EXTRA",
+                    "price": "5.9900",
+                    "stock_qty": 0
+                  },
+                  {
+                    "product_name": "CHIVAS SCOTCH NIP",
+                    "price": "3.9900",
+                    "stock_qty": 55
+                  },
+                  {
+                    "product_name": "99 BUTTER SCOTCH 50 ML",
+                    "price": "1.0000",
+                    "stock_qty": 215
+                  }
+                ],
+                "rowCount": 30,
+                "truncated": false,
+                "downloadId": "af481b6c4ae23199"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "search-03",
+      "category": "search",
+      "question": "Which bourbons do I have in stock right now?",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "min_count",
+            "from": "bourbonInStock"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "Which bourbons do I have in stock right now?",
+          "answer": "You have **106 bourbons** currently in stock. Here are your top bourbon selections by stock level:\n\n| Product Name | Price | Stock Qty | SKU |\n|--------------|-------|-----------|-----|\n| BIRD DOG BOURBON | $1.00 | 350 | 19632 |\n| BULLEIT BOURBON NIP | $3.99 | 105 | 3486 |\n| PENELOPE STR BOURBON 50ML | $2.99 | 87 | 18260 |\n| EAGLE RARE BOURBON | $49.99 | 60 | 4822 |\n| ELIJAH CRAIG BOURBON | $29.99 | 52 | 5316 |\n| BENCHMARK BOURBON 50ML | $1.25 | 49 | 14334 |\n| GLENFIDDICH BOURBON BARREL 14YR | $54.99 | 37 | 4506 |\n| WHISTLEPIG PIGGYBACK BOURBON 6YR | $39.99 | 27 | 15914 |\n| REDEMPTION BOURBON | $25.99 | 22 | 5398 |\n| BASIL HAYDEN BOURBON 8 YEARS | $36.99 | 17 | 3905 |\n| BOTA BOX NIGHTHAWK BOURBON CAB | $18.99 | 17 | 11627 |\n| JOSH RES BOURBON ZIN 750 | $18.99 | 16 | 15395 |\n| BULLEIT BOURBON | $31.99 | 16 | 3484 |\n| LEGENT BOURBON | $44.99 | 15 | 12967 |\n| BOURBON COUNTY STOUT 2022 | $13.99 | 15 | 15648 |\n| BUFFALO TRACE BOURBON CREAM | $26.99 | 13 | 13946 |\n| JOSH RES BOURBON CAB 750 | $19.99 | 13 | 15644 |\n| WILD TURKEY 101 BOURBON | $14.99 | 13 | 15755 |\n| COPPER & CASK STRAIGHT BOURBON | $59.99 | 13 | 15816 |\n| YELLOWSTONE BOURBON WHISKEY | $39.99 | 12 | 14439 |\n\n[download:eebb606355635c60]\n\nYour bourbon selection spans from budget-friendly options like Bird Dog Bourbon at $1.00 to premium bottles like Glenfiddich Bourbon Barrel 19 Years at $189.99. You have strong inventory depth in popular brands like Bulleit, Eagle Rare, and Elijah Craig, plus some specialty items like bourbon barrel-aged wines and bourbon cream liqueurs.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT product_name, price, stock_qty, sku\nFROM products \nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\n  AND stock_qty > 0\nORDER BY stock_qty DESC"
+              },
+              "sql": "SELECT product_name, price, stock_qty, sku\nFROM products \nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\n  AND stock_qty > 0\nORDER BY stock_qty DESC",
+              "success": true,
+              "row_count": 106,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "product_name": "BIRD DOG BOURBON",
+                    "price": "1.0000",
+                    "stock_qty": 350,
+                    "sku": "19632"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON NIP",
+                    "price": "3.9900",
+                    "stock_qty": 105,
+                    "sku": "3486"
+                  },
+                  {
+                    "product_name": "PENELOPE STR BOURBON 50ML",
+                    "price": "2.9900",
+                    "stock_qty": 87,
+                    "sku": "18260"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 60,
+                    "sku": "4822"
+                  },
+                  {
+                    "product_name": "ELIJAH CRAIG BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 52,
+                    "sku": "5316"
+                  },
+                  {
+                    "product_name": "BENCHMARK BOURBON 50ML",
+                    "price": "1.2500",
+                    "stock_qty": 49,
+                    "sku": "14334"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 14YR",
+                    "price": "54.9900",
+                    "stock_qty": 37,
+                    "sku": "4506"
+                  },
+                  {
+                    "product_name": "WHISTLEPIG PIGGYBACK BOURBON 6YR",
+                    "price": "39.9900",
+                    "stock_qty": 27,
+                    "sku": "15914"
+                  },
+                  {
+                    "product_name": "REDEMPTION BOURBON",
+                    "price": "25.9900",
+                    "stock_qty": 22,
+                    "sku": "5398"
+                  },
+                  {
+                    "product_name": "BASIL HAYDEN BOURBON 8 YEARS",
+                    "price": "36.9900",
+                    "stock_qty": 17,
+                    "sku": "3905"
+                  },
+                  {
+                    "product_name": "BOTA BOX NIGHTHAWK BOURBON CAB",
+                    "price": "18.9900",
+                    "stock_qty": 17,
+                    "sku": "11627"
+                  },
+                  {
+                    "product_name": "JOSH RES BOURBON ZIN 750",
+                    "price": "18.9900",
+                    "stock_qty": 16,
+                    "sku": "15395"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "31.9900",
+                    "stock_qty": 16,
+                    "sku": "3484"
+                  },
+                  {
+                    "product_name": "LEGENT BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 15,
+                    "sku": "12967"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY STOUT 2022",
+                    "price": "13.9900",
+                    "stock_qty": 15,
+                    "sku": "15648"
+                  },
+                  {
+                    "product_name": "BUFFALO TRACE BOURBON CREAM",
+                    "price": "26.9900",
+                    "stock_qty": 13,
+                    "sku": "13946"
+                  },
+                  {
+                    "product_name": "JOSH RES BOURBON CAB 750",
+                    "price": "19.9900",
+                    "stock_qty": 13,
+                    "sku": "15644"
+                  },
+                  {
+                    "product_name": "WILD TURKEY 101 BOURBON",
+                    "price": "14.9900",
+                    "stock_qty": 13,
+                    "sku": "15755"
+                  },
+                  {
+                    "product_name": "COPPER & CASK STRAIGHT BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 13,
+                    "sku": "15816"
+                  },
+                  {
+                    "product_name": "YELLOWSTONE BOURBON WHISKEY",
+                    "price": "39.9900",
+                    "stock_qty": 12,
+                    "sku": "14439"
+                  },
+                  {
+                    "product_name": "FOUNDER'S ORIGINAL BOURBON SOUR",
+                    "price": "13.9900",
+                    "stock_qty": 12,
+                    "sku": "19108"
+                  },
+                  {
+                    "product_name": "WILD TURKEY BOURBON",
+                    "price": "13.9900",
+                    "stock_qty": 12,
+                    "sku": "15754"
+                  },
+                  {
+                    "product_name": "PUNCHER'S CHANCE BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 10,
+                    "sku": "15848"
+                  },
+                  {
+                    "product_name": "EZRA BROOKS BOURBON CREAM LIQUEUR",
+                    "price": "15.9900",
+                    "stock_qty": 10,
+                    "sku": "15971"
+                  },
+                  {
+                    "product_name": "MONDAVI PS BOURBON CAB 750",
+                    "price": "12.9900",
+                    "stock_qty": 9,
+                    "sku": "7394"
+                  },
+                  {
+                    "product_name": "SMUGGLERS NOTCH VERMONT MAPLE BOURBON CREAM",
+                    "price": "29.9900",
+                    "stock_qty": 9,
+                    "sku": "15371"
+                  },
+                  {
+                    "product_name": "ROWAN’S CREEK BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 9,
+                    "sku": "14463"
+                  },
+                  {
+                    "product_name": "KNOB CREEK BOURBON 12YR",
+                    "price": "64.9900",
+                    "stock_qty": 9,
+                    "sku": "13780"
+                  },
+                  {
+                    "product_name": "NOAH’S MILL BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 8,
+                    "sku": "14464"
+                  },
+                  {
+                    "product_name": "FOUR ROSES BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 8,
+                    "sku": "3566"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 8,
+                    "sku": "3482"
+                  },
+                  {
+                    "product_name": "HINCH SMALL BATCH BOURBON CASK",
+                    "price": "24.9900",
+                    "stock_qty": 8,
+                    "sku": "13001"
+                  },
+                  {
+                    "product_name": "BOTA BOX BOURBON CAB 500ML",
+                    "price": "4.9900",
+                    "stock_qty": 8,
+                    "sku": "12941"
+                  },
+                  {
+                    "product_name": "KINGS COUNTY BOURBON",
+                    "price": "74.9900",
+                    "stock_qty": 8,
+                    "sku": "15633"
+                  },
+                  {
+                    "product_name": "WHEAT PENNY BOURBON 75O",
+                    "price": "54.9900",
+                    "stock_qty": 8,
+                    "sku": "14484"
+                  },
+                  {
+                    "product_name": "OLD TUB UNFILTERED BOURBON",
+                    "price": "24.9900",
+                    "stock_qty": 7,
+                    "sku": "15553"
+                  },
+                  {
+                    "product_name": "RARE HARE BOURBON 7YR",
+                    "price": "69.9900",
+                    "stock_qty": 7,
+                    "sku": "19096"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL-AGED STOUT CAN",
+                    "price": "3.9900",
+                    "stock_qty": 7,
+                    "sku": "19318"
+                  },
+                  {
+                    "product_name": "KENTUCKY BOURBON BARREL",
+                    "price": "14.9900",
+                    "stock_qty": 7,
+                    "sku": "516"
+                  },
+                  {
+                    "product_name": "HEAVEN HILL BOURBON",
+                    "price": "114.9900",
+                    "stock_qty": 7,
+                    "sku": "18032"
+                  },
+                  {
+                    "product_name": "BARDSTOWN ORGIN SERIES BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 7,
+                    "sku": "18048"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "22.9900",
+                    "stock_qty": 6,
+                    "sku": "11010"
+                  },
+                  {
+                    "product_name": "WILLETT BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 6,
+                    "sku": "14402"
+                  },
+                  {
+                    "product_name": "REBEL BOURBON 100 PROOF",
+                    "price": "24.9900",
+                    "stock_qty": 6,
+                    "sku": "15612"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-04",
+                    "price": "119.9900",
+                    "stock_qty": 6,
+                    "sku": "18561"
+                  },
+                  {
+                    "product_name": "YELLOWSTONE BOURBON SMALL BATCH 6YR",
+                    "price": "39.9900",
+                    "stock_qty": 6,
+                    "sku": "18672"
+                  },
+                  {
+                    "product_name": "COPPER & CASK WHEATED BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 6,
+                    "sku": "18958"
+                  },
+                  {
+                    "product_name": "BEN HOLLADAY 1856 ORIGINAL ONE BARREL BOURBON 8YR",
+                    "price": "99.9900",
+                    "stock_qty": 6,
+                    "sku": "19158"
+                  },
+                  {
+                    "product_name": "WEST CORK BOURBON CASK MATURED",
+                    "price": "28.9900",
+                    "stock_qty": 6,
+                    "sku": "19497"
+                  },
+                  {
+                    "product_name": "FOUR ROSES BOURBON",
+                    "price": "19.9900",
+                    "stock_qty": 6,
+                    "sku": "3565"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S RESERVE BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 6,
+                    "sku": "5466"
+                  },
+                  {
+                    "product_name": "F.E.W.BOURBON WHISKEY",
+                    "price": "49.9900",
+                    "stock_qty": 5,
+                    "sku": "14602"
+                  },
+                  {
+                    "product_name": "GREEN RIVER BOURBON SPECIAL 250TH ANNIVERSARY RELEASE",
+                    "price": "49.9900",
+                    "stock_qty": 5,
+                    "sku": "18944"
+                  },
+                  {
+                    "product_name": "MICHTER'S SMALL BATCH BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 5,
+                    "sku": "12227"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 5,
+                    "sku": "5467"
+                  },
+                  {
+                    "product_name": "WILLETT BOURBON 4YR",
+                    "price": "65.9900",
+                    "stock_qty": 5,
+                    "sku": "19317"
+                  },
+                  {
+                    "product_name": "COPPER & CASK BOURBON 6 YERS 7",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "sku": "16813"
+                  },
+                  {
+                    "product_name": "FIGHTING COCK BOURBON",
+                    "price": "19.9900",
+                    "stock_qty": 5,
+                    "sku": "15977"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-02",
+                    "price": "129.9900",
+                    "stock_qty": 5,
+                    "sku": "16585"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "119.9900",
+                    "stock_qty": 5,
+                    "sku": "13951"
+                  },
+                  {
+                    "product_name": "CHICKEN COCK BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "sku": "16006"
+                  },
+                  {
+                    "product_name": "GREEN RIVER FULL PROOF BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 4,
+                    "sku": "18052"
+                  },
+                  {
+                    "product_name": "JOSEPH MAGNUS TRIPLE CASK FINISHED",
+                    "price": "109.9900",
+                    "stock_qty": 4,
+                    "sku": "14626"
+                  },
+                  {
+                    "product_name": "PENELOPE STR BOURBON 750",
+                    "price": "39.9900",
+                    "stock_qty": 4,
+                    "sku": "13513"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY BACKYARD STOUT",
+                    "price": "24.9900",
+                    "stock_qty": 4,
+                    "sku": "17130"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON 10YR",
+                    "price": "49.9900",
+                    "stock_qty": 4,
+                    "sku": "13553"
+                  },
+                  {
+                    "product_name": "BUFFALO TRACE BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 4,
+                    "sku": "3612"
+                  },
+                  {
+                    "product_name": "GREEN RIVER BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 4,
+                    "sku": "18018"
+                  },
+                  {
+                    "product_name": "BLUESTONE MANOR BOURBON",
+                    "price": "52.9900",
+                    "stock_qty": 4,
+                    "sku": "16880"
+                  },
+                  {
+                    "product_name": "BLANTON'S BOURBON",
+                    "price": "99.9900",
+                    "stock_qty": 4,
+                    "sku": "3609"
+                  },
+                  {
+                    "product_name": "BARRELL FOUNDATION BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 3,
+                    "sku": "19154"
+                  },
+                  {
+                    "product_name": "GREEN RIVER WHEATED BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 3,
+                    "sku": "17598"
+                  },
+                  {
+                    "product_name": "PUNCHER'S CHANCE BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 3,
+                    "sku": "15851"
+                  },
+                  {
+                    "product_name": "DEXTER THREE WOOD BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 3,
+                    "sku": "18258"
+                  },
+                  {
+                    "product_name": "TINCUP STRAIGHT BOURBON",
+                    "price": "27.9900",
+                    "stock_qty": 3,
+                    "sku": "18618"
+                  },
+                  {
+                    "product_name": "OLD ELK  WHEATED BOURBON 750ML",
+                    "price": "71.9900",
+                    "stock_qty": 3,
+                    "sku": "15273"
+                  },
+                  {
+                    "product_name": "BASIL HAYDEN BOURBON 8 YRS",
+                    "price": "26.9900",
+                    "stock_qty": 3,
+                    "sku": "12107"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL STOUT",
+                    "price": "18.9900",
+                    "stock_qty": 3,
+                    "sku": "19174"
+                  },
+                  {
+                    "product_name": "BRECKENRIDGE BOURBON WHISKEY",
+                    "price": "54.9900",
+                    "stock_qty": 3,
+                    "sku": "14840"
+                  },
+                  {
+                    "product_name": "JOS.A.MAGNUS MURRAY HILL CLUB",
+                    "price": "109.9900",
+                    "stock_qty": 3,
+                    "sku": "14627"
+                  },
+                  {
+                    "product_name": "WILLETT BOURBON  8YRS 750ML",
+                    "price": "399.9900",
+                    "stock_qty": 3,
+                    "sku": "16200"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH WHEAT BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "sku": "18908"
+                  },
+                  {
+                    "product_name": "ERIC LEGRAND BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "sku": "19070"
+                  },
+                  {
+                    "product_name": "PINHOOK BOURBON WAR 5YR",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "sku": "15292"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH RYE BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "sku": "18907"
+                  },
+                  {
+                    "product_name": "MIDDLE WEST BOURBON CREAM",
+                    "price": "19.9900",
+                    "stock_qty": 2,
+                    "sku": "15994"
+                  },
+                  {
+                    "product_name": "OLD ELK BLENDED STRAIGHT BOURBON",
+                    "price": "52.9900",
+                    "stock_qty": 2,
+                    "sku": "15272"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-01",
+                    "price": "119.9900",
+                    "stock_qty": 2,
+                    "sku": "18563"
+                  },
+                  {
+                    "product_name": "VIRGINIA GENTLEMAN BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 2,
+                    "sku": "16692"
+                  },
+                  {
+                    "product_name": "BROTHER’S BOND BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 2,
+                    "sku": "14716"
+                  },
+                  {
+                    "product_name": "JOS MAGNUS CIGAR BOURB 750",
+                    "price": "249.9900",
+                    "stock_qty": 2,
+                    "sku": "16241"
+                  },
+                  {
+                    "product_name": "SMOOTH AMBLER. CONTRADICTION BOURBON",
+                    "price": "33.9900",
+                    "stock_qty": 1,
+                    "sku": "14099"
+                  },
+                  {
+                    "product_name": "OLD BARDSTOWN SOUR MASH BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 1,
+                    "sku": "15804"
+                  },
+                  {
+                    "product_name": "MIXED-UP APPLE BOURBON MULE",
+                    "price": "13.9900",
+                    "stock_qty": 1,
+                    "sku": "19148"
+                  },
+                  {
+                    "product_name": "OLD GRAND-DAD BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 1,
+                    "sku": "17017"
+                  },
+                  {
+                    "product_name": "RARE HARE BOURBON 15YR",
+                    "price": "149.9900",
+                    "stock_qty": 1,
+                    "sku": "19097"
+                  },
+                  {
+                    "product_name": "NEW RIFF BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 1,
+                    "sku": "16131"
+                  },
+                  {
+                    "product_name": "BIRDDOG BOURBON",
+                    "price": "24.9900",
+                    "stock_qty": 1,
+                    "sku": "14963"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 19 YEARS",
+                    "price": "189.9900",
+                    "stock_qty": 1,
+                    "sku": "19531"
+                  },
+                  {
+                    "product_name": "CHARLES GOODNIGHT TEXAS BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 1,
+                    "sku": "16931"
+                  }
+                ],
+                "rowCount": 106,
+                "truncated": true,
+                "downloadId": "eebb606355635c60"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "follow-04",
+      "category": "followup",
+      "turns": [
+        {
+          "question": "List bourbon products.",
+          "answer": "You have **175 bourbon products** in your inventory. Here are the first 20 by name — say 'show next 20' or 'show all' if you'd like more:\n\n| Product Name | Price | Stock Qty | Category | Sub Category |\n|--------------|-------|-----------|----------|--------------|\n| 10TH MOUNTAIN BOURBON 750ML | $59.99 | 0 | LIQUOR | OLD FORESTER |\n| 1911 MAPLE BOURBON | $11.99 | 0 | BEER | 1911 CIDER |\n| ALC A CHINO BOURBON VANILLA LATTE | $3.99 | 0 | BEER | CUTWATER |\n| ANDERSON BOURBON STOUT 22OZ | $9.59 | 0 | BEER | ANDERSON VALLEY BREWING |\n| BARDSTOWN ORGIN SERIES BOURBON | $49.99 | 7 | LIQUOR | BARDSTOWN |\n| BARRELL FOUNDATION BOURBON | $39.99 | 3 | LIQUOR | BARRELL FOUNDATION |\n| BASIL HAYDEN BOURBON 8 YEARS | $36.99 | 17 | LIQUOR | BASIL HAYDEN'S |\n| BASIL HAYDEN BOURBON 8 YRS | $26.99 | 3 | LIQUOR | BASIL HAYDEN'S |\n| BELLE MEADE CLASSIC BOURBON | $37.99 | 0 | LIQUOR | BELLE MEADE |\n| BELLE MEADE RESERVE BOURBON | $62.99 | 1 | LIQUOR | BELLE MEADE |\n| BEN HOLLADAY 1856 ORIGINAL ONE BARREL BOURBON 8YR | $99.99 | 6 | LIQUOR | BEN HOLLADAY |\n| BENCHMARK BOURBON | $23.99 | 0 | LIQUOR | BENCHMARK |\n| BENCHMARK BOURBON 50ML | $1.25 | 49 | LIQUOR | BENCHMARK |\n| BENCHMARK BOURBON 750 | $14.99 | 0 | LIQUOR | BENCHMARK |\n| BERKSHIRE BOURBON | $43.99 | 0 | LIQUOR | BERKSHIRE MOUNTAIN DISTILLERS |\n| BIRD DOG BOURBON | $1.00 | 350 | LIQUOR | BIRDDOG |\n| BIRDDOG BOURBON | $24.99 | 1 | LIQUOR | BIRDDOG |\n| BLANTON'S BOURBON | $99.99 | 4 | LIQUOR | BLANTONS |\n| BLUESTONE MANOR BOURBON | $52.99 | 4 | LIQUOR | BLUESTONE MANOR |\n| BOOKER'S BOURBON 2023-01 | $119.99 | 2 | LIQUOR | BOOKER'S |\n\n[download:14c41008c04dece5]\n\nYour bourbon selection spans from budget-friendly options like Bird Dog Bourbon at $1.00 to premium bottles like JOS MAGNUS CIGAR BOURB at $249.99. You have a good mix of well-known brands like Buffalo Trace, Bulleit, and Four Roses, plus craft and specialty bourbons from distilleries like Bardstown and Booker's.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT product_name, price, stock_qty, category, sub_category\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\nORDER BY product_name"
+              },
+              "sql": "SELECT product_name, price, stock_qty, category, sub_category\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\nORDER BY product_name",
+              "success": true,
+              "row_count": 175,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "product_name": "10TH MOUNTAIN BOURBON 750ML",
+                    "price": "59.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "OLD FORESTER"
+                  },
+                  {
+                    "product_name": "1911 MAPLE BOURBON",
+                    "price": "11.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "1911 CIDER"
+                  },
+                  {
+                    "product_name": "ALC A CHINO BOURBON VANILLA LATTE",
+                    "price": "3.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "CUTWATER"
+                  },
+                  {
+                    "product_name": "ANDERSON BOURBON STOUT 22OZ",
+                    "price": "9.5900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "ANDERSON VALLEY BREWING"
+                  },
+                  {
+                    "product_name": "BARDSTOWN ORGIN SERIES BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "BARDSTOWN"
+                  },
+                  {
+                    "product_name": "BARRELL FOUNDATION BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "BARRELL FOUNDATION"
+                  },
+                  {
+                    "product_name": "BASIL HAYDEN BOURBON 8 YEARS",
+                    "price": "36.9900",
+                    "stock_qty": 17,
+                    "category": "LIQUOR",
+                    "sub_category": "BASIL HAYDEN'S"
+                  },
+                  {
+                    "product_name": "BASIL HAYDEN BOURBON 8 YRS",
+                    "price": "26.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "BASIL HAYDEN'S"
+                  },
+                  {
+                    "product_name": "BELLE MEADE CLASSIC BOURBON",
+                    "price": "37.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "BELLE MEADE"
+                  },
+                  {
+                    "product_name": "BELLE MEADE RESERVE BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BELLE MEADE"
+                  },
+                  {
+                    "product_name": "BEN HOLLADAY 1856 ORIGINAL ONE BARREL BOURBON 8YR",
+                    "price": "99.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BEN HOLLADAY"
+                  },
+                  {
+                    "product_name": "BENCHMARK BOURBON",
+                    "price": "23.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "BENCHMARK"
+                  },
+                  {
+                    "product_name": "BENCHMARK BOURBON 50ML",
+                    "price": "1.2500",
+                    "stock_qty": 49,
+                    "category": "LIQUOR",
+                    "sub_category": "BENCHMARK"
+                  },
+                  {
+                    "product_name": "BENCHMARK BOURBON 750",
+                    "price": "14.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "BENCHMARK"
+                  },
+                  {
+                    "product_name": "BERKSHIRE BOURBON",
+                    "price": "43.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "BERKSHIRE MOUNTAIN DISTILLERS"
+                  },
+                  {
+                    "product_name": "BIRD DOG BOURBON",
+                    "price": "1.0000",
+                    "stock_qty": 350,
+                    "category": "LIQUOR",
+                    "sub_category": "BIRDDOG"
+                  },
+                  {
+                    "product_name": "BIRDDOG BOURBON",
+                    "price": "24.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BIRDDOG"
+                  },
+                  {
+                    "product_name": "BLANTON'S BOURBON",
+                    "price": "99.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BLANTONS"
+                  },
+                  {
+                    "product_name": "BLUESTONE MANOR BOURBON",
+                    "price": "52.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BLUESTONE MANOR"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-01",
+                    "price": "119.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-02",
+                    "price": "129.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-04",
+                    "price": "119.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2024-04",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2025",
+                    "price": "119.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKERS BOURBON 2022",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOTA BOX BOURBON CAB 500ML",
+                    "price": "4.9900",
+                    "stock_qty": 8,
+                    "category": "WINE",
+                    "sub_category": "DELICATO"
+                  },
+                  {
+                    "product_name": "BOTA BOX NIGHTHAWK BOURBON CAB",
+                    "price": "18.9900",
+                    "stock_qty": 17,
+                    "category": "WINE",
+                    "sub_category": "DELICATO"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY #4 OAT",
+                    "price": "24.4900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY 4PK",
+                    "price": "22.4900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY BACKYARD STOUT",
+                    "price": "24.9900",
+                    "stock_qty": 4,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY BARLEYWINE 12OZ",
+                    "price": "6.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY CARAMELLA",
+                    "price": "16.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY CHERI STOUT",
+                    "price": "23.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY CHERRY STOUT",
+                    "price": "18.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY COFFEE 12OZ",
+                    "price": "6.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY COFFEE 4PK",
+                    "price": "21.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY COFFEE STOUT",
+                    "price": "12.4900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY COFFEE STOUT 20",
+                    "price": "24.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY COLA STOUT",
+                    "price": "24.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY KENT FOG",
+                    "price": "24.4900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY STOUT",
+                    "price": "13.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY STOUT 12OZ",
+                    "price": "6.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY STOUT 2022",
+                    "price": "13.9900",
+                    "stock_qty": 15,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY STOUT 30TH",
+                    "price": "39.9900",
+                    "stock_qty": 0,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BRECKENRIDGE BOURBON WHISKEY",
+                    "price": "54.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": ""
+                  },
+                  {
+                    "product_name": "BROTHER’S BOND BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "BROTHER'S BOND"
+                  },
+                  {
+                    "product_name": "BUFFALO TRACE BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BUFFALO TRACE"
+                  },
+                  {
+                    "product_name": "BUFFALO TRACE BOURBON CREAM",
+                    "price": "26.9900",
+                    "stock_qty": 13,
+                    "category": "LIQUOR",
+                    "sub_category": "BUFFALO TRACE"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "31.9900",
+                    "stock_qty": 16,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "22.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON 10YR",
+                    "price": "49.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON NIP",
+                    "price": "3.9900",
+                    "stock_qty": 105,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON SELECT 750",
+                    "price": "52.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "CHARLES GOODNIGHT TEXAS BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "CHARLES GOODNIGHT"
+                  },
+                  {
+                    "product_name": "CHICKEN COCK BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "CHICKEN COCK"
+                  },
+                  {
+                    "product_name": "CLEVELAND CHRISTMAS BOURBON",
+                    "price": "32.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "CLEVELAND"
+                  },
+                  {
+                    "product_name": "CLYDE MAYS STRAIGHT BOURBON",
+                    "price": "41.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "MICHTER'S"
+                  },
+                  {
+                    "product_name": "COPPER & CASK BOURBON 6 YERS 7",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "COPPER & CASK BOURBON 750ML",
+                    "price": "59.9900",
+                    "stock_qty": -1,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "COPPER & CASK STRAIGHT BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 13,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "COPPER & CASK WHEATED BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH RYE BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "dexter"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH WHEAT BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "dexter"
+                  },
+                  {
+                    "product_name": "DEXTER THREE WOOD BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "dexter"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL STOUT",
+                    "price": "18.9900",
+                    "stock_qty": 3,
+                    "category": "BEER",
+                    "sub_category": "NEW HOLLAND BREWING"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL-AGED STOUT BOTTLE",
+                    "price": "17.9900",
+                    "stock_qty": 1,
+                    "category": "BEER",
+                    "sub_category": "DRAGON'S MILK"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL-AGED STOUT CAN",
+                    "price": "3.9900",
+                    "stock_qty": 7,
+                    "category": "BEER",
+                    "sub_category": "NEW HOLLAND BREWING"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "EAGLE RARE"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "119.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "EAGLE RARE"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 60,
+                    "category": "LIQUOR",
+                    "sub_category": "EAGLE RARE"
+                  },
+                  {
+                    "product_name": "ELIJAH CRAIG BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 52,
+                    "category": "LIQUOR",
+                    "sub_category": "ELIJAH CRAIG"
+                  },
+                  {
+                    "product_name": "ERIC LEGRAND BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "new riff"
+                  },
+                  {
+                    "product_name": "EZRA BROOKS BOURBON CREAM LIQUEUR",
+                    "price": "15.9900",
+                    "stock_qty": 10,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "F.E.W.BOURBON WHISKEY",
+                    "price": "49.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "F.E.W"
+                  },
+                  {
+                    "product_name": "FIGHTING COCK BOURBON",
+                    "price": "19.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "FIGHTING COCK"
+                  },
+                  {
+                    "product_name": "FISTFUL OF BOURBON",
+                    "price": "24.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "BUFFALO TRACE"
+                  },
+                  {
+                    "product_name": "FOUNDER'S ORIGINAL BOURBON SOUR",
+                    "price": "13.9900",
+                    "stock_qty": 12,
+                    "category": "BEER",
+                    "sub_category": "FOUNDERS"
+                  },
+                  {
+                    "product_name": "FOUR ROSES BOURBON",
+                    "price": "19.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "FOUR ROSES"
+                  },
+                  {
+                    "product_name": "FOUR ROSES BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "FOUR ROSES"
+                  },
+                  {
+                    "product_name": "GEORGE REMUS BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "GEORGE REMUS"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 14YR",
+                    "price": "54.9900",
+                    "stock_qty": 37,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 19 YEARS",
+                    "price": "189.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "GREEN RIVER BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "GREEN RIVER"
+                  },
+                  {
+                    "product_name": "GREEN RIVER BOURBON SPECIAL 250TH ANNIVERSARY RELEASE",
+                    "price": "49.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "GREEN RIVER"
+                  },
+                  {
+                    "product_name": "GREEN RIVER FULL PROOF BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "GREEN RIVER"
+                  },
+                  {
+                    "product_name": "GREEN RIVER WHEATED BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "GREEN RIVER"
+                  },
+                  {
+                    "product_name": "HEAVEN HILL BOURBON",
+                    "price": "114.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "HEAVEN HILL"
+                  },
+                  {
+                    "product_name": "HIGH WEST BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "HIGH WEST"
+                  },
+                  {
+                    "product_name": "HINCH SMALL BATCH BOURBON CASK",
+                    "price": "24.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "HINCH"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "JEFFERSON'S"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S RESERVE BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "JEFFERSON'S"
+                  },
+                  {
+                    "product_name": "JEREMIAH WEED SWEET TEA VODKA & BOURBON WHISKEY",
+                    "price": "19.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "JEREMIAH WEED"
+                  },
+                  {
+                    "product_name": "JESSE JAMES BOURBON 750ML",
+                    "price": "14.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "JESSE JAMES"
+                  },
+                  {
+                    "product_name": "JIM BEAM BOURBON CREAM",
+                    "price": "9.9900",
+                    "stock_qty": -1,
+                    "category": "LIQUOR",
+                    "sub_category": "JIM BEAM"
+                  },
+                  {
+                    "product_name": "JOS MAGNUS CIGAR BOURB 750",
+                    "price": "249.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "jos magnus bourbon"
+                  },
+                  {
+                    "product_name": "JOS.A.MAGNUS MURRAY HILL CLUB",
+                    "price": "109.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "jos magnus bourbon"
+                  },
+                  {
+                    "product_name": "JOSEPH MAGNUS TRIPLE CASK FINISHED",
+                    "price": "109.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "jos magnus bourbon"
+                  },
+                  {
+                    "product_name": "JOSH RES BOURBON CAB 750",
+                    "price": "19.9900",
+                    "stock_qty": 13,
+                    "category": "WINE",
+                    "sub_category": "JOSH CELLARS"
+                  },
+                  {
+                    "product_name": "JOSH RES BOURBON ZIN 750",
+                    "price": "18.9900",
+                    "stock_qty": 16,
+                    "category": "WINE",
+                    "sub_category": "JOSH CELLARS"
+                  }
+                ],
+                "rowCount": 175,
+                "truncated": true,
+                "downloadId": "14c41008c04dece5"
+              }
+            },
+            {
+              "iteration": 2,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT COUNT(*) as total_bourbon_products\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')"
+              },
+              "sql": "SELECT COUNT(*) as total_bourbon_products\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')",
+              "success": true,
+              "row_count": 1,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "total_bourbon_products": "175"
+                  }
+                ],
+                "rowCount": 1,
+                "truncated": false
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 2,
+            "notes": ""
+          }
+        },
+        {
+          "question": "Which of those are in stock?",
+          "answer": "You have **106 bourbon products currently in stock**. Here are the first 20 by name — say 'show next 20' or 'show all' if you'd like more:\n\n| Product Name | Price | Stock Qty | Category | Sub Category |\n|--------------|-------|-----------|----------|--------------|\n| BARDSTOWN ORGIN SERIES BOURBON | $49.99 | 7 | LIQUOR | BARDSTOWN |\n| BARRELL FOUNDATION BOURBON | $39.99 | 3 | LIQUOR | BARRELL FOUNDATION |\n| BASIL HAYDEN BOURBON 8 YEARS | $36.99 | 17 | LIQUOR | BASIL HAYDEN'S |\n| BASIL HAYDEN BOURBON 8 YRS | $26.99 | 3 | LIQUOR | BASIL HAYDEN'S |\n| BELLE MEADE RESERVE BOURBON | $62.99 | 1 | LIQUOR | BELLE MEADE |\n| BEN HOLLADAY 1856 ORIGINAL ONE BARREL BOURBON 8YR | $99.99 | 6 | LIQUOR | BEN HOLLADAY |\n| BENCHMARK BOURBON 50ML | $1.25 | 49 | LIQUOR | BENCHMARK |\n| BIRD DOG BOURBON | $1.00 | 350 | LIQUOR | BIRDDOG |\n| BIRDDOG BOURBON | $24.99 | 1 | LIQUOR | BIRDDOG |\n| BLANTON'S BOURBON | $99.99 | 4 | LIQUOR | BLANTONS |\n| BLUESTONE MANOR BOURBON | $52.99 | 4 | LIQUOR | BLUESTONE MANOR |\n| BOOKER'S BOURBON 2023-01 | $119.99 | 2 | LIQUOR | BOOKER'S |\n| BOOKER'S BOURBON 2023-02 | $129.99 | 5 | LIQUOR | BOOKER'S |\n| BOOKER'S BOURBON 2023-04 | $119.99 | 6 | LIQUOR | BOOKER'S |\n| BOOKER'S BOURBON 2024-04 | $119.99 | 1 | LIQUOR | BOOKER'S |\n| BOOKERS BOURBON 2022 | $119.99 | 1 | LIQUOR | BOOKER'S |\n| BOTA BOX BOURBON CAB 500ML | $4.99 | 8 | WINE | DELICATO |\n| BOTA BOX NIGHTHAWK BOURBON CAB | $18.99 | 17 | WINE | DELICATO |\n| BOURBON COUNTY BACKYARD STOUT | $24.99 | 4 | BEER | GOOSE ISLAND |\n| BOURBON COUNTY STOUT 2022 | $13.99 | 15 | BEER | GOOSE ISLAND |\n\n[download:e63c76ad14ea41ec]\n\nYour in-stock bourbon selection includes excellent variety from budget-friendly options like Bird Dog Bourbon at $1.00 (with 350 units!) to premium bottles like JOS MAGNUS CIGAR BOURB at $249.99. You have strong inventory depth in popular brands like Eagle Rare (60 units at $49.99), Elijah Craig (52 units), and Bulleit Bourbon Nips (105 units for sampling).",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT product_name, price, stock_qty, category, sub_category\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\n  AND stock_qty > 0\nORDER BY product_name"
+              },
+              "sql": "SELECT product_name, price, stock_qty, category, sub_category\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\n  AND stock_qty > 0\nORDER BY product_name",
+              "success": true,
+              "row_count": 106,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "product_name": "BARDSTOWN ORGIN SERIES BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "BARDSTOWN"
+                  },
+                  {
+                    "product_name": "BARRELL FOUNDATION BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "BARRELL FOUNDATION"
+                  },
+                  {
+                    "product_name": "BASIL HAYDEN BOURBON 8 YEARS",
+                    "price": "36.9900",
+                    "stock_qty": 17,
+                    "category": "LIQUOR",
+                    "sub_category": "BASIL HAYDEN'S"
+                  },
+                  {
+                    "product_name": "BASIL HAYDEN BOURBON 8 YRS",
+                    "price": "26.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "BASIL HAYDEN'S"
+                  },
+                  {
+                    "product_name": "BELLE MEADE RESERVE BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BELLE MEADE"
+                  },
+                  {
+                    "product_name": "BEN HOLLADAY 1856 ORIGINAL ONE BARREL BOURBON 8YR",
+                    "price": "99.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BEN HOLLADAY"
+                  },
+                  {
+                    "product_name": "BENCHMARK BOURBON 50ML",
+                    "price": "1.2500",
+                    "stock_qty": 49,
+                    "category": "LIQUOR",
+                    "sub_category": "BENCHMARK"
+                  },
+                  {
+                    "product_name": "BIRD DOG BOURBON",
+                    "price": "1.0000",
+                    "stock_qty": 350,
+                    "category": "LIQUOR",
+                    "sub_category": "BIRDDOG"
+                  },
+                  {
+                    "product_name": "BIRDDOG BOURBON",
+                    "price": "24.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BIRDDOG"
+                  },
+                  {
+                    "product_name": "BLANTON'S BOURBON",
+                    "price": "99.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BLANTONS"
+                  },
+                  {
+                    "product_name": "BLUESTONE MANOR BOURBON",
+                    "price": "52.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BLUESTONE MANOR"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-01",
+                    "price": "119.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-02",
+                    "price": "129.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-04",
+                    "price": "119.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2024-04",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKERS BOURBON 2022",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOTA BOX BOURBON CAB 500ML",
+                    "price": "4.9900",
+                    "stock_qty": 8,
+                    "category": "WINE",
+                    "sub_category": "DELICATO"
+                  },
+                  {
+                    "product_name": "BOTA BOX NIGHTHAWK BOURBON CAB",
+                    "price": "18.9900",
+                    "stock_qty": 17,
+                    "category": "WINE",
+                    "sub_category": "DELICATO"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY BACKYARD STOUT",
+                    "price": "24.9900",
+                    "stock_qty": 4,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BOURBON COUNTY STOUT 2022",
+                    "price": "13.9900",
+                    "stock_qty": 15,
+                    "category": "BEER",
+                    "sub_category": "GOOSE ISLAND"
+                  },
+                  {
+                    "product_name": "BRECKENRIDGE BOURBON WHISKEY",
+                    "price": "54.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": ""
+                  },
+                  {
+                    "product_name": "BROTHER’S BOND BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "BROTHER'S BOND"
+                  },
+                  {
+                    "product_name": "BUFFALO TRACE BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BUFFALO TRACE"
+                  },
+                  {
+                    "product_name": "BUFFALO TRACE BOURBON CREAM",
+                    "price": "26.9900",
+                    "stock_qty": 13,
+                    "category": "LIQUOR",
+                    "sub_category": "BUFFALO TRACE"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "22.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON",
+                    "price": "31.9900",
+                    "stock_qty": 16,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON 10YR",
+                    "price": "49.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "BULLEIT BOURBON NIP",
+                    "price": "3.9900",
+                    "stock_qty": 105,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "CHARLES GOODNIGHT TEXAS BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "CHARLES GOODNIGHT"
+                  },
+                  {
+                    "product_name": "CHICKEN COCK BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "CHICKEN COCK"
+                  },
+                  {
+                    "product_name": "COPPER & CASK BOURBON 6 YERS 7",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "COPPER & CASK STRAIGHT BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 13,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "COPPER & CASK WHEATED BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH RYE BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "dexter"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH WHEAT BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "dexter"
+                  },
+                  {
+                    "product_name": "DEXTER THREE WOOD BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "dexter"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL STOUT",
+                    "price": "18.9900",
+                    "stock_qty": 3,
+                    "category": "BEER",
+                    "sub_category": "NEW HOLLAND BREWING"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL-AGED STOUT BOTTLE",
+                    "price": "17.9900",
+                    "stock_qty": 1,
+                    "category": "BEER",
+                    "sub_category": "DRAGON'S MILK"
+                  },
+                  {
+                    "product_name": "DRAGON'S MILK BOURBON BARREL-AGED STOUT CAN",
+                    "price": "3.9900",
+                    "stock_qty": 7,
+                    "category": "BEER",
+                    "sub_category": "NEW HOLLAND BREWING"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "119.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "EAGLE RARE"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 60,
+                    "category": "LIQUOR",
+                    "sub_category": "EAGLE RARE"
+                  },
+                  {
+                    "product_name": "ELIJAH CRAIG BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 52,
+                    "category": "LIQUOR",
+                    "sub_category": "ELIJAH CRAIG"
+                  },
+                  {
+                    "product_name": "ERIC LEGRAND BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "new riff"
+                  },
+                  {
+                    "product_name": "EZRA BROOKS BOURBON CREAM LIQUEUR",
+                    "price": "15.9900",
+                    "stock_qty": 10,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "F.E.W.BOURBON WHISKEY",
+                    "price": "49.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "F.E.W"
+                  },
+                  {
+                    "product_name": "FIGHTING COCK BOURBON",
+                    "price": "19.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "FIGHTING COCK"
+                  },
+                  {
+                    "product_name": "FOUNDER'S ORIGINAL BOURBON SOUR",
+                    "price": "13.9900",
+                    "stock_qty": 12,
+                    "category": "BEER",
+                    "sub_category": "FOUNDERS"
+                  },
+                  {
+                    "product_name": "FOUR ROSES BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "FOUR ROSES"
+                  },
+                  {
+                    "product_name": "FOUR ROSES BOURBON",
+                    "price": "19.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "FOUR ROSES"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 14YR",
+                    "price": "54.9900",
+                    "stock_qty": 37,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 19 YEARS",
+                    "price": "189.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "GREEN RIVER BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "GREEN RIVER"
+                  },
+                  {
+                    "product_name": "GREEN RIVER BOURBON SPECIAL 250TH ANNIVERSARY RELEASE",
+                    "price": "49.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "GREEN RIVER"
+                  },
+                  {
+                    "product_name": "GREEN RIVER FULL PROOF BOURBON",
+                    "price": "49.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "GREEN RIVER"
+                  },
+                  {
+                    "product_name": "GREEN RIVER WHEATED BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "GREEN RIVER"
+                  },
+                  {
+                    "product_name": "HEAVEN HILL BOURBON",
+                    "price": "114.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "HEAVEN HILL"
+                  },
+                  {
+                    "product_name": "HIGH WEST BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "HIGH WEST"
+                  },
+                  {
+                    "product_name": "HINCH SMALL BATCH BOURBON CASK",
+                    "price": "24.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "HINCH"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "JEFFERSON'S"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S RESERVE BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "JEFFERSON'S"
+                  },
+                  {
+                    "product_name": "JEREMIAH WEED SWEET TEA VODKA & BOURBON WHISKEY",
+                    "price": "19.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "JEREMIAH WEED"
+                  },
+                  {
+                    "product_name": "JOS MAGNUS CIGAR BOURB 750",
+                    "price": "249.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "jos magnus bourbon"
+                  },
+                  {
+                    "product_name": "JOS.A.MAGNUS MURRAY HILL CLUB",
+                    "price": "109.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "jos magnus bourbon"
+                  },
+                  {
+                    "product_name": "JOSEPH MAGNUS TRIPLE CASK FINISHED",
+                    "price": "109.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "jos magnus bourbon"
+                  },
+                  {
+                    "product_name": "JOSH RES BOURBON CAB 750",
+                    "price": "19.9900",
+                    "stock_qty": 13,
+                    "category": "WINE",
+                    "sub_category": "JOSH CELLARS"
+                  },
+                  {
+                    "product_name": "JOSH RES BOURBON ZIN 750",
+                    "price": "18.9900",
+                    "stock_qty": 16,
+                    "category": "WINE",
+                    "sub_category": "JOSH CELLARS"
+                  },
+                  {
+                    "product_name": "KENTUCKY BOURBON BARREL",
+                    "price": "14.9900",
+                    "stock_qty": 7,
+                    "category": "BEER",
+                    "sub_category": "KENTUCKY"
+                  },
+                  {
+                    "product_name": "KINGS COUNTY BOURBON",
+                    "price": "74.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "KINGS COUNTY DISTILLERY"
+                  },
+                  {
+                    "product_name": "KNOB CREEK BOURBON 12YR",
+                    "price": "64.9900",
+                    "stock_qty": 9,
+                    "category": "LIQUOR",
+                    "sub_category": "KNOB CREEK"
+                  },
+                  {
+                    "product_name": "LEGENT BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 15,
+                    "category": "LIQUOR",
+                    "sub_category": "KNOB CREEK"
+                  },
+                  {
+                    "product_name": "MICHTER'S SMALL BATCH BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "MICHTER'S"
+                  },
+                  {
+                    "product_name": "MIDDLE WEST BOURBON CREAM",
+                    "price": "19.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "Middle West"
+                  },
+                  {
+                    "product_name": "MIXED-UP APPLE BOURBON MULE",
+                    "price": "13.9900",
+                    "stock_qty": 1,
+                    "category": "BEER",
+                    "sub_category": "MIXED-UP"
+                  },
+                  {
+                    "product_name": "MONDAVI PS BOURBON CAB 750",
+                    "price": "12.9900",
+                    "stock_qty": 9,
+                    "category": "WINE",
+                    "sub_category": "ROBERT MONDAVI"
+                  },
+                  {
+                    "product_name": "NEW RIFF BOURBON",
+                    "price": "44.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "new riff"
+                  },
+                  {
+                    "product_name": "NOAH’S MILL BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "NOAH'S MILL"
+                  },
+                  {
+                    "product_name": "OLD BARDSTOWN SOUR MASH BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "OLD BARDSTOWN"
+                  },
+                  {
+                    "product_name": "OLD ELK  WHEATED BOURBON 750ML",
+                    "price": "71.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "old elk"
+                  },
+                  {
+                    "product_name": "OLD ELK BLENDED STRAIGHT BOURBON",
+                    "price": "52.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "old elk"
+                  },
+                  {
+                    "product_name": "OLD GRAND-DAD BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "OLD GRAND-DAD"
+                  },
+                  {
+                    "product_name": "OLD TUB UNFILTERED BOURBON",
+                    "price": "24.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "old tub"
+                  },
+                  {
+                    "product_name": "PENELOPE STR BOURBON 50ML",
+                    "price": "2.9900",
+                    "stock_qty": 87,
+                    "category": "LIQUOR",
+                    "sub_category": "PENELOPE"
+                  },
+                  {
+                    "product_name": "PENELOPE STR BOURBON 750",
+                    "price": "39.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "PENELOPE"
+                  },
+                  {
+                    "product_name": "PINHOOK BOURBON WAR 5YR",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "PINHOOK"
+                  },
+                  {
+                    "product_name": "PUNCHER'S CHANCE BOURBON",
+                    "price": "34.9900",
+                    "stock_qty": 10,
+                    "category": "LIQUOR",
+                    "sub_category": "PUNCHER'S CHANCE"
+                  },
+                  {
+                    "product_name": "PUNCHER'S CHANCE BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "PUNCHER'S CHANCE"
+                  },
+                  {
+                    "product_name": "RARE HARE BOURBON 15YR",
+                    "price": "149.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "RARE HARE"
+                  },
+                  {
+                    "product_name": "RARE HARE BOURBON 7YR",
+                    "price": "69.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "RARE HARE"
+                  },
+                  {
+                    "product_name": "REBEL BOURBON 100 PROOF",
+                    "price": "24.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "REBEL"
+                  },
+                  {
+                    "product_name": "REDEMPTION BOURBON",
+                    "price": "25.9900",
+                    "stock_qty": 22,
+                    "category": "LIQUOR",
+                    "sub_category": "REDEMPTION"
+                  },
+                  {
+                    "product_name": "ROWAN’S CREEK BOURBON",
+                    "price": "39.9900",
+                    "stock_qty": 9,
+                    "category": "LIQUOR",
+                    "sub_category": "ROWAN'S CREEK"
+                  },
+                  {
+                    "product_name": "SMOOTH AMBLER. CONTRADICTION BOURBON",
+                    "price": "33.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "SMOOTH AMBLER"
+                  },
+                  {
+                    "product_name": "SMUGGLERS NOTCH VERMONT MAPLE BOURBON CREAM",
+                    "price": "29.9900",
+                    "stock_qty": 9,
+                    "category": "LIQUOR",
+                    "sub_category": "BAILEYS"
+                  },
+                  {
+                    "product_name": "TINCUP STRAIGHT BOURBON",
+                    "price": "27.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "TINCUP"
+                  },
+                  {
+                    "product_name": "VIRGINIA GENTLEMAN BOURBON",
+                    "price": "29.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "VIRGINIA GENTLEMAN"
+                  },
+                  {
+                    "product_name": "WEST CORK BOURBON CASK MATURED",
+                    "price": "28.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "WEST CORK"
+                  },
+                  {
+                    "product_name": "WHEAT PENNY BOURBON 75O",
+                    "price": "54.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "HIGH WEST"
+                  },
+                  {
+                    "product_name": "WHISTLEPIG PIGGYBACK BOURBON 6YR",
+                    "price": "39.9900",
+                    "stock_qty": 27,
+                    "category": "LIQUOR",
+                    "sub_category": "WHISTLEPIG"
+                  },
+                  {
+                    "product_name": "WILD TURKEY 101 BOURBON",
+                    "price": "14.9900",
+                    "stock_qty": 13,
+                    "category": "LIQUOR",
+                    "sub_category": "WILD TURKEY"
+                  }
+                ],
+                "rowCount": 106,
+                "truncated": true,
+                "downloadId": "e63c76ad14ea41ec"
+              }
+            },
+            {
+              "iteration": 2,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT COUNT(*) as in_stock_bourbon_count\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\n  AND stock_qty > 0"
+              },
+              "sql": "SELECT COUNT(*) as in_stock_bourbon_count\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '\\ybourbon\\y' OR sub_category ~* '\\ybourbon\\y' OR category ~* '\\ybourbon\\y')\n  AND stock_qty > 0",
+              "success": true,
+              "row_count": 1,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "in_stock_bourbon_count": "106"
+                  }
+                ],
+                "rowCount": 1,
+                "truncated": false
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 2,
+            "notes": ""
+          }
+        }
+      ],
+      "turnsVerify": [
+        null,
+        {
+          "checks": [
+            {
+              "type": "min_count",
+              "from": "bourbonInStock"
+            }
+          ]
+        }
+      ],
+      "question": "List bourbon products. -> Which of those are in stock?",
+      "finalScore": "pass"
+    }
+  ]
+}

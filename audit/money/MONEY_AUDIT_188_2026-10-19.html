@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Money audit - Grapes and Grains</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#fbfaf7;--fg:#1a1713;--mut:#6f675b;--line:#dfdad0;--good:#047857;--bad:#be123c;--badbg:#fff1f2;--goodbg:#ecfdf5;--panel:#f3f1ec}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1115;--fg:#e8e6e1;--mut:#9a948a;--line:#2a2e36;--good:#34d399;--bad:#fb7185;--badbg:#2d0d16;--goodbg:#052e23;--panel:#181b21}}
+:root[data-theme="dark"]{--bg:#0f1115;--fg:#e8e6e1;--mut:#9a948a;--line:#2a2e36;--good:#34d399;--bad:#fb7185;--badbg:#2d0d16;--goodbg:#052e23;--panel:#181b21}
+body{margin:0;padding:24px 16px 64px;background:var(--bg);color:var(--fg);font:14px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:16px;margin:28px 0 8px}
+p{max-width:80ch}.mut{color:var(--mut)}.bad{color:var(--bad);font-weight:600}.good{color:var(--good);font-weight:600}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}td.r,th.r{text-align:right;white-space:nowrap}
+.summary th{width:28ch;text-transform:none;letter-spacing:0;font-size:13px;color:var(--fg)}
+.cards{font-size:12.5px}.cards td.why{min-width:36ch;max-width:60ch;color:var(--mut)}
+tr.v-lost_money td{background:var(--badbg)}tr.v-made_money td{background:var(--goodbg)}
+.verdict{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px}
+.wrap{overflow-x:auto}.answer li{margin:4px 0}
+</style></head><body>
+<h1>Money audit - Grapes and Grains</h1>
+<p class="mut">Client 188, location 188. Generated 2026-10-19 09:37:12 UTC. Read-only; nothing here is a forecast.</p>
+
+<h2>Are they losing money on any recommendation?</h2>
+<ul class="answer"><li>Grapes and Grains has been shown no recommendation in the last 120 days, so there is no recommendation it could be losing money on - and none it could be making money on.</li></ul>
+
+<h2>Summary</h2>
+<table class="summary"><tbody><tr><th>Cards shown</th><td>0 <span class="mut">last 120 days; 0 withheld as the control; 0 distinct product-windows (0 repeat cards, counted once in the money)</span></td></tr>
+<tr><th>Confirmed bought</th><td>0 <span class="mut">fulfilment_state confirmed: purchases feed or invoice</span></td></tr>
+<tr><th>Closed windows</th><td>0</td></tr>
+<tr><th>Lost money</th><td><span class="">0</span> <span class="mut">confirmed, closed, net &lt; 0</span></td></tr>
+<tr><th>Made money</th><td><span class="">0</span> <span class="mut">confirmed, closed, net &gt; 0</span></td></tr>
+<tr><th>Broke even</th><td>0</td></tr>
+<tr><th>Exposure unconfirmed</th><td>0 <span class="mut">closed with a net, purchase not established</span></td></tr>
+<tr><th>Not followed, no exposure</th><td>0</td></tr>
+<tr><th>Window open</th><td>0</td></tr>
+<tr><th>Unmeasurable</th><td>0 <span class="mut">each row names the missing input</span></td></tr>
+<tr><th>Realised net, closed confirmed</th><td><span class="mut">n/a</span> <span class="mut">no closed, confirmed card carries a full net yet (no closed confirmed card carries a full net yet)</span></td></tr>
+<tr><th>Per card</th><td><span class="mut">n/a</span> <span class="mut">no closed confirmed card carries a full net yet</span></td></tr>
+<tr><th>Largest single loss</th><td><span class="mut">none</span> <span class="mut">no confirmed card with a closed window has a negative net</span></td></tr>
+<tr><th>Unattributed closed net</th><td><span class="mut">n/a</span> <span class="mut">0 card(s); every closed card with a computable net, whatever its fulfilment state - what the products did, not what the cards earned</span></td></tr>
+<tr><th>Expected-profit floor in force</th><td>$0 <span class="mut">REC_MIN_PROFIT_USD=0; REC_MIN_PROFIT_USD=0 in this environment: the dollar floor is switched off, so cards below $1 expected profit were shown</span></td></tr>
+<tr><th>Issued below $1 expected profit</th><td>0 <span class="mut">0 without an admission row; 0 with no computable figure</span></td></tr>
+<tr><th>Holdout (the only causal statement)</th><td>holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 0 shown and 0 withheld <span class="mut">shown 0 product-windows, withheld 0</span></td></tr></tbody></table>
+
+<h2>Every card shown, losses first</h2>
+<p class="mut">incremental margin (recommendation_evaluations.margin_impact: (sold - expected) x (price - cost)) minus the holding cost incurred. the engine's holding_cost_if_unsold x units_unsold / suggested_order_qty - an approximation, stated on each row. the 30-day window where closed, else the longest closed window; closed means the evaluator's data_through has passed rec_date + window. recommended units not sold inside the window (recommended_qty - units_sold, floored at 0); a count against the order, not a shelf count.</p>
+<div class="wrap"><table class="cards"><thead><tr><th>Verdict</th><th>Card</th><th>Issued</th><th>SKU</th><th>Family</th><th>Fulfilment</th>
+<th class="r">Expected profit</th><th class="r">Order qty</th><th class="r">Price</th><th class="r">Cost</th><th class="r">Margin/unit</th><th class="r">Holding if unsold</th>
+<th class="r">Window</th><th class="r">Sold</th><th class="r">Expected</th><th class="r">Lift</th><th class="r">Incr. margin</th><th class="r">Unsold</th><th class="r">Holding incurred</th><th class="r">Net</th><th>Why</th></tr></thead><tbody>
+<tr><td colspan="21" class="mut">no card shown in the period</td></tr>
+</tbody></table></div>
+
+<h2>Withheld cards (the control)</h2>
+<p class="mut">Never shown to the owner, so nothing was made or lost on them; their figures are what the holdout comparison reads.</p>
+<div class="wrap"><table class="cards"><thead><tr><th>Verdict</th><th>Card</th><th>Issued</th><th>SKU</th><th>Family</th><th>Fulfilment</th>
+<th class="r">Expected profit</th><th class="r">Order qty</th><th class="r">Price</th><th class="r">Cost</th><th class="r">Margin/unit</th><th class="r">Holding if unsold</th>
+<th class="r">Window</th><th class="r">Sold</th><th class="r">Expected</th><th class="r">Lift</th><th class="r">Incr. margin</th><th class="r">Unsold</th><th class="r">Holding incurred</th><th class="r">Net</th><th>Why</th></tr></thead><tbody>
+<tr><td colspan="21" class="mut">no withheld card in the period</td></tr>
+</tbody></table></div>
+</body></html>

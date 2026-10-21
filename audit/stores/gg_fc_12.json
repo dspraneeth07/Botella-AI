@@ -1,0 +1,127 @@
+{
+  "store": "Grapes and Grains Liquor",
+  "data": {
+    "lines": 5016,
+    "products": 1435,
+    "trading_days": 27,
+    "span_days": 30,
+    "first_day": "2026-07-07",
+    "last_day": "2026-08-06",
+    "cost_coverage_pct": 98.82
+  },
+  "production_requirement_days": 492,
+  "production_windows": {
+    "long_run_days": 365,
+    "horizons": [
+      30,
+      60,
+      90,
+      120
+    ]
+  },
+  "windows_used": {
+    "long_run_days": 12,
+    "horizons": [
+      5,
+      7
+    ],
+    "baseline_window_days": 28
+  },
+  "dates": {
+    "total": 4,
+    "calibration": 2,
+    "scored": 2,
+    "first": "2026-07-24",
+    "last": "2026-07-28"
+  },
+  "interval_bands": {
+    "5": [
+      0.0,
+      1.7591911764705885
+    ],
+    "7": [
+      0.0,
+      1.784116331096197
+    ]
+  },
+  "baseline_collapse": {
+    "5": {
+      "identical_to_trailing_28": 231,
+      "of": 231
+    },
+    "7": {
+      "identical_to_trailing_28": 231,
+      "of": 231
+    }
+  },
+  "degenerate_baselines": [
+    "last_year",
+    "year_average"
+  ],
+  "by_horizon": {
+    "5": {
+      "forecasts": 231,
+      "skus": 118,
+      "actual_units": 865.0,
+      "interval_coverage_pct": 86.1,
+      "interval_coverage_ci95": [
+        83.9,
+        88.5
+      ],
+      "models": {
+        "trailing_28": {
+          "wape_pct": 70.72,
+          "bias_pct": 20.61
+        },
+        "last_year": {
+          "wape_pct": 70.72,
+          "bias_pct": 20.61
+        },
+        "year_average": {
+          "wape_pct": 78.94,
+          "bias_pct": 24.0
+        },
+        "engine": {
+          "wape_pct": 75.01,
+          "bias_pct": 22.92
+        },
+        "engine_seasonal": {
+          "wape_pct": 76.86,
+          "bias_pct": 28.1
+        }
+      }
+    },
+    "7": {
+      "forecasts": 231,
+      "skus": 118,
+      "actual_units": 1244.0,
+      "interval_coverage_pct": 86.6,
+      "interval_coverage_ci95": [
+        85.6,
+        87.6
+      ],
+      "models": {
+        "trailing_28": {
+          "wape_pct": 60.8,
+          "bias_pct": 11.86
+        },
+        "last_year": {
+          "wape_pct": 60.8,
+          "bias_pct": 11.86
+        },
+        "year_average": {
+          "wape_pct": 64.9,
+          "bias_pct": 14.74
+        },
+        "engine": {
+          "wape_pct": 61.59,
+          "bias_pct": 13.81
+        },
+        "engine_seasonal": {
+          "wape_pct": 61.59,
+          "bias_pct": 13.81
+        }
+      }
+    }
+  }
+}

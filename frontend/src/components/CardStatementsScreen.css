@@ -1,0 +1,640 @@
+/* CardStatementsScreen.css - Card Statement Analysis: list, upload, log
+   -----------------------------------------------------------------------------
+   Builds on ReferenceScreen.css, which this screen imports: the page root is
+   `.ref-page.cs-page`, so the short aliases (--card, --bd2, --gr, --am ...),
+   .ref-card, .ref-table and .ref-empty are already styled and already follow
+   the app theme, light and dark. `.ref-page` is also what gives the page its
+   bottom runway under the Ask bar (AskBar.css).
+
+   Only what is new to this screen lives here, scoped .cs-*. The controls are
+   Quick PO's (.po-*), re-scoped rather than shared, so neither screen can
+   restyle the other by accident. Colours are app tokens only.
+   ============================================================================= */
+
+/* ── Page ─────────────────────────────────────────────────────────────────── */
+/* .ref-page is its own scroller. Where scrollbars take room (Windows), a long
+   page 1 and a short page 2 would add and drop the bar, the content would
+   change width by its 17px, and everything would shift sideways on every page
+   change. The gutter is kept whether or not the bar is showing. */
+.ref-page.cs-page { scrollbar-gutter: stable; }
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+/* Title, subtitle, then the buttons on a row of their own at the left, under
+   the subtitle. Always their own row: a wrapping header put the buttons beside
+   the title at one width and under it a few pixels narrower, so they moved
+   whenever the page width did (a scrollbar coming and going was enough). */
+.cs-head {
+  display: grid; grid-template-columns: minmax(0, 1fr); justify-items: start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.cs-head > div:first-child { min-width: 0; max-width: 100%; }
+.cs-head .ref-title svg { color: var(--ac); flex: none; }
+/* "SAVED" in the subtitle: bold, in the colour the savings column uses below
+   it, and in capitals. Capitals by CSS only, so a screen reader still says
+   "saved". */
+.cs-sub-saved { font-weight: 700; color: var(--gr); text-transform: uppercase; letter-spacing: 0.03em; }
+.cs-head-actions { position: relative; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* "Updated just now", after a press of Refresh. Out of the flow, beside the
+   buttons, so it neither moves them nor pushes the page down; it fades in,
+   holds, and fades out (UPDATED_MS in the JS is the same 2.6s). */
+.cs-updated-live {
+  position: absolute; left: calc(100% + 12px); top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+/* No room beside the buttons (the JS measures it): under Refresh instead,
+   4px down. At 22px tall the note then ends inside the 16px gap plus the
+   toolbar's own border and padding, short of the search box and of a
+   notice's first line of text. Above the toolbar, which comes later. */
+.cs-updated-live.is-under { left: 0; top: calc(100% + 4px); transform: none; z-index: 2; }
+.cs-updated {
+  display: inline-flex; align-items: center; gap: 5px;
+  white-space: nowrap;
+  padding: 2px 9px;
+  font-size: 12px; font-weight: 600; line-height: 16px;
+  color: var(--gr);
+  background: color-mix(in srgb, var(--gr) 12%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--gr) 30%, transparent);
+  border-radius: 999px;
+  animation: cs-updated 2.6s ease both;
+}
+@keyframes cs-updated {
+  0% { opacity: 0; }
+  8%, 85% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Matched to .ref-btn / .po-btn: same 12.5px, same 7px 13px, same 8px radius.
+   line-height is pinned so Refresh and Upload stay the same height while the
+   Refresh icon spins. */
+.cs-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 13px;
+  font-family: var(--bx-font-body); font-size: 12.5px; font-weight: 600;
+  line-height: 20px;
+  color: var(--tx);
+  background: var(--elev);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+}
+.cs-btn:hover:not(:disabled) { color: var(--ac2); border-color: var(--ac); }
+.cs-btn:disabled { opacity: 0.5; cursor: default; }
+/* --on-fill, not #fff: the accent is a light violet in dark mode, where white
+   text on it fails contrast. */
+.cs-btn-primary { color: var(--on-fill); background: var(--ac); border-color: var(--ac); }
+.cs-btn-primary:hover:not(:disabled) { color: var(--on-fill); background: var(--ac); filter: brightness(1.05); }
+
+.cs-btn:focus-visible,
+.cs-open-btn:focus-visible,
+.cs-log-btn:focus-visible,
+.cs-icon-btn:focus-visible,
+.cs-page-btn:focus-visible,
+.cs-sort:focus-visible,
+.cs-notice-link:focus-visible,
+.cs-notice-x:focus-visible,
+.cs-modal-x:focus-visible,
+.cs-search-clear:focus-visible,
+.cs-drop:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 2px;
+}
+
+.cs-spin { animation: cs-spin .9s linear infinite; }
+@keyframes cs-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .cs-spin { animation: none; } }
+
+/* Visually hidden, still read aloud. */
+.cs-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ── Feedback ─────────────────────────────────────────────────────────────── */
+.cs-error {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px; margin-bottom: 16px;
+  border-radius: 10px; font-size: 13px; line-height: 1.55;
+  color: var(--rd);
+  background: color-mix(in srgb, var(--rd) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rd) 30%, transparent);
+}
+.cs-error svg { flex: none; margin-top: 2px; }
+
+/* A statement that turned out to be one already on the list. Not an error -
+   nothing was lost - so it is drawn in the attention cut, not the failure one. */
+.cs-notices { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.cs-notice {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px 10px 14px;
+  font-size: 13px; line-height: 1.5;
+  color: var(--tx2);
+  background: color-mix(in srgb, var(--am) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--am) 30%, transparent);
+  border-radius: 10px;
+}
+.cs-notice > svg { flex: none; color: var(--am); }
+.cs-notice-text { flex: 1; min-width: 0; margin: 0; overflow-wrap: anywhere; }
+.cs-notice-text strong { color: var(--tx); font-weight: 650; }
+.cs-notice-link {
+  flex: none;
+  padding: 4px 10px;
+  font: inherit; font-size: 12.5px; font-weight: 650;
+  color: var(--ac2);
+  background: none; border: 1px solid var(--ac); border-radius: 7px;
+  cursor: pointer;
+}
+.cs-notice-link:hover { background: var(--act); }
+.cs-notice-x {
+  flex: none; display: grid; place-items: center;
+  width: 26px; height: 26px; padding: 0;
+  color: var(--mu); background: none; border: 0; border-radius: 6px; cursor: pointer;
+}
+.cs-notice-x:hover { color: var(--tx); background: var(--hover); }
+/* A file from a batch the owner closed mid-upload that did not go in. Nothing
+   was added, so it is drawn in the failure cut. */
+.cs-notice.is-failed {
+  background: color-mix(in srgb, var(--rd) 10%, transparent);
+  border-color: color-mix(in srgb, var(--rd) 30%, transparent);
+}
+.cs-notice.is-failed > svg { color: var(--rd); }
+
+.cs-empty { margin-top: 4px; }
+.cs-empty > svg { color: var(--ac); }
+
+/* ── Toolbar: search, filters, pager ──────────────────────────────────────── */
+/* One row: the search, Status and Store right beside it, and the count, Rows
+   and the pager at the far end. The search takes the spare width first, up to
+   half the toolbar; on a wide screen what is left opens up between Store and
+   the count. The search starts from nothing (flex-basis 0), so a long store
+   name picked in Store narrows the search rather than wrapping the row, down
+   to 120px; narrower than that and the controls drop below it rather than
+   squeeze the search shut. When the toolbar is too narrow for one row (the
+   container query below) the search takes a row of its own. */
+.cs-toolbar {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 10px 12px;
+  container: cs-toolbar / inline-size;
+  padding: 12px 14px;
+  margin-bottom: 14px;
+  background: var(--card);
+  border: 1px solid var(--bd2);
+  border-radius: 12px;
+}
+.cs-search {
+  display: flex; align-items: center; gap: 8px;
+  flex: 100 1 0; max-width: 50%;
+  min-width: 120px; min-height: 32px;
+  padding: 6px 10px;
+  color: var(--mu);
+  background: var(--bg2);
+  border: 1px solid var(--bd2);
+  border-radius: 9px;
+}
+.cs-search:focus-within { border-color: var(--ac); }
+.cs-search input {
+  flex: 1; min-width: 0;
+  font-family: var(--bx-font-body); font-size: 13px;
+  color: var(--tx);
+  text-overflow: ellipsis;
+  background: none; border: 0; outline: none;
+}
+.cs-search-clear {
+  display: grid; place-items: center; padding: 2px;
+  color: var(--mu); background: none; border: 0; border-radius: 4px; cursor: pointer;
+}
+.cs-search-clear:hover { color: var(--tx); }
+
+/* One text style across the controls. Every label ("Status:", "Store:",
+   "Rows:") and the "1-10 of 12" count read alike; every value (the three
+   dropdowns and the page number) reads alike, a step stronger. */
+.cs-filter {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; font-weight: 500; color: var(--tx2);
+  white-space: nowrap;
+}
+/* Each dropdown is as wide as what it shows, like Rows, not as wide as its
+   longest option ("Could not read", a long store name). field-sizing is
+   Chromium's; elsewhere the dropdown falls back to its longest option, capped
+   so a long store name cannot push the row apart. The cap still fits a whole
+   store name (BETHANY WINES & LIQUORS). */
+.cs-filter select {
+  field-sizing: content;
+  min-width: 3.5em; max-width: 220px;
+  min-height: 32px;
+  font-family: var(--bx-font-body); font-size: 12.5px; font-weight: 600;
+  color: var(--tx);
+  text-overflow: ellipsis;
+  background: var(--card);
+  border: 1px solid var(--bd2);
+  border-radius: 8px;
+  padding: 5px 6px;
+  cursor: pointer;
+}
+.cs-filter select:focus-visible { outline: 2px solid var(--ac); outline-offset: 1px; }
+
+/* Status and Store sit right after the search; the pager is pushed to the far
+   end. The group never wraps inside itself while it shares the row. */
+.cs-toolbar-controls {
+  display: flex; align-items: center;
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  gap: 8px 12px;
+  min-width: 0;
+}
+
+.cs-pager { display: flex; align-items: center; gap: 5px; flex-wrap: nowrap; margin-left: auto; }
+/* Rows is its own control, 12px from the count like Status from Store, so
+   "1-10 of 12" and "Rows:" do not run together as "12 Rows". */
+.cs-pager > .cs-filter { margin-left: 7px; }
+
+/* Too narrow for one row (below about 1215px wide with the sidebar open): the
+   search gets a row of its own and the controls follow underneath, Status and
+   Store on the left and the pager on the right, wrapping only if even that row
+   is too narrow. */
+@container cs-toolbar (max-width: 790px) {
+  .cs-search { flex-basis: 100%; max-width: none; }
+  .cs-toolbar-controls { flex-wrap: wrap; }
+}
+/* Fixed widths, digits in tabular figures (.ref-page): "1-10 of 12" and
+   "11-12 of 12" differ in width, and the controls beside them must not move
+   from one page to the next. */
+.cs-count { min-width: 10ch; text-align: right; font-size: 12.5px; font-weight: 500; color: var(--tx2); white-space: nowrap; }
+.cs-count strong { font-weight: 600; color: var(--tx); }
+.cs-page-of { min-width: 6ch; text-align: center; font-size: 12.5px; font-weight: 600; color: var(--tx); white-space: nowrap; }
+.cs-page-btn {
+  display: grid; place-items: center;
+  width: 28px; height: 28px; padding: 0;
+  color: var(--tx2);
+  background: var(--card);
+  border: 1px solid var(--bd2);
+  border-radius: 8px;
+  cursor: pointer;
+}
+.cs-page-btn:hover:not(:disabled) { background: var(--hover); color: var(--tx); }
+.cs-page-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ── Table ────────────────────────────────────────────────────────────────── */
+/* The card holds the table edge to edge; the wrapper scrolls sideways inside
+   it on a narrow screen rather than crushing twelve columns. */
+.cs-card { padding: 0; overflow: hidden; }
+/* A size container so a note row can size itself to the part of the table
+   that is on screen (.cs-table-note-in). */
+.cs-card .ref-table-wrap { padding: 14px 4px 4px; container-type: inline-size; }
+
+/* While the next page (or sort, or search) loads, the rows on screen stay and
+   dim. The dim waits 150ms, so a quick answer swaps the rows without any
+   flash; clearing it is immediate. */
+.cs-card tbody { transition: opacity 0.12s ease; }
+.cs-card.is-loading tbody { opacity: 0.5; pointer-events: none; transition: opacity 0.15s ease 0.15s; }
+/* A press of Refresh dims at once, with no wait: the dim is how the owner
+   sees the rows being fetched again, and it lasts as long as the icon turns.
+   The rows stay clickable: the answer lands within milliseconds, so what is
+   under the dim is already the fresh list. */
+.cs-card.is-pressed tbody { opacity: 0.5; transition: opacity 0.15s ease; }
+
+/* Twelve columns with declared widths that sum to the min-width, so
+   `table-layout: fixed` never scales them down: a scaled table is how "Could
+   not read" ends up as "Could not r". The selectors carry both table classes
+   so they beat .ref-table's generic first-child and .ref-num widths. */
+/* Body cells and headings both 8px a side (from 14px): every column slimmer
+   by 12px, the table about 100px narrower. */
+.ref-table.cs-table tbody td { padding-left: 8px; padding-right: 8px; }
+.ref-table.cs-table { min-width: 1236px; }
+.ref-table.cs-table thead th:nth-child(1)  { width: 100px; } /* View                */
+.ref-table.cs-table thead th:nth-child(2)  { width: 124px; } /* Merchant ID         */
+.ref-table.cs-table thead th:nth-child(3)  { width: 88px;  } /* Period              */
+.ref-table.cs-table thead th:nth-child(4)  { width: 112px; } /* Card sales          */
+.ref-table.cs-table thead th:nth-child(5)  { width: 100px; } /* Fees paid           */
+.ref-table.cs-table thead th:nth-child(6)  { width: 96px;  } /* Effective rate      */
+.ref-table.cs-table thead th:nth-child(7)  { width: 108px; } /* Debit share         */
+.ref-table.cs-table thead th:nth-child(8)  { width: 140px; } /* Save                */
+.ref-table.cs-table thead th:nth-child(9)  { width: 104px; } /* Findings            */
+.ref-table.cs-table thead th:nth-child(10) { width: 132px; } /* Status              */
+.ref-table.cs-table thead th:nth-child(11) { width: 84px;  } /* Log                 */
+.ref-table.cs-table thead th:nth-child(12) { width: 48px;  } /* Actions             */
+
+/* Every heading sits centred over its column, and everything under it is
+   centred too: names, numbers, badges, chips and buttons. This table only;
+   .ref-table elsewhere keeps text to the left and numbers to the right. The
+   .ref-num selectors match ReferenceScreen.css's own, one class stronger. */
+.ref-table.cs-table thead th,
+.ref-table.cs-table thead th.ref-num,
+.ref-table.cs-table tbody td,
+.ref-table.cs-table tbody td.ref-num { text-align: center; }
+
+.cs-row:hover { background: var(--hover); }
+
+/* The View cell holds a button, the saving cell two lines, and the chip
+   columns a shape: none of them may inherit the one-line ellipsis, which draws
+   a lone dot beside a button or cuts a chip in half. */
+.ref-table.cs-table tbody td.cs-td-view,
+.ref-table.cs-table tbody td.cs-td-save { overflow: visible; text-overflow: clip; }
+.ref-table.cs-table tbody td.cs-td-save { white-space: normal; }
+.ref-table.cs-table tbody td:nth-child(9),
+.ref-table.cs-table tbody td:nth-child(10),
+.ref-table.cs-table tbody td:nth-child(11),
+.ref-table.cs-table tbody td:nth-child(12) { overflow: hidden; text-overflow: clip; white-space: nowrap; }
+
+.cs-table-note {
+  padding: 34px 16px;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--tx2);
+}
+/* overflow visible: .ref-table clips every cell, and a clipping cell would
+   be the scroller its sticky note sticks to, so the note would scroll away. */
+.ref-table.cs-table tbody td.cs-table-note { white-space: normal; overflow: visible; }
+.cs-table-note .cs-spin { vertical-align: -3px; margin-right: 6px; }
+/* The note's cell spans the whole 1430px table, so where the table scrolls
+   sideways a centred note sat off screen ("No statements match that search."
+   showed as a blank table on a phone). The inner block is exactly as wide as
+   the visible part (100cqw of the wrapper, less the cell's 16px padding each
+   side) and sticks to its left edge, so the note is centred in what is seen. */
+.cs-table-note-in {
+  display: block;
+  position: sticky; left: 16px;
+  width: calc(100cqw - 32px);
+}
+
+.cs-muted { color: var(--mu); }
+
+/* "View", the one way into a statement: a soft violet pill sized to its words
+   with room on both sides (squeezed into a 92px column, "View" ran into its
+   own edge). There is no Store column: each store uploads its own
+   statements, so every row would carry the same name. */
+.ref-table.cs-table tbody td.cs-td-view { padding-left: 10px; padding-right: 10px; }
+.cs-open-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  white-space: nowrap;
+  padding: 6px 15px 6px 13px;
+  font-family: var(--bx-font-body); font-size: 12.5px; font-weight: 650; line-height: 1.2;
+  color: var(--ac2);
+  background: color-mix(in srgb, var(--ac) 9%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--ac) 38%, var(--bd2));
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.14s ease, background 0.14s ease, color 0.14s ease;
+}
+.cs-open-btn:hover:not(:disabled) { border-color: var(--ac); background: color-mix(in srgb, var(--ac) 18%, var(--card)); }
+.cs-open-btn:disabled { opacity: 0.55; cursor: default; color: var(--mu); background: var(--card); border-color: var(--bd2); }
+.cs-open-btn svg { flex-shrink: 0; }
+
+/* The saving: the one positive number on the row, in the positive colour,
+   with the yearly pace under it. */
+.cs-save { display: block; font-weight: 700; color: var(--gr); }
+.cs-save-yr { display: block; margin-top: 1px; font-size: 11.5px; color: var(--mu); }
+
+/* Laid out as text, not flex: the arrow follows the label's last word, so a
+   heading that wraps ("Save with / Rebelipay") stays centred with its arrow
+   instead of leaving the arrow stranded at the far edge. -2px puts the arrow
+   level with the middle of the capitals. */
+.cs-sort {
+  display: inline-block;
+  padding: 0;
+  font: inherit; letter-spacing: inherit; text-transform: inherit; text-align: center;
+  color: inherit;
+  background: none; border: 0; border-radius: 4px;
+  cursor: pointer;
+}
+.cs-sort:hover, .cs-sort.is-on { color: var(--ac2); }
+.cs-sort svg { vertical-align: -2px; opacity: 0.55; }
+.cs-sort:hover svg, .cs-sort.is-on svg { opacity: 1; }
+
+/* Fuchsia is "needs attention" in this palette (app-theme.css). */
+.cs-badge {
+  display: inline-flex; align-items: center; white-space: nowrap;
+  font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+  color: var(--am);
+  background: color-mix(in srgb, var(--am) 14%, transparent);
+}
+
+.cs-chip {
+  display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; max-width: 100%;
+  font-size: 11.5px; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+}
+.cs-chip-ok { color: var(--gr); background: color-mix(in srgb, var(--gr) 15%, transparent); }
+.cs-chip-bad { color: var(--rd); background: color-mix(in srgb, var(--rd) 15%, transparent); }
+.cs-chip-wait { color: var(--ac2); background: var(--act); }
+.cs-chip-bad[title]:not([title=""]) { cursor: help; }
+
+.cs-log-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px;
+  font-family: var(--bx-font-body); font-size: 12px; font-weight: 600;
+  color: var(--tx2);
+  background: var(--card);
+  border: 1px solid var(--bd2);
+  border-radius: 7px;
+  cursor: pointer;
+}
+.cs-log-btn:hover { background: var(--hover); color: var(--tx); }
+
+.cs-icon-btn {
+  display: inline-grid; place-items: center;
+  width: 28px; height: 28px; padding: 0;
+  color: var(--mu);
+  background: none; border: 0; border-radius: 7px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, color 0.12s ease, background 0.12s ease;
+}
+.cs-row:hover .cs-icon-btn,
+.cs-icon-btn:focus-visible { opacity: 1; }
+.cs-icon-btn:hover { color: var(--rd); background: color-mix(in srgb, var(--rd) 12%, transparent); }
+/* No hover to reveal it with, so it is always there. */
+@media (hover: none) { .cs-icon-btn { opacity: 1; } }
+
+/* ── Modals ───────────────────────────────────────────────────────────────── */
+/* Quick PO's modal, on the app tokens directly, so both screens' dialogs look
+   the same. */
+.cs-modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  background: rgba(0, 0, 0, 0.62);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+}
+.cs-modal {
+  width: min(560px, 100%); max-height: 86vh; overflow-y: auto;
+  background: var(--bg-card); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 16px;
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+}
+/* The dialog box takes focus only as a fallback (tabIndex -1); its controls
+   carry the visible ring. */
+.cs-modal:focus { outline: none; }
+.cs-modal-log { width: min(680px, 100%); }
+.cs-modal-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+  padding: 16px 18px; border-bottom: 1px solid var(--border-light);
+}
+.cs-modal-title { margin: 0; font-family: var(--bx-font-display); font-size: 16px; font-weight: 700; }
+.cs-modal-sub { margin: 4px 0 0; font-size: 13px; color: var(--text-secondary); line-height: 1.55; overflow-wrap: anywhere; }
+.cs-modal-x {
+  flex: none; display: grid; place-items: center;
+  width: 30px; height: 30px; padding: 0;
+  color: var(--text-muted); background: none; border: 0; border-radius: 7px; cursor: pointer;
+}
+.cs-modal-x:hover { color: var(--text-primary); background: var(--bg-hover); }
+.cs-modal-note { margin: 0 18px 16px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; }
+.cs-modal-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 0 18px 18px; }
+
+/* ── Upload ───────────────────────────────────────────────────────────────── */
+.cs-drop {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 7px; text-align: center;
+  margin: 16px 18px;
+  padding: 34px 20px;
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease;
+}
+.cs-drop:hover, .cs-drop:focus-visible { border-color: var(--accent); background: var(--bg-hover); }
+.cs-drop.is-dragging { border-color: var(--accent); background: var(--accent-glow); border-style: solid; }
+.cs-drop.is-busy { cursor: progress; border-style: solid; border-color: var(--accent); }
+.cs-drop strong { font-family: var(--bx-font-display); font-size: 15px; color: var(--text-primary); }
+.cs-drop span { font-size: 12.5px; color: var(--text-muted); }
+.cs-drop svg { color: var(--accent); }
+
+.cs-queue { list-style: none; margin: 0 18px 16px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.cs-queue-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  color: var(--text-muted);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+.cs-queue-row > svg { flex: none; }
+.cs-queue-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.cs-queue-name {
+  font-size: 13px; font-weight: 600; color: var(--text-primary);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cs-queue-meta { font-size: 11.5px; color: var(--text-muted); overflow-wrap: anywhere; }
+.cs-queue-chip {
+  display: inline-flex; align-items: center; gap: 5px; flex-shrink: 0;
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 700; white-space: nowrap;
+  color: var(--text-secondary); background: var(--bg-hover);
+}
+.cs-queue-row.is-uploading .cs-queue-chip,
+.cs-queue-row.is-queued .cs-queue-chip { color: var(--accent-light); background: var(--accent-glow); }
+.cs-queue-row.is-duplicate .cs-queue-chip { color: var(--yellow); background: color-mix(in srgb, var(--yellow) 12%, transparent); }
+.cs-queue-row.is-failed .cs-queue-chip { color: var(--red); background: color-mix(in srgb, var(--red) 15%, transparent); }
+.cs-queue-row.is-failed { border-color: color-mix(in srgb, var(--red) 34%, transparent); }
+
+/* ── Log ──────────────────────────────────────────────────────────────────── */
+.cs-log-body { padding: 16px 18px 18px; }
+
+.cs-log-summary {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+/* Each row is its own pair, so a long value wraps under itself rather than
+   widening the label column for every other row. */
+.cs-log-summary > div, .cs-log-details > div { display: contents; }
+.cs-log-summary dt { padding: 5px 24px 5px 0; font-size: 13px; color: var(--text-secondary); }
+.cs-log-summary dd {
+  margin: 0; padding: 5px 0;
+  font-size: 13px; font-weight: 650; color: var(--text-primary);
+  text-align: right; overflow-wrap: anywhere;
+}
+
+.cs-log-section { margin-bottom: 16px; }
+.cs-log-section:last-child { margin-bottom: 0; }
+.cs-log-head {
+  margin: 0 0 8px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.cs-log-notes { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text-primary); }
+.cs-log-empty { margin: 0; font-size: 13px; color: var(--text-muted); }
+
+.cs-log-events { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.cs-log-event {
+  padding: 11px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+}
+.cs-log-event-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.cs-log-tag {
+  padding: 2px 8px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.02em;
+  color: var(--text-secondary); background: var(--bg-hover);
+}
+.cs-log-tag.is-analysed, .cs-log-tag.is-reanalysed { color: var(--green); background: color-mix(in srgb, var(--green) 14%, transparent); }
+.cs-log-tag.is-analysis_failed, .cs-log-tag.is-interrupted { color: var(--red); background: color-mix(in srgb, var(--red) 14%, transparent); }
+.cs-log-tag.is-duplicate { color: var(--yellow); background: color-mix(in srgb, var(--yellow) 12%, transparent); }
+.cs-log-tag.is-rebelipay_interest { color: var(--accent-light); background: var(--accent-glow); }
+.cs-log-actor { font-size: 12.5px; color: var(--text-secondary); }
+/* Pushed right so the times form a column the eye can run down. */
+.cs-log-when { margin-left: auto; font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+
+.cs-log-details {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  margin: 9px 0 0;
+  padding: 7px 10px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+.cs-log-details dt { padding: 3px 18px 3px 0; font-size: 12px; color: var(--text-muted); }
+.cs-log-details dd { margin: 0; padding: 3px 0; font-size: 12px; color: var(--text-secondary); overflow-wrap: anywhere; }
+
+/* ── Narrow screens ───────────────────────────────────────────────────────── */
+/* The page gutter and title size already step down in ReferenceScreen.css. */
+@media (max-width: 620px) {
+  .cs-head { grid-template-columns: minmax(0, 1fr); }
+  .cs-head-actions { width: 100%; }
+  .cs-head-actions .cs-btn { flex: 1 1 auto; justify-content: center; }
+  /* The buttons fill the row here, so the note always goes under Refresh
+     (see .is-under), still moving nothing. */
+  .cs-updated-live { left: 0; top: calc(100% + 4px); transform: none; z-index: 2; }
+  /* On a phone the search has its own line (the container query), then Status
+     and Store side by side, then the pager. Status is only as wide as what it
+     shows ("All"), and Store takes the rest, so a store name is cut as late as
+     possible. min-width 0 all the way down: a long store name in the select
+     must not size the filter wider than the card. */
+  .cs-toolbar-controls { gap: 10px; }
+  .cs-toolbar-controls > .cs-filter { flex: 1 1 140px; min-width: 0; }
+  .cs-toolbar-controls > .cs-filter select { flex: 1; min-width: 0; max-width: none; width: 100%; }
+  .cs-toolbar-controls > .cs-filter:first-child { flex: 0 0 auto; }
+  .cs-toolbar-controls > .cs-filter:first-child select { flex: none; width: auto; }
+  /* One line: count, rows, back, page, next. The desktop count width would
+     push "next" onto a line of its own here. */
+  .cs-pager { width: 100%; justify-content: space-between; gap: 8px; }
+  .cs-count { min-width: 11ch; text-align: left; }
+  .cs-notice { flex-wrap: wrap; }
+  .cs-modal-overlay { padding: 12px; align-items: flex-end; }
+  .cs-modal { max-height: 92vh; }
+  .cs-drop { padding: 26px 16px; }
+}
+
+/* Last, so it outranks the rules above at equal specificity. */
+@media (prefers-reduced-motion: reduce) {
+  .cs-btn, .cs-open-btn, .cs-log-btn, .cs-icon-btn, .cs-drop,
+  .cs-card tbody, .cs-card.is-loading tbody, .cs-card.is-pressed tbody { transition: none; }
+  .cs-updated { animation: none; }
+}
+
+/* The headings: 8px each side rather than 14px, so a two-word heading keeps
+   to one line where it can and never runs to three; each ⓘ follows its
+   heading's last word, as the sort arrows do (a separate flex item, it sat
+   off to the side of a wrapped heading). */
+.ref-table.cs-table thead th { padding-left: 8px; padding-right: 8px; }
+.cs-th-end { white-space: nowrap; }
+.ref-table.cs-table thead th .mi-group { display: inline-flex; vertical-align: -3px; margin-left: 4px; }
+.ref-table.cs-table thead th .mi-btn { width: 15px; height: 15px; text-transform: none; letter-spacing: 0; }

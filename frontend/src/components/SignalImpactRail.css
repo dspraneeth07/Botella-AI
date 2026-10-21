@@ -1,0 +1,50 @@
+/* SignalImpactRail.css - the Signals panel on the Recommendations rail.
+   Inherits the rh-* tokens from RecommendationsHome.css (the panel sits inside
+   .rh-page); --sig is the feed colour set per row from DOMAIN_META. */
+
+.sir-lede { margin: 0 0 10px; font-size: 12px; line-height: 1.5; color: var(--mu); }
+
+.sir-list { list-style: none; margin: 0 0 6px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+
+.sir-row { display: flex; gap: 9px; align-items: flex-start; padding: 8px 0 0; border-top: 1px solid var(--bd2); }
+.sir-row:first-child { border-top: none; padding-top: 0; }
+.sir-icon {
+  flex: 0 0 auto; width: 24px; height: 24px; border-radius: 7px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--sig); background: color-mix(in srgb, var(--sig) 14%, transparent);
+  margin-top: 1px;
+}
+@supports not (background: color-mix(in srgb, red, blue)) {
+  .sir-icon { background: var(--elev); }
+}
+.sir-body { flex: 1 1 auto; min-width: 0; }
+.sir-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.sir-label { flex: 1 1 auto; min-width: 0; font-size: 12.5px; font-weight: 600; color: var(--tx); line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sir-when { flex: 0 0 auto; font-size: 11px; font-weight: 600; color: var(--mu); white-space: nowrap; }
+
+/* The impact line: the server's state word, then its sentence. A refusal is
+   muted; a measured effect takes the feed colour so the eye finds the one row
+   it can act on. */
+.sir-impact { margin: 3px 0 0; font-size: 11.5px; line-height: 1.45; color: var(--mu); text-wrap: pretty; }
+.sir-state { font-weight: 700; color: var(--tx2); }
+.sir-measured .sir-state { color: var(--sig); }
+.sir-measured .sir-impact { color: var(--tx2); }
+
+.sir-cards {
+  border: none; background: none; color: var(--ac2); font: inherit; font-size: 11.5px; font-weight: 600;
+  cursor: pointer; padding: 3px 0 0; display: inline-flex; align-items: center; gap: 3px;
+}
+.sir-cards svg { transition: transform .15s ease; }
+.sir-chev-open { transform: rotate(180deg); }
+.sir-nocards { display: inline-block; padding-top: 3px; font-size: 11px; color: var(--mu); font-style: italic; }
+
+.sir-cardlist { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 3px; }
+.sir-card {
+  width: 100%; text-align: left; border: 1px solid var(--bd2); background: var(--elev); border-radius: 8px;
+  padding: 5px 8px; font: inherit; color: var(--tx); cursor: pointer;
+  display: grid; grid-template-columns: auto 1fr; column-gap: 7px; row-gap: 1px; align-items: baseline;
+}
+.sir-card:hover { background: var(--hover); }
+.sir-card-type { font-size: 10.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ac2); }
+.sir-card-name { font-size: 12px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.sir-card-via { grid-column: 1 / -1; font-size: 10.5px; color: var(--mu); }

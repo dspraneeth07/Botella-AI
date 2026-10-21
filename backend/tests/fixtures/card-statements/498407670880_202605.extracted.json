@@ -1,0 +1,89 @@
+{
+  "processor": "Better Payments",
+  "layout_version": "legacy_2026",
+  "merchant": { "number": "498407670880", "name": "SPOTSWOOD LIQUORS" },
+  "period": { "start": "2026-05-01", "end": "2026-05-31" },
+  "summary": {
+    "amount_submitted": 166035.83,
+    "paid_by_others": null,
+    "disputes": 0.00,
+    "adjustments": 0.00,
+    "fees": 4981.88,
+    "amount_processed": 161053.95
+  },
+  "customers": null,
+  "sales_trend": [],
+  "printed_yoy_pct": null,
+  "printed_mom_pct": null,
+  "daily": [
+    { "date": "2026-05-01", "submitted": 4426.30, "disputes": 0.00, "adjustments": 0.00, "fees": 132.80, "processed": 4293.50, "is_prior_period": false },
+    { "date": "2026-05-02", "submitted": 7432.10, "disputes": 0.00, "adjustments": 0.00, "fees": 222.96, "processed": 7209.14, "is_prior_period": false },
+    { "date": "2026-05-03", "submitted": 7210.39, "disputes": 0.00, "adjustments": 0.00, "fees": 216.31, "processed": 6994.08, "is_prior_period": false },
+    { "date": "2026-05-04", "submitted": 4098.86, "disputes": 0.00, "adjustments": 0.00, "fees": 122.97, "processed": 3975.89, "is_prior_period": false },
+    { "date": "2026-05-05", "submitted": 3325.04, "disputes": 0.00, "adjustments": 0.00, "fees": 99.76, "processed": 3225.28, "is_prior_period": false },
+    { "date": "2026-05-06", "submitted": 3966.99, "disputes": 0.00, "adjustments": 0.00, "fees": 119.01, "processed": 3847.98, "is_prior_period": false },
+    { "date": "2026-05-07", "submitted": 2562.25, "disputes": 0.00, "adjustments": 0.00, "fees": 76.87, "processed": 2485.38, "is_prior_period": false },
+    { "date": "2026-05-08", "submitted": 3558.40, "disputes": 0.00, "adjustments": 0.00, "fees": 106.74, "processed": 3451.66, "is_prior_period": false },
+    { "date": "2026-05-09", "submitted": 7028.00, "disputes": 0.00, "adjustments": 0.00, "fees": 210.85, "processed": 6817.15, "is_prior_period": false },
+    { "date": "2026-05-10", "submitted": 10403.28, "disputes": 0.00, "adjustments": 0.00, "fees": 312.11, "processed": 10091.17, "is_prior_period": false },
+    { "date": "2026-05-11", "submitted": 7180.98, "disputes": 0.00, "adjustments": 0.00, "fees": 215.43, "processed": 6965.55, "is_prior_period": false },
+    { "date": "2026-05-12", "submitted": 2723.57, "disputes": 0.00, "adjustments": 0.00, "fees": 81.70, "processed": 2641.87, "is_prior_period": false },
+    { "date": "2026-05-13", "submitted": 2606.22, "disputes": 0.00, "adjustments": 0.00, "fees": 78.18, "processed": 2528.04, "is_prior_period": false },
+    { "date": "2026-05-14", "submitted": 2898.56, "disputes": 0.00, "adjustments": 0.00, "fees": 86.95, "processed": 2811.61, "is_prior_period": false },
+    { "date": "2026-05-15", "submitted": 3113.25, "disputes": 0.00, "adjustments": 0.00, "fees": 93.39, "processed": 3019.86, "is_prior_period": false },
+    { "date": "2026-05-16", "submitted": 6427.68, "disputes": 0.00, "adjustments": 0.00, "fees": 192.83, "processed": 6234.85, "is_prior_period": false },
+    { "date": "2026-05-17", "submitted": 9612.68, "disputes": 0.00, "adjustments": 0.00, "fees": 288.38, "processed": 9324.30, "is_prior_period": false },
+    { "date": "2026-05-18", "submitted": 6775.21, "disputes": 0.00, "adjustments": 0.00, "fees": 203.25, "processed": 6571.96, "is_prior_period": false },
+    { "date": "2026-05-19", "submitted": 2286.06, "disputes": 0.00, "adjustments": 0.00, "fees": 68.58, "processed": 2217.48, "is_prior_period": false },
+    { "date": "2026-05-20", "submitted": 4028.01, "disputes": 0.00, "adjustments": 0.00, "fees": 120.85, "processed": 3907.16, "is_prior_period": false },
+    { "date": "2026-05-21", "submitted": 2984.36, "disputes": 0.00, "adjustments": 0.00, "fees": 89.53, "processed": 2894.83, "is_prior_period": false },
+    { "date": "2026-05-22", "submitted": 4334.35, "disputes": 0.00, "adjustments": 0.00, "fees": 130.03, "processed": 4204.32, "is_prior_period": false },
+    { "date": "2026-05-23", "submitted": 9005.37, "disputes": 0.00, "adjustments": 0.00, "fees": 270.17, "processed": 8735.20, "is_prior_period": false },
+    { "date": "2026-05-24", "submitted": 8600.86, "disputes": 0.00, "adjustments": 0.00, "fees": 258.04, "processed": 8342.82, "is_prior_period": false },
+    { "date": "2026-05-25", "submitted": 7681.78, "disputes": 0.00, "adjustments": 0.00, "fees": 230.45, "processed": 7451.33, "is_prior_period": false },
+    { "date": "2026-05-26", "submitted": 6011.24, "disputes": 0.00, "adjustments": 0.00, "fees": 180.33, "processed": 5830.91, "is_prior_period": false },
+    { "date": "2026-05-27", "submitted": 2324.16, "disputes": 0.00, "adjustments": 0.00, "fees": 69.72, "processed": 2254.44, "is_prior_period": false },
+    { "date": "2026-05-28", "submitted": 2590.04, "disputes": 0.00, "adjustments": 0.00, "fees": 77.70, "processed": 2512.34, "is_prior_period": false },
+    { "date": "2026-05-29", "submitted": 3526.32, "disputes": 0.00, "adjustments": 0.00, "fees": 105.79, "processed": 3420.53, "is_prior_period": false },
+    { "date": "2026-05-30", "submitted": 8052.35, "disputes": 0.00, "adjustments": 0.00, "fees": 242.38, "processed": 7809.97, "is_prior_period": false },
+    { "date": "2026-05-31", "submitted": 9261.17, "disputes": 0.00, "adjustments": 0.00, "fees": 277.82, "processed": 8983.35, "is_prior_period": false }
+  ],
+  "month_end_charges": null,
+  "card_types": [
+    { "type": "MASTERCARD", "label": "Mastercard", "avg_ticket": 30.60, "items": 946, "gross": 28946.43, "refund_items": 0, "refunds": 0.00, "net_items": 946, "net": 28946.43 },
+    { "type": "VISA", "label": "VISA", "avg_ticket": 31.93, "items": 3818, "gross": 121974.31, "refund_items": 1, "refunds": 26.65, "net_items": 3819, "net": 121947.66 },
+    { "type": "DISCOVER", "label": "Discover", "avg_ticket": 29.71, "items": 213, "gross": 6327.78, "refund_items": 0, "refunds": 0.00, "net_items": 213, "net": 6327.78 },
+    { "type": "AMEX", "label": "AMEX ACQ", "avg_ticket": 38.38, "items": 229, "gross": 8788.69, "refund_items": 0, "refunds": 0.00, "net_items": 229, "net": 8788.69 },
+    { "type": "DEBIT", "label": "Debit/Atm", "avg_ticket": 25.27, "items": 1, "gross": 25.27, "refund_items": 0, "refunds": 0.00, "net_items": 1, "net": 25.27 }
+  ],
+  "fee_lines": [
+    { "category": "transaction", "product": "MASTERCARD", "network": "MASTERCARD", "description": "MASTERCARD DEBIT SALES DISC 0.03 DISC RATE TIMES $9627.50", "is_debit": true, "rate": 0.03, "base_amount": 9627.50, "count": null, "unit_price": null, "fee_type": "Service Charges", "amount": 288.81 },
+    { "category": "transaction", "product": "MASTERCARD", "network": "MASTERCARD", "description": "MASTERCARD SALES DISCOUNT 0.03 DISC RATE TIMES $19318.93", "is_debit": false, "rate": 0.03, "base_amount": 19318.93, "count": null, "unit_price": null, "fee_type": "Service Charges", "amount": 579.57 },
+    { "category": "transaction", "product": "VISA", "network": "VISA", "description": "VISA SALES DISCOUNT 0.03 DISC RATE TIMES $44142.02", "is_debit": false, "rate": 0.03, "base_amount": 44142.02, "count": null, "unit_price": null, "fee_type": "Service Charges", "amount": 1324.26 },
+    { "category": "transaction", "product": "VISA", "network": "VISA", "description": "VISA DEBIT SALES DISCOUNT 0.03 DISC RATE TIMES $77832.29", "is_debit": true, "rate": 0.03, "base_amount": 77832.29, "count": null, "unit_price": null, "fee_type": "Service Charges", "amount": 2334.96 },
+    { "category": "transaction", "product": "DISCOVER", "network": "DISCOVER", "description": "DISCOVER SALES DISCOUNT 0.03 DISC RATE TIMES $4178.84", "is_debit": false, "rate": 0.03, "base_amount": 4178.84, "count": null, "unit_price": null, "fee_type": "Service Charges", "amount": 125.36 },
+    { "category": "transaction", "product": "DISCOVER", "network": "DISCOVER", "description": "DISCOVER DEBIT SALES DISCOUNT 0.03 DISC RATE TIMES $2148.94", "is_debit": true, "rate": 0.03, "base_amount": 2148.94, "count": null, "unit_price": null, "fee_type": "Service Charges", "amount": 64.49 },
+    { "category": "transaction", "product": "DEBIT CARD", "network": "DEBIT", "description": "DEBIT SALES DISCOUNT 0.03 DISC RATE TIMES $25.27", "is_debit": true, "rate": 0.03, "base_amount": 25.27, "count": null, "unit_price": null, "fee_type": "Service Charges", "amount": 0.76 },
+    { "category": "transaction", "product": "Other", "network": "AMEX", "description": "AMEX SALES DISCOUNT 0.03 DISC RATE TIMES $8788.69", "is_debit": false, "rate": 0.03, "base_amount": 8788.69, "count": null, "unit_price": null, "fee_type": "Service Charges", "amount": 263.67 }
+  ],
+  "chargebacks": [],
+  "funding": [],
+  "reportable_sales": { "tin_last4": "0000", "month_label": "April", "month_amount": 140895.11, "ytd_amount": 534466.12, "ytd_year": 2026 },
+  "notices": [
+    {
+      "text": "Beginning with your July 2026 month end statement, you will no longer be emailed a PDF attachment. You will receive an email notification and instructions on where to download your statement in Commerce Control Center, www.commercecontrol.com. Statements will now feature a new, streamlined design with visual bar graphs and summary snapshots.",
+      "kind": "delivery_change",
+      "effective_date": null
+    },
+    {
+      "text": "IMPORTANT NOTICE: Effective June 29, 2026, your Visa and Mastercard acquiring sponsorship, as well as Debit, will change from Wells Fargo Bank, N.A., P.O. Box 6079, Concord, CA 94524 to Citizens Bank, N.A., 1 Citizens Plaza, Providence, RI 02903, 888-211-4057. Please note there are no changes to your current merchant agreement, rates, or services. If you have any questions, please call Customer Service by using the number located at the top of your merchant statement.",
+      "kind": "acquirer_change",
+      "effective_date": "2026-06-29"
+    },
+    {
+      "text": "IMPORTANT NOTICE: Effective June 29, 2026, the Company Name associated with the ACH file that is being sent to your financial institution will be updated to reflect MER BNKCD. Your Company ID will not be changing. To ensure that your processing funds are not interrupted, please inform the ACH department of the financial institution where your settlement funds are deposited to update the company name. Proceeds of sales and other activity will continue to be deposited into your existing bank account.",
+      "kind": "ach_descriptor_change",
+      "effective_date": "2026-06-29"
+    }
+  ]
+}

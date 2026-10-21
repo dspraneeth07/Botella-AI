@@ -1,0 +1,160 @@
+[
+ {
+  "loc": 0,
+  "name": "Chuck's Wine & Spirits (Main Store)",
+  "ok": false,
+  "reason": "not_in_database",
+  "detail": "no store of this name in client_locations (197 searched)"
+ },
+ {
+  "loc": 0,
+  "name": "Red Barn Liquors Bowling Green",
+  "ok": false,
+  "reason": "not_in_database",
+  "detail": "no store of this name in client_locations (197 searched)"
+ },
+ {
+  "loc": 0,
+  "name": "BJ's Liquor",
+  "ok": false,
+  "reason": "not_in_database",
+  "detail": "no store of this name in client_locations (197 searched)"
+ },
+ {
+  "loc": 0,
+  "name": "Top 10 Wine & Spirits",
+  "ok": false,
+  "reason": "not_in_database",
+  "detail": "no store of this name in client_locations (197 searched)"
+ },
+ {
+  "loc": 44,
+  "name": "Manhattan Liquors",
+  "ok": false,
+  "reason": "history_too_short",
+  "detail": "has 2026-09-06 to 2026-10-05 (29 days, 30 trading days); a 2026-03 backtest needs 2025-03-01 to 2026-07-30"
+ },
+ {
+  "loc": 194,
+  "name": "FireWater Package",
+  "ok": false,
+  "reason": "history_too_short",
+  "detail": "has 2026-09-06 to 2026-10-05 (29 days, 30 trading days); a 2026-03 backtest needs 2025-03-01 to 2026-07-30"
+ },
+ {
+  "loc": 51,
+  "name": "La Bodega Wine & Spirits",
+  "ok": false,
+  "reason": "history_too_short",
+  "detail": "has 2026-09-06 to 2026-10-05 (29 days, 30 trading days); a 2026-03 backtest needs 2025-03-01 to 2026-07-30"
+ },
+ {
+  "loc": 173,
+  "name": "Tuscany Wine, Spirits + Craft CO",
+  "ok": false,
+  "reason": "history_too_short",
+  "detail": "has 2026-07-05 to 2026-10-05 (92 days, 93 trading days); a 2026-03 backtest needs 2025-03-01 to 2026-07-30"
+ },
+ {
+  "loc": 0,
+  "name": "Lothian Beverage Company",
+  "ok": false,
+  "reason": "not_in_database",
+  "detail": "no store of this name in client_locations (197 searched)"
+ },
+ {
+  "loc": 0,
+  "name": "Burtons Liquor Mart",
+  "ok": false,
+  "reason": "not_in_database",
+  "detail": "no store of this name in client_locations (197 searched)"
+ },
+ {
+  "loc": 134,
+  "name": "Georgio's Liquors Billerica",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 135,
+  "name": "Georgio's Liquors Waltham",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 155,
+  "name": "Nick & Moes Liquor",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 105,
+  "name": "Local Vine - Atlanta",
+  "ok": true,
+  "reason": "",
+  "detail": "2024-03-26 to 2026-10-05, 888 trading days",
+  "cost_coverage": 0.0,
+  "lines": 741639,
+  "skus": 12368,
+  "slug": "105",
+  "cards": 124,
+  "hit30": 82.25806451612904,
+  "net30": 0.0,
+  "bt_hit": 84.61538461538461,
+  "bt_null": 64.37713675213675,
+  "bt_p": 0.0004997501249375312,
+  "bt_edge": 20.238247863247864
+ },
+ {
+  "loc": 131,
+  "name": "Local Vine - Johns Creek",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 106,
+  "name": "Damon's Beverage Wholesale 700 Hogan Rd",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 107,
+  "name": "Damon's Beverage and Redemption Bangor",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 139,
+  "name": "Damon's Beverage and Redemption Augusta",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 140,
+  "name": "Damon's Beverage and Redemption Waterville",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 141,
+  "name": "Damon's Beverage Skowhegan",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ },
+ {
+  "loc": 146,
+  "name": "Damon's Beverage Orono",
+  "ok": false,
+  "reason": "no_sales",
+  "detail": "the export exists and contains no sold lines"
+ }
+]

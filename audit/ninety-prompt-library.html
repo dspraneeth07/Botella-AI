@@ -1,0 +1,1588 @@
+<title>The Ninety Prompt Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  color-scheme:light;
+  --paper:#FBFAF7; --card:#FFFFFF; --sunk:#F3F1EC; --rule:#DFDAD0;
+  --ink:#1A1713; --body:#3D3830; --mute:#6F675B; --faint:#9A9184;
+  --blue:#1F4E79; --blue-bg:#E6EEF6; --blue-edge:#A9C4DD;
+  --green:#15613F; --green-bg:#E5F1E9; --green-edge:#A6CDB6;
+  --brass:#9A5A05; --brass-bg:#FCF1E0; --brass-edge:#E3C68E;
+  --red:#A32118; --red-bg:#FBEAE7; --red-edge:#E0AFA8;
+  --code-bg:#F7F5F0;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+  --code-bg:#0E0C0A;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+  --code-bg:#0E0C0A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);
+  font-family:"Source Sans 3",system-ui,sans-serif;font-size:16.5px;line-height:1.66;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3{color:var(--ink);margin:0;font-family:"Source Serif 4",Georgia,serif;text-wrap:balance}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1060px;margin:0 auto;padding-block:0 110px;padding-inline:20px}
+
+header.mast{border-bottom:3px double var(--rule);padding:44px 0 24px;margin-bottom:30px}
+.dept{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:18px}
+h1{font-size:clamp(32px,5.2vw,52px);font-weight:700;line-height:1.05;letter-spacing:-.02em}
+.dek{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.1vw,20px);line-height:1.5;
+  margin-top:14px;max-width:62ch}
+.byline{margin-top:20px;padding-top:13px;border-top:1px solid var(--rule);
+  font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center}
+.byline b{color:var(--body);font-weight:600}
+#prog{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--green);font-weight:700}
+
+p{margin:0 0 14px;max-width:74ch}
+ul,ol{max-width:74ch;padding-left:22px;margin:0 0 14px}li{margin-bottom:6px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:"JetBrains Mono",monospace;font-size:.85em;background:var(--sunk);
+  padding:1.5px 5px;border-radius:2px;color:var(--ink);word-break:break-word}
+
+.how{background:var(--card);border:1px solid var(--rule);border-left:5px solid var(--blue);
+  padding:22px 26px;margin:28px 0}
+.how h2{font-size:21px;margin-bottom:10px;color:var(--blue)}
+.how ol{margin:0;max-width:72ch}
+.warn{background:var(--red-bg);border:1px solid var(--red-edge);border-left:5px solid var(--red);
+  padding:18px 22px;margin:24px 0}
+.warn p{margin:0;color:var(--ink);max-width:72ch}.warn p+p{margin-top:9px}
+.warn .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--red);font-weight:700;display:block;margin-bottom:5px}
+
+section{margin-top:52px;scroll-margin-top:16px}
+.sh{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px 16px;
+  padding-bottom:11px;border-bottom:2px solid var(--ink);margin-bottom:8px}
+.sh h2{font-size:clamp(22px,3vw,30px);font-weight:700;letter-spacing:-.015em;flex:1 1 260px}
+.sh .sid{font-family:"JetBrains Mono",monospace;font-size:13px;font-weight:700;color:var(--green)}
+.sh .wk{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--mute)}
+.lede{font-size:15px;color:var(--mute);margin:10px 0 18px;max-width:76ch}
+
+.pr{border:1px solid var(--rule);background:var(--card);margin:18px 0;overflow:hidden}
+.pr.is-done{opacity:.62}
+.pr.is-done .ph{background:var(--green-bg)}
+.ph{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:12px 16px;
+  background:var(--sunk);border-bottom:1px solid var(--rule)}
+.ph .pid{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;color:var(--blue)}
+.ph h3{margin:0;font-size:17px;flex:1 1 240px;line-height:1.3}
+.chkw{display:inline-flex;align-items:center;gap:6px;font-family:"JetBrains Mono",monospace;
+  font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);cursor:pointer}
+.chk{accent-color:var(--green);width:15px;height:15px;cursor:pointer}
+button{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;font-weight:700;color:var(--blue);background:var(--blue-bg);
+  border:1px solid var(--blue-edge);border-radius:3px;padding:6px 13px;cursor:pointer;
+  white-space:nowrap;min-height:32px}
+button:hover{background:var(--card)}
+button.ok{color:var(--green);background:var(--green-bg);border-color:var(--green-edge)}
+.gate{font-family:"JetBrains Mono",monospace;font-size:11px;line-height:1.55;
+  padding:9px 16px;background:var(--green-bg);color:var(--green);
+  border-bottom:1px solid var(--green-edge);font-weight:700}
+.gate span{color:var(--mute);font-weight:400}
+.ptext{font-family:"JetBrains Mono",monospace;font-size:12.5px;line-height:1.62;
+  margin:0;padding:16px;background:var(--code-bg);color:var(--ink);
+  overflow-x:auto;white-space:pre-wrap;word-break:break-word;border:0}
+@media (max-width:520px){.ptext{font-size:11.5px;padding:12px}}
+
+footer{margin-top:66px;padding-top:18px;border-top:3px double var(--rule);
+  font-size:12.5px;color:var(--mute)}
+footer p{max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media print{body{background:#fff}.pr{break-inside:avoid}button,.chkw{display:none}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="dept">Engine Three · 27 prompts · paste one per session, in order</div>
+  <h1>Copy, paste, measure, repeat</h1>
+  <p class="dek">Every prompt from the ninety-percent programme, written as an instruction to an
+  agent rather than as documentation. Each carries its own context, the file it touches, the tests it
+  must add, the guardrails it must not cross, and the number that has to move before the next one
+  starts.</p>
+  <div class="byline">
+    <span><b>Branch</b> <code>Enh_Engine_v1</code></span>
+    <span><b>Targets</b> promise kept ≥90% · $1,000 net per store per month</span>
+    <span id="prog">0 marked done</span>
+  </div>
+</header>
+
+<div class="how">
+  <h2>How to use this</h2>
+  <ol>
+    <li><strong>Paste the primer first</strong>, once per fresh Claude Code session. It establishes
+    the repository's non-negotiable constraints so no later prompt has to repeat them.</li>
+    <li><strong>One prompt per session.</strong> They are sized to be a single coherent change with
+    its own tests. Two at once produces a diff nobody can review.</li>
+    <li><strong>Do not skip the gate.</strong> Each prompt ends in a number that must move. If it
+    does not move, the prompt failed — and that is a finding to publish, not a step to work around.</li>
+    <li><strong>Run the guards every time:</strong> <code>python -m pytest tests/ -q</code>,
+    <code>check_no_literals.py</code>, <code>check_no_state_branches.py</code>.</li>
+    <li>The tick boxes are remembered in your own browser only. They are a convenience, not shared
+    state — nobody else sees them.</li>
+  </ol>
+</div>
+
+<div class="warn">
+  <span class="l">The one instruction that overrides everything else</span>
+  <p><strong>Never reach 90% by raising the <code>p_hit</code> floor.</strong> The engine's own
+  settings already price that path: 0.50 gives 75.9% at 5.1 cards a run; 0.55 buys about one point,
+  cuts coverage to 2.4 cards and halves the margin. A floor high enough to print 90% issues almost
+  nothing.</p>
+  <p>And <strong>never change <code>deficit_units</code></strong>. The +16.6 point edge over a
+  reversion-matched null was measured on that ordering. Moving it invalidates the result and the
+  whole five-store audit has to be re-run.</p>
+</div>
+
+<!-- ─────────── PRIMER ─────────── -->
+<section id="primer">
+  <div class="sh"><span class="sid">P</span><h2>The primer</h2><span class="wk">paste once per session</span></div>
+  <p class="lede">Context every other prompt assumes. Cheap to paste, expensive to omit.</p>
+
+  <article class="pr" data-id="P0">
+    <div class="ph"><span class="pid">P0</span><h3>Session primer — repository constraints</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <pre class="ptext">You are working on the BotellaAI recommendation engine, branch Enh_Engine_v1.
+Read these constraints before you touch anything. They are not preferences.
+
+ARCHITECTURE BOUNDARIES
+- app/pipeline is PURE STANDARD LIBRARY. No numpy, scipy, sklearn, statsmodels,
+  pandas or LightGBM. Precedents already in the tree: OLS via normal equations
+  plus Gauss-Jordan inverse in app/pipeline/elasticity/estimate.py, isotonic by
+  pool-adjacent-violators in app/pipeline/calibrate/fit.py. Follow them.
+- Node is the SOLE writer of bottleai_analytics. Python is stateless and holds
+  no analytics credentials. syncgo access is SELECT-only by design.
+- Secrets in .env files are masked whenever displayed. The three real .env files
+  (backend/, Botella_External_APIs/, frontend/) are git-ignored and stay so.
+- Do NOT use the stale copy at C:/Users/Techm/Downloads/external_api. All work
+  is in BottleAI-gitlab/Botella_External_APIs.
+
+CODING RULES THE BUILD ENFORCES
+- Every tunable is a registry Setting with a name, unit, owner, a `why` that says
+  what evidence would change it, and a status of PROVISIONAL, FITTED or MEASURED.
+  scripts/check_no_literals.py fails CI on a bare magic number.
+- Nothing branches on evidence state. scripts/check_no_state_branches.py fails CI
+  on an `if tier ==` style branch. A thin-data store and a rich-data store take
+  the same code path with a different weight.
+- Absence is not zero. A missing cost is None and stays None; it never becomes
+  0.0 and it never prints as "$0". `x = d.get("cost") or 1.0` is a bug: it maps a
+  genuine 0.0 to 1.0. This class has already shipped once and been caught.
+- Open days, never calendar days. A store shut on Sundays has six-day weeks and a
+  calendar denominator understates every rate by a seventh.
+- A probability may never be multiplied by a margin. Only unit counts become
+  dollars. This defect has been removed twice.
+
+WHAT IS TRUE TODAY, SO YOU DO NOT RE-DERIVE IT
+- Ranking on the demand DEFICIT rather than total demand took the pooled hit rate
+  from 31.0% to 75.9% and incremental margin per card from -$952 to +$48.
+- 90% HIT RATE IS NOT REACHABLE. Three measurements cap it near 73%: top decile
+  65-69%, best worst-horizon 73.1%, best single card 71.1%. Do not optimise for
+  it. The accuracy target is PROMISE KEPT and CALIBRATED CONFIDENCE.
+- The signal layer, measured over 155 signal-driven recommendations, scored 6 to
+  10 points BELOW random. Any work that switches signals on must first make each
+  one earn an estimated coefficient.
+
+HOW TO FINISH ANY TASK HERE
+1. Write the tests named in the prompt. They are the contract.
+2. python -m pytest tests/ -q          (1,265 pass today)
+3. python scripts/check_no_literals.py
+4. python scripts/check_no_state_branches.py
+5. python scripts/config_report.py     (106 of 120 settings still PROVISIONAL)
+6. Report the gate number. If it did not move, say so plainly and stop. Do not
+   adjust the gate to match the result.
+
+Acknowledge you have read this, then wait for the task prompt.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N0 ─────────── -->
+<section id="n0">
+  <div class="sh"><span class="sid">N0</span><h2>Repair the ruler</h2><span class="wk">1–2 weeks · do first</span>
+    <button data-copy="all">Copy all 3</button></div>
+  <p class="lede">Every later gate is measured with these. Nothing below N0 can be trusted until they land.</p>
+
+  <article class="pr" data-id="N0.1">
+    <div class="ph"><span class="pid">N0.1</span><h3>Carrying cost, not a COGS write-off</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— re-run all five pilot stores and publish a before/after table. Expect the sign to change at two or three.</span></div>
+    <pre class="ptext">TASK: fix the over-ordering cost model. It is currently wrong by one to two
+orders of magnitude and it is driving the roadmap.
+
+THE DEFECT
+scripts/daily_recommendation_ledger.py line 203 computes
+    "over_ordered_cost": (over * cost) if cost else None
+That charges the ENTIRE cost of goods for stock that did not sell in the window,
+as though it had been destroyed. Liquor does not spoil. A case of bourbon unsold
+in April is on the shelf in May and sells then.
+
+Note the second bug on the same line: `if cost else None` treats a genuine cost
+of 0.0 as missing. Use an explicit `is None` check.
+
+WHAT TO BUILD
+A holding_cost function, in app/pipeline (not in the script), with three new
+registry Settings, all PROVISIONAL:
+
+    COST_OF_CAPITAL_ANNUAL          e.g. 0.10, owner finance
+    SHELF_OPPORTUNITY_PER_UNIT_DAY  owner commercial
+    OBSOLESCENCE_HAZARD             PER CATEGORY FAMILY
+
+    capital  = unit_cost * wacc * (days_held / 365)
+    cost     = over_units * (capital + shelf * days_held + hazard * unit_cost)
+
+OBSOLESCENCE_HAZARD is near zero for spirits and real for dated, seasonal or
+limited stock. Each Setting's `why` must say what measurement would make it
+MEASURED.
+
+Then call it from the ledger and from anywhere else that costs unsold units.
+
+GUARDRAILS
+- A missing unit_cost returns None, and None does not become 0.0 anywhere
+  downstream. Five of ten audited stores send no cost at all; their reports must
+  read "no cost data", never "$0".
+- Do not change how units are counted. Only the money.
+
+TESTS
+    test_holding_cost_is_not_cogs
+        a $20 bottle held 30 extra days costs under $1, not $20
+    test_holding_cost_absent_without_cost
+        no unit cost gives None, and None propagates as an absence
+    test_zero_cost_is_not_treated_as_missing
+        a genuine 0.0 coverage is distinguishable from None
+
+THEN: re-run scripts/run_all_ledgers.py across all five pilot stores and give me
+a before/after net-margin table. I expect two or three stores to flip from
+negative to positive. Report that as a MEASUREMENT CORRECTION, not as a win.</pre>
+  </article>
+
+  <article class="pr" data-id="N0.2">
+    <div class="ph"><span class="pid">N0.2</span><h3>Net margin per card becomes the primary outcome</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— every store's report leads with net margin per card and its clustered interval.</span></div>
+    <pre class="ptext">TASK: make money the primary scored outcome, per card, at every horizon.
+
+WHY
+Hit rate answers a research question about selection. The business runs on money,
+and today money is a secondary column. Promote it.
+
+WHAT TO BUILD
+    net_margin_per_card = (realised_units - expected_units) * unit_margin
+                        - holding_cost(over_units, unit_cost, days_held, ...)
+
+using N0.1's holding_cost. Report it:
+- PER CARD, with a DATE-CLUSTERED interval over decision dates. Never as a raw
+  total. The arms place different numbers of bets, and comparing totals across
+  different card counts compares a rate to a volume.
+- Keep margin_captured (total flow touched) as a SEPARATE, LABELLED column. It is
+  not a result: the old ordering showed the largest captured flow at $215k and a
+  NEGATIVE incremental margin at the same time.
+
+GUARDRAILS
+- Incremental, not total: (sold - expected) * margin. Never sold * margin.
+- Two picks on the same decision date share a market, so the bootstrap clusters
+  by date. A row-wise bootstrap once reported "82.9%" off 41 observations here
+  and was thrown away.
+
+TESTS
+    test_net_margin_is_incremental_not_total
+        pins (sold - expected) * margin, plus a case where total is positive
+        while incremental is negative
+    test_interval_is_date_clustered
+    test_no_cost_store_reports_absence_not_zero
+
+THEN: update scripts/_ledger_report.py and scripts/_index_report.py so net margin
+per card is the lead figure on every page, with its interval beside it.</pre>
+  </article>
+
+  <article class="pr" data-id="N0.3">
+    <div class="ph"><span class="pid">N0.3</span><h3>Turn the holdout on — one flag, four components</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— recommendation_evaluations row count is non-zero and rising daily. N2 is impossible until it is.</span></div>
+    <pre class="ptext">TASK: switch on the 20% holdout. This is the cheapest high-value change in the
+whole programme and it has been off for the entire project.
+
+WHY IT MATTERS MORE THAN IT LOOKS
+REC_HOLDOUT_PCT = 0, so recommendation_evaluations has zero rows. That starves
+FOUR components that are already built and tested:
+    app/pipeline/calibrate/fit.py       has no outcomes to fit a curve from
+    app/pipeline/calibrate/monitor.py   has nothing to compute Brier or ECE on
+    app/pipeline/gate/matched.py        has no withheld arm to compare against
+    any causal claim at all             nobody has acted on any card ever measured
+
+WHAT TO BUILD
+- Set REC_HOLDOUT_PCT = 20.
+- Assignment must be DETERMINISTIC from (client_id, location_id, sku,
+  decision_date) via a stable hash. A random assignment makes the backtest
+  unreproducible, which defeats the purpose.
+- The withheld arm is scored IDENTICALLY to the shown arm and displayed to
+  nobody. That symmetry is what makes the null credible.
+- Record the arm on the evaluation row so the matched gate can read it.
+
+GUARDRAILS
+- Node writes bottleai_analytics. Python does not get analytics credentials.
+- Do not let a withheld card leak into any API response, log line or report.
+
+TESTS
+    test_holdout_assignment_is_stable
+        same inputs give the same arm across processes and runs
+    test_holdout_share_is_about_twenty_percent_over_many_keys
+    test_withheld_never_reaches_a_card
+
+THEN: confirm rows are accumulating, and tell me the count per store after the
+first night. Also state plainly: until this has run for roughly a quarter, every
+accuracy figure the engine publishes is FORECASTING evidence, not CAUSAL
+evidence, and the reports must keep saying so.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N1 ─────────── -->
+<section id="n1">
+  <div class="sh"><span class="sid">N1</span><h2>Split the promise from the order</h2><span class="wk">3–4 weeks · the 90% promise</span>
+    <button data-copy="all">Copy all 3</button></div>
+  <p class="lede">The highest-leverage change in the engine, and it is arithmetic rather than modelling.</p>
+
+  <article class="pr" data-id="N1.1">
+    <div class="ph"><span class="pid">N1.1</span><h3>Promise a quantity reality clears 90% of the time</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— promise kept lands in 85–95% at every pilot store. Not 100%: a promise always kept was not worth making.</span></div>
+    <pre class="ptext">TASK: stop promising the mean. Promise a low quantile instead.
+
+THE ARITHMETIC, WHICH IS THE WHOLE ARGUMENT
+deficit_units is an EXPECTATION. For a product whose true rate is 14 units per 30
+days, demand is a count, so the spread is sqrt(14) = 3.74 units. The chance that
+reality reaches its own mean is 53.5%. A promise built on the mean therefore
+fails about half the time EVEN WITH A PERFECT FORECAST.
+
+    promise 14  (the mean - what the card says today)   kept 53.5%
+    promise 12                                          kept 74.0%
+    promise 11  (p25)                                   kept 82.4%
+    promise 10                                          kept 89.1%   &lt;- target
+    promise  9  (p10)                                   kept 93.8%
+
+WHAT TO BUILD
+Add a SECOND field to RevertedDemand in app/pipeline/blend/reversion.py. Do not
+repurpose the first:
+
+    deficit_units: float     # UNCHANGED. the RANKING quantity.
+    promise_units: float     # NEW. the quantile the card is allowed to state.
+
+Add a Setting:
+    PROMISE_QUANTILE = reversion.promise_quantile, default 0.10, PROVISIONAL,
+    owner commercial. The `why` must say: this is a PROMISE dial and never an
+    ORDER dial; raising it makes the card claim more and keep its word less.
+
+promise_units comes from the FORECAST'S OWN INTERVAL, not from a normal
+approximation. That interval is already empirically calibrated to 80-82%
+coverage - it was built by fitting on an early slice and applying to later dates,
+after a weekly-cv version gave 91-93% and a cv/sqrt(weeks) version gave 37-62%.
+Use it as it is.
+
+GUARDRAILS, AND THE FIRST ONE IS ABSOLUTE
+- deficit_units MUST NOT CHANGE. The +16.6 point edge over a reversion-matched
+  null (p = 0.0005, holding at all five stores) was measured on that ordering.
+- Where no usable interval exists, the card states A RANGE OR NOTHING. It does
+  not fall back to the mean.
+- Both numbers appear on the card. They are different and the owner sees both.
+
+TESTS
+    test_promise_is_below_the_mean_for_a_lumpy_sku
+    test_promise_absent_without_an_interval
+    test_deficit_units_is_byte_identical_to_v1_1_0
+        a regression pin over the stored backtest, so this change cannot
+        silently move the ranking
+
+THEN: re-run the five-store ledger and give me promise-kept per store. Today it
+is 21%, 45%, 53%, 104%, 150% - wildly uncalibrated in both directions. I expect
+every store inside 85-95%. If a store lands outside, tell me which and why
+before tuning the quantile.</pre>
+  </article>
+
+  <article class="pr" data-id="N1.2">
+    <div class="ph"><span class="pid">N1.2</span><h3>Order through the policy module that already exists</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— no card states an order quantity that did not come from policy/inventory.py.</span></div>
+    <pre class="ptext">TASK: route the live order quantity through app/pipeline/policy/inventory.py.
+
+THE DEFECT
+app/recommender/deterministic.py sizes orders with
+    qty = max(1, int(round(p.deficit_units)))
+A mean. No sigma, no lead time, no review period, no on-hand.
+
+Meanwhile app/pipeline/policy/inventory.py already computes
+    safety_stock  = z(service_level) * sigma * sqrt(lead_time)
+    reorder_point = mu * lead_time + safety_stock
+    order_up_to   = reorder_point + review_period * mu
+    ideal_qty     = order_up_to - on_hand - on_order
+It takes sigma from the p10-p90 interval, computes the z divisor FROM the quantile
+Settings rather than hard-coding 2.563, and REFUSES a forecast with no usable
+interval. It is the strongest module in the engine and the live route never
+calls it. It is currently reached only by the sheets 11/12 decision path
+(candidates/generate.py, constraints/apply.py, validate/decision.py,
+scripts/run_decisions.py).
+
+WHAT TO BUILD
+- The live route asks policy.inventory for the order quantity.
+- The deficit stays the RANKING quantity. The policy module owns the quantity the
+  owner is told to buy. These are now three distinct numbers on one card:
+  rank on deficit_units, promise promise_units, order ideal_qty.
+- Run constraints/apply.py AFTER it, so case packs, MOQ and shelf caps apply and
+  the card can explain why 37.4 became 24.
+
+GUARDRAILS
+- Lead time is a DECLARED assumption: purchase_orders has the right columns and
+  ZERO ROWS at four of five stores. The card must carry the assumption and say
+  the date rests on it. Do not invent a measured lead time.
+- Where the forecast has no interval, the policy module refuses. Honour the
+  refusal - do not substitute a default sigma. That is the exact failure this
+  rebuild exists to remove.
+
+TESTS
+    test_live_route_uses_policy_quantity
+        the card's order quantity equals ideal_qty for a fixture store
+    test_route_refuses_quantity_without_interval
+    test_constraints_run_after_policy_not_before
+    test_card_carries_the_lead_time_assumption
+
+THEN: show me one real card before and after, with all three numbers labelled.</pre>
+  </article>
+
+  <article class="pr" data-id="N1.3">
+    <div class="ph"><span class="pid">N1.3</span><h3>Derive the service level instead of declaring it</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— net margin per card positive at ≥4 of 5 stores at 30 days, measured with N0.1's ruler.</span></div>
+    <pre class="ptext">TASK: replace the declared service level with the newsvendor critical fractile.
+
+WHY
+policy/inventory.py has SERVICE_LEVEL_BEER, _SPIRITS, _WINE, _DEFAULT - a Setting
+per category family, PROVISIONAL, documented as "awaiting commercial sign-off".
+It does not need sign-off. The service level IS the critical fractile and it is
+computable per SKU from figures already in the warehouse:
+
+    q* = Cu / (Cu + Co)
+    Cu = unit margin                      (price - cost)
+    Co = holding cost for one cycle       (N0.1's holding_cost for one unit)
+
+    $10 margin, $0.50 carrying  -&gt;  q* = 95.2%
+    $10 margin, $1.00 carrying  -&gt;  q* = 90.9%    order to the p91
+    $10 margin, $4.00 carrying  -&gt;  q* = 71.4%
+
+Because liquor does not spoil, Co is small and q* is HIGH - the engine should
+stock these generously. That is the exact opposite of promising the mean, which
+is why N1.1 and N1.3 pull in opposite directions ON PURPOSE. A 14-unit mean
+promises 10 and orders 19.
+
+WHAT TO BUILD
+- q* computed per SKU per cycle, feeding policy/inventory.py's z(service_level).
+- Keep SERVICE_LEVEL_BY_FAMILY as the FALLBACK where cost is absent - five of ten
+  stores - and mark the computed path MEASURED, the fallback PROVISIONAL.
+- The card says which one it used.
+- CLAMP q* into [0.70, 0.98]. An unclamped fractile on a thin-margin,
+  high-carrying SKU asks for a quantile the interval cannot support.
+
+TESTS
+    test_q_star_from_margin_and_holding
+    test_q_star_falls_back_without_cost_and_says_so
+    test_q_star_is_clamped
+    test_spirits_q_star_is_higher_than_seasonal_q_star
+
+THEN: re-run the five-store ledger with N0.1's cost model and give me net margin
+per card per store. Four of five should be positive. Name the one that is not and
+say what is different about it.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N2 ─────────── -->
+<section id="n2">
+  <div class="sh"><span class="sid">N2</span><h2>Earn the confidence number</h2><span class="wk">3 weeks · needs N0.3</span>
+    <button data-copy="all">Copy all 2</button></div>
+  <p class="lede">Today a card saying "74% likely" has never been checked against reality — and that number also multiplies into the ranking.</p>
+
+  <article class="pr" data-id="N2.1">
+    <div class="ph"><span class="pid">N2.1</span><h3>Fit the calibration curve from holdout outcomes</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— ECE under 5 points on held-out outcomes, from calibrate/monitor.py, which already computes it.</span></div>
+    <pre class="ptext">TASK: make the stated confidence a measured frequency instead of an assertion.
+
+THE CHAIN, WHICH IS BUILT CORRECTLY AND ENDS IN NOTHING
+1. app/recommender/deterministic.py sets
+       "confidence": round(min(0.99, max(0.01, p.p_hit)), 3)
+   where p_hit = s/(1+s) and s = uplift * steadiness. A closed-form ratio.
+2. app/recommender/validator.py calls _apply_calibration.
+3. app/pipeline/calibrate/apply.py looks for an isotonic fit for the
+   (family x demand_class) cell, finds none, returns
+   "no_fit_for_cell:{family}/{demand_class}" and passes the raw value through
+   WITH ITS REASON.
+4. The fit comes from calibrate/fit.py, from recorded outcomes.
+   There are no recorded outcomes.
+
+So every confidence in production is uncalibrated, and it is multiplied into
+score = expected_value * calibrated_confidence * urgency - an unearned
+probability is reordering the slate.
+
+WHAT TO BUILD, NOW THAT N0.3 IS ON
+- Fit per cell: (family x demand_class x VELOCITY BAND). Add the velocity band.
+  A 1-unit-a-month SKU and a 40-unit-a-month SKU do not share a reliability
+  curve, and the current two-way cell pools them.
+- Minimum ~50 outcomes before a cell is used. Below that, fall back to the parent
+  cell, then the global curve, then a STATED BAND rather than a number.
+- Pool-adjacent-violators isotonic, as calibrate/fit.py already implements. No
+  sklearn.
+- Every passthrough keeps recording its reason. The module is explicit that an
+  unexplained passthrough and a fitted curve look identical on the wire, and that
+  the first would quietly become permanent.
+
+TESTS
+    test_isotonic_is_monotone
+    test_cell_falls_back_to_parent_below_minimum
+    test_reason_is_recorded_on_every_passthrough
+    test_velocity_band_separates_slow_and_fast_skus
+
+THEN: publish the reliability diagram per store and give me ECE. Report how many
+cells have enough data and how many are still falling back - that ratio is the
+honest state of calibration.</pre>
+  </article>
+
+  <article class="pr" data-id="N2.2">
+    <div class="ph"><span class="pid">N2.2</span><h3>Make calibration a build gate, not a dashboard</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— no card in any store's report states a confidence whose reliability bin deviates by more than 10 points.</span></div>
+    <pre class="ptext">TASK: forbid a card from stating a confidence it has not earned.
+
+WHAT TO BUILD
+- A MAX_RELIABILITY_DEVIATION Setting, default 10 points.
+- At card assembly: if the stated confidence sits in a populated reliability bin
+  whose observed rate deviates by more than that, the card states a BAND or
+  states nothing. It never states a number that is known to be wrong.
+- A family whose curve deviates by more than the threshold in any populated bin
+  is SUSPENDED for that store. calibrate/apply.py already carries
+  suspended_families through ApplyRequest - use it, do not add a parallel
+  mechanism.
+- Publish the reliability diagram in the per-store report, NEXT TO the hit rate,
+  so the two are read together.
+
+GUARDRAILS
+- Suspension is per store and per family. A family that works at Bethany and
+  fails at Marshfield is suspended at Marshfield only.
+- A suspended family is reported, with its deviation. Silent suppression is how a
+  temporary measure becomes permanent.
+
+TESTS
+    test_card_with_unreliable_confidence_states_a_band
+    test_suspended_family_does_not_reach_a_card
+    test_suspension_is_per_store_not_global
+    test_suspension_is_reported_with_its_deviation
+
+THEN: list every (store, family) pair currently suspended and its deviation. If
+that list is long, say so - it is the real measure of how much of the engine's
+confidence was decorative.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N3 ─────────── -->
+<section id="n3">
+  <div class="sh"><span class="sid">N3</span><h2>One currency for all eleven families</h2><span class="wk">4 weeks · the ensemble</span>
+    <button data-copy="all">Copy all 4</button></div>
+  <p class="lede">Not a model-blending exercise. It is making every family quote its value in the same units so they can be compared at all.</p>
+
+  <article class="pr" data-id="N3.1">
+    <div class="ph"><span class="pid">N3.1</span><h3>Every family returns expected value, or it does not rank</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— a new build guard fails CI if any family constructs a pick without units_at_stake.</span></div>
+    <pre class="ptext">TASK: give every recommendation family the same contract, so they can be ranked
+against each other instead of being given reserved slots.
+
+THE DEFECT, IN FOUR LINES OF app/recommender/families.py
+    cold_box    confidence=0.55     a hardcoded literal
+    pre_stock   confidence=0.55     a hardcoded literal
+    bundles     confidence=0.7      a hardcoded literal
+    stock_new   confidence=0.6      a hardcoded literal
+    ExtraPick.units_at_stake = None for bundles
+
+A hand-written confidence cannot be compared with a measured p_hit, so
+app/recommender/pipeline.py does the only thing it can and reserves slots:
+    limit = max(1, self._settings.max_recommendations - len(extra))
+That is why the slate looks like restock. The signals are switched ON - all
+twenty modules under app/signals/ with their master switches defaulting true -
+they were simply given slots instead of a price.
+
+WHAT TO BUILD
+One dataclass every family must return:
+
+    FamilyPick:
+        family, category, action_type, primary_skus
+        units_at_stake: float        the units this card is ABOUT. NEVER None.
+        unit_margin: float | None    None when the store sends no cost
+        raw_confidence: float        goes THROUGH calibration, never around it
+        horizon_open_days: int
+        effect: SignalEffect | None  the estimate that earned this card (N4)
+        provenance: str              which component produced each figure
+
+Every family then computes expected_value = units_at_stake * unit_margin and
+score = expected_value * calibrated_confidence * urgency through the EXISTING
+app/pipeline/rank/score.py. No family keeps its own scoring.
+
+WHAT units_at_stake MEANS PER FAMILY - all derivable from the current context
+    understock        max(0, deficit_units)                  unchanged
+    overstock/clear   units above policy's order_up_to        policy/inventory.py
+    weather           effect.beta * baseline_units            N4.1
+    calendar/sports   same, over the fixture's window         N4.1
+    news              same, and a NEGATIVE beta is valid      N4.1
+    bundle            incremental units on the ATTACHED sku   co_purchases lift
+    new/trending      cohort first-30-day velocity            area_winners
+
+GUARDRAILS
+- units_at_stake may NEVER be None. A family that cannot compute it REFUSES.
+  Passing a sentinel is worse than producing no card.
+- raw_confidence goes THROUGH calibrate/apply.py. A family that stamps
+  calibrated_confidence itself defeats all of N2.
+- Nothing multiplies a ratio by a margin. Only unit counts become dollars.
+
+TESTS
+    test_every_family_returns_units_at_stake
+    test_no_family_sets_calibrated_confidence_directly
+    test_ratio_never_multiplied_by_margin
+    test_family_without_units_at_stake_refuses
+
+ALSO ADD: scripts/check_families_quote_ev.py, a build guard in the style of
+check_no_literals.py, that fails CI if any family constructs a pick without
+units_at_stake. The two existing guards are the pattern to copy.</pre>
+  </article>
+
+  <article class="pr" data-id="N3.2">
+    <div class="ph"><span class="pid">N3.2</span><h3>Delete the reserved slots</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— slate composition changes, and N3.4's per-family table shows why each change happened.</span></div>
+    <pre class="ptext">TASK: replace reserved slots with one pool and one ranking.
+
+WHAT TO REMOVE
+app/recommender/pipeline.py:
+    limit = max(1, self._settings.max_recommendations - len(extra))
+and the whole "reserving their slots costs the stock families very little"
+arrangement around it. That was a reasonable workaround for families that could
+not be priced. After N3.1 they can be.
+
+WHAT TO BUILD
+- ONE candidate pool from all eleven families.
+- Rank it with app/pipeline/rank/score.py. One sort, one tie-break
+  (score, then sku, as sheet 13 already does).
+- KEEP the family cap (FAMILY_CAP_SHARE) so one family cannot take the whole
+  slate. That is diversity, which is a product decision, not a ranking failure -
+  do not remove it while removing the slots.
+- The separate budget for social_trending survives ONLY if that family passes its
+  own measurement in N3.4. Otherwise it competes like everything else.
+
+GUARDRAILS
+- Determinism: same inputs must produce byte-identical card order twice. This is
+  already a property of the composer and must not be lost.
+- A strong weather card SHOULD now be able to outrank a weak reorder. If it
+  never can, the currency is not working and N3.1 is incomplete.
+
+TESTS
+    test_one_pool_one_ranking
+    test_strong_weather_card_can_outrank_a_weak_reorder
+    test_weak_weather_card_no_longer_displaces_a_strong_reorder
+    test_family_cap_still_holds
+    test_same_inputs_give_identical_order_twice
+
+THEN: show me the slate for one store before and after, side by side, and
+explain each position change by its expected value.</pre>
+  </article>
+
+  <article class="pr" data-id="N3.3">
+    <div class="ph"><span class="pid">N3.3</span><h3>Count the overstock money — it is a different currency</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— the overstock families report a non-zero, signed net benefit per store that reconciles to the shelf.</span></div>
+    <pre class="ptext">TASK: make the two overstock families' value measurable. It is not incremental
+margin, which is why it currently reads as zero.
+
+WHY THEY LOOK WORTHLESS AND ARE NOT
+A clearance card's value is CAPITAL RELEASED and MARKDOWN AVOIDED. Putting that
+in the same column as a restock card's incremental margin would be wrong, so it
+was left out entirely - and anything uncounted looks like nothing.
+
+WHAT TO BUILD
+    ClearValue:
+        capital_released: float    units_over * unit_cost, cash off the shelf
+        markdown_avoided: float    hazard * unit_cost * units, if it ages out
+        margin_sacrificed: float   the discount given to move it
+        net: float                 released * carrying_rate + avoided - sacrificed
+
+- Report it in its OWN labelled column, and ALSO fold it into a single "total
+  benefit" figure so a store owner sees one number rather than an accounting
+  lesson.
+- The clearance card is only issued when net is positive. This is a real gate:
+  discounting stock that would have sold anyway at full price is a pure loss, and
+  that is the most likely way this family destroys value.
+- carrying_rate reuses N0.1's holding cost. Do not introduce a second one.
+
+GUARDRAILS
+- Capital released is NOT margin. Never add it to the incremental margin column.
+- A store with no cost data cannot compute any of this. Return an absence.
+
+TESTS
+    test_clear_refused_when_net_is_negative
+    test_capital_release_not_counted_as_margin
+    test_clear_absent_without_cost_data
+    test_total_benefit_reconciles_to_its_components
+
+THEN: give me a signed net benefit per store for the overstock families, and say
+how it reconciles against what is actually sitting on those shelves.</pre>
+  </article>
+
+  <article class="pr" data-id="N3.4">
+    <div class="ph"><span class="pid">N3.4</span><h3>Measure every family separately, and drop the losers</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— a per-family table for all 11 families at all 5 stores. Losers switched off in the same commit as the measurement.</span></div>
+    <pre class="ptext">TASK: measure each of the eleven families on its own, and switch off the ones
+that do not earn their place.
+
+WHY THIS IS NOT OPTIONAL BOOKKEEPING
+The signal layer, measured over 155 signal-driven recommendations, scored 6 to 10
+POINTS BELOW RANDOM. N3.1 and N3.2 let those families compete properly, which
+means they can now also lose properly. This prompt is the thing that stops N3
+making the engine worse.
+
+WHAT TO BUILD
+Extend scripts/real_engine_backtest.py to report PER FAMILY:
+    family | cards | hit rate | reversion-matched null | edge | p |
+    net margin per card | promise kept
+
+- Each family gets its OWN reversion-matched null. A weather card and a reorder
+  card do not share a baseline, and pooling them would hide exactly the effect
+  being tested.
+- Pooled permutation with add-one p-values over 2,000 draws; date-clustered
+  bootstrap for the interval. Both are already implemented in that script - reuse
+  them, do not write new ones.
+- A family with fewer than ~30 cards gets an INTERVAL AND NO VERDICT. Do not
+  print a verdict on thin evidence.
+- A family whose net margin per card is not significantly positive is SUSPENDED,
+  not quietly down-weighted. The report says which, and why.
+
+TESTS
+    test_per_family_null_is_family_matched
+    test_family_below_thirty_cards_gets_no_verdict
+    test_suspension_is_recorded_with_its_measurement
+
+THEN: give me the table for all eleven families at all five stores. For every
+family that fails, switch it off IN THE SAME COMMIT as the measurement that
+condemned it, and add a row to ENGINE-ENHANCEMENTS.md section 11, "Rejected by
+measurement", in the same style as the eight entries already there. A rebuild
+that reports only its successes is not evidence.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N4 ─────────── -->
+<section id="n4">
+  <div class="sh"><span class="sid">N4</span><h2>Make every signal earn its coefficient</h2><span class="wk">4–5 weeks · refusals expected</span>
+    <button data-copy="all">Copy all 3</button></div>
+  <p class="lede">Start with N4.3. Without a signal history there is nothing to fit, and the other two cannot begin.</p>
+
+  <article class="pr" data-id="N4.3">
+    <div class="ph"><span class="pid">N4.3</span><h3>Persist the signal record — do this one first</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— signal_history has rows for every pilot store, and the count of keys with ≥20 active days is reported weekly.</span></div>
+    <pre class="ptext">TASK: start recording which signals were active, per store, per day. Nothing
+else in N4 is estimable without it, and it cannot be fully backfilled.
+
+WHAT TO BUILD
+One append-only table:
+    signal_history(client_id, location_id, as_of, signal_key, strength,
+                   source, captured_at)
+
+- Written NIGHTLY, BY NODE. Node remains the sole writer of bottleai_analytics
+  and Python stays stateless with no analytics credentials. This is not
+  negotiable and there is no version of this task where Python writes it.
+- Backfill what is RECONSTRUCTIBLE. Holidays, sports fixtures and moving dates
+  are all COMPUTABLE - app/pipeline/features/calendar.py already does this with
+  the anonymous Gregorian computus for Easter, nth-weekday rules, and the Super
+  Bowl's move to the second Sunday in February from 2022. Twenty-two tests pin
+  known-good dates across four years.
+- Weather and news are NOT cheaply reconstructible. Capture starts now, and beta
+  for those keys stays REFUSED until enough history exists. Say that plainly
+  rather than backfilling a guess.
+
+GUARDRAILS
+- Append-only. A corrected signal is a new row, never an update - otherwise the
+  history is not a history.
+- strength is nullable. A binary advisory has no strength and must not be given
+  a fabricated 1.0 that later reads as measured intensity.
+
+TESTS
+    test_signal_history_is_append_only
+    test_computable_keys_backfill_exactly
+    test_non_reconstructible_keys_are_not_backfilled
+    test_null_strength_is_preserved
+
+THEN: report, per store, the count of distinct signal_keys with at least 20
+active days. That count is the leading indicator for how many signals will ever
+be usable, and it should be published weekly from now on.</pre>
+  </article>
+
+  <article class="pr" data-id="N4.1">
+    <div class="ph"><span class="pid">N4.1</span><h3>Signal elasticity, by the pattern price elasticity already set</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— per store, a table of every signal key with its β, interval and USABLE/REFUSED. Refusals are the expected majority.</span></div>
+    <pre class="ptext">TASK: estimate each signal's effect on THIS store's units, with an interval, and
+refuse to cite any whose interval spans zero.
+
+THE PRECEDENT TO FOLLOW EXACTLY
+app/pipeline/elasticity/estimate.py estimates
+    ln(units) = alpha + beta*ln(price) + dow + month + e
+with HC1 heteroskedasticity-robust standard errors, OLS via normal equations
+plus a Gauss-Jordan inverse, about eighty lines, no numpy. And
+app/pipeline/elasticity/guard.py REFUSES any card citing a price effect whose
+interval spans zero. That discipline is exactly what the signals need and it is
+currently wired to price only.
+
+WHAT TO BUILD
+    ln(units + 1) = alpha + beta*signal_active + dow + month + trend + e
+
+    beta = 0.22  [0.09, 0.35]   USABLE: heat lifts this store's seltzer ~25%
+    beta = 0.05  [-0.18, 0.28]  REFUSED: the interval spans zero. No card.
+
+- One beta per (store x category x signal_key_family).
+- SHRINK it toward the cohort's beta using the registry's EXISTING k machinery.
+  A store with four past heat advisories has almost no information of its own.
+  Do not introduce a new constant.
+- signal_active comes from N4.3's signal_history.
+- Reuse guard.py's refusal VERBATIM. Do not write a second refusal.
+
+GUARDRAILS, AND THE FIRST IS THE WHOLE POINT
+- EXPECT MOST INTERVALS TO SPAN ZERO, especially at low-volume stores. The price
+  module states this explicitly as the correct answer rather than a failure of
+  the estimator. A signal layer that finds an effect everywhere is the
+  6-to-10-points-below-random layer rebuilt.
+- Confounding runs TOWARD finding an effect: a festival is scheduled for a
+  weekend that was going to be busy anyway. dow, month and trend absorb the
+  crudest of it and NONE of the competitor effect. Put that on the card's
+  provenance line.
+- A NEGATIVE beta is a valid and valuable result. It means do not pre-stock.
+
+TESTS
+    test_signal_beta_refused_when_interval_spans_zero
+    test_signal_beta_shrinks_toward_cohort_when_thin
+    test_dow_and_month_controls_present
+    test_negative_beta_is_allowed_and_suppresses
+
+THEN: give me, per store, every signal key tried with its beta, interval, n, and
+USABLE or REFUSED. LEAD THE REPORT WITH THE REFUSAL COUNT. If almost everything
+refuses, that is the finding, and it means the signal families contribute little
+and the profit target has to come from sizing and overstock instead.</pre>
+  </article>
+
+  <article class="pr" data-id="N4.2">
+    <div class="ph"><span class="pid">N4.2</span><h3>Widen the triggers, now that they are safe to widen</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— each new trigger appears in N4.1's table with a β and a verdict before it may produce a card anywhere.</span></div>
+    <pre class="ptext">TASK: widen the signal triggers. Only after N4.1 is gating them.
+
+THE CURRENT NARROWNESS
+Twenty modules under app/signals/ funnel into two literal prefix sets in
+app/recommender/families.py:
+    HEAT_KEYS = ("heat_advisory", "heat_", "hot_")
+    EVENT_KEY_PREFIXES = ("nhl_", "nfl_", "nba_", "mlb_", "ncaa_",
+                          "news_festival", ...)
+So a cold snap, a storm, a long weekend, a payday and a liquor-tax change all
+produce nothing at all.
+
+TRIGGERS TO ADD - each one a key whose beta must be estimated before it can
+produce a card
+    cold snap / first freeze        whiskey, brandy, mixers      weather.py
+    sustained rain or storm         footfall down, basket up     weather.py
+    long weekend / holiday eve      the biggest predictable spike holidays.py
+    payday proximity                fortnightly basket rhythm    calendar.py
+    local festival or concert       partly covered already       events.py
+    graduation / wedding season     sparkling, gifting sizes     holidays.py
+    competitor promotion in news    a dip NOT to be recovered    news_analyst.py
+    tax or regulation change        a price-level shift          news_analyst.py
+
+THE LAST TWO ARE THE MOST VALUABLE AND THEY ARE THE OPPOSITE OF RECOMMENDATIONS.
+They tell the engine NOT to recommend a recovery, because the dip has a cause. A
+signal that suppresses a bad card is worth as much as one that creates a good
+card, and it costs nothing in coverage. Build them as first-class suppressors,
+not as an afterthought.
+
+GUARDRAILS
+- An unestimated trigger produces NO card. The key may be emitted and recorded in
+  signal_history; it may not reach a recommendation.
+- Do not widen HEAT_KEYS by adding more string prefixes. Replace the prefix
+  matching with a typed signal taxonomy, or the next person adds a ninth tuple.
+
+TESTS
+    one test per trigger family proving the key is emitted
+    test_unestimated_trigger_produces_no_card
+    test_suppressing_trigger_blocks_a_recovery_card
+    test_taxonomy_replaces_prefix_matching
+
+THEN: report which new triggers fired at all, how often, and for each one whether
+N4.1 found a usable beta.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N5 ─────────── -->
+<section id="n5">
+  <div class="sh"><span class="sid">N5</span><h2>Connect what is already built</h2><span class="wk">2 weeks · parallel with N3</span>
+    <button data-copy="all">Copy</button></div>
+  <p class="lede">Two measured modules sit in the tree and only the audit harness exercises them.</p>
+
+  <article class="pr" data-id="N5.1">
+    <div class="ph"><span class="pid">N5.1</span><h3>Lifecycle and the merchandise contract onto the live route</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— no SKU appears on consecutive days while failing, and the 162→69 card reduction reproduces in production.</span></div>
+    <pre class="ptext">TASK: put the card lifecycle and the merchandise contract on the live request
+path. Both are built, tested, and currently only reached by the audit harness.
+
+WHAT THEY ARE WORTH, MEASURED
+app/pipeline/candidates/lifecycle.py cut 162 March cards to 69 AT THE SAME HIT
+RATE, and pulled a failing card after 3 days instead of 8. Stroyski 1.75L had
+been recommended on eight consecutive trading days, missing every one, because
+the engine recomputed the same depressed window each morning with no memory.
+app/pipeline/candidates/merchandise.py refuses 45 of 44,398 SKUs - 0.10% - after
+a first version that would have deleted real stock (1690 Absolut Mandrin, 417
+E&amp;J Brandy, Department 66 Grenache which is a winery, LYNX POLARIZED GROUNDING
+AD. caught by the word "rounding", and 187 real bottles with broken prices).
+
+WHAT TO BUILD
+- Wire lifecycle into deterministic.choose, BEFORE any card is issued. It needs
+  card memory, so it reads the issued-card history that N0.3's evaluation rows
+  now provide.
+- Replace deterministic.is_merchandise with candidates.merchandise. KEEP the
+  route's own blocklist as an ADDITIONAL screen, not a replacement - it catches
+  register mechanics the catalogue filter does not.
+- Bring constraints/apply.py with them, so case packs, MOQ and shelf caps apply
+  to N1.2's quantity.
+
+GUARDRAILS
+- All lifecycle day counts are OPEN days. A store shut on Sundays reaches its
+  day-7 review after eight calendar days, and the rule must not fire early for
+  that.
+- Retirement without SUPPRESSION does nothing: the next morning re-earns the card
+  from exactly the evidence just shown to be wrong. Suppression is the only
+  transition that makes the state machine terminate. It is 14 open days.
+- Do not broaden the merchandise filter. A filter that removes real stock is
+  worse than the mess it cleans up, and that sentence is in the module for a
+  reason.
+
+TESTS
+    test_route_retires_a_declining_card
+    test_retired_card_is_suppressed_for_fourteen_open_days
+    test_route_uses_the_catalogue_merchandise_filter
+    test_route_blocklist_still_applies_on_top
+    test_open_day_counting_on_a_sunday_closed_store
+
+THEN: confirm the 162-to-69 reduction reproduces, and give me the retirement
+reason breakdown. In March it was 13 declining, 1 no-recovery, 3 stale.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N6 ─────────── -->
+<section id="n6">
+  <div class="sh"><span class="sid">N6</span><h2>Fix the inputs</h2><span class="wk">5–6 weeks · N6.3 starts today</span>
+    <button data-copy="all">Copy all 3</button></div>
+  <p class="lede">The selection ceiling near 73% is an information limit. These three are what move it.</p>
+
+  <article class="pr" data-id="N6.3">
+    <div class="ph"><span class="pid">N6.3</span><h3>Capture what cannot be backfilled — start tonight</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— on-hand snapshots exist for every pilot store, dated from the night this starts.</span></div>
+    <pre class="ptext">TASK: start capturing three things. This is not modelling work and it is the
+hardest-stopping item in the programme, because every night without it is
+evidence permanently lost.
+
+1. NIGHTLY ON-HAND PER SKU
+   Unblocks the single confusion that caps selection accuracy near 73%: a zero
+   sales day and an empty shelf are currently the same row. Also makes a real
+   reorder point possible instead of an assumed one.
+   Written by Node, append-only, one snapshot per SKU per night.
+
+2. RECEIVED / DELIVERED DATES
+   Lead time becomes measured per vendor instead of declared on every card.
+   purchase_orders has po_date, invoice_date and due_date - and ZERO ROWS at four
+   of five stores. The `purchases` table carries date and invoice_date and no
+   receive, deliver, arrive or lead column anywhere. This has been confirmed four
+   times. It is one conversation per store, not an engineering task.
+
+3. PRICE-CHANGE EVENTS
+   A dip caused by a competitor's promotion is not a dip to recover from.
+   Realised unit prices are already stored; the EVENT is not. Partly
+   reconstructable from realised prices, which is a weaker signal than the event.
+
+WHAT TO BUILD NOW
+- The on-hand snapshot job and its table. Node writes it.
+- A weekly report of coverage: how many stores, how many nights, how many SKUs.
+- Do NOT backfill on-hand with anything. An invented history is worse than a
+  short one, because it will be trusted.
+
+TESTS
+    test_on_hand_snapshot_is_append_only
+    test_snapshot_coverage_report_counts_nights_not_rows
+    test_no_synthetic_on_hand_is_ever_written
+
+THEN: tell me the first night's coverage per store, and put the coverage count on
+the audit index so it is visible every week. Also state the obvious: until these
+exist, the engine cannot tell a stockout from a slow seller, and no model change
+removes that ceiling.</pre>
+  </article>
+
+  <article class="pr" data-id="N6.1">
+    <div class="ph"><span class="pid">N6.1</span><h3>Treat stockouts as censored, not as zero demand</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— r_long rises for SKUs with inferred stockouts, the deficit falls, and promise kept improves. That last one is the real test.</span></div>
+    <pre class="ptext">TASK: stop counting probable stockout days as zero demand.
+
+THE DAMAGE, WHICH RUNS BOTH WAYS
+No module distinguishes "nobody wanted it" from "there was none to sell". The
+feature store correctly omits closed STORE days, but a SKU out of stock while the
+store traded contributes observed zeros to its own rate. So:
+- r_long is biased LOW, which makes the deficit OVERSTATED, which makes the
+  engine over-promise. This is a direct contributor to the unkept promise.
+- The grade is corrupted: a SKU that was out of stock and gets restocked shows a
+  large lift that the engine takes credit for predicting.
+
+WHAT TO BUILD, FROM DATA THAT ALREADY EXISTS
+    probable_stockout(sku, day, ...) -&gt; bool
+        True when a SKU with an ESTABLISHED RHYTHM sold zero while its CATEGORY
+        traded normally that day.
+
+Censored days leave the DENOMINATOR. They are not counted as zero demand and they
+are not counted as a day of selling.
+
+GUARDRAILS
+- VALIDATE the inference against the stores that DO carry on-hand before trusting
+  it anywhere else. An unvalidated censoring rule can quietly inflate every rate
+  in the estate.
+- A zero on a day when the whole category was quiet is NOT a stockout. That is a
+  slow day and it is real information.
+- A SKU with no established rhythm cannot be judged. Return False, not a guess.
+
+TESTS
+    test_censored_day_leaves_the_denominator
+    test_zero_on_a_quiet_category_day_is_not_censored
+    test_sku_without_rhythm_is_never_censored
+    test_inference_agrees_with_on_hand_where_available
+
+THEN: report how many days were censored per store, how much r_long moved, and
+how much promise-kept moved. The promise-kept movement is the test of whether
+this was real - if rates rise and the promise does not improve, the censoring
+rule is finding something other than stockouts.</pre>
+  </article>
+
+  <article class="pr" data-id="N6.2">
+    <div class="ph"><span class="pid">N6.2</span><h3>The right method for intermittent demand</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— bias inside ±5% at all four horizons (today +0.6, +3.5, +6.7, +8.8), and interval coverage ≥90% at p5–p95.</span></div>
+    <pre class="ptext">TASK: give intermittent and lumpy SKUs a method built for them.
+
+THE MIS-SPECIFICATION, IN THE ENGINE'S OWN WORDS
+app/pipeline/blend/shrink.py says "intermittent SKUs are the majority, so this k
+is high". The method applied to them is a shrunk MEAN. For a SKU selling in
+bursts of six every three weeks, 0.28 units a day is arithmetically true and
+operationally meaningless.
+
+There is a demand_class threaded through the calibration cells, and
+app/pipeline/assemble.py documents the forecast as using "the method the demand
+CLASS selects" - but there is no app/pipeline/forecast/ module and no Croston,
+SBA or bootstrap anywhere in the tree. The class currently selects between
+variations of one method.
+
+WHAT TO BUILD
+- Classify properly: SYNTETOS-BOYLAN on average inter-demand interval and the
+  squared coefficient of variation, giving smooth / erratic / intermittent /
+  lumpy.
+- Route by class:
+      smooth        the existing shrunk mean
+      intermittent  CROSTON / SBA
+      lumpy         EMPIRICAL BOOTSTRAP over historical windows
+- The bootstrap also produces an HONEST interval instead of a fitted band, which
+  partly retires the three-attempt interval workaround: weekly cv on the window
+  total gave 91-93% coverage (so wide it could not be wrong), cv/sqrt(weeks) gave
+  37-62% (too narrow, because weekly demand is autocorrelated), and the
+  empirical version gave 80-82%.
+- PURE STANDARD LIBRARY. A bootstrap is; a gradient-boosted model is not, which
+  is why R9 is deferred to an offline artefact.
+
+GUARDRAILS
+- Do not change the demand_class values already used as calibration cell keys
+  without migrating the cells, or every fitted curve silently loses its home.
+- A SKU with too little history to classify gets the smooth path and says so.
+
+TESTS
+    test_syntetos_boylan_boundaries
+    test_croston_beats_shrunk_mean_on_intermittent_wape
+    test_bootstrap_interval_coverage_in_band
+    test_unclassifiable_sku_falls_back_and_is_labelled
+
+THEN: run scripts/forecast_accuracy.py and give me WAPE, bias and coverage at all
+four horizons against the three baselines. Today the engine wins all three
+baselines at every horizon but bias fails at 90 and 120 days. Both must pass.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N7 ─────────── -->
+<section id="n7">
+  <div class="sh"><span class="sid">N7</span><h2>Decide as a portfolio</h2><span class="wk">3 weeks · last</span>
+    <button data-copy="all">Copy all 2</button></div>
+  <p class="lede">Needs every family's real expected value, so it goes after N3 and N4.</p>
+
+  <article class="pr" data-id="N7.1">
+    <div class="ph"><span class="pid">N7.1</span><h3>Budget, and abstention as a valid answer</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— the slate never exceeds the cash budget, and an empty slate is a legal response.</span></div>
+    <pre class="ptext">TASK: make the slate a portfolio decision under a budget, and make "nothing
+worth doing today" a legal answer.
+
+THE DEFECT
+Selection is top-k by score with a family cap. There is no cash or shelf budget
+across the slate, so an owner with $2,000 of free cash receives $8,000 of advice
+and silently picks the ones they can afford - which means the engine's ranking is
+being overridden by whoever reads it, invisibly.
+
+WHAT TO BUILD
+- cash_budget and shelf_budget per store, as declared Settings until somebody
+  measures them, surfaced on the slate so the owner knows what was assumed.
+- Choose the slate by GREEDY RATIO under budget - expected net margin per dollar
+  committed - not top-k by score. Greedy is sufficient, auditable and
+  deterministic. A true knapsack is not worth the explanation cost on a card.
+- ABSTENTION IS A FIRST-CLASS OUTCOME. If no candidate clears an expected NET
+  margin of zero, the slate is empty and says "nothing worth doing today". An
+  empty slate is an answer. The engine must never return an error for it, and the
+  UI must not treat it as a failure.
+
+GUARDRAILS
+- DO NOT reach 90% by raising the p_hit floor. The engine's own
+  MIN_HIT_PROBABILITY setting already prices that path over 52 decision dates,
+  208 runs and 1,056 cards: 0.50 gives 75.9% at 5.1 cards a run; 0.40 fills a
+  ten-card slate and costs ~3 points; 0.55 buys ~1 point, cuts coverage to 2.4
+  cards and HALVES the margin. A floor high enough to print 90% issues almost
+  nothing.
+- Abstention is different and must be implemented as such: it withholds cards
+  whose EXPECTED PROFIT is negative, and it PUBLISHES the coverage it chose.
+  Coverage always appears beside any accuracy figure.
+
+TESTS
+    test_slate_respects_cash_budget
+    test_empty_slate_is_a_valid_response
+    test_greedy_ratio_beats_top_k_on_net_margin
+    test_coverage_is_published_with_every_accuracy_figure
+
+THEN: report cards per run and net margin per card, before and after, per store.
+Coverage will fall. Say by how much, and say it next to the accuracy number every
+single time.</pre>
+  </article>
+
+  <article class="pr" data-id="N7.2">
+    <div class="ph"><span class="pid">N7.2</span><h3>Both targets as measured gates</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— both gates green at ≥4 of 5 pilot stores, and the failing store published rather than dropped.</span></div>
+    <pre class="ptext">TASK: put both targets into the reports as hard gates, per store, never pooled.
+
+WHAT TO ADD to scripts/run_all_ledgers.py and scripts/_index_report.py
+
+    GATE A - ACCURACY
+      promise kept                    in 85-95%        at every store
+      calibration ECE                 under 5 points   at every store
+      interval coverage p5-p95        at least 90%     at all four horizons
+      no card states a confidence whose reliability bin deviates over 10 points
+
+    GATE B - PROFIT
+      net margin per store per month  at least $1,000  every store with cost
+      per-family net margin           signed, published, all 11 families
+      coverage, cards per run         printed beside every accuracy figure
+
+RULES THE INDEX ALREADY FOLLOWS AND MUST KEEP FOLLOWING
+- PER STORE, NEVER POOLED. The engine is switched on one store at a time, so it
+  is judged one store at a time. A pooled average also lets the largest store
+  carry the result - Cork Runner has four times Bethany's line items.
+- A store failing either gate is published IN RED WITH "DO NOT SHIP". The most
+  useful row on that page is the store where it does not work. Finding it on the
+  page costs a paragraph; finding it in a pilot costs a customer.
+- Stores sending NO COST DATA - five of ten audited - report GATE A ONLY, and
+  their money columns read "no cost data", never "$0". Keep the explicit None
+  check: `s.get("cost") or 1.0` maps a genuine 0.0 to 1.0 and that class has
+  already been caught once here.
+
+TESTS
+    test_gate_a_fails_a_store_outside_the_promise_band
+    test_gate_b_skipped_for_a_store_without_cost
+    test_no_cost_store_prints_absence_not_zero
+    test_failing_store_is_published_not_dropped
+
+THEN: give me the gate table for all five stores. If fewer than four pass, do not
+adjust the gates. Tell me which gate failed where, and what the next prompt
+should be.</pre>
+  </article>
+</section>
+
+<!-- ─────────── N8 ─────────── -->
+<section id="n8">
+  <div class="sh"><span class="sid">N8</span><h2>Seasonal and event playbooks</h2><span class="wk">3–4 weeks · backtestable today</span>
+    <button data-copy="all">Copy all 4</button></div>
+  <p class="lede">25+ events, an order list built from the store's own history, and an alert 4 to 6 weeks
+  ahead. Read N8.0 before the others — seasonality has already lost twice on this engine.</p>
+
+  <article class="pr" data-id="N8.0">
+    <div class="ph"><span class="pid">N8.0</span><h3>Why this is not the seasonality already rejected twice</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— context, not a task. Paste it with any N8 prompt.</span></div>
+    <pre class="ptext">CONTEXT for the event playbook work. Read before writing any of it.
+
+SEASONALITY HAS LOST ON THIS ENGINE TWICE, MEASURED
+    as a RANKING ratio        90-day hit rate 70.0% -&gt; 58.4%
+    as a FORECAST multiplier  lost at 0 of 4 horizons;
+                              30-day bias +0.6% -&gt; +9.2%
+
+Both failures have the SAME cause: they applied a continuous, store-level
+busy-ness index to the daily forecast, and the trailing 28-day window already
+reflects current conditions - so the adjustment double-counted. The calendar
+FACTS were kept (they are inputs a model can learn a coefficient for); the
+multiplier was deleted and the harness prints REJECT with the reason.
+
+A PLAYBOOK IS A DIFFERENT OBJECT, and the difference is why it can work
+- discrete, dated and NAMED, not a continuous index
+- it has its OWN window, 4 to 6 weeks of run-up
+- it is estimated from THAT EVENT'S OWN HISTORY at that store
+- it produces an ORDER LIST, not a forecast adjustment
+- IT DOES NOT TOUCH rate_hat OR THE DAILY FORECAST AT ALL
+- it is a new card family competing on N3's currency like every other
+
+IF YOU BUILD IT AS A MULTIPLIER ON rate_hat, IT WILL LOSE FOR THE THIRD TIME.
+If at any point the design starts adjusting a daily rate, stop and say so.
+
+Also keep in mind, because it shapes every estimate here: the pilot stores have
+3.7 years of history, so each event has THREE OR FOUR observations per store.
+n = 3. Everything in N8.2 follows from that.</pre>
+  </article>
+
+  <article class="pr" data-id="N8.1">
+    <div class="ph"><span class="pid">N8.1</span><h3>The event calendar, computed and never tabulated</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— every event date matches known-good for four years, and any tabulated event fails loudly past its validity.</span></div>
+    <pre class="ptext">TASK: build the event calendar for 25+ events. Extend the existing module; do not
+start a second one.
+
+WHERE IT GOES
+app/pipeline/features/calendar.py already computes moving dates: the anonymous
+Gregorian computus for Easter, nth-weekday rules for Thanksgiving and Memorial
+Day, and the Super Bowl's move to the second Sunday in February from 2022.
+Twenty-two tests pin known-good dates across four years so the arithmetic cannot
+drift silently. A run in 2031 needs no edit. Keep that property.
+
+WHAT TO BUILD
+    Event:
+        key                 "thanksgiving", "diwali", "nye", "super_bowl"
+        name
+        date_for(year)      COMPUTED. a callable, not a lookup.
+        window_pre_days     the selling run-up this event actually has
+        window_post_days
+        may_suppress        True where the effect can legitimately be NEGATIVE
+
+Cover at least: New Year's Eve and Day, Super Bowl, Valentine's, St Patrick's,
+Easter, Cinco de Mayo, Memorial Day, Father's Day, July 4th, Labor Day,
+Halloween, Thanksgiving and the eve before it, Christmas Eve and Day, Diwali,
+Eid al-Fitr, Chinese New Year, Ramadan start, graduation season, Mother's Day,
+Oktoberfest, Black Friday, and the local fixtures already handled by sports.py.
+
+THE TRAP: LUNI-SOLAR DATES
+Diwali, Eid al-Fitr, Chinese New Year and the start of Ramadan are not
+nth-weekday rules. Compute them properly where a standard-library algorithm
+exists. Where one is genuinely too heavy for pure stdlib, A TABLE IS ACCEPTABLE
+ONLY WITH an explicit end-of-validity year AND a test that FAILS when the table
+runs out. A silent wrong date in 2031 is worse than a build error in 2030.
+
+may_suppress IS NOT A COURTESY. Ramadan reduces alcohol demand in some trade
+areas. A negative uplift there is a correct and valuable result: it tells the
+engine not to pre-stock, and not to read the subsequent dip as something to
+recover.
+
+TESTS
+    test_every_event_date_matches_known_good_for_four_years
+    test_tabulated_event_fails_loudly_past_validity
+    test_suppressing_event_may_return_negative_uplift
+    test_window_days_are_per_event_not_global
+
+THEN: print the full event calendar for 2026 and 2027 and let me check it by eye.</pre>
+  </article>
+
+  <article class="pr" data-id="N8.2">
+    <div class="ph"><span class="pid">N8.2</span><h3>Event uplift per store, shrunk hard, because n is 3</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— per store, all 25+ events with uplift, interval, n_own, cohort level and USABLE/REFUSED. Refusals are the year-one majority.</span></div>
+    <pre class="ptext">TASK: estimate each event's uplift per store, and shrink it hard, because the
+evidence is three observations.
+
+THE STATISTICAL HEART OF THIS, AND THE EASIEST THING TO GET WRONG
+The pilot stores have 3.7 years of history. That is THREE OR FOUR observations
+per event per store. One store's Thanksgiving is n = 3. An uplift estimated from
+three observations is noise. So this is the ONE place in the engine where the
+peer cohort is genuinely load-bearing rather than a cold-start convenience.
+
+WHAT TO BUILD
+    uplift_hat = (n_eff * u_own + k * u_cohort) / (n_eff + k)
+
+- The SAME formula as sheets 06 and 20 - a THIRD axis, across events. Use the
+  registry's existing k machinery. Do NOT introduce a new constant.
+- u_own    = this store's realised units in the event window versus its own
+             baseline over MATCHED WEEKDAYS outside the window. Weekday matching
+             matters: Thanksgiving is always a Thursday.
+- u_cohort = the same quantity across the peer cohort. Cohort resolution already
+             walks five levels - state, state+size, region+size, national+size,
+             national - and always resolves.
+- REFUSE where the interval spans zero. Reuse app/pipeline/elasticity/guard.py.
+  With n = 3, most events at most stores will refuse. THAT IS THE CORRECT ANSWER.
+- The card STATES ITS EVIDENCE LEVEL. "Based on your 3 previous Thanksgivings" is
+  a different claim from "based on 14 similar Texas stores", and the owner should
+  be able to tell which one they got.
+
+GUARDRAILS
+- Open days throughout. An event window containing a closure is shorter.
+- Do not pool across events. Thanksgiving and Diwali are not the same effect and
+  a store's Diwali is not evidence about its Super Bowl.
+- A suppressing event may return a negative uplift. Do not clamp it at zero.
+
+TESTS
+    test_uplift_shrinks_to_cohort_at_n_equals_three
+    test_uplift_refused_when_interval_spans_zero
+    test_baseline_matches_weekdays
+    test_card_states_which_evidence_it_used
+    test_negative_uplift_survives_for_a_suppressing_event
+
+THEN: give me the table per store - every event, uplift_hat, interval, n_own,
+cohort level used, USABLE or REFUSED - and lead with the refusal count.</pre>
+  </article>
+
+  <article class="pr" data-id="N8.3">
+    <div class="ph"><span class="pid">N8.3</span><h3>The playbook: one card, an order list, an alert date</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— one card per event, not thirty; order and promise are different numbers; the whole list fits the cash budget.</span></div>
+    <pre class="ptext">TASK: assemble the playbook. It is ONE decision with many lines, not thirty
+cards.
+
+WHAT TO BUILD
+    Playbook:
+        event
+        alert_on        event_date - window_pre - lead_time - safety_buffer
+        lines           (sku, order_units, promise_units, why) ...
+        units_at_stake  the SUM, so it ranks on N3's currency
+        cash_required   what the owner has to commit
+        evidence        "your 3 previous - 14 TX peers - cohort level 1"
+
+- order_units per line comes from policy/inventory.py at q* over the event
+  window - N1.2 and N1.3. promise_units is the p10 - N1.1. THE TWO NUMBERS ARE
+  DIFFERENT AND BOTH APPEAR. This is the same promise/order split as everywhere
+  else and the playbook is where it is most visible, because the owner is
+  committing real cash weeks early.
+- Then constraints/apply.py for case packs, MOQ and shelf caps, so the card can
+  explain why 37.4 became 24.
+- A playbook is the LARGEST SINGLE CASH ASK the engine makes, so N7.1's budget
+  constraint matters most here. A playbook that does not fit the cash budget is
+  TRIMMED BY EXPECTED NET MARGIN PER DOLLAR, line by line, and the card says what
+  was trimmed and why.
+
+GUARDRAILS
+- alert_on rests on a DECLARED lead time, because purchase_orders is empty at
+  four of five stores. SAY SO ON THE CARD. The 4-to-6-week promise is a
+  consequence of that assumption, not a measurement.
+- Lines whose event uplift was REFUSED in N8.2 do not appear. A playbook of
+  refused lines is an empty playbook, and an empty playbook is a valid answer.
+- One card. If this produces thirty cards, it is wrong.
+
+TESTS
+    test_playbook_is_one_card_not_many
+    test_alert_date_accounts_for_lead_time_and_window
+    test_playbook_trimmed_to_cash_budget_keeps_best_ratio_lines
+    test_order_and_promise_are_different_numbers
+    test_refused_lines_are_excluded
+    test_empty_playbook_is_valid
+
+THEN: show me one real playbook for Thanksgiving at Bethany, with every line, its
+order and promise quantities, the evidence level, the cash required and the alert
+date - and what was trimmed to fit the budget.</pre>
+  </article>
+
+  <article class="pr" data-id="N8.4">
+    <div class="ph"><span class="pid">N8.4</span><h3>Grade a playbook as one bet, and pool to get any power</h3>
+      <label class="chkw"><input type="checkbox" class="chk">done</label>
+      <button data-copy="one">Copy</button></div>
+    <div class="gate">GATE <span>— pooled across stores: playbook promise kept ≥85% and net margin per playbook significantly positive.</span></div>
+    <pre class="ptext">TASK: measure the playbooks honestly, which means admitting how little power one
+store-year has.
+
+THE POWER PROBLEM, STATED FIRST
+A playbook fires ONCE A YEAR. One store-year is n = 1. A playbook can never be
+significant on its own, and printing a per-store verdict on n = 1 would repeat
+the row-wise-bootstrap mistake that was already caught here and thrown away - it
+reported "82.9%" off 41 observations.
+
+WHAT TO BUILD
+- Grade the playbook AS A UNIT: did realised units over the event window clear
+  the promised total, and what was the net margin after N0.1's holding cost.
+  Not line by line - the owner made one decision.
+- POOL ACROSS STORES AND ACROSS EVENTS for any verdict. State the pooling
+  explicitly in the report. This is the one family whose evidence is necessarily
+  cross-sectional, and hiding that would be dishonest.
+- The backtest is available TODAY, before any live playbook ships: 3.7 years of
+  history contains three or four occurrences of every event, so a walk-forward
+  over past events can be run immediately. Do that first and report it.
+
+GUARDRAILS
+- No per-store verdict on one occurrence. An interval, yes. A verdict, no.
+- Date-clustered: all lines in one playbook share one event, so they are one
+  cluster, not thirty observations.
+- The LEAD TIME benefit - an owner told six weeks ahead can negotiate,
+  consolidate a delivery and use supplier terms - is real and is NOT incremental
+  margin on units. If it is claimed anywhere, it must be measured separately.
+  This prompt does not pretend to measure it, and the report must not imply it.
+
+TESTS
+    test_playbook_graded_as_one_unit
+    test_no_per_store_verdict_on_one_occurrence
+    test_playbook_lines_are_one_cluster
+
+THEN: run the historical walk-forward over all past occurrences of all events at
+all five stores and give me the pooled result. If playbooks do not clear the
+gate, switch the family off and add a row to ENGINE-ENHANCEMENTS.md section 11
+like every other idea that lost.</pre>
+  </article>
+</section>
+
+<footer>
+  <p><strong>Order.</strong> Primer, then N0 (1–2 wk), N1 (3–4 wk), N2 (3 wk), N3 (4 wk),
+  N4 (4–5 wk, N4.3 first), N5 (2 wk, parallel with N3), N6 (5–6 wk, N6.3 from day one), N7 (3 wk),
+  N8 (3–4 wk). <strong>Start today</strong> with the three collection items — N0.3 the holdout flag,
+  N6.3 the on-hand snapshots, N4.3 the signal history. All three are lost forever if deferred and
+  none blocks on code review.</p>
+  <p><strong>The one-line summary.</strong> The engine is not inaccurate because the model is weak —
+  it reports an average as though it were a floor, states a confidence nobody has checked, and ranks
+  ten of its eleven families on hand-written literals. Fix those three and 90% is arithmetic.</p>
+  <p>Full prose versions of every prompt, with the measurements behind them, are in
+  <code>ENGINE-NINETY-PROMPTS.md</code> on branch <code>Enh_Engine_v1</code>. The tick boxes on this
+  page are stored in your own browser only and are not shared with anyone.</p>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var KEY = 'botella.n90.done';
+  var done = {};
+  try { done = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { done = {}; }
+
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(done)); } catch (e) {} }
+
+  function paint() {
+    var all = document.querySelectorAll('.pr');
+    var n = 0;
+    for (var i = 0; i < all.length; i++) {
+      var a = all[i], d = !!done[a.getAttribute('data-id')];
+      if (d) n++;
+      a.classList.toggle('is-done', d);
+      var cb = a.querySelector('.chk');
+      if (cb) cb.checked = d;
+    }
+    var el = document.getElementById('prog');
+    if (el) el.textContent = n + ' of ' + all.length + ' marked done';
+  }
+
+  function flash(btn, msg) {
+    var old = btn.getAttribute('data-label') || btn.textContent;
+    btn.setAttribute('data-label', old);
+    btn.textContent = msg;
+    btn.classList.add('ok');
+    setTimeout(function () { btn.textContent = old; btn.classList.remove('ok'); }, 1500);
+  }
+
+  function selectNode(el) {
+    try {
+      var r = document.createRange();
+      r.selectNodeContents(el);
+      var s = window.getSelection();
+      s.removeAllRanges();
+      s.addRange(r);
+      return true;
+    } catch (e) { return false; }
+  }
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('button[data-copy]') : null;
+    if (!btn) return;
+    var art = btn.closest('.pr');
+    var text, fallbackEl;
+    if (btn.getAttribute('data-copy') === 'all') {
+      var pres = btn.closest('section').querySelectorAll('.ptext');
+      var parts = [];
+      for (var i = 0; i < pres.length; i++) parts.push(pres[i].textContent);
+      text = parts.join('\n\n' + new Array(71).join('=') + '\n\n');
+      fallbackEl = pres[0];
+    } else {
+      fallbackEl = art ? art.querySelector('.ptext') : null;
+      text = fallbackEl ? fallbackEl.textContent : '';
+    }
+    if (!text) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(
+        function () { flash(btn, 'Copied'); },
+        function () { if (fallbackEl) selectNode(fallbackEl); flash(btn, 'Select + copy'); }
+      );
+    } else {
+      if (fallbackEl) selectNode(fallbackEl);
+      flash(btn, 'Select + copy');
+    }
+  });
+
+  document.addEventListener('change', function (e) {
+    var cb = e.target.closest ? e.target.closest('.chk') : null;
+    if (!cb) return;
+    var a = cb.closest('.pr');
+    if (!a) return;
+    done[a.getAttribute('data-id')] = cb.checked;
+    save();
+    paint();
+  });
+
+  paint();
+})();
+</script>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live slates &middot; cohort</title>
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#ffffff; --panel:#f7f8fa; --panel2:#eef1f5; --fg:#0d1117; --mut:#5b6672;
+  --line:#dfe3e8; --grid:#e8ebef;
+  --accent:#2563eb; --accent2:#60a5fa; --good:#047857; --bad:#be123c;
+  --warn:#b45309; --goodbg:#ecfdf5; --badbg:#fff1f2;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a0e17; --panel:#121823; --panel2:#1a2230; --fg:#e8edf4; --mut:#93a1b1;
+  --line:#233044; --grid:#1c2634;
+  --accent:#60a5fa; --accent2:#3b82f6; --good:#34d399; --bad:#fb7185;
+  --warn:#fbbf24; --goodbg:#052e23; --badbg:#2d0d16;
+}}
+:root[data-theme="dark"]{
+  --bg:#0a0e17; --panel:#121823; --panel2:#1a2230; --fg:#e8edf4; --mut:#93a1b1;
+  --line:#233044; --grid:#1c2634;
+  --accent:#60a5fa; --accent2:#3b82f6; --good:#34d399; --bad:#fb7185;
+  --warn:#fbbf24; --goodbg:#052e23; --badbg:#2d0d16;
+}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.65 ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",
+  Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1140px;margin:0 auto;padding:56px 24px 96px}
+h1{font-size:clamp(28px,4vw,40px);line-height:1.12;margin:0 0 10px;
+  letter-spacing:-.025em;font-weight:680}
+h2{font-size:23px;margin:64px 0 6px;letter-spacing:-.015em;font-weight:660}
+h2 .num{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:10px}
+h3{font-size:16px;margin:30px 0 8px;font-weight:650}
+.lede{font-size:17px;color:var(--mut);margin:0 0 4px;max-width:70ch}
+.sub{color:var(--mut);font-size:13.5px;margin:0 0 30px}
+.sub b{color:var(--fg);font-weight:600}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+p{max-width:72ch}
+.band{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:22px 26px;margin:26px 0}
+.band.good{border-left:4px solid var(--good)}
+.band.warn{border-left:4px solid var(--warn)}
+.band.bad{border-left:4px solid var(--bad)}
+.band h3{margin-top:0}
+.band p:last-child{margin-bottom:0}
+.kpis{display:grid;gap:14px;margin:26px 0;
+  grid-template-columns:repeat(auto-fit,minmax(196px,1fr))}
+.k{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:18px 20px}
+.k .v{font-size:34px;font-weight:700;letter-spacing:-.03em;line-height:1.05;
+  font-variant-numeric:tabular-nums}
+.k .l{font-size:11.5px;color:var(--mut);text-transform:uppercase;
+  letter-spacing:.09em;margin-top:6px;font-weight:600}
+.k .d{font-size:12.5px;color:var(--mut);margin-top:9px;line-height:1.5}
+.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;
+  margin:18px 0;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:14px;
+  font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--mut);font-weight:650;background:var(--panel2);
+  position:sticky;top:0;z-index:2}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--panel2)}
+td b{font-weight:650}
+.month{font-weight:650}
+.span{font-size:11.5px;color:var(--mut);display:block;font-weight:400}
+.chart{margin:20px 0;padding:18px;background:var(--panel);
+  border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+.chart svg{width:100%;height:auto;max-width:860px;display:block;margin:0 auto}
+.chart.wide svg{max-width:100%}
+.ax{font-size:11px;fill:var(--mut)}
+.lbl{font-size:13px;fill:var(--fg);font-weight:600}
+.val{font-size:15px;fill:var(--fg);font-weight:700}
+.day{margin:0 0 30px}
+.dayhead{display:flex;align-items:baseline;gap:12px;padding:9px 0;
+  border-bottom:2px solid var(--line);margin-bottom:14px}
+.dayhead .d{font-size:15px;font-weight:660}
+.dayhead .c{font-size:12px;color:var(--mut)}
+.card{background:var(--panel);border:1px solid var(--line);
+  border-left:3px solid var(--accent);border-radius:12px;
+  padding:18px 20px;margin:0 0 12px}
+.card .head{font-size:16.5px;font-weight:660;letter-spacing:-.01em;
+  margin-bottom:8px;line-height:1.35}
+.card .body{font-size:14.5px;line-height:1.62;color:var(--fg)}
+.card .why{font-size:14px;margin-top:9px;padding-left:12px;
+  border-left:2px solid var(--line);color:var(--mut)}
+.card .why b{color:var(--fg)}
+.card .conf{font-size:12.5px;color:var(--mut);margin-top:9px}
+.out{display:grid;gap:8px;margin-top:14px;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.o{border:1px solid var(--line);border-radius:10px;padding:9px 12px;
+  background:var(--bg)}
+.o.hit{border-color:var(--good);background:var(--goodbg)}
+.o.miss{border-color:var(--bad);background:var(--badbg)}
+.o .ow{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--mut);font-weight:650}
+.o .ov{font-size:17px;font-weight:700;margin-top:3px;
+  font-variant-numeric:tabular-nums}
+.o .od{font-size:11.5px;color:var(--mut);margin-top:2px}
+.o.hit .ov{color:var(--good)}.o.miss .ov{color:var(--bad)}
+code{background:var(--panel2);border:1px solid var(--line);padding:1px 6px;
+  border-radius:5px;font-size:13px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+ul{padding-left:22px;max-width:72ch}li{margin:9px 0}
+.foot{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--mut)}
+@media print{
+  body{background:#fff;color:#000;font-size:11pt}
+  .wrap{max-width:none;padding:0}
+  h2{page-break-after:avoid;margin-top:26px}
+  .card,.k,.band,.scroll,.chart{page-break-inside:avoid}
+  .scroll{max-height:none;overflow:visible}
+  thead th{position:static}
+}
+@media(max-width:640px){
+  .wrap{padding:32px 16px 64px}
+  th,td{padding:9px 10px;font-size:13px}
+}
+</style></head><body><div class="wrap">
+
+<h1>What the engine recommends today</h1>
+<p class="lede">Every store in the cohort, run through the live route against
+whatever data it has right now &mdash; not a replay of a past month, and not
+dependent on having years of history.</p>
+<p class="sub"><b>5</b> of <b>21</b>
+locations produced recommendations &middot; <b>46</b> cards &middot;
+generated 07 October 2026, 13:28</p>
+
+<div class="band">
+<h3>These are forecasts, and there is no hit rate on this page</h3>
+<p>Every card here was issued today and its window has not closed, so no outcome
+exists to score it against. The only figure that could be printed is the engine's
+own confidence, which is a claim rather than a measurement &mdash; and where the
+calibration curve returns the same value for every card in a run, the card says so
+in those words instead of letting it read as this card's own chance.</p>
+<p>Accuracy lives in the ledger, which replays a finished month and scores each
+card against what actually happened. A store needs about seventeen months of
+history to appear there and about one month to appear here. <b>Backtestable and
+recommendable are not the same thing</b>, and four of these stores are being
+served today while being far too new to measure.</p>
+</div>
+
+<h2><span class="num">00</span>Who got what</h2>
+<div class="scroll"><table>
+<thead><tr><th>Store</th><th class="num">cards</th><th>mix</th>
+<th class="num">pool</th></tr></thead>
+<tbody><tr><td><b>44</b> Manhattan Liquors</td><td><b class="good">10</b></td><td>1 bundle &middot; 9 reorder</td><td>18<span class="span">candidates considered</span></td></tr><tr><td><b>51</b> La Bodega Wine &amp; Spirits</td><td><b class="good">10</b></td><td>1 bundle &middot; 9 reorder</td><td>20<span class="span">candidates considered</span></td></tr><tr><td><b>173</b> Tuscany Wine, Spirits + Craft CO</td><td><b class="good">10</b></td><td>1 bundle &middot; 3 markdown &middot; 6 reorder</td><td>83<span class="span">candidates considered</span></td></tr><tr><td><b>105</b> Local Vine - Atlanta</td><td><b class="good">10</b></td><td>10 reorder</td><td>0<span class="span">candidates considered</span></td></tr><tr><td><b>194</b> FireWater Package</td><td><b class="good">6</b></td><td>6 reorder</td><td>102<span class="span">candidates considered</span></td></tr></tbody>
+</table></div>
+
+<h2><span class="num">44</span>Manhattan Liquors</h2><p class="sub"><b>10</b> recommendations &middot; 18 candidates considered &middot; data as of 2026-10-05</p><div class="card"><div class="head"><span class="span">reorder</span> 00X9JC9927S0R</div><div class="body">order 27 units of 00X9JC9927S0R (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 1.0 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.43 &middot; raw_ranking_score &middot; order 27</div></div><div class="card"><div class="head"><span class="span">reorder</span> 08X03KX406DR0</div><div class="body">order 19 units of 08X03KX406DR0 (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.7 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.40 &middot; raw_ranking_score &middot; order 19</div></div><div class="card"><div class="head"><span class="span">reorder</span> 0CCB2WJE1XWQ6</div><div class="body">order 11 units of 0CCB2WJE1XWQ6 (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.4 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.36 &middot; raw_ranking_score &middot; order 11</div></div><div class="card"><div class="head"><span class="span">reorder</span> 0JBD3WZ4Q1EV4</div><div class="body">order 11 units of 0JBD3WZ4Q1EV4 (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.4 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.31 &middot; raw_ranking_score &middot; order 11</div></div><div class="card"><div class="head"><span class="span">reorder</span> 13RDG798P7928</div><div class="body">order 12 units of 13RDG798P7928 (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.4 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.30 &middot; raw_ranking_score &middot; order 12</div></div><div class="card"><div class="head"><span class="span">reorder</span> 1667K0271JNAG</div><div class="body">order 19 units of 1667K0271JNAG (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.6 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.36 &middot; raw_ranking_score &middot; order 19</div></div><div class="card"><div class="head"><span class="span">reorder</span> 16PFN4M297YST</div><div class="body">order 13 units of 16PFN4M297YST (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.5 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.32 &middot; raw_ranking_score &middot; order 13</div></div><div class="card"><div class="head"><span class="span">reorder</span> 1B883EVAY5B4P</div><div class="body">order 14 units of 1B883EVAY5B4P (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.5 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.47 &middot; raw_ranking_score &middot; order 14</div></div><div class="card"><div class="head"><span class="span">reorder</span> 1K6GDXHGS788M</div><div class="body">order 13 units of 1K6GDXHGS788M (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.5 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.38 &middot; raw_ranking_score &middot; order 13</div></div><div class="card"><div class="head"><span class="span">bundle</span> JMVHCGA1C5DCG, MXEFBSVRXZP7W</div><div class="why"><b>Why:</b> NATTY DADDY 4PK and SMIRNOFF 10PK-- were bought together in 13 baskets. Sited side by side they sell each other.</div><div class="conf">confidence 0.52 &middot; ranking score</div></div><h2><span class="num">51</span>La Bodega Wine &amp; Spirits</h2><p class="sub"><b>10</b> recommendations &middot; 20 candidates considered &middot; data as of 2026-10-05</p><div class="card"><div class="head"><span class="span">reorder</span> 0140QEWPDV6Z4</div><div class="body">order 12 units of 0140QEWPDV6Z4 (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.3 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.30 &middot; raw_ranking_score &middot; order 12</div></div><div class="card"><div class="head"><span class="span">reorder</span> 0CYSX30NXFQHY</div><div class="body">order 17 units of 0CYSX30NXFQHY (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.3 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.26 &middot; raw_ranking_score &middot; order 17</div></div><div class="card"><div class="head"><span class="span">reorder</span> 0D9HBVW6R67B6</div><div class="body">order 13 units of 0D9HBVW6R67B6 (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.5 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.36 &middot; raw_ranking_score &middot; order 13</div></div><div class="card"><div class="head"><span class="span">reorder</span> 11DVAM9Y13JTR</div><div class="body">order 14 units of 11DVAM9Y13JTR (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.5 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.38 &middot; raw_ranking_score &middot; order 14</div></div><div class="card"><div class="head"><span class="span">reorder</span> 1HSC28G5CANPT</div><div class="body">order 57 units of 1HSC28G5CANPT (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 2.1 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.43 &middot; raw_ranking_score &middot; order 57</div></div><div class="card"><div class="head"><span class="span">reorder</span> 1TCT13ZS78QN8</div><div class="body">order 18 units of 1TCT13ZS78QN8 (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.6 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.44 &middot; raw_ranking_score &middot; order 18</div></div><div class="card"><div class="head"><span class="span">reorder</span> 1VD4CPVSX3WXC</div><div class="body">order 15 units of 1VD4CPVSX3WXC (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.5 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.38 &middot; raw_ranking_score &middot; order 15</div></div><div class="card"><div class="head"><span class="span">reorder</span> 20PNCJ2K1BQZW</div><div class="body">order 54 units of VMC Pepino Limon (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 2.1 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.31 &middot; raw_ranking_score &middot; order 54</div></div><div class="card"><div class="head"><span class="span">reorder</span> 22EJXX72H5R2P</div><div class="body">order 74 units of 22EJXX72H5R2P (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 2.7 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.24 &middot; raw_ranking_score &middot; order 74</div></div><div class="card"><div class="head"><span class="span">bundle</span> JZDBPJC6QRPKA, THYWBNRZRYY8W</div><div class="why"><b>Why:</b> Lotto and Lotto were bought together in 55 baskets. Sited side by side they sell each other.</div><div class="conf">confidence 0.82 &middot; ranking score</div></div><h2><span class="num">173</span>Tuscany Wine, Spirits + Craft CO</h2><p class="sub"><b>10</b> recommendations &middot; 83 candidates considered &middot; data as of 2026-10-05</p><div class="card"><div class="head"><span class="span">reorder</span> 796158</div><div class="body">about 5 to cover the next 14 days. Over the next 30 selling days total sales should land between 2 and 24 units 90% of the time</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.3 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.35 &middot; raw_ranking_score &middot; order 5</div></div><div class="card"><div class="head"><span class="span">reorder</span> 90032509</div><div class="body">about 5 to cover the next 14 days. Over the next 30 selling days total sales should land between 1 and 24 units 90% of the time</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.3 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.38 &middot; raw_ranking_score &middot; order 5</div></div><div class="card"><div class="head"><span class="span">reorder</span> 90035821</div><div class="body">about 30 to cover the next 14 days. Over the next 30 selling days total sales should land between 8 and 165 units 90% of the time</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 2.1 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.35 &middot; raw_ranking_score &middot; order 30</div></div><div class="card"><div class="head"><span class="span">reorder</span> 90053855</div><div class="body">about 7 to cover the next 14 days. Over the next 30 selling days total sales should land between 1 and 40 units 90% of the time</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.5 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.35 &middot; raw_ranking_score &middot; order 7</div></div><div class="card"><div class="head"><span class="span">reorder</span> 90055729</div><div class="body">about 3 to cover the next 14 days. Over the next 30 selling days total sales should land between 0 and 32 units 90% of the time</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.2 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.10 &middot; raw_ranking_score &middot; order 3</div></div><div class="card"><div class="head"><span class="span">reorder</span> 90056756</div><div class="body">about 2 to cover the next 14 days. Over the next 30 selling days total sales should land between 0 and 22 units 90% of the time</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.2 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.19 &middot; raw_ranking_score &middot; order 2</div></div><div class="card"><div class="head"><span class="span">markdown</span> 90030864</div><div class="body">840 on the shelf, moving slowly. Over the next 30 selling days total sales should land between 36 and 99 units 90% of the time</div><div class="why"><b>Why:</b> About 391 days of stock at the current rate - roughly 13 months. That is $20,992 tied up on the shelf.</div><div class="conf">confidence 0.42 &middot; raw_ranking_score</div></div><div class="card"><div class="head"><span class="span">markdown</span> 90057477</div><div class="body">2013 on the shelf, moving slowly. Over the next 30 selling days total sales should land between 6 and 39 units 90% of the time</div><div class="why"><b>Why:</b> About 3082 days of stock at the current rate - roughly 103 months. That is $6,794 tied up on the shelf.</div><div class="conf">confidence 0.36 &middot; raw_ranking_score</div></div><div class="card"><div class="head"><span class="span">markdown</span> 121022</div><div class="body">237 on the shelf, moving slowly. Over the next 30 selling days total sales should land between 8 and 36 units 90% of the time</div><div class="why"><b>Why:</b> About 358 days of stock at the current rate - roughly 12 months. That is $4,249 tied up on the shelf.</div><div class="conf">confidence 0.41 &middot; raw_ranking_score</div></div><div class="card"><div class="head"><span class="span">bundle</span> 90022166, 90057845</div><div class="why"><b>Why:</b> STEEL RESERVE EXTRA MALT CAN and SMIRNOFF ORIGINAL were bought together in 131 baskets. Sited side by side they sell each other.</div><div class="conf">confidence 0.92 &middot; ranking score</div></div><h2><span class="num">105</span>Local Vine - Atlanta</h2><p class="sub"><b>10</b> recommendations &middot; 0 candidates considered &middot; data as of 2026-10-05</p><div class="card"><div class="head"><span class="span">reorder</span> 5116</div><div class="body">about 34 more than the last four weeks imply. Over the next 30 selling days total sales should land between 14 and 164 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 34 units over the period.</div><div class="conf">confidence 0.53 &middot; raw_ranking_score &middot; order 34</div></div><div class="card"><div class="head"><span class="span">reorder</span> 25643</div><div class="body">about 27 more than the last four weeks imply. Over the next 30 selling days total sales should land between 66 and 151 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 27 units over the period.</div><div class="conf">confidence 0.52 &middot; raw_ranking_score &middot; order 27</div></div><div class="card"><div class="head"><span class="span">reorder</span> 28044</div><div class="body">about 22 more than the last four weeks imply. Over the next 30 selling days total sales should land between 1 and 106 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 22 units over the period.</div><div class="conf">confidence 0.59 &middot; raw_ranking_score &middot; order 22</div></div><div class="card"><div class="head"><span class="span">reorder</span> 17012</div><div class="body">about 21 more than the last four weeks imply. Over the next 30 selling days total sales should land between 92 and 173 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 21 units over the period.</div><div class="conf">confidence 0.51 &middot; raw_ranking_score &middot; order 21</div></div><div class="card"><div class="head"><span class="span">reorder</span> 25776</div><div class="body">about 16 more than the last four weeks imply. Over the next 30 selling days total sales should land between 17 and 66 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 16 units over the period.</div><div class="conf">confidence 0.56 &middot; raw_ranking_score &middot; order 16</div></div><div class="card"><div class="head"><span class="span">reorder</span> 22612</div><div class="body">about 12 more than the last four weeks imply. Over the next 30 selling days total sales should land between 11 and 45 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 12 units over the period.</div><div class="conf">confidence 0.57 &middot; raw_ranking_score &middot; order 12</div></div><div class="card"><div class="head"><span class="span">reorder</span> 6236</div><div class="body">about 10 more than the last four weeks imply. Over the next 30 selling days total sales should land between 6 and 36 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 10 units over the period.</div><div class="conf">confidence 0.59 &middot; raw_ranking_score &middot; order 10</div></div><div class="card"><div class="head"><span class="span">reorder</span> 6481</div><div class="body">about 9 more than the last four weeks imply. Over the next 30 selling days total sales should land between 8 and 50 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 9 units over the period.</div><div class="conf">confidence 0.52 &middot; raw_ranking_score &middot; order 9</div></div><div class="card"><div class="head"><span class="span">reorder</span> GC</div><div class="body">about 9 more than the last four weeks imply. Over the next 30 selling days total sales should land between 1 and 50 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 9 units over the period.</div><div class="conf">confidence 0.51 &middot; raw_ranking_score &middot; order 9</div></div><div class="card"><div class="head"><span class="span">reorder</span> 32354</div><div class="body">about 6 more than the last four weeks imply. Over the next 30 selling days total sales should land between 3 and 36 units 90% of the time</div><div class="why"><b>Why:</b> Recent sales ran below this product's own longer-run rate, so the last few weeks understate it by about 6 units over the period.</div><div class="conf">confidence 0.51 &middot; raw_ranking_score &middot; order 6</div></div><h2><span class="num">194</span>FireWater Package</h2><p class="sub"><b>6</b> recommendations &middot; 102 candidates considered &middot; data as of 2026-10-05</p><div class="card"><div class="head"><span class="span">reorder</span> A76E5V8612BS6</div><div class="body">order 10 units of Mccormick Vodka 375 ml (covers through about Oct 28)</div><div class="why"><b>Why:</b> Out of stock now, and it was selling 0.3 a day. A delivery takes 7 days.</div><div class="conf">confidence 0.29 &middot; raw_ranking_score &middot; order 10</div></div><div class="card"><div class="head"><span class="span">reorder</span> HTBFSEN3YJJTA</div><div class="body">order 14 units of 24/7 Red 100's Box (covers through about Oct 28)</div><div class="why"><b>Why:</b> About 3 days of stock left at the current rate, and a delivery takes 7 days. It runs out before the next one lands.</div><div class="conf">confidence 0.34 &middot; raw_ranking_score &middot; order 14</div></div><div class="card"><div class="head"><span class="span">reorder</span> 2M649AAY4FSFR</div><div class="body">order 8 units of Cazadores Blanco 375ml (covers through about Oct 28)</div><div class="why"><b>Why:</b> About 3 days of stock left at the current rate, and a delivery takes 7 days. It runs out before the next one lands.</div><div class="conf">confidence 0.35 &middot; raw_ranking_score &middot; order 8</div></div><div class="card"><div class="head"><span class="span">reorder</span> 1WPZS1F5RW47T</div><div class="body">order 11 units of 24/7 Menthol 100's Box (covers through about Oct 28)</div><div class="why"><b>Why:</b> About 6 days of stock left at the current rate, and a delivery takes 7 days. It runs out before the next one lands.</div><div class="conf">confidence 0.38 &middot; raw_ranking_score &middot; order 11</div></div><div class="card"><div class="head"><span class="span">reorder</span> WG8EESSGW77B2</div><div class="body">order 7 units of Fireball Cinnamon Whiskey 375ml (covers through about Oct 28)</div><div class="why"><b>Why:</b> About 6 days of stock left at the current rate, and a delivery takes 7 days. It runs out before the next one lands.</div><div class="conf">confidence 0.36 &middot; raw_ranking_score &middot; order 7</div></div><div class="card"><div class="head"><span class="span">reorder</span> 2QWDVW7PRPDTY</div><div class="body">order 7 units of Jose Cuervo Silver Tequila 200ml (covers through about Oct 28)</div><div class="why"><b>Why:</b> About 6 days of stock left at the current rate, and a delivery takes 7 days. It runs out before the next one lands.</div><div class="conf">confidence 0.34 &middot; raw_ranking_score &middot; order 7</div></div>
+
+<h2><span class="num">99</span>The stores that produced nothing, and why</h2>
+<p>Grouped by who can fix it. For most of this cohort the answer is a POS sync
+that has never run &mdash; not an engine limit.</p>
+<h3>No products on file &mdash; 6 locations <span class="span">fixed by: POS sync</span></h3><p>The store is onboarded and its catalogue is empty. Nothing has synced from the POS, so there is no shelf to reason about.</p><div class="scroll"><table><thead><tr><th>Location</th><th class="num">candidates</th></tr></thead><tbody><tr><td><b>Damon's Beverage Orono</b><span class="span">location 146</span></td><td>0</td></tr><tr><td><b>Damon's Beverage Skowhegan</b><span class="span">location 141</span></td><td>0</td></tr><tr><td><b>Damon's Beverage and Redemption Bangor</b><span class="span">location 107</span></td><td>0</td></tr><tr><td><b>Damon's Beverage and Redemption Waterville</b><span class="span">location 140</span></td><td>0</td></tr><tr><td><b>Georgio's Liquors Waltham</b><span class="span">location 135</span></td><td>0</td></tr><tr><td><b>Local Vine - Johns Creek</b><span class="span">location 131</span></td><td>0</td></tr></tbody></table></div><h3>Not in the warehouse &mdash; 6 locations <span class="span">fixed by: onboarding</span></h3><p>No store of this name exists in <code>client_locations</code>.</p><div class="scroll"><table><thead><tr><th>Location</th><th class="num">candidates</th></tr></thead><tbody><tr><td><b>BJ's Liquor</b></td><td>&mdash;</td></tr><tr><td><b>Burtons Liquor Mart</b></td><td>&mdash;</td></tr><tr><td><b>Chuck's Wine &amp; Spirits (Main Store)</b></td><td>&mdash;</td></tr><tr><td><b>Lothian Beverage Company</b></td><td>&mdash;</td></tr><tr><td><b>Red Barn Liquors Bowling Green</b></td><td>&mdash;</td></tr><tr><td><b>Top 10 Wine &amp; Spirits</b></td><td>&mdash;</td></tr></tbody></table></div><h3>Nothing cleared the bar &mdash; 4 locations <span class="span">fixed by: none</span></h3><p>The store has sales and stock and no product cleared the materiality and confidence gates today. This is a real answer, and it changes day to day.</p><div class="scroll"><table><thead><tr><th>Location</th><th class="num">candidates</th></tr></thead><tbody><tr><td><b>Damon's Beverage Wholesale 700 Hogan Rd</b><span class="span">location 106</span></td><td>2</td></tr><tr><td><b>Damon's Beverage and Redemption Augusta</b><span class="span">location 139</span></td><td>2</td></tr><tr><td><b>Georgio's Liquors Billerica</b><span class="span">location 134</span></td><td>97</td></tr><tr><td><b>Nick &amp; Moes Liquor</b><span class="span">location 155</span></td><td>1</td></tr></tbody></table></div>
+
+<div class="foot">
+<p>Generated by <code>scripts/build_live_slate_report.py</code> from the raw
+<code>/run-recommendations</code> payloads, so every card here is exactly what the
+API returned. No CDN, no fonts, no script tags.</p>
+</div>
+
+</div></body></html>

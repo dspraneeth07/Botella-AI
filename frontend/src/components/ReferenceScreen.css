@@ -1,0 +1,275 @@
+/* ReferenceScreen.css - shared styling for the reference screens
+   (Market Comparison, Purchasing, Customers, Effectiveness).
+   -----------------------------------------------------------------------------
+   As in RecommendationsHome.css, the short `--ac / --tx / --bd` names are
+   ALIASES onto the shared app tokens published by app-theme.css, not a palette
+   of their own. These four screens used to carry a private indigo-and-slate
+   sheet, so the product changed colour as you moved through it. One decision,
+   made once, in app-theme.css.
+
+   Scoped .ref-*. The dark-register override block is gone: the tokens being
+   aliased flip themselves. */
+
+.ref-page {
+  /* Surfaces */
+  --bg: var(--bg-primary);
+  --bg2: var(--bg-secondary);
+  --card: var(--bg-card);
+  --hover: var(--bg-hover);
+  --elev: var(--bg-elevated);
+  --bd: var(--border);
+  --bd2: var(--border-light);
+
+  /* Ink */
+  --tx: var(--text-primary);
+  --tx2: var(--text-secondary);
+  --mu: var(--text-muted);
+
+  /* Accent + semantics - the same four the recommendations home uses.
+     Jade = good, rose = critical, fuchsia = needs attention. */
+  --ac: var(--accent);
+  --ac2: var(--accent-light);
+  --act: var(--accent-glow);
+  --gr: var(--green);
+  --rd: var(--red);
+  --am: var(--yellow);
+
+  /* Ink to lay ON a filled accent or semantic swatch - flips with the register,
+     because the dark cuts of accent and rose are LIGHT colours. */
+  --on-fill: var(--bx-accent-ink);
+
+  height: 100%; overflow-y: auto; overflow-x: hidden;
+  background: var(--bg); color: var(--tx);
+  font-family: var(--bx-font-body);
+  padding: 22px 26px 40px; box-sizing: border-box; font-variant-numeric: tabular-nums;
+}
+
+.ref-crumb { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--mu); margin-bottom: 10px; }
+.ref-crumb-sep { opacity: .5; }
+.ref-crumb-here { color: var(--tx); font-weight: 600; }
+.ref-return { margin-left: auto; border: none; background: none; color: var(--ac2); font: inherit; font-size: 12.5px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+
+.ref-head { margin-bottom: 16px; }
+.ref-title { display: flex; align-items: center; gap: 9px; font-family: var(--bx-font-display); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin: 0; overflow-wrap: anywhere; max-width: 100%; }
+.ref-sub { font-size: 13px; color: var(--tx2); margin: 6px 0 0; overflow-wrap: anywhere; max-width: 100%; }
+
+.ref-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+.ref-tile { background: var(--card); border: 1px solid var(--bd2); border-left: 3px solid var(--ac); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.ref-tile-rd { border-left-color: var(--rd); } .ref-tile-am { border-left-color: var(--am); } .ref-tile-gr { border-left-color: var(--gr); } .ref-tile-ac { border-left-color: var(--ac); }
+.ref-tile-label { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--mu); }
+.ref-tile-value { font-family: var(--bx-font-display); color: var(--tx); font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.ref-tile-note { font-size: 12px; color: var(--tx2); }
+.ref-tile-note em, .ref-est-label em { font-style: normal; color: var(--mu); }
+
+.ref-reco-line { display: flex; align-items: center; gap: 10px; background: var(--act); border: 1px solid var(--bd2); border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; font-size: 13px; color: var(--tx2); }
+.ref-reco-link { margin-left: auto; color: var(--ac2); border: none; background: none; font: inherit; font-weight: 600; cursor: pointer; }
+
+.ref-card { background: var(--card); border: 1px solid var(--bd2); border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; }
+.ref-card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; flex-wrap: wrap; }
+.ref-card-title { font-size: 15px; font-weight: 700; }
+.ref-est-label { font-size: 11px; font-weight: 600; color: var(--am); background: color-mix(in srgb, var(--am) 12%, transparent); padding: 2px 8px; border-radius: 6px; margin-left: 6px; }
+@supports not (background: color-mix(in srgb, red, blue)) { .ref-est-label { background: var(--elev); } }
+.ref-btn { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 12.5px; font-weight: 600; padding: 7px 13px; border-radius: 8px; cursor: pointer; color: var(--tx); background: var(--elev); border: 1px solid var(--bd); }
+.ref-btn:hover:not(:disabled) { color: var(--ac2); border-color: var(--ac); }
+.ref-btn:disabled { opacity: .5; cursor: default; }
+
+.ref-subtabs { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; width: 100%; }
+/* `baseline`, not `center`: the count is 11px against a 13px label, and
+   centring aligns their line BOXES, which leaves the number sitting visibly
+   off the label's baseline. Neither of these chips holds an icon, so there is
+   nothing that baseline alignment would push out of place. */
+.ref-subtab { align-self: center; flex: 0 0 auto; border: 1px solid var(--bd); background: var(--card); color: var(--tx2); font: inherit; font-size: 13px; font-weight: 600; line-height: 1.25; padding: 7px 14px; border-radius: 8px; cursor: pointer; display: inline-flex; gap: 7px; align-items: baseline; }
+.ref-subtab.is-on { background: var(--ac); color: var(--on-fill); border-color: var(--ac); }
+.ref-subtab-count { font-size: 11px; font-weight: 700; line-height: 1.25; opacity: .8; font-variant-numeric: tabular-nums; }
+.ref-filters { display: inline-flex; flex-wrap: wrap; gap: 5px; margin-left: 12px; }
+.ref-filter { border: 1px solid var(--bd); background: var(--card); color: var(--mu); font: inherit; font-size: 12px; padding: 5px 11px; border-radius: 999px; cursor: pointer; }
+.ref-filter.is-on { background: var(--act); color: var(--ac2); border-color: var(--ac); }
+
+.ref-table-wrap { overflow-x: auto; }
+/* `fixed` is what stops the columns from re-sizing themselves out of every
+   page change. min-width keeps them legible on a narrow viewport - the wrapper
+   already scrolls horizontally rather than crushing the grid. */
+/* min-width has to clear the SUM of the declared column widths, not just look
+   generous. The widest table here (Purchasing > reorder) declares
+   130 + 112x3 + 130 + 92 = 688px before the name column gets anything, so at
+   the old 720px the name column was handed the 32px left over - and under
+   `table-layout: fixed` that is final: fixed layout sizes from the declared
+   widths alone and never consults the content, so no amount of wrapping
+   control can widen a column the layout has already decided is 32px wide.
+   That is what stacked "Product" one letter per line. 940 = 688 + 240 for the
+   name + a little slack; the wrapper scrolls rather than crushing. */
+.ref-table { width: 100%; min-width: 940px; table-layout: fixed; border-collapse: collapse; font-size: 13px; }
+/* Default share for a data column, then the exceptions. The first column is
+   always the name (Product / Customer / Recommendation). It carries a declared
+   width rather than `auto` so it takes a PROPORTIONAL share when the table is
+   squeezed - `auto` made it the only column that gave way, absorbing the whole
+   shortfall by itself. */
+.ref-table thead th { width: 130px; }
+.ref-table thead th:first-child { width: 240px; }
+.ref-table thead th.ref-num { width: 112px; }
+.ref-table thead th:empty { width: 92px; }
+/* A column whose value is a sentence rather than a figure ("+3-5 units / yr ·
+   +$73-122 revenue / yr"). It gets a bigger share so the reader sees both
+   halves; the cell still truncates with its title intact if the table is
+   squeezed further. */
+.ref-table thead th.ref-col-wide { width: 210px; }
+/* Long headers have to wrap now that their column cannot widen to fit them.
+   `break-word`, NOT `anywhere`: the two look identical until the table runs out
+   of room. `anywhere` lets a break count toward min-content, so the column's
+   minimum becomes ONE CHARACTER - and since the first column is `width: auto`,
+   it is the one that gives way, turning "Product" into a letter-per-line
+   column. `break-word` keeps min-content at the longest word, so the column
+   can never collapse narrower than "Product" and the wrapper scrolls instead. */
+.ref-table thead th { white-space: normal; overflow-wrap: break-word; }
+/* A long value truncates instead of forcing the column open OR wrapping to
+   four lines. `nowrap` is what makes text-overflow work at all - without it the
+   cell wraps and the ellipsis never appears, so a supplier name like "Southern
+   Glazers Wine and Spirits of Texas LLC" quadrupled its row height. One line
+   per row also keeps every row the same height, which is what makes a paged
+   table scannable. The full value stays available via each cell's title. */
+.ref-table tbody td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ref-table thead th { text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--mu); padding: 0 14px 10px; border-bottom: 1px solid var(--bd); vertical-align: bottom; }
+/* Numeric columns right-align BOTH header and cell so figures sit directly
+   under their heading. The header rule above is more specific than a bare
+   .ref-num, so numeric headers must be targeted explicitly. */
+.ref-num { text-align: right; }
+.ref-table thead th.ref-num { text-align: right; }
+.ref-table tbody td.ref-num { text-align: right; }
+.ref-table tbody td { padding: 10px 14px; border-bottom: 1px solid var(--bd2); vertical-align: middle; }
+.ref-table tbody tr:last-child td { border-bottom: none; }
+.ref-table tbody tr:hover { background: var(--hover); }
+.ref-name { font-weight: 600; }
+.ref-strong { font-weight: 700; }
+.ref-good { color: var(--gr); } .ref-bad { color: var(--rd); }
+.ref-reco-mark { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 700; color: var(--ac2); }
+.ref-reco-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ac); }
+.ref-next { display: inline-flex; align-items: center; gap: 6px; }
+.ref-next-dot { width: 7px; height: 7px; border-radius: 50%; }
+.ref-next-call .ref-next-dot { background: var(--rd); } .ref-next-offer .ref-next-dot { background: var(--am); }
+
+.ref-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 12px; color: var(--mu); }
+.ref-pager { display: inline-flex; gap: 6px; }
+.ref-pager button { border: 1px solid var(--bd); background: var(--card); color: var(--tx2); font: inherit; font-size: 12px; padding: 4px 12px; border-radius: 8px; cursor: pointer; }
+.ref-pager button:disabled { opacity: .4; cursor: default; }
+
+/* Matches .rh-disclaimer exactly - same size, rule, spacing and ink - so the
+   note reads identically on Purchasing, Market Comparison, Customers,
+   Effectiveness and AI Recommendations. */
+.ref-disclaimer { margin-top: 24px; padding-top: 16px; background: none; border: none; border-top: 1px solid var(--bd2); border-radius: 0; font-size: var(--disclaimer-size); line-height: 1.65; color: var(--tx2); text-wrap: pretty; }
+/* Some screens reuse this for a note UNDER a table rather than the page-foot
+   legal block. Those take the size and the ink, but not the divider - a rule
+   across the middle of a card reads as a broken layout. */
+.ref-disclaimer-inline { margin-top: 8px; padding-top: 0; border-top: none; }
+.ref-disclaimer strong { color: var(--tx); font-weight: 700; }
+
+/* States */
+.ref-skel-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+.ref-skel-tile { height: 92px; border-radius: 12px; background: var(--elev); position: relative; overflow: hidden; }
+.ref-skel-tile::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.35) 50%, transparent 70%); transform: translateX(-100%); animation: ref-shim 1.3s infinite; }
+@keyframes ref-shim { to { transform: translateX(100%); } }
+.ref-loading { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 50px; color: var(--tx2); }
+.ref-spin { animation: ref-spin .9s linear infinite; }
+@keyframes ref-spin { to { transform: rotate(360deg); } }
+.ref-error { display: flex; align-items: center; gap: 10px; justify-content: center; margin: 40px auto; max-width: 520px; padding: 18px 22px; border: 1px solid var(--bd2); border-radius: 12px; background: var(--card); }
+.ref-error button { margin-left: 6px; font: inherit; font-weight: 600; cursor: pointer; padding: 6px 14px; border-radius: 8px; border: none; color: #FFFFFF; background: var(--bx-grad-signature); }
+.ref-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 48px 24px; background: var(--card); border: 1px solid var(--bd2); border-radius: 12px; color: var(--mu); }
+.ref-empty p { font-size: 14px; line-height: 1.6; max-width: 56ch; margin: 0; color: var(--tx2); }
+.ref-empty-meta { font-size: 12px; color: var(--mu); }
+
+@media (max-width: 1080px) { .ref-tiles, .ref-skel-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .ref-page { padding: 16px 12px 32px; } .ref-tiles, .ref-skel-tiles { grid-template-columns: minmax(0, 1fr); } .ref-title { font-size: 22px; } }
+@media (prefers-reduced-motion: reduce) { .ref-skel-tile::after, .ref-spin { animation: none; } }
+
+/* Customers screen extras */
+.ref-seg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
+.ref-seg { background: var(--bg2); border: 1px solid var(--bd2); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 2px; }
+.ref-seg-count { font-family: var(--bx-font-display); font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.ref-seg-label { font-size: 13px; font-weight: 600; color: var(--tx); }
+.ref-seg-desc { font-size: 11px; color: var(--mu); }
+.ref-chip { display: inline-block; font-size: 12px; font-weight: 600; color: var(--ac2); background: var(--act); border-radius: 6px; padding: 2px 9px; }
+.ref-row-warn td { background: color-mix(in srgb, var(--rd) 6%, transparent); }
+@supports not (background: color-mix(in srgb, red, blue)) { .ref-row-warn td { background: var(--bg2); } }
+
+/* Effectiveness screen */
+.eff-headline { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 14px; line-height: 1.4; }
+.eff-statement { background: var(--bg2); border: 1px solid var(--bd2); border-radius: 12px; padding: 12px 15px; font-size: 13px; line-height: 1.6; color: var(--tx2); margin-bottom: 16px; display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.eff-statement strong { color: var(--tx); }
+.eff-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.eff-rel-head { font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 8px; }
+.eff-rel-proven { color: var(--gr); } .eff-rel-caution { color: var(--rd); }
+.eff-rel-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--bd2); font-size: 13px; }
+.eff-rel-row:last-child { border-bottom: none; }
+@media (max-width: 760px) { .eff-two { grid-template-columns: minmax(0, 1fr); } }
+
+/* Purchasing "Order by" date, coloured by proximity (D1) */
+.ref-due { font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 7px; white-space: nowrap; }
+.ref-due-red { color: var(--rd); background: color-mix(in srgb, var(--rd) 12%, transparent); }
+.ref-due-amber { color: var(--am); background: color-mix(in srgb, var(--am) 12%, transparent); }
+.ref-due-later { color: var(--tx2); background: var(--elev); }
+@supports not (background: color-mix(in srgb, red, blue)) { .ref-due-red, .ref-due-amber { background: var(--elev); } }
+/* Highlighted rows when arriving from a recommendation (C1) */
+.ref-table tbody tr.ref-row-hi { background: var(--act); }
+.ref-table tbody tr.ref-row-hi:hover { background: var(--act); }
+
+/* ── V23: one segmented control for every in-place filter ─────────────────────
+   12px / 500, 5x11 padding, hairline dividers, active segment in the accent
+   tint with accent text, 8px radius. Shared so Purchasing's velocity filter,
+   Market Comparison's pricing sub-filter, the Reports chart period and the
+   Effectiveness range all read as the same object. */
+.ref-segmented { display: inline-flex; flex-direction: row; flex-wrap: nowrap; flex-shrink: 0; align-items: center; border: 1px solid var(--bd2); border-radius: 8px; overflow: hidden; background: var(--card); }
+.ref-segmented-btn { flex: 0 0 auto; font: inherit; font-size: 12px; font-weight: 500; line-height: 1.25; color: var(--tx2); background: none; border: none; border-left: 1px solid var(--bd2); padding: 6px 11px; cursor: pointer; white-space: nowrap; display: inline-flex; align-items: baseline; gap: 5px; }
+.ref-segmented-btn:first-child { border-left: none; }
+.ref-segmented-btn:hover { background: var(--hover); }
+.ref-segmented-btn.is-on { background: var(--act); color: var(--ac2); font-weight: 600; }
+.ref-segmented-count { font-size: 11px; line-height: 1.25; color: var(--mu); font-variant-numeric: tabular-nums; }
+.ref-segmented-btn.is-on .ref-segmented-count { color: var(--ac2); }
+
+.ref-velocity { display: inline-flex; align-items: center; flex-shrink: 0; gap: 8px; margin-left: auto; }
+.ref-velocity-label { font-size: 12px; color: var(--mu); }
+
+/* ── V27: table footers say what they show ──────────────────────────────────*/
+.ref-tfoot { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 14px; border-top: 1px solid var(--bd2); font-size: 12px; color: var(--mu); }
+.ref-tfoot-showing { font-variant-numeric: tabular-nums; }
+.ref-tfoot-pager { display: inline-flex; align-items: center; gap: 10px; }
+.ref-pager-btn { font: inherit; font-size: 12px; color: var(--tx2); background: none; border: none; cursor: pointer; padding: 2px 4px; }
+.ref-pager-btn:hover:not(:disabled) { color: var(--ac2); }
+.ref-pager-btn:disabled { color: var(--mu); opacity: .45; cursor: default; }
+.ref-pager-pos { font-variant-numeric: tabular-nums; }
+
+/* ── V14: one small round ⓘ, and the borderless estimate label ──────────────*/
+.ref-info { display: inline-grid; place-items: center; width: 16px; height: 16px; margin-left: 7px; padding: 0; font: inherit; font-size: 10.5px; font-style: italic; font-weight: 700; line-height: 1; color: var(--mu); background: none; border: 1px solid var(--bd); border-radius: 50%; cursor: help; vertical-align: middle; }
+.ref-info:hover { color: var(--ac2); border-color: var(--ac); }
+.ref-card-sub { margin: 3px 0 0; font-size: 12px; color: var(--mu); line-height: 1.5; }
+.ref-est-note { margin-left: 8px; color: var(--mu); background: none; border: none; padding: 0; }
+/* A Purchasing cell whose figure IS the recommendation card's (same quantity,
+   same order-by date) rather than this tab's own formula - so the owner knows
+   the two screens agree because they read one number. */
+.ref-from-card { display: block; margin-top: 1px; font-size: 10.5px; font-weight: 500; color: var(--mu); white-space: nowrap; cursor: help; }
+
+/* ── V30: Effectiveness early state - progress card, meter, ledger status ────*/
+.eff-progress { padding: 16px 18px; }
+.eff-progress-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 12px; }
+.eff-progress-title { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; color: var(--tx); }
+.eff-progress-caption { font-size: 12px; color: var(--mu); font-variant-numeric: tabular-nums; }
+
+/* Ten slots: filled for measured, tinted for in progress, empty otherwise. */
+.eff-meter { display: flex; gap: 5px; margin: 12px 0 10px; }
+.eff-slot { flex: 1 1 0; height: 7px; border-radius: 999px; background: var(--bg2); border: 1px solid var(--bd2); }
+.eff-slot.is-measured { background: var(--ac); border-color: var(--ac); }
+.eff-slot.is-progress { background: var(--act); border-color: var(--ac); }
+
+.eff-progress-note { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--tx2); max-width: 78ch; }
+
+.eff-status { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; white-space: nowrap; }
+.eff-status-dot { width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto; }
+.eff-status-measuring .eff-status-dot { background: var(--am); }
+.eff-status-waiting   .eff-status-dot { background: var(--mu); }
+.eff-status-measured  .eff-status-dot { background: var(--gr); }
+
+
+/* Truncation must always be recoverable.
+   Every cell here is `overflow: hidden; text-overflow: ellipsis`, so any value
+   longer than its column is silently cut. The cells that carry free text now
+   set a `title`, and this cursor is the affordance that says so - without it a
+   reader has no way to know the ellipsis hides anything they can reach. */
+.ref-table tbody td[title]:not([title=""]) { cursor: help; }

@@ -1,0 +1,1917 @@
+/* ============================================
+   CONTENT PAGES - shared styles (cp- prefix)
+   Used by the SEO landing pages built from the
+   Botella AI - SEO Changes & New Landing Pages doc.
+   ============================================ */
+
+/* Main page container */
+.cp {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 56px 48px 80px;
+  color: var(--lp-text);
+  line-height: 1.75;
+}
+
+.cp h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -1.2px;
+  font-weight: 700;
+  color: var(--lp-text);
+  margin: 0 0 28px;
+}
+
+.cp h2 {
+  font-size: clamp(28px, 3.8vw, 38px);
+  line-height: 1.18;
+  letter-spacing: -0.8px;
+  font-weight: 700;
+  color: var(--lp-text);
+  margin: 56px 0 18px;
+}
+
+.cp h3 {
+  font-size: 20px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--lp-text);
+  margin: 28px 0 10px;
+}
+
+.cp p {
+  font-size: 16px;
+  color: var(--lp-secondary);
+  margin: 0 0 16px;
+}
+
+.cp ul {
+  margin: 0 0 18px;
+  padding-left: 22px;
+  color: var(--lp-secondary);
+}
+
+.cp ul li {
+  margin-bottom: 8px;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.cp strong { color: var(--lp-text); font-weight: 600; }
+
+/* Scroll reveal - content blocks fade + rise into view as you scroll down.
+   Tagged with .cp-reveal by useScrollReveal(); .is-revealed added on enter. */
+.cp-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s cubic-bezier(.2, .7, .2, 1), transform 0.7s cubic-bezier(.2, .7, .2, 1);
+  will-change: opacity, transform;
+}
+.cp-reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cp-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* Page hero (top-of-page H1 + intro paragraphs) */
+.cp-hero {
+  padding: 24px 0 12px;
+  border-bottom: 1px solid var(--lp-border);
+  margin-bottom: 24px;
+}
+
+.cp-hero .cp-eyebrow {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--lp-accent-light);
+  margin-bottom: 12px;
+}
+
+/* Comparison table */
+.cp-table-wrap {
+  overflow-x: auto;
+  margin: 16px 0 24px;
+  border-radius: 12px;
+  border: 1px solid var(--lp-border);
+}
+
+.cp-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--lp-card);
+  font-size: 15px;
+}
+
+.cp-table th,
+.cp-table td {
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--lp-border);
+}
+
+.cp-table th {
+  background: rgba(167, 139, 250, 0.08);
+  color: var(--lp-text);
+  font-weight: 600;
+}
+
+.cp-table tr:last-child td { border-bottom: none; }
+
+.cp-table .cp-yes { color: #4ade80; font-weight: 600; }
+.cp-table .cp-no { color: #FF6B8A; font-weight: 500; }
+.cp-table .cp-adv { color: var(--lp-accent-light); font-weight: 600; }
+
+/* FAQ block */
+.cp-faqs {
+  margin: 24px 0 32px;
+  display: grid;
+  gap: 12px;
+}
+
+.cp-faq {
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 12px;
+  padding: 18px 22px;
+}
+
+.cp-faq h3 {
+  font-size: 17px;
+  margin: 0 0 8px;
+  color: var(--lp-text);
+}
+
+.cp-faq p {
+  margin: 0;
+  color: var(--lp-secondary);
+}
+
+/* CTA block at bottom of every page */
+.cp-cta {
+  margin: 64px 0 0;
+  padding: 40px 32px;
+  background: linear-gradient(135deg, rgba(167, 139, 250,0.10), rgba(124, 58, 237,0.06));
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  text-align: center;
+}
+
+.cp-cta h2 {
+  margin: 0 0 12px;
+}
+
+.cp-cta p {
+  margin: 0 0 24px;
+  font-size: 16px;
+  color: var(--lp-secondary);
+}
+
+.cp-cta-btn {
+  display: inline-block;
+  background: var(--lp-accent);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+}
+
+.cp-cta-btn:hover {
+  background: var(--lp-accent-light);
+  box-shadow: 0 4px 24px var(--lp-accent-glow);
+}
+
+/* Highlighted callout boxes */
+.cp-callout {
+  background: var(--lp-card);
+  border-left: 3px solid var(--lp-accent);
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin: 16px 0 24px;
+}
+
+.cp-callout p:last-child { margin-bottom: 0; }
+
+/* Image placeholders - until real screenshots ship */
+.cp-image-list {
+  background: rgba(167, 139, 250,0.04);
+  border: 1px dashed var(--lp-border);
+  border-radius: 12px;
+  padding: 16px 22px;
+  margin: 20px 0 0;
+  font-size: 13px;
+  color: var(--lp-muted);
+}
+
+.cp-image-list strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--lp-text);
+  font-size: 14px;
+}
+
+.cp-image-list ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.cp-image-list li {
+  font-size: 13px;
+  color: var(--lp-muted);
+  margin-bottom: 4px;
+}
+
+/* ---- NAV additions (dropdown + mobile) ---- */
+.cp-nav-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+.cp-nav-dropdown-trigger {
+  font-size: 14px;
+  color: var(--lp-muted);
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.cp-nav-dropdown:hover .cp-nav-dropdown-trigger {
+  color: var(--lp-text);
+}
+
+.cp-nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 10px;
+  padding: 8px;
+  display: none;
+  min-width: 240px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+  z-index: 200;
+}
+
+.cp-nav-dropdown:hover .cp-nav-dropdown-menu {
+  display: block;
+}
+
+.cp-nav-dropdown-menu a {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 7px;
+  font-size: 13.5px;
+  color: var(--lp-secondary);
+  transition: background 0.12s, color 0.12s;
+}
+
+.cp-nav-dropdown-menu a:hover {
+  background: rgba(167, 139, 250,0.10);
+  color: var(--lp-text);
+}
+
+.cp-nav-mobile-btn {
+  display: none;
+  background: none;
+  border: 1px solid var(--lp-border);
+  color: var(--lp-muted);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.cp-mobile-menu {
+  display: none;
+  background: var(--lp-card);
+  border-bottom: 1px solid var(--lp-border);
+  padding: 12px 24px 18px;
+}
+
+.cp-mobile-menu a {
+  display: block;
+  padding: 10px 0;
+  font-size: 15px;
+  color: var(--lp-secondary);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  text-decoration: none;
+}
+
+.cp-mobile-menu a:hover { color: var(--lp-text); }
+
+.cp-mobile-menu hr {
+  border: none;
+  border-top: 1px solid var(--lp-border);
+  margin: 8px 0;
+}
+
+/* ---- FOOTER additions ---- */
+.cp-footer {
+  flex-direction: column !important;
+  align-items: stretch !important;
+  padding: 56px 48px 24px !important;
+}
+
+.cp-footer-top {
+  display: grid;
+  grid-template-columns: minmax(140px, 200px) 1fr;
+  gap: 48px;
+  align-items: start;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--lp-border);
+}
+
+.cp-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.cp-footer-col h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lp-text);
+  margin: 0 0 12px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.cp-footer-col a {
+  display: block;
+  font-size: 13.5px;
+  color: var(--lp-muted);
+  margin-bottom: 8px;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.cp-footer-col a:hover {
+  color: var(--lp-text);
+}
+
+.cp-footer-bottom {
+  padding-top: 20px;
+  font-size: 12.5px;
+  color: var(--lp-muted);
+  text-align: left;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .cp-nav-mobile-btn { display: inline-flex; }
+  .cp-nav-dropdown,
+  .cp-nav-links { display: none !important; }
+  .cp-mobile-menu { display: block; }
+
+  .cp { padding: 40px 24px 64px; }
+  .cp h1 { font-size: 30px; }
+  .cp h2 { font-size: 26px; margin-top: 40px; }
+  .cp h3 { font-size: 17px; }
+
+  .cp-footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .cp-footer-cols { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .cp-footer { padding: 40px 24px 20px !important; }
+}
+
+@media (max-width: 600px) {
+  .cp { padding: 28px 18px 56px; }
+  .cp-cta { padding: 28px 18px; }
+  .cp-faq { padding: 14px 16px; }
+}
+
+/* Light theme refinements */
+[data-theme="light"] .cp-table th { background: rgba(167, 139, 250,0.06); }
+[data-theme="light"] .cp-callout { background: #f7f8fb; }
+[data-theme="light"] .cp-image-list { background: rgba(167, 139, 250,0.03); }
+
+/* ============================================================================
+   v2 - Visual pattern library (designed-out replacements for plain text)
+   Keep brand: indigo→purple gradient + Inter font.
+   Used by SEO landing pages so they read as product pages, not docs.
+   ============================================================================ */
+
+/* Wider container so 2-col hero + grids have room to breathe.
+   Pages opt into this by adding .cp-rich to the <main> element OR each
+   section can override via .cp-section-wide. */
+.cp-rich {
+  max-width: 1320px;
+  padding-top: 32px;
+
+  /* ONE measure for every block that stacks in a single column: the section
+     heading, bullet lists, section feet, and any per-page grid collapsed to
+     1fr. Multi-column grids ignore it and span the container. Before this,
+     each of those was capped independently (720 / 760 / 780 / 800 / 880 / none)
+     and a single page rendered seven different left/right edge pairs. */
+  --cp-measure: 880px;
+}
+
+/* ---- Eyebrow v2 (cyan dash + ALL CAPS label) ---------------------- */
+/* Eyebrow label - small ALL-CAPS accent text above section titles.
+   The gradient dash that used to sit before this text was removed
+   per user feedback (those little blue lines were cluttering the
+   page). Just the label text now. */
+.cp-eyebrow-v2 {
+  display: inline-block;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--lp-accent-light);
+  margin-bottom: 14px;
+}
+
+/* Tagline pill above hero H1 - small bordered pill */
+.cp-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  background: rgba(167, 139, 250, 0.08);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--lp-accent-light);
+  letter-spacing: 0.3px;
+  margin-bottom: 24px;
+}
+
+.cp-tag-pill::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lp-accent-light);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.18);
+}
+
+/* ---- Hero v2: 2-column split (text + visual) ---------------------- */
+.cp-hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 48px;
+  align-items: center;
+  padding: 24px 0 64px;
+  border-bottom: 1px solid var(--lp-border);
+  margin-bottom: 48px;
+}
+
+/* Full-width hero headline. Lives as a DIRECT child of .cp-hero-split and
+   spans both columns (its own top row), so the title gets the entire width
+   and stays on a single line instead of wrapping inside a half-width column.
+   The supporting copy (.cp-hero-text) + visual flow into the row beneath. */
+.cp-hero-split > h1 {
+  grid-column: 1 / -1;
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.08;
+  letter-spacing: -1.4px;
+  font-weight: 800;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.cp-hero-split > h1 i {
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light), #F472B6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+  font-weight: 800;
+}
+
+.cp-hero-sub {
+  font-size: 18px !important;
+  line-height: 1.55;
+  color: var(--lp-text) !important;
+  font-weight: 500;
+  margin-bottom: 14px !important;
+}
+
+.cp-hero-body {
+  font-size: 15.5px !important;
+  line-height: 1.65;
+  color: var(--lp-secondary) !important;
+  margin-bottom: 28px !important;
+}
+
+.cp-hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cp-btn-fill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 28px;
+  background: var(--lp-accent);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.05s;
+}
+
+.cp-btn-fill:hover {
+  background: var(--lp-accent-light);
+  box-shadow: 0 6px 24px var(--lp-accent-glow);
+}
+
+.cp-btn-fill:active { transform: translateY(1px); }
+
+.cp-btn-line {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--lp-text);
+  border: 1px solid var(--lp-border);
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.cp-btn-line:hover {
+  border-color: var(--lp-accent);
+  background: var(--lp-accent-glow);
+}
+
+/* Hero visual slot - the right side of the 2-col hero */
+.cp-hero-visual {
+  position: relative;
+  min-height: 380px;
+}
+
+/* ---- Real product screenshot inside the hero visual column ----------
+   Used by the SEO pages that have authentic captures (AI Agent, Sales
+   Analytics, Inventory, Margin). Replaces the .hv-* CSS mockups.
+   Markup is a plain <img className="cp-hero-shot" src="/screenshots/X.png">
+   - PNG only, no WebP sidecar, so swapping the file in
+   frontend/public/screenshots/ is the ONLY step needed to change the image.
+   Tall captures (chat views) are capped + top-cropped so the hero stays a
+   sensible height; short captures show in full. */
+.cp-hero-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  /* `contain`, not `cover`. cover fills the box by cropping, which is what was
+     slicing the edges off the screenshot on every side. contain shows the whole
+     capture and lets the box letterbox instead. */
+  object-fit: contain;
+  object-position: top center;
+  border: 1px solid var(--lp-border);
+  border-radius: 14px;
+  background: var(--lp-card);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.45);
+}
+[data-theme="light"] .cp-hero-shot {
+  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.18);
+}
+
+/* ---- Framed screenshot + click-to-enlarge lightbox (ScreenshotFrame.js) ----
+   Dense dashboard/chat captures are illegible when shrunk into the hero
+   column, so we show a tidy framed preview (cropped to the top of the image)
+   and let the visitor click to open the full-resolution image in a lightbox.
+   One image file powers both the preview and the zoom. */
+.cp-shot { margin: 0; width: 100%; }
+
+/* Clean, minimal frame - plain rounded border + a light shadow. */
+.cp-shot-frame {
+  border: 1px solid var(--lp-border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--lp-card);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+[data-theme="light"] .cp-shot-frame {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+}
+
+.cp-shot-body {
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: var(--lp-card);
+  cursor: zoom-in;
+}
+.cp-shot-body img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  /* `contain`, never `cover`. The frame now matches the image's own ratio, so
+     there is normally nothing to letterbox - but if a ratio is ever wrong
+     again, contain shows the whole screenshot with a little empty space rather
+     than silently slicing the edges off it. A product screenshot is
+     information; losing an edge loses a column of numbers. */
+  object-fit: contain;
+  object-position: top center;
+  transition: transform 0.5s ease;
+}
+.cp-shot-body:hover img { transform: scale(1.03); }
+
+.cp-shot-zoom {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(17, 17, 27, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+.cp-shot-body:hover .cp-shot-zoom,
+.cp-shot-body:focus-visible .cp-shot-zoom { opacity: 1; transform: translateY(0); }
+
+/* Lightbox overlay (full-resolution image) */
+.cp-shot-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vmin;
+  background: rgba(5, 6, 15, 0.86);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  cursor: zoom-out;
+  animation: cp-shot-fade 0.18s ease;
+}
+.cp-shot-lightbox img {
+  max-width: 94vw;
+  max-height: 92vh;
+  border-radius: 10px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+  cursor: default;
+}
+.cp-shot-lightbox-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.cp-shot-lightbox-close:hover { background: rgba(255, 255, 255, 0.25); }
+
+@keyframes cp-shot-fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cp-shot-body img,
+  .cp-shot-zoom { transition: none; }
+  .cp-shot-body:hover img { transform: none; }
+  .cp-shot-lightbox { animation: none; }
+}
+
+/* ---- Mock window frame (for fake dashboard / chat / inventory UIs) - */
+.cp-mock {
+  position: relative;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+[data-theme="light"] .cp-mock {
+  background: #fff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.cp-mock-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--lp-border);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .cp-mock-bar {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.cp-mock-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--lp-muted);
+  opacity: 0.4;
+}
+
+.cp-mock-dot.r { background: #ef4444; opacity: 0.7; }
+.cp-mock-dot.y { background: #f59e0b; opacity: 0.7; }
+.cp-mock-dot.g { background: #22c55e; opacity: 0.7; }
+
+.cp-mock-title {
+  flex: 1;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--lp-muted);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.cp-mock-body {
+  padding: 20px;
+}
+
+/* Floating data callout - overlays the mock window */
+.cp-float-callout {
+  position: absolute;
+  background: var(--lp-card);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  min-width: 130px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 2;
+}
+
+[data-theme="light"] .cp-float-callout {
+  background: #fff;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.10);
+}
+
+.cp-float-callout .lbl {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--lp-muted);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.cp-float-callout .val {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cp-float-callout .sub {
+  font-size: 11px;
+  color: var(--lp-muted);
+  margin-top: 2px;
+}
+
+/* ---- Stats row v2 (5 cards, big gradient numbers) ----------------- */
+.cp-stats {
+  display: grid;
+  /* auto-fit + minmax so the grid adapts to however many stat cards a
+     page has. AIAgentPage now has 4 cards (2s metric was removed);
+     the other 8 SEO pages still have 5. Both render in a single row
+     at 1024px+ and balance evenly. */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin: 48px 0 64px;
+}
+
+.cp-stat {
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 14px;
+  padding: 24px 18px;
+  text-align: center;
+  transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
+}
+
+.cp-stat:hover {
+  transform: translateY(-3px);
+  border-color: rgba(167, 139, 250, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+}
+
+[data-theme="light"] .cp-stat {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .cp-stat:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+}
+
+.cp-stat-n {
+  font-size: clamp(28px, 3.4vw, 38px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cp-stat-l {
+  font-size: 12.5px;
+  color: var(--lp-muted);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* ---- Section v2 (with optional centered header) ------------------ */
+.cp-section-v2 {
+  margin: 80px 0;
+}
+
+.cp-section-head {
+  text-align: center;
+  max-width: var(--cp-measure);
+  margin: 0 auto 48px;
+}
+
+.cp-section-head .cp-eyebrow-v2 {
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.cp-section-head h2 {
+  /* Bumped from clamp(28-42) to clamp(34-54) so the first line of
+     two-line section headings doesn't look small next to the italic
+     gradient bottom line. Bigger, more confident type. */
+  font-size: clamp(34px, 5.5vw, 54px);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  font-weight: 800;
+  margin: 0 0 18px;
+}
+
+.cp-section-head h2 i {
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+}
+
+.cp-section-head p {
+  font-size: 17px !important;
+  line-height: 1.6;
+  color: var(--lp-secondary) !important;
+  margin: 0 !important;
+}
+
+/* ---- Feature grid v2 (3-col cards with icon, hover lift) ---------- */
+.cp-feat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.cp-feat-card {
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.cp-feat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .cp-feat-card {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .cp-feat-card:hover {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.cp-feat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(124, 58, 237, 0.10));
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  font-size: 22px;
+  margin-bottom: 18px;
+}
+
+.cp-feat-card h3 {
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  color: var(--lp-text) !important;
+  margin: 0 0 10px !important;
+  letter-spacing: -0.2px;
+}
+
+.cp-feat-card p {
+  font-size: 14px !important;
+  color: var(--lp-secondary) !important;
+  margin: 0 !important;
+  line-height: 1.6;
+}
+
+/* ---- Two-column compare (pain points vs benefits) ----------------- */
+.cp-compare-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 36px 0;
+  align-items: stretch;
+}
+
+.cp-compare-col {
+  position: relative;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 20px;
+  padding: 28px 30px 16px;
+  transition: transform 0.25s cubic-bezier(.2, .7, .2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+[data-theme="light"] .cp-compare-col {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.07);
+}
+
+.cp-compare-col:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(0, 0, 0, 0.26); }
+[data-theme="light"] .cp-compare-col:hover { box-shadow: 0 18px 44px rgba(15, 23, 42, 0.10); }
+
+/* Highlighted "Botella AI" card - accent border, glow, gradient + a pill badge */
+.cp-compare-col.good {
+  border-color: rgba(167, 139, 250, 0.45);
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(167, 139, 250, 0.14), transparent 58%),
+    var(--lp-card);
+  box-shadow: 0 16px 40px rgba(167, 139, 250, 0.12);
+}
+[data-theme="light"] .cp-compare-col.good {
+  background:
+    radial-gradient(120% 80% at 0% 0%, rgba(167, 139, 250, 0.10), transparent 58%),
+    #fff;
+}
+.cp-compare-col.good::after {
+  content: 'RECOMMENDED';
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light));
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  box-shadow: 0 4px 12px rgba(167, 139, 250, 0.40);
+}
+
+.cp-compare-col h3 {
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  margin: 0 0 18px !important;
+  color: var(--lp-text) !important;
+}
+
+.cp-compare-col .cp-compare-lbl {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.cp-compare-col.bad .cp-compare-lbl { color: var(--lp-muted); }
+.cp-compare-col.good .cp-compare-lbl { color: var(--lp-accent-light); }
+
+.cp-compare-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cp-compare-col li {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 0;
+  font-size: 15px;
+  color: var(--lp-text);
+  line-height: 1.4;
+  border-bottom: 1px solid var(--lp-border);
+}
+.cp-compare-col li:last-child { border-bottom: none; }
+
+/* Circular status badges (replace the flat ✓ / ✕ glyphs) */
+.cp-compare-col li::before {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+.cp-compare-col.good li::before {
+  content: '✓';
+  color: #fff;
+  background: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.16);
+}
+.cp-compare-col.bad li::before {
+  content: '✕';
+  color: var(--lp-muted);
+  background: rgba(148, 163, 184, 0.18);
+}
+
+/* ---- Inline highlight callout (mid-page, gradient border) --------- */
+.cp-pull {
+  position: relative;
+  margin: 56px 0;
+  padding: 32px 36px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-left: 4px solid var(--lp-accent);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.08), rgba(124, 58, 237, 0.04));
+}
+
+[data-theme="light"] .cp-pull {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.05), rgba(124, 58, 237, 0.02));
+}
+
+.cp-pull-text {
+  font-size: 19px !important;
+  line-height: 1.5;
+  color: var(--lp-text) !important;
+  margin: 0 !important;
+  font-weight: 500;
+}
+
+.cp-pull-text strong {
+  background: linear-gradient(135deg, var(--lp-accent-light), #F472B6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* ---- Final CTA v2 (bigger, gradient background) ------------------ */
+.cp-final-cta {
+  position: relative;
+  overflow: hidden;
+  margin: 88px 0 24px;
+  padding: 66px 48px;
+  background:
+    radial-gradient(85% 130% at 12% 0%, rgba(167, 139, 250, 0.32), transparent 55%),
+    radial-gradient(80% 130% at 92% 105%, rgba(124, 58, 237, 0.26), transparent 55%),
+    var(--lp-card);
+  border: 1px solid rgba(167, 139, 250, 0.30);
+  border-radius: 28px;
+  box-shadow: 0 30px 72px rgba(167, 139, 250, 0.16);
+  text-align: center;
+}
+
+[data-theme="light"] .cp-final-cta {
+  background:
+    radial-gradient(85% 130% at 12% 0%, rgba(167, 139, 250, 0.14), transparent 55%),
+    radial-gradient(80% 130% at 92% 105%, rgba(124, 58, 237, 0.10), transparent 55%),
+    #fff;
+  border-color: rgba(167, 139, 250, 0.22);
+  box-shadow: 0 30px 72px rgba(167, 139, 250, 0.10);
+}
+
+/* Soft top halo for depth; content sits above it. */
+.cp-final-cta::before {
+  content: "";
+  position: absolute;
+  top: -32%;
+  left: 50%;
+  width: 68%;
+  height: 62%;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(214, 187, 255, 0.30), transparent 70%);
+  filter: blur(46px);
+  pointer-events: none;
+  z-index: 0;
+}
+.cp-final-cta > * { position: relative; z-index: 1; }
+
+.cp-final-cta h2 {
+  font-size: clamp(28px, 4vw, 42px) !important;
+  font-weight: 800 !important;
+  letter-spacing: -1px !important;
+  margin: 0 0 14px !important;
+  line-height: 1.1;
+}
+
+.cp-final-cta h2 i {
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light), #F472B6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-style: italic;
+}
+
+.cp-final-cta p {
+  font-size: 17px !important;
+  color: var(--lp-secondary) !important;
+  margin: 0 auto 28px !important;
+  max-width: 580px;
+  line-height: 1.6;
+}
+
+.cp-final-cta-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ---- FAQ v2 (2-column card grid, hover state) -------------------- */
+.cp-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.cp-faq-card {
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 14px;
+  padding: 24px 26px;
+  transition: border-color 0.18s, transform 0.18s;
+}
+
+.cp-faq-card:hover {
+  border-color: rgba(167, 139, 250, 0.3);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .cp-faq-card {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.cp-faq-card h3 {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: var(--lp-text) !important;
+  margin: 0 0 10px !important;
+  line-height: 1.35;
+}
+
+.cp-faq-card p {
+  font-size: 14px !important;
+  color: var(--lp-secondary) !important;
+  margin: 0 !important;
+  line-height: 1.6;
+}
+
+/* ---- Process / steps (numbered horizontal cards) ----------------- */
+.cp-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 32px 0;
+}
+
+.cp-step {
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  padding: 26px 22px;
+  position: relative;
+}
+
+[data-theme="light"] .cp-step {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.cp-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light));
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  margin-bottom: 16px;
+}
+
+.cp-step h3 {
+  font-size: 15.5px !important;
+  font-weight: 700 !important;
+  margin: 0 0 8px !important;
+  color: var(--lp-text) !important;
+}
+
+.cp-step p {
+  font-size: 13.5px !important;
+  color: var(--lp-secondary) !important;
+  margin: 0 !important;
+  line-height: 1.55;
+}
+
+/* ---- Chat-mock building blocks (used in AI Agent hero) ----------- */
+.cp-chat-row {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.cp-chat-row.user {
+  justify-content: flex-end;
+}
+
+.cp-chat-bubble {
+  max-width: 78%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.cp-chat-bubble.user {
+  background: var(--lp-accent);
+  color: #fff;
+}
+
+.cp-chat-bubble.ai {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--lp-border);
+  color: var(--lp-text);
+}
+
+[data-theme="light"] .cp-chat-bubble.ai {
+  background: #f9fafb;
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.cp-chat-bubble.ai strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lp-accent-light);
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.cp-chat-list {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--bx-font-body);
+  font-size: 12px;
+  color: var(--lp-secondary);
+}
+
+.cp-chat-list li {
+  padding: 3px 0;
+}
+
+.cp-chat-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.cp-chat-tag {
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(167, 139, 250, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  color: var(--lp-accent-light);
+}
+
+/* ---- Mock-content helpers (used inside .cp-mock-body for hero visuals) ---- */
+
+/* KPI cluster - 2-3 small cards inside a mock */
+.cp-mock-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.cp-mock-kpi {
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--lp-border);
+  border-radius: 9px;
+}
+
+[data-theme="light"] .cp-mock-kpi {
+  background: #f9fafb;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.cp-mock-kpi .lbl {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lp-muted);
+  margin-bottom: 4px;
+}
+
+.cp-mock-kpi .val {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--lp-text);
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+}
+
+.cp-mock-kpi .delta {
+  display: block;
+  font-size: 10.5px;
+  margin-top: 3px;
+  font-weight: 500;
+}
+
+.cp-mock-kpi .delta.up { color: #22c55e; }
+.cp-mock-kpi .delta.down { color: #ef4444; }
+.cp-mock-kpi .delta.flat { color: var(--lp-muted); }
+
+/* List row inside a mock (item + status / value) */
+.cp-mock-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.cp-mock-row:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+[data-theme="light"] .cp-mock-row:nth-child(odd) {
+  background: #f9fafb;
+}
+
+.cp-mock-row .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.cp-mock-row .dot.red { background: #ef4444; }
+.cp-mock-row .dot.amber { background: #f59e0b; }
+.cp-mock-row .dot.green { background: #22c55e; }
+
+.cp-mock-row .name {
+  flex: 1;
+  color: var(--lp-text);
+  font-weight: 500;
+}
+
+.cp-mock-row .meta {
+  color: var(--lp-muted);
+  font-size: 11px;
+}
+
+.cp-mock-row .pill {
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.cp-mock-row .pill.r {
+  background: rgba(239, 68, 68, 0.15);
+  color: #FF6B8A;
+}
+
+.cp-mock-row .pill.a {
+  background: rgba(240, 171, 252, 0.15);
+  color: #F5C2FF;
+}
+
+.cp-mock-row .pill.g {
+  background: rgba(34, 197, 94, 0.15);
+  color: #4ade80;
+}
+
+.cp-mock-row .pill.b {
+  background: rgba(167, 139, 250, 0.18);
+  color: var(--lp-accent-light);
+}
+
+/* Mini horizontal bars (for inventory/margin/sales visuals) */
+.cp-mock-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cp-mock-barrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+}
+
+.cp-mock-barrow .lbl {
+  flex: 0 0 auto;
+  width: 88px;
+  color: var(--lp-text);
+  font-weight: 500;
+}
+
+.cp-mock-barrow .track {
+  flex: 1;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+[data-theme="light"] .cp-mock-barrow .track {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.cp-mock-barrow .fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lp-accent), var(--lp-accent-light));
+  border-radius: 4px;
+}
+
+.cp-mock-barrow .v {
+  flex: 0 0 auto;
+  width: 40px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--lp-text);
+}
+
+/* Mini line chart (SVG placeholder) */
+.cp-mock-chart {
+  height: 90px;
+  padding: 12px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(167, 139, 250, 0.06), transparent);
+  margin: 12px 0;
+}
+
+.cp-mock-chart svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Segment cards (used inside Customer Insights mock) */
+.cp-mock-segs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.cp-mock-seg {
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--lp-border);
+}
+
+[data-theme="light"] .cp-mock-seg {
+  background: #f9fafb;
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.cp-mock-seg .name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lp-accent-light);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.cp-mock-seg .v {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--lp-text);
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+}
+
+.cp-mock-seg .sub {
+  font-size: 10.5px;
+  color: var(--lp-muted);
+  margin-top: 2px;
+}
+
+/* Section heading for inside mocks */
+.cp-mock-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cp-mock-head h4 {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: var(--lp-text) !important;
+  margin: 0 !important;
+  letter-spacing: -0.2px;
+}
+
+.cp-mock-head .badge {
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: rgba(167, 139, 250, 0.15);
+  color: var(--lp-accent-light);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1024px) {
+  .cp-feat-grid { grid-template-columns: repeat(2, 1fr); }
+  .cp-steps { grid-template-columns: repeat(2, 1fr); }
+  .cp-stats { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .cp-hero-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding-bottom: 40px;
+  }
+  .cp-hero-visual { min-height: 300px; }
+  .cp-feat-grid { grid-template-columns: 1fr; }
+  .cp-steps { grid-template-columns: 1fr; }
+  .cp-stats { grid-template-columns: repeat(2, 1fr); }
+  .cp-compare-pair { grid-template-columns: 1fr; }
+  .cp-faq-grid { grid-template-columns: 1fr; }
+  .cp-section-v2 { margin: 48px 0; }
+  .cp-final-cta { padding: 40px 24px; }
+  .cp-pull { padding: 24px; margin: 32px 0; }
+}
+
+/* ============================================================================
+   PAGE-SPECIFIC VARIATIONS - each SEO page gets a distinct visual treatment
+   ============================================================================
+
+   Layout types:
+   - page-flagship   : current style (AI Agent) - left text + right mock
+   - page-reverse    : right text + left mock - flipped hero direction
+   - page-centered   : centered hero with mock below (no split)
+   - page-bignumber  : huge accent stat on the left, text/list on the right
+   - page-magazine   : asymmetric grid - stacked text/cards with mock floating
+
+   Each page also gets a different ACCENT theme - variation in gradient
+   direction, top-of-page glow color, and section card shadows - so the
+   pages don't all feel like the same template.
+   ============================================================================ */
+
+/* Background glow that hints page identity. Sits above the content but
+   below the hero text. Each page-X tweaks the gradient stops + position. */
+.cp-rich {
+  position: relative;
+}
+
+.cp-rich::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(ellipse at center top, rgba(167, 139, 250, 0.10), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cp-rich > * { position: relative; z-index: 1; }
+
+[data-theme="light"] .cp-rich::before {
+  background: radial-gradient(ellipse at center top, rgba(167, 139, 250, 0.06), transparent 70%);
+}
+
+/* ---- REVERSE SPLIT ---- mock on LEFT, text on RIGHT */
+.page-reverse .cp-hero-split {
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.page-reverse .cp-hero-split > .cp-hero-text { order: 2; }
+.page-reverse .cp-hero-split > .cp-hero-visual { order: 1; }
+
+/* The two longest titles (Margin = 60 chars, Customer Insights = 66 chars)
+   live on the reverse-layout pages. Force them onto a single line: nowrap
+   guarantees one line, and the font is capped small enough that even the
+   66-char title can't overflow the widened container. They wrap normally
+   on mobile (see the max-width: 760px block). */
+.page-reverse .cp-hero-split > h1 {
+  white-space: nowrap;
+  font-size: clamp(16px, 2.2vw, 30px);
+  letter-spacing: -0.8px;
+}
+
+.page-reverse .cp-rich::before {
+  background: radial-gradient(ellipse at 25% top, rgba(124, 58, 237, 0.12), transparent 70%);
+}
+
+/* ---- CENTERED HERO ---- single column, mock below text */
+.page-centered .cp-hero-split {
+  grid-template-columns: 1fr;
+  text-align: center;
+  gap: 40px;
+}
+
+.page-centered .cp-hero-text {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.page-centered .cp-hero-text .cp-tag-pill,
+.page-centered .cp-hero-text .cp-hero-cta {
+  justify-content: center;
+}
+
+.page-centered .cp-hero-split > h1 {
+  font-size: clamp(36px, 4.6vw, 56px);
+}
+
+.page-centered .cp-hero-visual {
+  max-width: 760px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page-centered .cp-float-callout {
+  display: none; /* the callouts make less sense in a centered layout */
+}
+
+.page-centered .cp-rich::before {
+  background: radial-gradient(ellipse at center top, rgba(167, 139, 250, 0.16), transparent 60%);
+  height: 700px;
+}
+
+/* ---- BIG-NUMBER HERO ---- giant stat on left, narrow body on right */
+.page-bignumber .cp-hero-split {
+  grid-template-columns: 1fr 1.2fr;
+  align-items: center;
+}
+
+.page-bignumber .cp-hero-visual {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* When a page uses bignumber mode, its hero "visual" is a single
+   massive stat instead of a mock window - see .cp-hero-bignum below. */
+.cp-hero-bignum {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 32px 0;
+}
+
+.cp-hero-bignum-val {
+  font-size: clamp(120px, 18vw, 200px);
+  line-height: 0.95;
+  font-weight: 900;
+  letter-spacing: -8px;
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light), #F472B6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cp-hero-bignum-lbl {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--lp-text);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.cp-hero-bignum-sub {
+  font-size: 14px;
+  color: var(--lp-muted);
+  max-width: 280px;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.page-bignumber .cp-rich::before {
+  background: radial-gradient(ellipse at 80% top, rgba(167, 139, 250, 0.14), transparent 65%);
+}
+
+/* ---- MAGAZINE LAYOUT ---- asymmetric grid */
+.page-magazine .cp-hero-split {
+  grid-template-columns: 1fr 1.1fr;
+  align-items: stretch;
+}
+
+.page-magazine .cp-hero-visual {
+  align-self: end;
+}
+
+.page-magazine .cp-hero-split > h1 {
+  font-size: clamp(30px, 3.4vw, 42px);
+}
+
+.page-magazine .cp-rich::before {
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(124, 58, 237, 0.10), transparent 60%),
+    radial-gradient(ellipse at 85% 5%, rgba(167, 139, 250, 0.10), transparent 60%);
+  width: 100%;
+}
+
+/* ---- PER-PAGE ACCENT TINTS ----
+   Each page gets a slightly different feature-grid border tint on hover
+   so the visual identity carries throughout the page, not just the hero. */
+
+.page-retailers .cp-feat-card:hover {
+  border-color: rgba(34, 197, 94, 0.28);  /* green tint - growth + retail */
+}
+
+.page-distilleries .cp-feat-card:hover {
+  border-color: rgba(240, 171, 252, 0.28); /* amber tint - spirits warmth */
+}
+
+.page-inventory .cp-feat-card:hover {
+  border-color: rgba(6, 182, 212, 0.28);  /* cyan tint - clarity */
+}
+
+.page-customers .cp-feat-card:hover {
+  border-color: rgba(244, 114, 182, 0.28); /* pink tint - people */
+}
+
+.page-analytics .cp-feat-card:hover {
+  border-color: rgba(214, 187, 255, 0.40); /* indigo - strong */
+}
+
+.page-reordering .cp-feat-card:hover {
+  border-color: rgba(6, 182, 212, 0.32);  /* cyan tint - flow */
+}
+
+.page-margin .cp-feat-card:hover {
+  border-color: rgba(34, 197, 94, 0.32);  /* green tint - money */
+}
+
+.page-recommend .cp-feat-card:hover {
+  border-color: rgba(124, 58, 237, 0.32); /* purple - suggestions */
+}
+
+/* Per-page eyebrow accent - small touch of variety */
+/* Per-page eyebrow accent colour. The dash that used to be tinted per
+   page is gone now - only the label text colour shifts. Keeps each
+   page's identity through the eyebrow without re-introducing dashes. */
+.page-retailers   .cp-eyebrow-v2 { color: #22c55e; }
+.page-distilleries .cp-eyebrow-v2 { color: #f59e0b; }
+.page-inventory   .cp-eyebrow-v2 { color: #06b6d4; }
+.page-customers   .cp-eyebrow-v2 { color: #f472b6; }
+.page-reordering  .cp-eyebrow-v2 { color: #06b6d4; }
+.page-margin      .cp-eyebrow-v2 { color: #22c55e; }
+.page-recommend   .cp-eyebrow-v2 { color: #F472B6; }
+
+/* ---- Responsive - collapse all special layouts on mobile ---- */
+@media (max-width: 760px) {
+  .page-reverse .cp-hero-split,
+  .page-centered .cp-hero-split,
+  .page-bignumber .cp-hero-split,
+  .page-magazine .cp-hero-split {
+    grid-template-columns: 1fr;
+  }
+  .page-reverse .cp-hero-split > .cp-hero-text { order: 1; }
+  .page-reverse .cp-hero-split > .cp-hero-visual { order: 2; }
+  /* On phones the long reverse-page titles wrap normally (nowrap would
+     overflow a ~375px screen) and use a readable mobile size. */
+  .page-reverse .cp-hero-split > h1 { white-space: normal; font-size: clamp(28px, 7vw, 36px); }
+  .cp-hero-bignum-val { font-size: 100px; letter-spacing: -4px; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   V3 SEO REWRITE - bullet list + section foot text styles used across
+   the rewritten SEO sub-pages where the doc has plain-list content.
+   ════════════════════════════════════════════════════════════════ */
+
+.cp .cp-bullet-list,
+.cp-bullet-list {
+  list-style: none;
+  padding: 0;
+  /* Centred on the shared measure so the bullets sit under the heading on the
+     same two edges, instead of running the full 1224px container. */
+  max-width: var(--cp-measure);
+  margin: 16px auto 24px;
+  display: grid;
+  gap: 10px;
+}
+
+.cp-bullet-list li {
+  position: relative;
+  padding: 12px 16px 12px 44px;
+  background: rgba(167, 139, 250, 0.06);
+  border: 1px solid var(--lp-border);
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--lp-text);
+}
+
+/* Custom bullet - a small accent-coloured dot, drawn via ::before so
+   we don't need any list-marker styling. */
+.cp-bullet-list li::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light));
+  transform: translateY(-50%);
+}
+
+[data-theme="light"] .cp-bullet-list li {
+  background: #fff;
+  border-color: rgba(167, 139, 250, 0.16);
+}
+
+.cp .cp-section-foot,
+.cp-section-foot {
+  font-size: 15.5px;
+  color: var(--lp-secondary);
+  line-height: 1.65;
+  margin: 14px 0 18px;
+  font-style: italic;
+  max-width: var(--cp-measure);
+  margin-inline: auto;
+}

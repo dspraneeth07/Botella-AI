@@ -1,0 +1,127 @@
+{
+ "generated": "2026-10-09T12:37:54",
+ "dates": [
+  "2026-02-22",
+  "2026-03-08",
+  "2026-03-22",
+  "2026-04-05",
+  "2026-04-19",
+  "2026-05-03"
+ ],
+ "horizons": [
+  30,
+  60,
+  90,
+  120
+ ],
+ "sheet20": {
+  "n": 240,
+  "hits": 223,
+  "hit_rate": 92.91666666666667,
+  "ci_lo": 88.9502290985528,
+  "ci_hi": 95.53084386028607,
+  "median_lift": 1.6,
+  "margin_impact": 23060.783884,
+  "margin_captured": 73258.3249,
+  "median_size": 17.0,
+  "impact_per_card": 96.08659951666667
+ },
+ "old_ordering": {
+  "n": 240,
+  "hits": 80,
+  "hit_rate": 33.33333333333333,
+  "ci_lo": 27.67316193590199,
+  "ci_hi": 39.51865439076252,
+  "median_lift": 0.89,
+  "margin_impact": -24772.420100000003,
+  "margin_captured": 249040.72999999998,
+  "median_size": 114.0,
+  "impact_per_card": -103.21841708333335
+ },
+ "clustered_ci": [
+  90.0,
+  95.83333333333334
+ ],
+ "null_volume": 43.55625,
+ "null_reversion": 63.671875,
+ "percentile": 95.94166666666666,
+ "p_value": 0.0004997501249375312,
+ "cards_per_run": 10.0,
+ "runs": 24,
+ "by_horizon": {
+  "30": {
+   "n": 60,
+   "hits": 49,
+   "hit_rate": 81.66666666666667,
+   "ci_lo": 70.08000677353371,
+   "ci_hi": 89.44231096286387,
+   "median_lift": 1.41,
+   "margin_impact": 1871.596252,
+   "margin_captured": 6891.2133,
+   "median_size": 17.0,
+   "impact_per_card": 31.19327086666667,
+   "null_reversion": 54.36666666666667
+  },
+  "60": {
+   "n": 60,
+   "hits": 57,
+   "hit_rate": 95.0,
+   "ci_lo": 86.29926537490016,
+   "ci_hi": 98.28508088208588,
+   "median_lift": 1.68,
+   "margin_impact": 4529.093132,
+   "margin_captured": 14568.7266,
+   "median_size": 17.0,
+   "impact_per_card": 75.48488553333333,
+   "null_reversion": 63.666666666666664
+  },
+  "90": {
+   "n": 60,
+   "hits": 59,
+   "hit_rate": 98.33333333333333,
+   "ci_lo": 91.1446617732205,
+   "ci_hi": 99.70519161391263,
+   "median_lift": 1.69,
+   "margin_impact": 7441.469784,
+   "margin_captured": 22500.7203,
+   "median_size": 17.0,
+   "impact_per_card": 124.0244964,
+   "null_reversion": 67.7625
+  },
+  "120": {
+   "n": 60,
+   "hits": 58,
+   "hit_rate": 96.66666666666667,
+   "ci_lo": 88.63601247107462,
+   "ci_hi": 99.08108735098499,
+   "median_lift": 1.63,
+   "margin_impact": 9218.624716,
+   "margin_captured": 29297.6647,
+   "median_size": 17.0,
+   "impact_per_card": 153.64374526666668,
+   "null_reversion": 68.89166666666667
+  }
+ },
+ "refusals": {
+  "below_materiality_floor": 64060,
+  "trailing_window_inflated": 6748,
+  "not_merchandise_category": 3376,
+  "not_merchandise_catalogue": 2220,
+  "p_hit_below_floor": 4124,
+  "not_merchandise_blocklist": 96,
+  "no_price": 4
+ },
+ "store_name": "Marshfield Wine & Spirits",
+ "lines": 705328,
+ "products": 3948,
+ "cost_coverage": 0.9136296045913477,
+ "dropped_lines": [],
+ "trading_days": 568,
+ "settings": {
+  "materiality_floor_units": 8,
+  "min_hit_probability": 0.5,
+  "baseline_window_days": 28,
+  "n_recs": 10,
+  "null_baskets": 400
+ }
+}

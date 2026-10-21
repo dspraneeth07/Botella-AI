@@ -1,0 +1,66 @@
+/* Recommendations tab: sub-tab toggle (Smart Suggestions | StoreAgent) above the
+   active engine. Keeps the existing flex-fill + internal-scroll behaviour of the
+   child panels intact by re-creating the flex column the panels expect. */
+.rec-view {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.rec-subtabs {
+  flex-shrink: 0;
+  display: flex;
+  gap: 4px;
+  padding: 14px 24px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.rec-subtab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.rec-subtab:hover {
+  color: var(--text-primary);
+}
+.rec-subtab svg {
+  opacity: 0.7;
+}
+.rec-subtab-active {
+  color: var(--accent-light);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+.rec-subtab-active svg {
+  opacity: 1;
+}
+
+/* The active engine fills the rest and provides the flex-column context its
+   root (.sp-container / .sa-panel) needs to flex-fill and scroll. */
+.rec-subpanel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 640px) {
+  .rec-subtabs {
+    padding: 10px 12px 0;
+  }
+  .rec-subtab {
+    padding: 9px 12px;
+    font-size: 0.85rem;
+  }
+}

@@ -1,0 +1,2928 @@
+{
+  "generated_for": "2026-10-19",
+  "store": 171,
+  "sources": {
+    "ledger": [
+      "audit/ledger-171-2026-03/ledger.json",
+      "audit/ledger-171-2026-04/ledger.json"
+    ],
+    "live": "audit/calibration/outcomes-171.json",
+    "forward": "audit/forward/daily/2026-10-19/forward_test_w7_trailing30.json"
+  },
+  "settings": {
+    "calibrate.min_outcomes_to_fit": 50,
+    "calibrate.min_distinct_confidences": 4,
+    "calibrate.publishable_max_ece": 0.05,
+    "calibrate.reliability_bins": 10,
+    "calibrate.differentiation_bootstrap_resamples": 2000,
+    "calibrate.differentiation_quantile_bins": 5,
+    "seed": 20261019
+  },
+  "headline_cell": "ledger:30d",
+  "conclusion": {
+    "lines": [
+      "On Bethany's 129-card ledger (ledger:30d), the stated confidence spans 0.5-0.68 (p10 0.504, p50 0.526, p90 0.566) and scores AUC 0.568 as a classifier of hit, 95% interval 0.47-0.672, Spearman rho 0.118.",
+      "That interval straddles 0.5: on this history the stated figure does not demonstrably separate a card that will work from one that will not. Not demonstrably backwards either - the forward test's reversal is not reproduced, and not refuted, by the ledger.",
+      "By stated-confidence quintile the hit rate runs 68% (stated 0.5-0.507), 35% (stated 0.507-0.519), 50% (stated 0.519-0.536), 54% (stated 0.537-0.554), 73% (stated 0.556-0.68) from the least to the most confident fifth.",
+      "Fitting on the first half by date (64 rows) and scoring the second (65): the curve has 5 level(s) and returns 5 distinct value(s); ECE moves from 8.6 pts to 31.3 pts, AUC from 0.406 to 0.438 - unchanged up to ties, as a monotone map must be.",
+      "The forward test's resolved cards at Bethany (202 cards, hit = met the promised rate): AUC 0.296, interval 0.2-0.398, rho -0.315; by quintile 62%, 18%, 10%, 15%, 20%. The reversal the reviewer saw is real on this window.",
+      "Calibration and discrimination are different failures. Isotonic regression can move a stated 0.60 onto the observed rate; it is monotone, so it cannot reorder cards, and the AUC after equals the AUC before. The reviewer's question is discrimination, and no curve fitted to these rows answers it.",
+      "No cell clears every bar (a governed fit above the registry floor, ECE under 0.05 out of sample, and an AUC interval above 0.5). Nothing is published; the cards keep the basis they have, the UI keeps the figure hidden, and the admission floor stays off every non-isotonic basis."
+    ],
+    "publish": false,
+    "publishable_cells": []
+  },
+  "cells": {
+    "ledger:30d": {
+      "n": 129,
+      "hits": 72,
+      "hit_rate": 0.558,
+      "stated": {
+        "p10": 0.504,
+        "p50": 0.526,
+        "p90": 0.566,
+        "min": 0.5,
+        "max": 0.68,
+        "distinct": 128
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 25,
+          "stated_min": 0.5,
+          "stated_max": 0.507,
+          "stated_mean": 0.504,
+          "hits": 17,
+          "hit_rate": 0.68
+        },
+        {
+          "bin": 2,
+          "n": 26,
+          "stated_min": 0.507,
+          "stated_max": 0.519,
+          "stated_mean": 0.514,
+          "hits": 9,
+          "hit_rate": 0.346
+        },
+        {
+          "bin": 3,
+          "n": 26,
+          "stated_min": 0.519,
+          "stated_max": 0.536,
+          "stated_mean": 0.527,
+          "hits": 13,
+          "hit_rate": 0.5
+        },
+        {
+          "bin": 4,
+          "n": 26,
+          "stated_min": 0.537,
+          "stated_max": 0.554,
+          "stated_mean": 0.545,
+          "hits": 14,
+          "hit_rate": 0.538
+        },
+        {
+          "bin": 5,
+          "n": 26,
+          "stated_min": 0.556,
+          "stated_max": 0.68,
+          "stated_mean": 0.575,
+          "hits": 19,
+          "hit_rate": 0.731
+        }
+      ],
+      "spearman_rho": 0.118,
+      "auc": 0.568,
+      "auc_ci95": [
+        0.47,
+        0.672
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 64,
+        "score_rows": 65,
+        "fit_dates": [
+          "2026-03-02",
+          "2026-03-28"
+        ],
+        "score_dates": [
+          "2026-03-28",
+          "2026-04-30"
+        ],
+        "before": {
+          "ece": 0.086,
+          "auc": 0.406,
+          "distinct_values": 64,
+          "reliability": [
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 65,
+              "mean_stated": 0.5326001764960915,
+              "observed_rate": 0.4461538461538462
+            }
+          ]
+        },
+        "governed": {
+          "levels_in_curve": 5,
+          "knots": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.522,
+              0.448
+            ],
+            [
+              0.539,
+              0.75
+            ],
+            [
+              0.545,
+              0.8
+            ],
+            [
+              0.546,
+              1.0
+            ],
+            [
+              0.553,
+              1.0
+            ],
+            [
+              0.554,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.564,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.568,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.571,
+              1.0
+            ],
+            [
+              0.577,
+              1.0
+            ],
+            [
+              0.61,
+              1.0
+            ],
+            [
+              0.612,
+              1.0
+            ],
+            [
+              0.68,
+              1.0
+            ]
+          ],
+          "domain": [
+            0.5,
+            0.68
+          ],
+          "ece_after": 0.313,
+          "auc_after": 0.438,
+          "distinct_calibrated_values_on_scored_half": 5,
+          "reliability_after": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 1,
+              "mean_stated": 0.0,
+              "observed_rate": 1.0
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 25,
+              "mean_stated": 0.4482758620689655,
+              "observed_rate": 0.48
+            },
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 13,
+              "mean_stated": 0.75,
+              "observed_rate": 0.38461538461538464
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 6,
+              "mean_stated": 0.8000000000000002,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 20,
+              "mean_stated": 1.0,
+              "observed_rate": 0.35
+            }
+          ]
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 5,
+          "knots": [
+            [
+              0.5,
+              0.0
+            ],
+            [
+              0.522,
+              0.448
+            ],
+            [
+              0.539,
+              0.75
+            ],
+            [
+              0.545,
+              0.8
+            ],
+            [
+              0.546,
+              1.0
+            ],
+            [
+              0.553,
+              1.0
+            ],
+            [
+              0.554,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.564,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.568,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.571,
+              1.0
+            ],
+            [
+              0.577,
+              1.0
+            ],
+            [
+              0.61,
+              1.0
+            ],
+            [
+              0.612,
+              1.0
+            ],
+            [
+              0.68,
+              1.0
+            ]
+          ],
+          "domain": [
+            0.5,
+            0.68
+          ],
+          "ece_after": 0.313,
+          "auc_after": 0.438,
+          "distinct_calibrated_values_on_scored_half": 5,
+          "reliability_after": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 1,
+              "mean_stated": 0.0,
+              "observed_rate": 1.0
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 25,
+              "mean_stated": 0.4482758620689655,
+              "observed_rate": 0.48
+            },
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 13,
+              "mean_stated": 0.75,
+              "observed_rate": 0.38461538461538464
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 6,
+              "mean_stated": 0.8000000000000002,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 20,
+              "mean_stated": 1.0,
+              "observed_rate": 0.35
+            }
+          ]
+        }
+      },
+      "source": "ledger",
+      "horizon": "30d",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "ECE after 0.313 is not under 0.05",
+        "AUC 0.568 with 95% interval [0.47, 0.672] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "ledger:60d": {
+      "n": 129,
+      "hits": 91,
+      "hit_rate": 0.705,
+      "stated": {
+        "p10": 0.504,
+        "p50": 0.526,
+        "p90": 0.566,
+        "min": 0.5,
+        "max": 0.68,
+        "distinct": 128
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 25,
+          "stated_min": 0.5,
+          "stated_max": 0.507,
+          "stated_mean": 0.504,
+          "hits": 21,
+          "hit_rate": 0.84
+        },
+        {
+          "bin": 2,
+          "n": 26,
+          "stated_min": 0.507,
+          "stated_max": 0.519,
+          "stated_mean": 0.514,
+          "hits": 14,
+          "hit_rate": 0.538
+        },
+        {
+          "bin": 3,
+          "n": 26,
+          "stated_min": 0.519,
+          "stated_max": 0.536,
+          "stated_mean": 0.527,
+          "hits": 17,
+          "hit_rate": 0.654
+        },
+        {
+          "bin": 4,
+          "n": 26,
+          "stated_min": 0.537,
+          "stated_max": 0.554,
+          "stated_mean": 0.545,
+          "hits": 18,
+          "hit_rate": 0.692
+        },
+        {
+          "bin": 5,
+          "n": 26,
+          "stated_min": 0.556,
+          "stated_max": 0.68,
+          "stated_mean": 0.575,
+          "hits": 21,
+          "hit_rate": 0.808
+        }
+      ],
+      "spearman_rho": 0.046,
+      "auc": 0.529,
+      "auc_ci95": [
+        0.426,
+        0.638
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 64,
+        "score_rows": 65,
+        "fit_dates": [
+          "2026-03-02",
+          "2026-03-28"
+        ],
+        "score_dates": [
+          "2026-03-28",
+          "2026-04-30"
+        ],
+        "before": {
+          "ece": 0.144,
+          "auc": 0.497,
+          "distinct_values": 64,
+          "reliability": [
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 65,
+              "mean_stated": 0.5326001764960915,
+              "observed_rate": 0.676923076923077
+            }
+          ]
+        },
+        "governed": {
+          "levels_in_curve": 3,
+          "knots": [
+            [
+              0.522,
+              0.667
+            ],
+            [
+              0.56,
+              0.682
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.564,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.568,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.571,
+              1.0
+            ],
+            [
+              0.577,
+              1.0
+            ],
+            [
+              0.61,
+              1.0
+            ],
+            [
+              0.612,
+              1.0
+            ],
+            [
+              0.68,
+              1.0
+            ]
+          ],
+          "domain": [
+            0.5,
+            0.68
+          ],
+          "ece_after": 0.049,
+          "auc_after": 0.516,
+          "distinct_calibrated_values_on_scored_half": 3,
+          "reliability_after": [
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 56,
+              "mean_stated": 0.6747835497835497,
+              "observed_rate": 0.6785714285714286
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 9,
+              "mean_stated": 1.0,
+              "observed_rate": 0.6666666666666666
+            }
+          ]
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 3,
+          "knots": [
+            [
+              0.522,
+              0.667
+            ],
+            [
+              0.56,
+              0.682
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.564,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.568,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.571,
+              1.0
+            ],
+            [
+              0.577,
+              1.0
+            ],
+            [
+              0.61,
+              1.0
+            ],
+            [
+              0.612,
+              1.0
+            ],
+            [
+              0.68,
+              1.0
+            ]
+          ],
+          "domain": [
+            0.5,
+            0.68
+          ],
+          "ece_after": 0.049,
+          "auc_after": 0.516,
+          "distinct_calibrated_values_on_scored_half": 3,
+          "reliability_after": [
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 56,
+              "mean_stated": 0.6747835497835497,
+              "observed_rate": 0.6785714285714286
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 9,
+              "mean_stated": 1.0,
+              "observed_rate": 0.6666666666666666
+            }
+          ]
+        }
+      },
+      "source": "ledger",
+      "horizon": "60d",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "AUC 0.529 with 95% interval [0.426, 0.638] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "ledger:90d": {
+      "n": 129,
+      "hits": 105,
+      "hit_rate": 0.814,
+      "stated": {
+        "p10": 0.504,
+        "p50": 0.526,
+        "p90": 0.566,
+        "min": 0.5,
+        "max": 0.68,
+        "distinct": 128
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 25,
+          "stated_min": 0.5,
+          "stated_max": 0.507,
+          "stated_mean": 0.504,
+          "hits": 25,
+          "hit_rate": 1.0
+        },
+        {
+          "bin": 2,
+          "n": 26,
+          "stated_min": 0.507,
+          "stated_max": 0.519,
+          "stated_mean": 0.514,
+          "hits": 20,
+          "hit_rate": 0.769
+        },
+        {
+          "bin": 3,
+          "n": 26,
+          "stated_min": 0.519,
+          "stated_max": 0.536,
+          "stated_mean": 0.527,
+          "hits": 18,
+          "hit_rate": 0.692
+        },
+        {
+          "bin": 4,
+          "n": 26,
+          "stated_min": 0.537,
+          "stated_max": 0.554,
+          "stated_mean": 0.545,
+          "hits": 20,
+          "hit_rate": 0.769
+        },
+        {
+          "bin": 5,
+          "n": 26,
+          "stated_min": 0.556,
+          "stated_max": 0.68,
+          "stated_mean": 0.575,
+          "hits": 22,
+          "hit_rate": 0.846
+        }
+      ],
+      "spearman_rho": -0.106,
+      "auc": 0.421,
+      "auc_ci95": [
+        0.319,
+        0.531
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 64,
+        "score_rows": 65,
+        "fit_dates": [
+          "2026-03-02",
+          "2026-03-28"
+        ],
+        "score_dates": [
+          "2026-03-28",
+          "2026-04-30"
+        ],
+        "before": {
+          "ece": 0.237,
+          "auc": 0.397,
+          "distinct_values": 64,
+          "reliability": [
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 65,
+              "mean_stated": 0.5326001764960915,
+              "observed_rate": 0.7692307692307693
+            }
+          ]
+        },
+        "governed": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.554,
+              0.82
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.564,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.568,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.571,
+              1.0
+            ],
+            [
+              0.577,
+              1.0
+            ],
+            [
+              0.61,
+              1.0
+            ],
+            [
+              0.612,
+              1.0
+            ],
+            [
+              0.68,
+              1.0
+            ]
+          ],
+          "domain": [
+            0.5,
+            0.68
+          ],
+          "ece_after": 0.087,
+          "auc_after": 0.457,
+          "distinct_calibrated_values_on_scored_half": 2,
+          "reliability_after": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 52,
+              "mean_stated": 0.8200000000000001,
+              "observed_rate": 0.7884615384615384
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 13,
+              "mean_stated": 1.0,
+              "observed_rate": 0.6923076923076923
+            }
+          ]
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.554,
+              0.82
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.564,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.568,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.571,
+              1.0
+            ],
+            [
+              0.577,
+              1.0
+            ],
+            [
+              0.61,
+              1.0
+            ],
+            [
+              0.612,
+              1.0
+            ],
+            [
+              0.68,
+              1.0
+            ]
+          ],
+          "domain": [
+            0.5,
+            0.68
+          ],
+          "ece_after": 0.087,
+          "auc_after": 0.457,
+          "distinct_calibrated_values_on_scored_half": 2,
+          "reliability_after": [
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 52,
+              "mean_stated": 0.8200000000000001,
+              "observed_rate": 0.7884615384615384
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 13,
+              "mean_stated": 1.0,
+              "observed_rate": 0.6923076923076923
+            }
+          ]
+        }
+      },
+      "source": "ledger",
+      "horizon": "90d",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "ECE after 0.087 is not under 0.05",
+        "AUC 0.421 with 95% interval [0.319, 0.531] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "ledger:120d": {
+      "n": 129,
+      "hits": 96,
+      "hit_rate": 0.744,
+      "stated": {
+        "p10": 0.504,
+        "p50": 0.526,
+        "p90": 0.566,
+        "min": 0.5,
+        "max": 0.68,
+        "distinct": 128
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 25,
+          "stated_min": 0.5,
+          "stated_max": 0.507,
+          "stated_mean": 0.504,
+          "hits": 25,
+          "hit_rate": 1.0
+        },
+        {
+          "bin": 2,
+          "n": 26,
+          "stated_min": 0.507,
+          "stated_max": 0.519,
+          "stated_mean": 0.514,
+          "hits": 20,
+          "hit_rate": 0.769
+        },
+        {
+          "bin": 3,
+          "n": 26,
+          "stated_min": 0.519,
+          "stated_max": 0.536,
+          "stated_mean": 0.527,
+          "hits": 18,
+          "hit_rate": 0.692
+        },
+        {
+          "bin": 4,
+          "n": 26,
+          "stated_min": 0.537,
+          "stated_max": 0.554,
+          "stated_mean": 0.545,
+          "hits": 14,
+          "hit_rate": 0.538
+        },
+        {
+          "bin": 5,
+          "n": 26,
+          "stated_min": 0.556,
+          "stated_max": 0.68,
+          "stated_mean": 0.575,
+          "hits": 19,
+          "hit_rate": 0.731
+        }
+      ],
+      "spearman_rho": -0.237,
+      "auc": 0.343,
+      "auc_ci95": [
+        0.256,
+        0.438
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": true,
+      "out_of_sample": {
+        "fit_rows": 64,
+        "score_rows": 65,
+        "fit_dates": [
+          "2026-03-02",
+          "2026-03-28"
+        ],
+        "score_dates": [
+          "2026-03-28",
+          "2026-04-30"
+        ],
+        "before": {
+          "ece": 0.129,
+          "auc": 0.28,
+          "distinct_values": 64,
+          "reliability": [
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 65,
+              "mean_stated": 0.5326001764960915,
+              "observed_rate": 0.6615384615384615
+            }
+          ]
+        },
+        "governed": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.554,
+              0.78
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.564,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.568,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.571,
+              1.0
+            ],
+            [
+              0.577,
+              1.0
+            ],
+            [
+              0.61,
+              1.0
+            ],
+            [
+              0.612,
+              1.0
+            ],
+            [
+              0.68,
+              1.0
+            ]
+          ],
+          "domain": [
+            0.5,
+            0.68
+          ],
+          "ece_after": 0.162,
+          "auc_after": 0.411,
+          "distinct_calibrated_values_on_scored_half": 2,
+          "reliability_after": [
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 52,
+              "mean_stated": 0.78,
+              "observed_rate": 0.7115384615384616
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 13,
+              "mean_stated": 1.0,
+              "observed_rate": 0.46153846153846156
+            }
+          ]
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.554,
+              0.78
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.56,
+              1.0
+            ],
+            [
+              0.564,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.566,
+              1.0
+            ],
+            [
+              0.568,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.57,
+              1.0
+            ],
+            [
+              0.571,
+              1.0
+            ],
+            [
+              0.577,
+              1.0
+            ],
+            [
+              0.61,
+              1.0
+            ],
+            [
+              0.612,
+              1.0
+            ],
+            [
+              0.68,
+              1.0
+            ]
+          ],
+          "domain": [
+            0.5,
+            0.68
+          ],
+          "ece_after": 0.162,
+          "auc_after": 0.411,
+          "distinct_calibrated_values_on_scored_half": 2,
+          "reliability_after": [
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 52,
+              "mean_stated": 0.78,
+              "observed_rate": 0.7115384615384616
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 13,
+              "mean_stated": 1.0,
+              "observed_rate": 0.46153846153846156
+            }
+          ]
+        }
+      },
+      "source": "ledger",
+      "horizon": "120d",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "ECE after 0.162 is not under 0.05",
+        "AUC 0.343 with 95% interval [0.256, 0.438] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "live_outcomes:w6": {
+      "n": 35,
+      "hits": 5,
+      "hit_rate": 0.143,
+      "stated": {
+        "p10": 0.444,
+        "p50": 0.78,
+        "p90": 0.906,
+        "min": 0.33,
+        "max": 0.95,
+        "distinct": 24
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 7,
+          "stated_min": 0.33,
+          "stated_max": 0.55,
+          "stated_mean": 0.433,
+          "hits": 0,
+          "hit_rate": 0.0
+        },
+        {
+          "bin": 2,
+          "n": 7,
+          "stated_min": 0.65,
+          "stated_max": 0.74,
+          "stated_mean": 0.716,
+          "hits": 1,
+          "hit_rate": 0.143
+        },
+        {
+          "bin": 3,
+          "n": 7,
+          "stated_min": 0.77,
+          "stated_max": 0.79,
+          "stated_mean": 0.779,
+          "hits": 2,
+          "hit_rate": 0.286
+        },
+        {
+          "bin": 4,
+          "n": 7,
+          "stated_min": 0.8,
+          "stated_max": 0.88,
+          "stated_mean": 0.849,
+          "hits": 2,
+          "hit_rate": 0.286
+        },
+        {
+          "bin": 5,
+          "n": 7,
+          "stated_min": 0.88,
+          "stated_max": 0.95,
+          "stated_mean": 0.91,
+          "hits": 0,
+          "hit_rate": 0.0
+        }
+      ],
+      "spearman_rho": 0.085,
+      "auc": 0.57,
+      "auc_ci95": [
+        0.371,
+        0.76
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 17,
+        "score_rows": 18,
+        "fit_dates": [
+          "2026-08-25",
+          "2026-09-09"
+        ],
+        "score_dates": [
+          "2026-09-09",
+          "2026-09-09"
+        ],
+        "before": {
+          "ece": 0.533,
+          "auc": 0.688,
+          "distinct_values": 18,
+          "reliability": [
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 3,
+              "mean_stated": 0.35333333333333333,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 2,
+              "mean_stated": 0.44999999999999996,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 2,
+              "mean_stated": 0.535,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 1,
+              "mean_stated": 0.65,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 6,
+              "mean_stated": 0.7416666666666667,
+              "observed_rate": 0.3333333333333333
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 3,
+              "mean_stated": 0.85,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 1,
+              "mean_stated": 0.91,
+              "observed_rate": 0.0
+            }
+          ]
+        },
+        "governed": {
+          "refused": "too_few_outcomes:17<50",
+          "min_outcomes_to_fit": 50,
+          "min_distinct_confidences": 4
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.72,
+              0.0
+            ],
+            [
+              0.74,
+              0.0
+            ],
+            [
+              0.77,
+              0.0
+            ],
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.95,
+              0.273
+            ]
+          ],
+          "domain": [
+            0.72,
+            0.95
+          ],
+          "ece_after": 0.172,
+          "auc_after": 0.375,
+          "distinct_calibrated_values_on_scored_half": 2,
+          "reliability_after": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 14,
+              "mean_stated": 0.0,
+              "observed_rate": 0.14285714285714285
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.30000000000000004,
+              "count": 4,
+              "mean_stated": 0.2727272727272727,
+              "observed_rate": 0.0
+            }
+          ]
+        }
+      },
+      "source": "live_outcomes",
+      "horizon": "w6",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "no governed fit: too_few_outcomes:17<50 (floor 50)",
+        "AUC 0.57 with 95% interval [0.371, 0.76] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "live_outcomes:w12": {
+      "n": 75,
+      "hits": 43,
+      "hit_rate": 0.573,
+      "stated": {
+        "p10": 0.38,
+        "p50": 0.74,
+        "p90": 0.88,
+        "min": 0.33,
+        "max": 0.91,
+        "distinct": 19
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 15,
+          "stated_min": 0.33,
+          "stated_max": 0.48,
+          "stated_mean": 0.392,
+          "hits": 6,
+          "hit_rate": 0.4
+        },
+        {
+          "bin": 2,
+          "n": 15,
+          "stated_min": 0.52,
+          "stated_max": 0.72,
+          "stated_mean": 0.63,
+          "hits": 5,
+          "hit_rate": 0.333
+        },
+        {
+          "bin": 3,
+          "n": 15,
+          "stated_min": 0.72,
+          "stated_max": 0.77,
+          "stated_mean": 0.74,
+          "hits": 11,
+          "hit_rate": 0.733
+        },
+        {
+          "bin": 4,
+          "n": 15,
+          "stated_min": 0.77,
+          "stated_max": 0.8,
+          "stated_mean": 0.782,
+          "hits": 15,
+          "hit_rate": 1.0
+        },
+        {
+          "bin": 5,
+          "n": 15,
+          "stated_min": 0.87,
+          "stated_max": 0.91,
+          "stated_mean": 0.888,
+          "hits": 6,
+          "hit_rate": 0.4
+        }
+      ],
+      "spearman_rho": 0.12,
+      "auc": 0.57,
+      "auc_ci95": [
+        0.426,
+        0.712
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 37,
+        "score_rows": 38,
+        "fit_dates": [
+          "2026-09-09",
+          "2026-09-09"
+        ],
+        "score_dates": [
+          "2026-09-09",
+          "2026-09-09"
+        ],
+        "before": {
+          "ece": 0.205,
+          "auc": 0.716,
+          "distinct_values": 13,
+          "reliability": [
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 6,
+              "mean_stated": 0.355,
+              "observed_rate": 0.5
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 3,
+              "mean_stated": 0.48,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 3,
+              "mean_stated": 0.52,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 3,
+              "mean_stated": 0.65,
+              "observed_rate": 1.0
+            },
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 18,
+              "mean_stated": 0.7416666666666667,
+              "observed_rate": 0.7777777777777778
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 3,
+              "mean_stated": 0.87,
+              "observed_rate": 1.0
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 2,
+              "mean_stated": 0.91,
+              "observed_rate": 0.0
+            }
+          ]
+        },
+        "governed": {
+          "refused": "too_few_outcomes:37<50",
+          "min_outcomes_to_fit": 50,
+          "min_distinct_confidences": 4
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 3,
+          "knots": [
+            [
+              0.55,
+              0.333
+            ],
+            [
+              0.77,
+              0.556
+            ],
+            [
+              0.91,
+              0.632
+            ]
+          ],
+          "domain": [
+            0.35,
+            0.91
+          ],
+          "ece_after": 0.157,
+          "auc_after": 0.729,
+          "distinct_calibrated_values_on_scored_half": 3,
+          "reliability_after": [
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 12,
+              "mean_stated": 0.3333333333333333,
+              "observed_rate": 0.25
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 18,
+              "mean_stated": 0.5555555555555556,
+              "observed_rate": 0.7777777777777778
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 8,
+              "mean_stated": 0.631578947368421,
+              "observed_rate": 0.75
+            }
+          ]
+        }
+      },
+      "source": "live_outcomes",
+      "horizon": "w12",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "no governed fit: too_few_outcomes:37<50 (floor 50)",
+        "AUC 0.57 with 95% interval [0.426, 0.712] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "live_outcomes:w25": {
+      "n": 30,
+      "hits": 14,
+      "hit_rate": 0.467,
+      "stated": {
+        "p10": 0.789,
+        "p50": 0.875,
+        "p90": 0.932,
+        "min": 0.78,
+        "max": 0.95,
+        "distinct": 9
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 6,
+          "stated_min": 0.78,
+          "stated_max": 0.79,
+          "stated_mean": 0.785,
+          "hits": 3,
+          "hit_rate": 0.5
+        },
+        {
+          "bin": 2,
+          "n": 6,
+          "stated_min": 0.82,
+          "stated_max": 0.82,
+          "stated_mean": 0.82,
+          "hits": 4,
+          "hit_rate": 0.667
+        },
+        {
+          "bin": 3,
+          "n": 6,
+          "stated_min": 0.87,
+          "stated_max": 0.88,
+          "stated_mean": 0.875,
+          "hits": 5,
+          "hit_rate": 0.833
+        },
+        {
+          "bin": 4,
+          "n": 6,
+          "stated_min": 0.89,
+          "stated_max": 0.91,
+          "stated_mean": 0.9,
+          "hits": 2,
+          "hit_rate": 0.333
+        },
+        {
+          "bin": 5,
+          "n": 6,
+          "stated_min": 0.93,
+          "stated_max": 0.95,
+          "stated_mean": 0.94,
+          "hits": 0,
+          "hit_rate": 0.0
+        }
+      ],
+      "spearman_rho": -0.373,
+      "auc": 0.286,
+      "auc_ci95": [
+        0.091,
+        0.493
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": true,
+      "out_of_sample": {
+        "fit_rows": 15,
+        "score_rows": 15,
+        "fit_dates": [
+          "2026-08-25",
+          "2026-08-25"
+        ],
+        "score_dates": [
+          "2026-08-25",
+          "2026-08-25"
+        ],
+        "before": {
+          "ece": 0.12,
+          "auc": 0.417,
+          "distinct_values": 4,
+          "reliability": [
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 3,
+              "mean_stated": 0.79,
+              "observed_rate": 1.0
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 12,
+              "mean_stated": 0.8475,
+              "observed_rate": 0.75
+            }
+          ]
+        },
+        "governed": {
+          "refused": "too_few_outcomes:15<50",
+          "min_outcomes_to_fit": 50,
+          "min_distinct_confidences": 4
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.95,
+              0.167
+            ]
+          ],
+          "domain": [
+            0.78,
+            0.95
+          ],
+          "ece_after": 0.633,
+          "auc_after": 0.5,
+          "distinct_calibrated_values_on_scored_half": 1,
+          "reliability_after": [
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 15,
+              "mean_stated": 0.16666666666666666,
+              "observed_rate": 0.8
+            }
+          ]
+        }
+      },
+      "source": "live_outcomes",
+      "horizon": "w25",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "no governed fit: too_few_outcomes:15<50 (floor 50)",
+        "AUC 0.286 with 95% interval [0.091, 0.493] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "live_evaluations:7d": {
+      "n": 35,
+      "hits": 5,
+      "hit_rate": 0.143,
+      "stated": {
+        "p10": 0.444,
+        "p50": 0.78,
+        "p90": 0.906,
+        "min": 0.33,
+        "max": 0.95,
+        "distinct": 24
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 7,
+          "stated_min": 0.33,
+          "stated_max": 0.55,
+          "stated_mean": 0.433,
+          "hits": 0,
+          "hit_rate": 0.0
+        },
+        {
+          "bin": 2,
+          "n": 7,
+          "stated_min": 0.65,
+          "stated_max": 0.74,
+          "stated_mean": 0.716,
+          "hits": 1,
+          "hit_rate": 0.143
+        },
+        {
+          "bin": 3,
+          "n": 7,
+          "stated_min": 0.77,
+          "stated_max": 0.79,
+          "stated_mean": 0.779,
+          "hits": 2,
+          "hit_rate": 0.286
+        },
+        {
+          "bin": 4,
+          "n": 7,
+          "stated_min": 0.8,
+          "stated_max": 0.88,
+          "stated_mean": 0.849,
+          "hits": 2,
+          "hit_rate": 0.286
+        },
+        {
+          "bin": 5,
+          "n": 7,
+          "stated_min": 0.88,
+          "stated_max": 0.95,
+          "stated_mean": 0.91,
+          "hits": 0,
+          "hit_rate": 0.0
+        }
+      ],
+      "spearman_rho": 0.085,
+      "auc": 0.57,
+      "auc_ci95": [
+        0.371,
+        0.76
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 17,
+        "score_rows": 18,
+        "fit_dates": [
+          "2026-08-25",
+          "2026-09-09"
+        ],
+        "score_dates": [
+          "2026-09-09",
+          "2026-09-09"
+        ],
+        "before": {
+          "ece": 0.533,
+          "auc": 0.688,
+          "distinct_values": 18,
+          "reliability": [
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 3,
+              "mean_stated": 0.35333333412806195,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 2,
+              "mean_stated": 0.44999998807907104,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 2,
+              "mean_stated": 0.5349999964237213,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 1,
+              "mean_stated": 0.6499999761581421,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 6,
+              "mean_stated": 0.7416666646798452,
+              "observed_rate": 0.3333333333333333
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 3,
+              "mean_stated": 0.850000003973643,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 1,
+              "mean_stated": 0.9100000262260437,
+              "observed_rate": 0.0
+            }
+          ]
+        },
+        "governed": {
+          "refused": "too_few_outcomes:17<50",
+          "min_outcomes_to_fit": 50,
+          "min_distinct_confidences": 4
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.72,
+              0.0
+            ],
+            [
+              0.74,
+              0.0
+            ],
+            [
+              0.77,
+              0.0
+            ],
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.78,
+              0.0
+            ],
+            [
+              0.95,
+              0.273
+            ]
+          ],
+          "domain": [
+            0.72,
+            0.95
+          ],
+          "ece_after": 0.172,
+          "auc_after": 0.375,
+          "distinct_calibrated_values_on_scored_half": 2,
+          "reliability_after": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 14,
+              "mean_stated": 0.0,
+              "observed_rate": 0.14285714285714285
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.30000000000000004,
+              "count": 4,
+              "mean_stated": 0.2727272727272727,
+              "observed_rate": 0.0
+            }
+          ]
+        }
+      },
+      "source": "live_evaluations",
+      "horizon": "7d",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "no governed fit: too_few_outcomes:17<50 (floor 50)",
+        "AUC 0.57 with 95% interval [0.371, 0.76] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "live_evaluations:30d": {
+      "n": 35,
+      "hits": 15,
+      "hit_rate": 0.429,
+      "stated": {
+        "p10": 0.444,
+        "p50": 0.78,
+        "p90": 0.906,
+        "min": 0.33,
+        "max": 0.95,
+        "distinct": 24
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 7,
+          "stated_min": 0.33,
+          "stated_max": 0.55,
+          "stated_mean": 0.433,
+          "hits": 2,
+          "hit_rate": 0.286
+        },
+        {
+          "bin": 2,
+          "n": 7,
+          "stated_min": 0.65,
+          "stated_max": 0.74,
+          "stated_mean": 0.716,
+          "hits": 4,
+          "hit_rate": 0.571
+        },
+        {
+          "bin": 3,
+          "n": 7,
+          "stated_min": 0.77,
+          "stated_max": 0.79,
+          "stated_mean": 0.779,
+          "hits": 5,
+          "hit_rate": 0.714
+        },
+        {
+          "bin": 4,
+          "n": 7,
+          "stated_min": 0.8,
+          "stated_max": 0.88,
+          "stated_mean": 0.849,
+          "hits": 4,
+          "hit_rate": 0.571
+        },
+        {
+          "bin": 5,
+          "n": 7,
+          "stated_min": 0.88,
+          "stated_max": 0.95,
+          "stated_mean": 0.91,
+          "hits": 0,
+          "hit_rate": 0.0
+        }
+      ],
+      "spearman_rho": -0.155,
+      "auc": 0.41,
+      "auc_ci95": [
+        0.216,
+        0.603
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 17,
+        "score_rows": 18,
+        "fit_dates": [
+          "2026-08-25",
+          "2026-09-09"
+        ],
+        "score_dates": [
+          "2026-09-09",
+          "2026-09-09"
+        ],
+        "before": {
+          "ece": 0.287,
+          "auc": 0.58,
+          "distinct_values": 18,
+          "reliability": [
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 3,
+              "mean_stated": 0.35333333412806195,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 2,
+              "mean_stated": 0.44999998807907104,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 2,
+              "mean_stated": 0.5349999964237213,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 1,
+              "mean_stated": 0.6499999761581421,
+              "observed_rate": 1.0
+            },
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 6,
+              "mean_stated": 0.7416666646798452,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 3,
+              "mean_stated": 0.850000003973643,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 1,
+              "mean_stated": 0.9100000262260437,
+              "observed_rate": 0.0
+            }
+          ]
+        },
+        "governed": {
+          "refused": "too_few_outcomes:17<50",
+          "min_outcomes_to_fit": 50,
+          "min_distinct_confidences": 4
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 3,
+          "knots": [
+            [
+              0.72,
+              0.0
+            ],
+            [
+              0.78,
+              0.333
+            ],
+            [
+              0.95,
+              0.385
+            ]
+          ],
+          "domain": [
+            0.72,
+            0.95
+          ],
+          "ece_after": 0.34,
+          "auc_after": 0.673,
+          "distinct_calibrated_values_on_scored_half": 3,
+          "reliability_after": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 10,
+              "mean_stated": 0.0,
+              "observed_rate": 0.3
+            },
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 8,
+              "mean_stated": 0.358974358974359,
+              "observed_rate": 0.75
+            }
+          ]
+        }
+      },
+      "source": "live_evaluations",
+      "horizon": "30d",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "no governed fit: too_few_outcomes:17<50 (floor 50)",
+        "AUC 0.41 with 95% interval [0.216, 0.603] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "live_evaluations:60d": {
+      "n": 35,
+      "hits": 21,
+      "hit_rate": 0.6,
+      "stated": {
+        "p10": 0.444,
+        "p50": 0.78,
+        "p90": 0.906,
+        "min": 0.33,
+        "max": 0.95,
+        "distinct": 24
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 7,
+          "stated_min": 0.33,
+          "stated_max": 0.55,
+          "stated_mean": 0.433,
+          "hits": 2,
+          "hit_rate": 0.286
+        },
+        {
+          "bin": 2,
+          "n": 7,
+          "stated_min": 0.65,
+          "stated_max": 0.74,
+          "stated_mean": 0.716,
+          "hits": 6,
+          "hit_rate": 0.857
+        },
+        {
+          "bin": 3,
+          "n": 7,
+          "stated_min": 0.77,
+          "stated_max": 0.79,
+          "stated_mean": 0.779,
+          "hits": 5,
+          "hit_rate": 0.714
+        },
+        {
+          "bin": 4,
+          "n": 7,
+          "stated_min": 0.8,
+          "stated_max": 0.88,
+          "stated_mean": 0.849,
+          "hits": 7,
+          "hit_rate": 1.0
+        },
+        {
+          "bin": 5,
+          "n": 7,
+          "stated_min": 0.88,
+          "stated_max": 0.95,
+          "stated_mean": 0.91,
+          "hits": 1,
+          "hit_rate": 0.143
+        }
+      ],
+      "spearman_rho": -0.052,
+      "auc": 0.469,
+      "auc_ci95": [
+        0.236,
+        0.693
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 17,
+        "score_rows": 18,
+        "fit_dates": [
+          "2026-08-25",
+          "2026-09-09"
+        ],
+        "score_dates": [
+          "2026-09-09",
+          "2026-09-09"
+        ],
+        "before": {
+          "ece": 0.293,
+          "auc": 0.588,
+          "distinct_values": 18,
+          "reliability": [
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 3,
+              "mean_stated": 0.35333333412806195,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 2,
+              "mean_stated": 0.44999998807907104,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 2,
+              "mean_stated": 0.5349999964237213,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 1,
+              "mean_stated": 0.6499999761581421,
+              "observed_rate": 1.0
+            },
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 6,
+              "mean_stated": 0.7416666646798452,
+              "observed_rate": 0.8333333333333334
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 3,
+              "mean_stated": 0.850000003973643,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 1,
+              "mean_stated": 0.9100000262260437,
+              "observed_rate": 0.0
+            }
+          ]
+        },
+        "governed": {
+          "refused": "too_few_outcomes:17<50",
+          "min_outcomes_to_fit": 50,
+          "min_distinct_confidences": 4
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.78,
+              0.5
+            ],
+            [
+              0.95,
+              0.692
+            ]
+          ],
+          "domain": [
+            0.72,
+            0.95
+          ],
+          "ece_after": 0.098,
+          "auc_after": 0.475,
+          "distinct_calibrated_values_on_scored_half": 2,
+          "reliability_after": [
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 14,
+              "mean_stated": 0.5,
+              "observed_rate": 0.5714285714285714
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 4,
+              "mean_stated": 0.6923076923076923,
+              "observed_rate": 0.5
+            }
+          ]
+        }
+      },
+      "source": "live_evaluations",
+      "horizon": "60d",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "no governed fit: too_few_outcomes:17<50 (floor 50)",
+        "AUC 0.469 with 95% interval [0.236, 0.693] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "live_evaluations:90d": {
+      "n": 35,
+      "hits": 21,
+      "hit_rate": 0.6,
+      "stated": {
+        "p10": 0.444,
+        "p50": 0.78,
+        "p90": 0.906,
+        "min": 0.33,
+        "max": 0.95,
+        "distinct": 24
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 7,
+          "stated_min": 0.33,
+          "stated_max": 0.55,
+          "stated_mean": 0.433,
+          "hits": 2,
+          "hit_rate": 0.286
+        },
+        {
+          "bin": 2,
+          "n": 7,
+          "stated_min": 0.65,
+          "stated_max": 0.74,
+          "stated_mean": 0.716,
+          "hits": 6,
+          "hit_rate": 0.857
+        },
+        {
+          "bin": 3,
+          "n": 7,
+          "stated_min": 0.77,
+          "stated_max": 0.79,
+          "stated_mean": 0.779,
+          "hits": 5,
+          "hit_rate": 0.714
+        },
+        {
+          "bin": 4,
+          "n": 7,
+          "stated_min": 0.8,
+          "stated_max": 0.88,
+          "stated_mean": 0.849,
+          "hits": 7,
+          "hit_rate": 1.0
+        },
+        {
+          "bin": 5,
+          "n": 7,
+          "stated_min": 0.88,
+          "stated_max": 0.95,
+          "stated_mean": 0.91,
+          "hits": 1,
+          "hit_rate": 0.143
+        }
+      ],
+      "spearman_rho": -0.052,
+      "auc": 0.469,
+      "auc_ci95": [
+        0.236,
+        0.693
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": false,
+      "out_of_sample": {
+        "fit_rows": 17,
+        "score_rows": 18,
+        "fit_dates": [
+          "2026-08-25",
+          "2026-09-09"
+        ],
+        "score_dates": [
+          "2026-09-09",
+          "2026-09-09"
+        ],
+        "before": {
+          "ece": 0.293,
+          "auc": 0.588,
+          "distinct_values": 18,
+          "reliability": [
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 3,
+              "mean_stated": 0.35333333412806195,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 2,
+              "mean_stated": 0.44999998807907104,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 2,
+              "mean_stated": 0.5349999964237213,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 1,
+              "mean_stated": 0.6499999761581421,
+              "observed_rate": 1.0
+            },
+            {
+              "lower": 0.7000000000000001,
+              "upper": 0.8,
+              "count": 6,
+              "mean_stated": 0.7416666646798452,
+              "observed_rate": 0.8333333333333334
+            },
+            {
+              "lower": 0.8,
+              "upper": 0.9,
+              "count": 3,
+              "mean_stated": 0.850000003973643,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.9,
+              "upper": 1.0,
+              "count": 1,
+              "mean_stated": 0.9100000262260437,
+              "observed_rate": 0.0
+            }
+          ]
+        },
+        "governed": {
+          "refused": "too_few_outcomes:17<50",
+          "min_outcomes_to_fit": 50,
+          "min_distinct_confidences": 4
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 2,
+          "knots": [
+            [
+              0.78,
+              0.5
+            ],
+            [
+              0.95,
+              0.692
+            ]
+          ],
+          "domain": [
+            0.72,
+            0.95
+          ],
+          "ece_after": 0.098,
+          "auc_after": 0.475,
+          "distinct_calibrated_values_on_scored_half": 2,
+          "reliability_after": [
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 14,
+              "mean_stated": 0.5,
+              "observed_rate": 0.5714285714285714
+            },
+            {
+              "lower": 0.6000000000000001,
+              "upper": 0.7000000000000001,
+              "count": 4,
+              "mean_stated": 0.6923076923076923,
+              "observed_rate": 0.5
+            }
+          ]
+        }
+      },
+      "source": "live_evaluations",
+      "horizon": "90d",
+      "hit_definition": "lift >= 1.0",
+      "publishable": false,
+      "not_publishable_because": [
+        "no governed fit: too_few_outcomes:17<50 (floor 50)",
+        "AUC 0.469 with 95% interval [0.236, 0.693] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "forward:w7": {
+      "n": 233,
+      "hits": 54,
+      "hit_rate": 0.232,
+      "stated": {
+        "p10": 0.22,
+        "p50": 0.41,
+        "p90": 0.444,
+        "min": 0.064,
+        "max": 0.97,
+        "distinct": 36
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 46,
+          "stated_min": 0.064,
+          "stated_max": 0.297,
+          "stated_mean": 0.209,
+          "hits": 25,
+          "hit_rate": 0.543
+        },
+        {
+          "bin": 2,
+          "n": 47,
+          "stated_min": 0.297,
+          "stated_max": 0.396,
+          "stated_mean": 0.328,
+          "hits": 9,
+          "hit_rate": 0.191
+        },
+        {
+          "bin": 3,
+          "n": 46,
+          "stated_min": 0.396,
+          "stated_max": 0.444,
+          "stated_mean": 0.421,
+          "hits": 6,
+          "hit_rate": 0.13
+        },
+        {
+          "bin": 4,
+          "n": 47,
+          "stated_min": 0.444,
+          "stated_max": 0.444,
+          "stated_mean": 0.444,
+          "hits": 6,
+          "hit_rate": 0.128
+        },
+        {
+          "bin": 5,
+          "n": 47,
+          "stated_min": 0.444,
+          "stated_max": 0.97,
+          "stated_mean": 0.519,
+          "hits": 8,
+          "hit_rate": 0.17
+        }
+      ],
+      "spearman_rho": -0.296,
+      "auc": 0.306,
+      "auc_ci95": [
+        0.217,
+        0.404
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": true,
+      "out_of_sample": {
+        "fit_rows": 116,
+        "score_rows": 117,
+        "fit_dates": [
+          "2026-09-23",
+          "2026-10-06"
+        ],
+        "score_dates": [
+          "2026-10-06",
+          "2026-10-12"
+        ],
+        "before": {
+          "ece": 0.287,
+          "auc": 0.412,
+          "distinct_values": 15,
+          "reliability": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 2,
+              "mean_stated": 0.064,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 2,
+              "mean_stated": 0.163,
+              "observed_rate": 0.0
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.30000000000000004,
+              "count": 5,
+              "mean_stated": 0.24900000000000003,
+              "observed_rate": 0.6
+            },
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 3,
+              "mean_stated": 0.36633333333333334,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 105,
+              "mean_stated": 0.44288571428571427,
+              "observed_rate": 0.1523809523809524
+            }
+          ]
+        },
+        "governed": {
+          "levels_in_curve": 1,
+          "knots": [
+            [
+              0.97,
+              0.284
+            ]
+          ],
+          "domain": [
+            0.095,
+            0.97
+          ],
+          "ece_after": 0.105,
+          "auc_after": 0.5,
+          "distinct_calibrated_values_on_scored_half": 1,
+          "reliability_after": [
+            {
+              "lower": 0.2,
+              "upper": 0.30000000000000004,
+              "count": 117,
+              "mean_stated": 0.28448275862068967,
+              "observed_rate": 0.1794871794871795
+            }
+          ]
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 1,
+          "knots": [
+            [
+              0.97,
+              0.284
+            ]
+          ],
+          "domain": [
+            0.095,
+            0.97
+          ],
+          "ece_after": 0.105,
+          "auc_after": 0.5,
+          "distinct_calibrated_values_on_scored_half": 1,
+          "reliability_after": [
+            {
+              "lower": 0.2,
+              "upper": 0.30000000000000004,
+              "count": 117,
+              "mean_stated": 0.28448275862068967,
+              "observed_rate": 0.1794871794871795
+            }
+          ]
+        }
+      },
+      "source": "forward",
+      "horizon": "w7",
+      "hit_definition": "met_forecast_rate (sold at least the promised rate)",
+      "publishable": false,
+      "not_publishable_because": [
+        "ECE after 0.105 is not under 0.05",
+        "the curve has one level: a constant, not a calibration",
+        "AUC 0.306 with 95% interval [0.217, 0.404] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    },
+    "forward:171-only": {
+      "n": 202,
+      "hits": 50,
+      "hit_rate": 0.248,
+      "stated": {
+        "p10": 0.22,
+        "p50": 0.409,
+        "p90": 0.444,
+        "min": 0.064,
+        "max": 0.82,
+        "distinct": 28
+      },
+      "quantiles": [
+        {
+          "bin": 1,
+          "n": 40,
+          "stated_min": 0.064,
+          "stated_max": 0.283,
+          "stated_mean": 0.199,
+          "hits": 25,
+          "hit_rate": 0.625
+        },
+        {
+          "bin": 2,
+          "n": 40,
+          "stated_min": 0.283,
+          "stated_max": 0.34,
+          "stated_mean": 0.312,
+          "hits": 7,
+          "hit_rate": 0.175
+        },
+        {
+          "bin": 3,
+          "n": 41,
+          "stated_min": 0.34,
+          "stated_max": 0.444,
+          "stated_mean": 0.4,
+          "hits": 4,
+          "hit_rate": 0.098
+        },
+        {
+          "bin": 4,
+          "n": 40,
+          "stated_min": 0.444,
+          "stated_max": 0.444,
+          "stated_mean": 0.444,
+          "hits": 6,
+          "hit_rate": 0.15
+        },
+        {
+          "bin": 5,
+          "n": 41,
+          "stated_min": 0.444,
+          "stated_max": 0.82,
+          "stated_mean": 0.478,
+          "hits": 8,
+          "hit_rate": 0.195
+        }
+      ],
+      "spearman_rho": -0.315,
+      "auc": 0.296,
+      "auc_ci95": [
+        0.2,
+        0.398
+      ],
+      "bootstrap_resamples": 2000,
+      "discriminates": false,
+      "anti_discriminates": true,
+      "out_of_sample": {
+        "fit_rows": 101,
+        "score_rows": 101,
+        "fit_dates": [
+          "2026-09-23",
+          "2026-09-29"
+        ],
+        "score_dates": [
+          "2026-09-29",
+          "2026-10-08"
+        ],
+        "before": {
+          "ece": 0.276,
+          "auc": 0.406,
+          "distinct_values": 19,
+          "reliability": [
+            {
+              "lower": 0.0,
+              "upper": 0.1,
+              "count": 3,
+              "mean_stated": 0.07433333333333333,
+              "observed_rate": 0.3333333333333333
+            },
+            {
+              "lower": 0.1,
+              "upper": 0.2,
+              "count": 3,
+              "mean_stated": 0.156,
+              "observed_rate": 0.3333333333333333
+            },
+            {
+              "lower": 0.2,
+              "upper": 0.30000000000000004,
+              "count": 6,
+              "mean_stated": 0.2635,
+              "observed_rate": 0.6666666666666666
+            },
+            {
+              "lower": 0.30000000000000004,
+              "upper": 0.4,
+              "count": 3,
+              "mean_stated": 0.36733333333333335,
+              "observed_rate": 0.3333333333333333
+            },
+            {
+              "lower": 0.4,
+              "upper": 0.5,
+              "count": 85,
+              "mean_stated": 0.4422235294117647,
+              "observed_rate": 0.16470588235294117
+            },
+            {
+              "lower": 0.5,
+              "upper": 0.6,
+              "count": 1,
+              "mean_stated": 0.55,
+              "observed_rate": 1.0
+            }
+          ]
+        },
+        "governed": {
+          "levels_in_curve": 1,
+          "knots": [
+            [
+              0.82,
+              0.277
+            ]
+          ],
+          "domain": [
+            0.142,
+            0.82
+          ],
+          "ece_after": 0.059,
+          "auc_after": 0.5,
+          "distinct_calibrated_values_on_scored_half": 1,
+          "reliability_after": [
+            {
+              "lower": 0.2,
+              "upper": 0.30000000000000004,
+              "count": 101,
+              "mean_stated": 0.27722772277227725,
+              "observed_rate": 0.21782178217821782
+            }
+          ]
+        },
+        "diagnostic_pava": {
+          "levels_in_curve": 1,
+          "knots": [
+            [
+              0.82,
+              0.277
+            ]
+          ],
+          "domain": [
+            0.142,
+            0.82
+          ],
+          "ece_after": 0.059,
+          "auc_after": 0.5,
+          "distinct_calibrated_values_on_scored_half": 1,
+          "reliability_after": [
+            {
+              "lower": 0.2,
+              "upper": 0.30000000000000004,
+              "count": 101,
+              "mean_stated": 0.27722772277227725,
+              "observed_rate": 0.21782178217821782
+            }
+          ]
+        }
+      },
+      "source": "forward",
+      "horizon": "w7 (store 171 only)",
+      "hit_definition": "met_forecast_rate",
+      "publishable": false,
+      "not_publishable_because": [
+        "ECE after 0.059 is not under 0.05",
+        "the curve has one level: a constant, not a calibration",
+        "AUC 0.296 with 95% interval [0.2, 0.398] does not clear 0.5: the stated figure does not separate hits from misses, and a monotone curve cannot add that"
+      ]
+    }
+  }
+}

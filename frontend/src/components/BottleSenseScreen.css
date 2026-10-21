@@ -1,0 +1,306 @@
+/* BottleSenseScreen.css
+   -----------------------------------------------------------------------------
+   Uses the same tokens and the same visual language as the other reference
+   screens, because a new tab that looks like a different product is a worse tab.
+   ============================================================================= */
+
+.bs-page {
+  --bs-bd: var(--border);
+  --bs-bd2: var(--border-light);
+  --bs-tx: var(--text-primary);
+  --bs-tx2: var(--text-secondary);
+  --bs-mu: var(--text-muted);
+  --bs-ac: var(--accent);
+  --bs-ac2: var(--accent-light);
+  --bs-card: var(--bg-card);
+  --bs-gr: var(--green);
+  --bs-rd: var(--red);
+  --bs-am: var(--yellow);
+
+  /* THE SCROLL CONTRACT. .chat-page is overflow:hidden at the viewport height,
+     so a view that does not scroll ITSELF simply hides everything past the
+     fold - which is exactly what this screen did: 2563px of content inside an
+     802px window with no way to reach the bottom two thirds.
+
+     Every other view here carries the same three lines (see .ref-page,
+     .sx-page). height:100% takes the bounded height from the parent rather
+     than growing to fit the content; overflow-y:auto makes this element the
+     scroller; overflow-x:hidden stops a wide table turning it into a
+     two-axis scroll. box-sizing keeps the padding inside that height. */
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  /* Lets the grids below query THIS element's width instead of the window's.
+     inline-size only: the block axis still scrolls, as it must. */
+  container-type: inline-size;
+  container-name: bs;
+
+  /* The same gutter as every other screen: .ref-page, .po-page, .sx-page and
+     .rh-page all use 22px 26px 40px. This carried 80px at the bottom, which is
+     visible the moment you switch tabs - the content stopped in a different
+     place here than everywhere else. */
+  padding: 22px 26px 40px;
+  color: var(--bs-tx);
+  font-family: var(--bx-font-body);
+  font-variant-numeric: tabular-nums;
+}
+
+/* The content column is centred by an inner wrapper now, because max-width on
+   the scroller itself would centre the SCROLLBAR too and leave it floating in
+   the middle of the screen. */
+/* Left-aligned, like every other screen. This centred each child inside a
+   1320px cap, which no other screen does - so on a wide window BottleSense
+   started further from the left edge than the tab you had just come from, and
+   the whole page appeared to shift when you switched to it. The gutter is the
+   page padding now, and only the page padding. */
+.bs-page > * { max-width: 1320px; margin-left: 0; margin-right: auto; }
+
+/* ── Breadcrumb + header ─────────────────────────────────────────────────── */
+.bs-crumb { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--bs-mu); margin-bottom: 14px; }
+.bs-crumb-sep { color: var(--bs-mu); }
+.bs-crumb-here { color: var(--bs-tx); font-weight: 600; }
+.bs-return {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 5px;
+  font: inherit; font-size: 12.5px; font-weight: 600; color: var(--bs-ac2);
+  background: none; border: none; cursor: pointer;
+}
+.bs-return:hover { text-decoration: underline; }
+
+.bs-head { margin-bottom: 16px; }  /* .ref-head / .po-head use 16px */
+.bs-title {
+  display: flex; align-items: center; gap: 9px; margin: 0 0 6px;
+  font-family: var(--bx-font-display); font-size: 27px; font-weight: 800; letter-spacing: -0.02em;
+}
+.bs-sub { margin: 0; font-size: 13.5px; color: var(--bs-tx2); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+/* The window is a first-class part of the header, not a footnote: the research's
+   first "habit not to copy" is a tile with no time bound at all. */
+.bs-window {
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--bs-ac2); border: 1px solid var(--bs-bd); border-radius: 999px; padding: 3px 10px;
+}
+
+/* ── States ──────────────────────────────────────────────────────────────── */
+.bs-loading, .bs-error, .bs-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  padding: 80px 20px; color: var(--bs-mu); text-align: center;
+}
+.bs-error { color: var(--bs-rd); }
+.bs-error button, .bs-empty button {
+  font: inherit; font-size: 13px; font-weight: 600; padding: 8px 16px;
+  border: 1px solid var(--bs-bd); border-radius: 8px; background: transparent; color: var(--bs-tx); cursor: pointer;
+}
+.bs-spin { animation: bs-spin 1s linear infinite; }
+@keyframes bs-spin { to { transform: rotate(360deg); } }
+
+/* ── Health score ────────────────────────────────────────────────────────── */
+.bs-health {
+  display: grid; grid-template-columns: 200px 1fr; gap: 26px; align-items: start;
+  padding: 22px 24px; margin-bottom: 20px;
+  background: var(--bs-card); border: 1px solid var(--bs-bd); border-radius: 14px;
+  border-left: 3px solid var(--bs-mu);
+}
+.bs-band-healthy { border-left-color: var(--bs-gr); }
+.bs-band-watch   { border-left-color: var(--bs-am); }
+.bs-band-action  { border-left-color: var(--bs-rd); }
+
+.bs-health-score { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+/* The ring is drawn from the score itself, so it cannot drift from the number
+   printed inside it. */
+.bs-score-ring {
+  position: relative; width: 148px; height: 148px; border-radius: 50%;
+  display: grid; place-content: center; text-align: center;
+  background:
+    conic-gradient(var(--bs-ac) calc(var(--pct) * 1%), var(--bg-hover) 0);
+}
+.bs-score-ring::after {
+  content: ''; position: absolute; inset: 11px; border-radius: 50%; background: var(--bs-card);
+}
+.bs-score-num, .bs-score-of { position: relative; z-index: 1; display: block; }
+.bs-score-num { font-family: var(--bx-font-display); font-size: 46px; font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.bs-score-of { font-size: 11.5px; color: var(--bs-mu); margin-top: 3px; }
+.bs-band {
+  font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 999px; border: 1px solid currentColor;
+}
+.bs-band-tag-healthy { color: var(--bs-gr); }
+.bs-band-tag-watch { color: var(--bs-am); }
+.bs-band-tag-action { color: var(--bs-rd); }
+.bs-band-tag-unknown { color: var(--bs-mu); }
+
+.bs-health-eyebrow {
+  display: inline-flex; align-items: center;
+  font-family: var(--bx-font-display); font-size: 10.5px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--bs-ac);
+}
+.bs-health-headline {
+  margin: 6px 0 2px; font-family: var(--bx-font-display);
+  font-size: 20px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em;
+}
+.bs-health-driver { margin: 0 0 16px; font-size: 13px; color: var(--bs-tx2); }
+
+.bs-drivers { display: grid; gap: 12px; }
+.bs-driver-top { display: flex; align-items: baseline; gap: 10px; font-size: 12.5px; }
+.bs-driver-label { font-weight: 600; color: var(--bs-tx); }
+.bs-driver-weight { font-size: 10.5px; color: var(--bs-mu); letter-spacing: .04em; text-transform: uppercase; }
+.bs-driver-value { margin-left: auto; font-variant-numeric: tabular-nums; font-weight: 700; color: var(--bs-tx); }
+.bs-driver-bar { height: 6px; margin: 5px 0 4px; border-radius: 999px; background: var(--bg-hover); overflow: hidden; }
+.bs-driver-fill { height: 100%; border-radius: 999px; transition: width .4s cubic-bezier(.2,.8,.3,1); }
+.bs-driver-fill.is-good { background: var(--bs-gr); }
+.bs-driver-fill.is-mid  { background: var(--bs-am); }
+.bs-driver-fill.is-bad  { background: var(--bs-rd); }
+.bs-driver-fill.is-none { background: var(--bs-mu); }
+.bs-driver-reason { font-size: 12px; color: var(--bs-tx2); }
+
+/* ── Tiles ───────────────────────────────────────────────────────────────── */
+.bs-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 20px; }
+.bs-tile {
+  display: flex; flex-direction: column; gap: 4px; padding: 15px 17px;
+  background: var(--bs-card); border: 1px solid var(--bs-bd); border-radius: 12px;
+}
+.bs-tile-label {
+  display: flex; align-items: center;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--bs-mu);
+}
+.bs-tile-value {
+  font-family: var(--bx-font-display); font-size: 26px; font-weight: 800;
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums;
+}
+.bs-tile-foot { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.bs-tile-note { font-size: 11.5px; color: var(--bs-mu); }
+.bs-delta { display: inline-flex; align-items: center; gap: 3px; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.bs-delta.is-good { color: var(--bs-gr); }
+.bs-delta.is-bad { color: var(--bs-rd); }
+.bs-delta.is-none { color: var(--bs-mu); font-weight: 500; }
+
+/* ── Cards ───────────────────────────────────────────────────────────────── */
+.bs-card {
+  padding: 18px 20px; margin-bottom: 20px;
+  background: var(--bs-card); border: 1px solid var(--bs-bd); border-radius: 14px;
+}
+.bs-card-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+.bs-card-title {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--bx-font-display); font-size: 15.5px; font-weight: 700;
+}
+.bs-card-sub { font-size: 11.5px; color: var(--bs-mu); }
+
+/* ── Margin + coverage ───────────────────────────────────────────────────── */
+.bs-margin-row { display: grid; grid-template-columns: repeat(3, auto) 1fr; gap: 26px; align-items: center; }
+.bs-margin-fig { display: flex; flex-direction: column; gap: 3px; }
+.bs-margin-label { font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--bs-mu); }
+.bs-margin-value { font-family: var(--bx-font-display); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.bs-muted { color: var(--bs-mu); }
+
+.bs-coverage {
+  display: flex; flex-direction: column; gap: 5px;
+  padding: 12px 14px; border: 1px dashed var(--bs-bd); border-radius: 10px;
+}
+.bs-coverage-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--bs-mu);
+}
+.bs-coverage-value { font-family: var(--bx-font-display); font-size: 19px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.bs-coverage-bar { height: 5px; border-radius: 999px; background: var(--bg-hover); overflow: hidden; }
+.bs-coverage-fill { height: 100%; background: var(--bs-ac); border-radius: 999px; }
+.bs-coverage-note { font-size: 11px; color: var(--bs-mu); }
+
+/* ── Trend ───────────────────────────────────────────────────────────────── */
+.bs-trend-bar { display: flex; height: 10px; border-radius: 999px; overflow: hidden; background: var(--bg-hover); margin-bottom: 12px; }
+.bs-trend-seg { height: 100%; }
+.bs-trend-growing   { background: var(--bs-gr); }
+.bs-trend-stable    { background: var(--bs-mu); }
+.bs-trend-declining { background: var(--bs-am); }
+.bs-trend-dying     { background: var(--bs-rd); }
+.bs-trend-legend { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; font-size: 12.5px; color: var(--bs-tx2); margin-bottom: 14px; }
+.bs-trend-key { display: inline-flex; align-items: center; gap: 6px; text-transform: capitalize; }
+.bs-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.bs-trend-risk { margin-left: auto; font-size: 12px; color: var(--bs-mu); }
+.bs-pill {
+  display: inline-block; padding: 2px 9px; border-radius: 999px;
+  font-size: 11px; font-weight: 700; text-transform: capitalize;
+  /* Follows the fill. #14101F was hard-coded here, which is correct in dark
+     mode (light fills) and invisible in light mode, where --green #15795C and
+     --red #BE123C are dark. The verdict column was the worst of it. */
+  color: var(--on-semantic, #14101F);
+}
+
+/* ── Tables ──────────────────────────────────────────────────────────────── */
+.bs-table-wrap { overflow-x: auto; }
+.bs-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13px; }
+.bs-table th {
+  text-align: left; padding: 9px 10px; font-size: 10.5px; font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase; color: var(--bs-mu);
+  border-bottom: 1px solid var(--bs-bd2); white-space: nowrap;
+}
+.bs-table td {
+  padding: 10px; border-bottom: 1px solid var(--bs-bd2); color: var(--bs-tx2);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.bs-table tr:last-child td { border-bottom: none; }
+.bs-n { text-align: right; font-variant-numeric: tabular-nums; }
+.bs-strong { color: var(--bs-tx); font-weight: 600; }
+.bs-warn { color: var(--bs-am); }
+.bs-ok { color: var(--bs-gr); }
+.bs-table-compact td, .bs-table-compact th { padding: 7px 9px; }
+
+/* ── Split row ───────────────────────────────────────────────────────────── */
+.bs-split { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.bs-split > .bs-card { margin-bottom: 20px; }
+
+/* ── Customers ───────────────────────────────────────────────────────────── */
+.bs-cust { display: flex; gap: 34px; margin-bottom: 14px; }
+.bs-cust-fig { display: flex; flex-direction: column; gap: 2px; }
+.bs-cust-value { font-family: var(--bx-font-display); font-size: 30px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.bs-cust-label { font-size: 11.5px; color: var(--bs-mu); }
+.bs-cust-cov { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 12px; color: var(--bs-mu); padding-top: 12px; border-top: 1px solid var(--bs-bd2); }
+
+/* ── Day-part heatmap ────────────────────────────────────────────────────── */
+.bs-heat { display: flex; flex-direction: column; gap: 3px; overflow-x: auto; }
+.bs-heat-hours, .bs-heat-row { display: grid; grid-template-columns: 42px repeat(24, minmax(14px, 1fr)); gap: 3px; align-items: center; }
+.bs-heat-hour { font-size: 9.5px; color: var(--bs-mu); text-align: center; }
+.bs-heat-day { font-size: 11px; color: var(--bs-mu); }
+.bs-heat-cell {
+  height: 18px; border-radius: 3px;
+  /* One channel, so a busy hour reads as intensity rather than as a different
+     category. color-mix keeps it on the accent rather than inventing a scale. */
+  background: color-mix(in srgb, var(--bs-ac) calc(var(--v) * 100%), var(--bg-hover));
+}
+
+.bs-foot { margin: 6px 0 0; font-size: 11.5px; color: var(--bs-mu); line-height: 1.6; }
+
+/* ── Narrow ───────────────────────────────────────────────────────────────
+   Measured against THIS PANEL, not the window.
+
+   The sidebar is a flex sibling of the page, so collapsing it from 300px to
+   56px hands this screen 244 more pixels while the viewport never moves. A
+   media query cannot see that. The result was a layout keyed to the wrong
+   number in both directions: on a 1300px window with the sidebar open, the
+   panel is under 1000px wide but still got the full four-across desktop grid,
+   with the 24-column heat map crushed into it; collapse the sidebar and the
+   room appeared but nothing reflowed to use it.
+
+   A container query asks the element how wide it actually is, so the screen is
+   correct with the sidebar open, collapsed, mid-resize, or on a phone - and
+   the two breakpoints below keep the numbers they were tuned at. */
+@container bs (max-width: 1080px) {
+  .bs-health { grid-template-columns: 1fr; }
+  .bs-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bs-split { grid-template-columns: 1fr; }
+  .bs-margin-row { grid-template-columns: repeat(3, auto); }
+  .bs-coverage { grid-column: 1 / -1; }
+}
+@container bs (max-width: 620px) {
+  .bs-tiles { grid-template-columns: 1fr; }
+  .bs-margin-row { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bs-cust { gap: 20px; }
+}
+/* The page's own padding cannot come from its own container query - an element
+   is not styled by the container it establishes - so that one stays on the
+   viewport, which is the right measure for it anyway. */
+@media (max-width: 620px) {
+  .bs-page { padding: 16px 14px 60px; }
+}

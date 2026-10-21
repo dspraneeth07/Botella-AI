@@ -1,0 +1,170 @@
+/* SignalsModal.css
+   -----------------------------------------------------------------------------
+   The Active Signals button + clustered pop-up, scoped under .sig-*.
+
+   The `--s-*` names are ALIASES onto the shared app tokens, as on every screen.
+   This file used to carry its own blue palette on its own near-black ground,
+   which meant the modal did not match the screen it opened on top of.
+   ------------------------------------------------------------------------- */
+
+.sig-btn, .sig-overlay {
+  --s-card: var(--bg-card);
+  --s-bg: var(--bg-secondary);
+  --s-border: var(--border);
+  --s-border-soft: var(--border-light);
+  --s-text: var(--text-primary);
+  --s-soft: var(--text-secondary);
+  --s-muted: var(--text-muted);
+  --s-blue: var(--accent);
+  --s-chip: var(--bg-elevated);
+}
+
+/* ── Button ──────────────────────────────────────────────────────────────── */
+.sig-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font: inherit; cursor: pointer;
+  color: var(--s-text); background: var(--s-card);
+  border: 1px solid var(--s-border); border-radius: 12px;
+  padding: 8px 12px;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+.sig-btn:hover { border-color: var(--s-blue); box-shadow: 0 6px 18px -12px var(--accent-glow); transform: translateY(-1px); }
+.sig-btn-bar { width: 100%; justify-content: flex-start; }
+
+.sig-btn-pulse {
+  position: relative; display: grid; place-items: center;
+  width: 28px; height: 28px; border-radius: 8px; flex: 0 0 auto;
+  color: #FFFFFF; background: var(--bx-grad-signature);
+}
+.sig-btn-pulse::after {
+  content: ''; position: absolute; inset: 0; border-radius: 8px;
+  box-shadow: 0 0 0 0 rgba(124,58,237,0.5); animation: sig-pulse 2s ease-out infinite;
+}
+@keyframes sig-pulse { to { box-shadow: 0 0 0 8px rgba(124,58,237,0); } }
+
+.sig-btn-label { font-size: 0.86rem; font-weight: 650; }
+.sig-btn-preview { display: inline-flex; gap: 4px; margin-left: 2px; }
+.sig-btn-dot {
+  display: grid; place-items: center; width: 22px; height: 22px; border-radius: 7px;
+  color: var(--sig); background: color-mix(in srgb, var(--sig) 14%, transparent);
+}
+@supports not (background: color-mix(in srgb, red, blue)) {
+  .sig-btn-dot { background: var(--s-chip); }
+}
+.sig-btn-count {
+  margin-left: auto; font-size: 0.74rem; font-weight: 700;
+  padding: 3px 9px; border-radius: 999px; color: var(--s-muted); background: var(--s-chip);
+  white-space: nowrap;
+}
+.sig-btn-count.is-live { color: var(--green); background: color-mix(in srgb, var(--green) 15%, transparent); }
+
+/* ── Overlay + modal ─────────────────────────────────────────────────────── */
+.sig-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(8, 12, 20, 0.55);
+  -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  animation: sig-fade 0.18s ease both;
+}
+@keyframes sig-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* HEIGHT, not max-height.
+   With a max, the panel shrank to fit its content, so every domain tab resized
+   the whole dialog - Weather with two rows was half the height of Events with
+   twelve, and the close button and tab list moved under the pointer between
+   clicks. The body already scrolls (.sig-body is flex:1 with min-height:0, and
+   .sig-content owns the overflow), so pinning the height simply stops the
+   frame moving while the list inside it changes. */
+.sig-modal {
+  width: min(860px, 100%); height: min(640px, 90vh);
+  display: flex; flex-direction: column;
+  background: var(--s-card); color: var(--s-text);
+  border: 1px solid var(--s-border); border-radius: 20px; overflow: hidden;
+  box-shadow: 0 40px 90px -30px rgba(0,0,0,0.55);
+  animation: sig-pop 0.22s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes sig-pop { from { opacity: 0; transform: translateY(14px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+.sig-modal-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 14px;
+  padding: 20px 22px; border-bottom: 1px solid var(--s-border-soft);
+}
+.sig-modal-titles { min-width: 0; }
+.sig-modal-kicker { display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--s-blue); }
+.sig-modal-title { font-size: 1.12rem; font-weight: 720; letter-spacing: -0.01em; margin: 6px 0 0; }
+.sig-close {
+  flex: 0 0 auto; display: grid; place-items: center; width: 34px; height: 34px;
+  border-radius: 9px; border: 1px solid var(--s-border); background: var(--s-card);
+  color: var(--s-soft); cursor: pointer; transition: color 0.2s, border-color 0.2s;
+}
+.sig-close:hover { color: var(--s-text); border-color: var(--s-blue); }
+
+.sig-body { display: grid; grid-template-columns: 210px 1fr; min-height: 0; flex: 1 1 auto; }
+
+/* Sidebar */
+.sig-nav {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 14px 12px; border-right: 1px solid var(--s-border-soft);
+  overflow-y: auto; background: var(--s-bg);
+}
+.sig-nav-btn {
+  display: flex; align-items: center; gap: 10px;
+  font: inherit; font-size: 0.88rem; font-weight: 600; text-align: left;
+  color: var(--s-soft); background: transparent; border: none; cursor: pointer;
+  padding: 9px 10px; border-radius: 10px; width: 100%;
+  transition: background 0.18s, color 0.18s;
+}
+.sig-nav-btn:hover { background: var(--s-chip); color: var(--s-text); }
+.sig-nav-btn.is-on { background: var(--s-card); color: var(--s-text); box-shadow: inset 3px 0 0 var(--sig); }
+.sig-nav-icon { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 7px; color: var(--sig); background: var(--s-chip); flex: 0 0 auto; }
+.sig-nav-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sig-nav-count { font-size: 0.74rem; font-weight: 700; color: var(--s-muted); }
+.sig-nav-caret { color: var(--s-muted); opacity: 0; transition: opacity 0.18s; }
+.sig-nav-btn.is-on .sig-nav-caret { opacity: 1; color: var(--sig); }
+
+/* Content */
+.sig-content { overflow-y: auto; padding: 16px 18px; min-width: 0; }
+.sig-group { margin-bottom: 18px; }
+.sig-group:last-child { margin-bottom: 0; }
+.sig-group-head {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.74rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--sig); margin: 0 0 10px;
+}
+.sig-group-head em { font-style: normal; color: var(--s-muted); font-weight: 700; }
+
+.sig-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.sig-row {
+  display: flex; gap: 11px; padding: 12px 13px;
+  border: 1px solid var(--s-border-soft); border-radius: 12px; background: var(--s-card);
+  position: relative; overflow: hidden;
+}
+.sig-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--sig); }
+.sig-row-icon { display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 auto; border-radius: 8px; color: var(--sig); background: var(--s-chip); }
+.sig-row-body { min-width: 0; flex: 1 1 auto; }
+.sig-row-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.sig-row-title { font-size: 0.92rem; font-weight: 650; }
+.sig-row-badge { font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; background: var(--sig); padding: 2px 7px; border-radius: 6px; }
+.sig-row-when { margin-left: auto; font-size: 0.76rem; font-weight: 650; color: var(--s-muted); white-space: nowrap; }
+.sig-row-detail { font-size: 0.82rem; line-height: 1.45; color: var(--s-soft); margin: 4px 0 0; }
+
+/* flex:1 so the empty state fills the now-fixed height and its message sits in
+   the middle of the panel, rather than clinging to the top of a tall box. */
+.sig-empty { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; color: var(--s-muted); padding: 48px 32px; }
+.sig-empty p { font-size: 0.9rem; line-height: 1.55; margin: 0; max-width: 44ch; }
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sig-overlay { padding: 0; align-items: flex-end; }
+  .sig-modal { width: 100%; max-height: 88vh; border-radius: 20px 20px 0 0; }
+  .sig-body { grid-template-columns: 1fr; }
+  .sig-nav { flex-direction: row; overflow-x: auto; border-right: none; border-bottom: 1px solid var(--s-border-soft); padding: 10px; }
+  .sig-nav-btn { width: auto; flex: 0 0 auto; }
+  .sig-nav-caret { display: none; }
+  .sig-btn-preview { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sig-btn-pulse::after, .sig-overlay, .sig-modal { animation: none; }
+  .sig-btn:hover { transform: none; }
+}

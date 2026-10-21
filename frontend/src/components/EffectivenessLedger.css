@@ -1,0 +1,77 @@
+/* EffectivenessLedger - the list engine behind the page's tabbed calls list.
+   Rows are EffectivenessCase (see EffectivenessCase.css); the parent .ep-calls
+   card owns the chrome - this file styles the drill chip, skeleton, and the
+   reconciling footer. */
+
+.el-list { min-width: 0; }
+
+/* Active drill chip (focus from the fine print's per-category record) */
+.el-presets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+.el-preset {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px;
+  font-size: 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: transparent; color: inherit;
+}
+.el-preset:hover { background: var(--bg-hover, rgba(255, 255, 255, 0.05)); }
+.el-preset-active {
+  background: color-mix(in srgb, var(--accent, #8B5CF6) 16%, transparent);
+  color: var(--accent-light, #D6BBFF); border-color: var(--accent, #8B5CF6);
+}
+
+/* Rows (EffectivenessCase brings its own styling) */
+.el-rows { margin-top: 4px; }
+
+/* Loading shimmer (same rhythm as the pending card's) */
+.el-skeletons { display: flex; flex-direction: column; gap: 8px; padding: 6px 0 2px; }
+.el-skel {
+  height: 34px; border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    var(--bg-hover, rgba(255, 255, 255, 0.05)) 25%,
+    var(--bg-elevated, rgba(255, 255, 255, 0.09)) 50%,
+    var(--bg-hover, rgba(255, 255, 255, 0.05)) 75%
+  );
+  background-size: 200% 100%;
+  animation: el-shimmer 1.2s ease-in-out infinite;
+}
+@keyframes el-shimmer { to { background-position: -200% 0; } }
+
+/* Error / empty */
+.el-msg {
+  display: flex; align-items: center; gap: 8px; padding: 10px 2px;
+  color: var(--text-muted, #9ca3af); font-size: 12.5px;
+}
+.el-retry {
+  display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px;
+  border-radius: 8px; border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: var(--bg-hover, rgba(255, 255, 255, 0.05)); color: inherit;
+  font-size: 11.5px; cursor: pointer;
+}
+.el-quiet { margin: 8px 0 0; font-size: 12px; color: var(--text-muted, #9ca3af); }
+.el-clear {
+  margin-left: 8px; padding: 2px 10px; font-size: 11.5px; border-radius: 999px;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.12));
+  background: transparent; color: inherit; cursor: pointer;
+}
+.el-clear:hover { background: var(--bg-hover, rgba(255, 255, 255, 0.05)); }
+
+/* Footer - page count + dollar reconciliation vs the report summary */
+.el-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; margin-top: 10px; padding-top: 8px;
+  border-top: 1px solid var(--border, rgba(255, 255, 255, 0.08));
+  font-size: 11.5px; color: var(--text-muted, #9ca3af);
+}
+.el-footer-actions { display: inline-flex; align-items: center; gap: 8px; }
+.el-more-error { font-style: normal; color: var(--red, #FF6B8A); font-size: 11px; }
+.el-more {
+  display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px;
+  font-size: 12px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.1));
+  background: transparent; color: var(--text-muted, #9ca3af);
+}
+.el-more:hover { background: var(--bg-hover, rgba(255, 255, 255, 0.05)); }
+.el-more:disabled { opacity: 0.6; cursor: default; }
+.el-spin { animation: el-rot 1s linear infinite; }
+@keyframes el-rot { to { transform: rotate(360deg); } }

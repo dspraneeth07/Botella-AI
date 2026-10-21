@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BotellaAI engine audit</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#fff;--panel:#f7f8fa;--panel2:#eef1f5;--fg:#0d1117;--mut:#5b6672;
+  --line:#dfe3e8;--accent:#2563eb;--good:#047857;--bad:#be123c;--warn:#b45309}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a0e17;--panel:#121823;--panel2:#1a2230;--fg:#e8edf4;--mut:#93a1b1;
+  --line:#233044;--accent:#60a5fa;--good:#34d399;--bad:#fb7185;--warn:#fbbf24;
+  color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a0e17;--panel:#121823;--panel2:#1a2230;
+  --fg:#e8edf4;--mut:#93a1b1;--line:#233044;--accent:#60a5fa;--good:#34d399;
+  --bad:#fb7185;--warn:#fbbf24;color-scheme:dark}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.65 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:56px 24px 90px}
+h1{font-size:clamp(28px,4vw,40px);margin:0 0 10px;letter-spacing:-.025em;
+  font-weight:680;text-wrap:balance}
+h2{font-size:21px;margin:52px 0 6px;letter-spacing:-.015em;font-weight:660}
+.lede{font-size:17px;color:var(--mut);margin:0 0 6px;max-width:70ch}
+.sub{color:var(--mut);font-size:13.5px;margin:0 0 26px}
+.sub b{color:var(--fg);font-weight:600}
+p{max-width:72ch}
+.hero{display:block;background:var(--panel);border:1px solid var(--line);
+  border-left:4px solid var(--accent);border-radius:14px;padding:22px 24px;
+  margin:22px 0;text-decoration:none;color:inherit}
+.hero:hover{background:var(--panel2)}
+.hero .t{font-size:19px;font-weight:660;letter-spacing:-.01em}
+.hero .d{font-size:14px;color:var(--mut);margin-top:7px;line-height:1.55}
+.grid{display:grid;gap:12px;margin:18px 0;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.item{background:var(--panel);border:1px solid var(--line);border-radius:12px;
+  padding:16px 18px}
+.item .n{font-weight:650;font-size:15.5px}
+.item .m{font-size:12.5px;color:var(--mut);margin-top:4px}
+.item .links{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+a.pill{font-size:12.5px;text-decoration:none;color:var(--accent);
+  border:1px solid var(--line);border-radius:999px;padding:4px 11px;
+  background:var(--bg)}
+a.pill:hover{border-color:var(--accent)}
+span.pill.gone{font-size:12.5px;color:var(--mut);border:1px dashed var(--line);
+  border-radius:999px;padding:4px 11px}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;
+  margin:18px 0;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:14px;
+  font-variant-numeric:tabular-nums}
+th,td{text-align:right;padding:10px 14px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:11px;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--mut);font-weight:650;background:var(--panel2)}
+tbody tr:last-child td{border-bottom:0}
+.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.span{font-size:11.5px;color:var(--mut);display:block;font-weight:400}
+.foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+  font-size:12.5px;color:var(--mut)}
+code{background:var(--panel2);border:1px solid var(--line);padding:1px 6px;
+  border-radius:5px;font-size:13px;font-family:ui-monospace,Menlo,monospace}
+</style></head><body><div class="wrap">
+
+<h1>BotellaAI recommendation engine &mdash; the evidence</h1>
+<p class="lede">Every recommendation the engine made at five pilot stores in
+April 2026, and what actually happened to each one at 30, 60, 90 and 120 days.</p>
+<p class="sub">Built 09 October 2026, 12:48 &middot;
+every link below was checked against the folder, so a page that was not generated
+says so instead of 404-ing.</p>
+
+<a class="hero" href="ALL_STORES_LEDGER.html">
+  <div class="t">All five stores, every card, one page &rarr;</div>
+  <div class="d">Start here. The cross-store comparison at all four horizons,
+  then every card from every store with its own outcomes attached. One file,
+  searchable, prints.</div></a>
+
+<a class="hero" href="ENGINE_AUDIT.html">
+  <div class="t">The gate index &rarr;</div>
+  <div class="d">One row per store with the seven admission checks: which stores
+  have been measured to work, which have not, and on which check they fail.</div></a>
+
+<a class="hero" href="WHAT_CHANGED.html">
+  <div class="t">What changed since the last run, and why &rarr;</div>
+  <div class="d">The previous published numbers against the current ones, per
+  store, with the reason each one moved.</div></a>
+
+<h2>Headline, per store</h2>
+<p>Judged one store at a time, because the engine is switched on one store at a
+time &mdash; and a store where it does not work is the most useful row here.</p>
+<div class="scroll"><table><thead><tr><th>Store</th><th class="num">April + 30d</th><th class="num">backtest, 2.3 years</th><th class="num">p</th><th class="num">money</th></tr></thead><tbody><tr><td><b>178</b> Marshfield Wine &amp; Spirits</td><td><b class="good">80.2%</b><span class="span">172 cards</span></td><td>92.9%<span class="span">+29.2 vs null</span></td><td>0.0005</td><td>$+4,191<span class="span">30-day net</span></td></tr><tr><td><b>181</b> Cork Runner Wine &amp; Spirits</td><td><b class="warn">66.7%</b><span class="span">99 cards</span></td><td>77.1%<span class="span">+17.2 vs null</span></td><td>0.0005</td><td>$+688<span class="span">30-day net</span></td></tr><tr><td><b>171</b> Bethany Discount Liquor</td><td><b class="bad">42.4%</b><span class="span">59 cards</span></td><td>75.7%<span class="span">+16.6 vs null</span></td><td>0.0005</td><td>$+1,356<span class="span">30-day net</span></td></tr><tr><td><b>177</b> Mango Jo's Bar &amp; Liquors</td><td><b class="good">90.6%</b><span class="span">139 cards</span></td><td>79.2%<span class="span">+8.7 vs null</span></td><td>0.0005</td><td>$+3,319<span class="span">30-day net</span></td></tr><tr><td><b>176</b> Northlake Liquors North</td><td><b class="good">83.9%</b><span class="span">62 cards</span></td><td>71.8%<span class="span">+8.1 vs null</span></td><td>0.0005</td><td>$+318<span class="span">30-day net</span></td></tr></tbody></table></div>
+
+<h2>Every report, per store</h2>
+<div class="grid"><div class="item"><div class="n">171 &mdash; Bethany Discount Liquor</div><div class="m">59 cards in April 2026</div><div class="links"><a class="pill" href="ledger-171-2026-04/RECOMMENDATION_LEDGER.html">ledger</a><a class="pill" href="171-backtest/REAL_ENGINE_REPORT.html">backtest</a><a class="pill" href="WHAT_CHANGED-171.html">what changed</a></div></div><div class="item"><div class="n">176 &mdash; Northlake Liquors North</div><div class="m">62 cards in April 2026</div><div class="links"><a class="pill" href="ledger-176-2026-04/RECOMMENDATION_LEDGER.html">ledger</a><a class="pill" href="176-backtest/REAL_ENGINE_REPORT.html">backtest</a><a class="pill" href="WHAT_CHANGED-176.html">what changed</a></div></div><div class="item"><div class="n">177 &mdash; Mango Jo's Bar &amp; Liquors</div><div class="m">139 cards in April 2026</div><div class="links"><a class="pill" href="ledger-177-2026-04/RECOMMENDATION_LEDGER.html">ledger</a><a class="pill" href="177-backtest/REAL_ENGINE_REPORT.html">backtest</a><a class="pill" href="WHAT_CHANGED-177.html">what changed</a></div></div><div class="item"><div class="n">178 &mdash; Marshfield Wine &amp; Spirits</div><div class="m">172 cards in April 2026</div><div class="links"><a class="pill" href="ledger-178-2026-04/RECOMMENDATION_LEDGER.html">ledger</a><a class="pill" href="178-backtest/REAL_ENGINE_REPORT.html">backtest</a><a class="pill" href="WHAT_CHANGED-178.html">what changed</a></div></div><div class="item"><div class="n">181 &mdash; Cork Runner Wine &amp; Spirits</div><div class="m">99 cards in April 2026</div><div class="links"><a class="pill" href="ledger-181-2026-04/RECOMMENDATION_LEDGER.html">ledger</a><a class="pill" href="181-backtest/REAL_ENGINE_REPORT.html">backtest</a><a class="pill" href="WHAT_CHANGED-181.html">what changed</a></div></div></div>
+
+<h2>Other months on file</h2><p class="sub">A month can only be published once it has 120 days of future behind it, so the newest publishable month trails the data by four months.</p><div class="grid"><div class="item"><div class="n">March 2026</div><div class="m">cards issued that month, followed for four months</div><div class="links"><a class="pill" href="ledger-171-2026-03/RECOMMENDATION_LEDGER.html">171</a><a class="pill" href="ledger-176-2026-03/RECOMMENDATION_LEDGER.html">176</a><a class="pill" href="ledger-177-2026-03/RECOMMENDATION_LEDGER.html">177</a><a class="pill" href="ledger-178-2026-03/RECOMMENDATION_LEDGER.html">178</a><a class="pill" href="ledger-181-2026-03/RECOMMENDATION_LEDGER.html">181</a></div></div></div>
+
+<h2>Architecture and method</h2>
+<div class="grid">
+  <div class="item"><div class="n">How the engine decides</div>
+    <div class="m">The nineteen stages, what is live and what is not</div>
+    <div class="links"><a class="pill" href="engine-architecture.html">architecture</a>
+    <a class="pill" href="architecture-changes.html">changes</a>
+    <a class="pill" href="eleven-families.html">card families</a></div></div>
+  <div class="item"><div class="n">On reaching 90%</div>
+    <div class="m">Why a hit rate above 80% at every store is not available,
+    measured rather than asserted</div>
+    <div class="links"><a class="pill" href="ninety-percent-diagnostic.html">diagnostic</a>
+    <a class="pill" href="ninety-prompt-library.html">prompt library</a></div></div>
+</div>
+
+<h2>Earlier generations, kept</h2>
+<p class="sub">Superseded runs are archived rather than overwritten, so a figure
+quoted in an older document can still be traced to the page it came from.</p>
+<div class="links"><a class="pill" href="previous/ENGINE_AUDIT.html">previous</a><a class="pill" href="previous-2026-10-06/ENGINE_AUDIT.html">previous-2026-10-06</a><a class="pill" href="previous-2026-10-09/ENGINE_AUDIT.html">previous-2026-10-09</a></div>
+
+<div class="foot">
+<p>Generated by <code>scripts/build_audit_home.py</code>, which enumerates the
+folder rather than declaring its contents. The previous version of this page
+linked a generation of folders a later run had already replaced.</p>
+<p>No CDN, no fonts, no script tags: these open from a <code>file://</code> URL on
+a laptop with no network, which is where they end up.</p>
+</div>
+
+</div></body></html>

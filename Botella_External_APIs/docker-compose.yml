@@ -1,0 +1,24 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # Inside compose, reach the host's Node service via host.docker.internal.
+      NODE_API_BASE_URL: ${NODE_API_BASE_URL:-http://host.docker.internal:3000}
+      # ONE worker: the SignalCache is in-process, so every extra worker
+      # re-fetches (and re-bills) each signal source per TTL — two workers
+      # meant two Apify actor runs for back-to-back rec runs. The service is
+      # async; one worker covers the daily multi-store load.
+      WEB_CONCURRENCY: "1"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://localhost:8000/health').status==200 else sys.exit(1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

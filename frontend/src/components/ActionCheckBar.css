@@ -1,0 +1,59 @@
+/* One-question micro-survey bar - slim, calm, instantly dismissible. */
+
+.acb {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 24px 0;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  background: color-mix(in srgb, var(--accent, #B79CFF) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent, #B79CFF) 22%, transparent);
+  animation: acb-in 0.25s ease-out;
+}
+@keyframes acb-in { from { opacity: 0; transform: translateY(-4px); } }
+
+.acb-icon { color: var(--accent, #B79CFF); flex-shrink: 0; }
+.acb-text { flex: 1; line-height: 1.4; }
+
+.acb-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.acb-btn {
+  padding: 5px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  cursor: pointer;
+  color: inherit;
+  background: var(--bg-hover, rgba(255,255,255,0.05));
+  border: 1px solid var(--border, rgba(255,255,255,0.12));
+}
+.acb-btn:hover { filter: brightness(1.15); }
+.acb-yes {
+  background: color-mix(in srgb, #2FBF97 14%, transparent);
+  border-color: color-mix(in srgb, #2FBF97 40%, transparent);
+}
+.acb-close {
+  display: inline-flex;
+  padding: 5px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted, #9ca3af);
+  cursor: pointer;
+  border-radius: 6px;
+}
+.acb-close:hover { background: var(--bg-hover, rgba(255,255,255,0.06)); }
+
+.acb-thanks {
+  color: #2FBF97;
+  border-color: color-mix(in srgb, #2FBF97 30%, transparent);
+  background: color-mix(in srgb, #2FBF97 8%, transparent);
+}
+
+@media (max-width: 640px) {
+  .acb { flex-wrap: wrap; margin: 8px 12px 0; }
+  .acb-text { flex-basis: 100%; }
+}
+
+/* A failed save puts the question back with a plain line saying so (039). */
+.acb-failed { display: block; color: var(--red, #FF6B8A); font-style: normal; font-size: 12px; margin-top: 2px; }
+.acb-btn:disabled { opacity: 0.6; cursor: default; }

@@ -1,0 +1,18 @@
+{
+  "171": {
+    "receipts": 153047,
+    "any_id": 153047,
+    "real_person_receipts": 92185,
+    "customers": 7909,
+    "real_person_customers": 7908,
+    "real_contactable": 4398
+  },
+  "188": {
+    "receipts": 2431,
+    "any_id": 2431,
+    "real_person_receipts": 1457,
+    "customers": 11073,
+    "real_person_customers": 11072,
+    "real_contactable": 7315
+  }
+}

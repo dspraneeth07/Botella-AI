@@ -1,0 +1,120 @@
+/* ============================================
+   LEGAL PAGES - shared (legal-* prefix)
+   /privacy-policy + /terms-and-conditions
+   Both pages wrap in ContentLayout's cp-rich container
+   and inherit the dark/light theme variables.
+   ============================================ */
+
+.legal-page {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* Hero stays simple - no 2-col split for legal pages.
+   They're plain prose: tag pill + H1 + effective date + intro. */
+.legal-hero {
+  padding: 16px 0 32px;
+  border-bottom: 1px solid var(--lp-border);
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.legal-hero h1 {
+  font-size: clamp(32px, 4.5vw, 48px);
+  line-height: 1.1;
+  letter-spacing: -1.2px;
+  font-weight: 800;
+  margin: 14px 0 12px;
+}
+
+.legal-effective {
+  font-size: 13px !important;
+  font-weight: 500;
+  color: var(--lp-muted) !important;
+  letter-spacing: 0.5px;
+  margin: 0 0 18px !important;
+  text-transform: uppercase;
+}
+
+.legal-intro {
+  font-size: 16.5px !important;
+  line-height: 1.65;
+  color: var(--lp-secondary) !important;
+  max-width: 720px;
+  margin: 0 !important;
+}
+
+/* Body - long-form prose with comfortable line-height + spacing */
+.legal-body {
+  padding: 8px 0 24px;
+}
+
+.legal-body h2 {
+  font-size: 28px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.6px;
+  color: var(--lp-text) !important;
+  margin: 40px 0 14px !important;
+}
+
+.legal-body p {
+  font-size: 15.5px !important;
+  line-height: 1.75;
+  color: var(--lp-secondary) !important;
+  margin: 0 0 14px !important;
+}
+
+.legal-body strong {
+  color: var(--lp-text);
+  font-weight: 600;
+}
+
+.legal-body ul {
+  margin: 0 0 18px 22px;
+  padding: 0;
+  color: var(--lp-secondary);
+}
+
+.legal-body li {
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.legal-body a {
+  color: var(--lp-accent-light);
+  text-decoration: none;
+  border-bottom: 1px dashed var(--lp-accent);
+  padding-bottom: 1px;
+  transition: color 0.15s, border-bottom-color 0.15s;
+}
+
+.legal-body a:hover {
+  color: var(--lp-text);
+  border-bottom-color: var(--lp-text);
+}
+
+[data-theme="light"] .legal-body a {
+  color: var(--lp-accent);
+}
+
+/* Footer link block (e.g. "See also our Privacy Policy") */
+.legal-foot {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--lp-border);
+  font-size: 13.5px;
+  color: var(--lp-muted);
+}
+
+.legal-foot p {
+  font-size: 13.5px !important;
+  color: var(--lp-muted) !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 700px) {
+  .legal-hero h1 { font-size: 28px; }
+  .legal-body h2 { font-size: 22px !important; margin: 32px 0 12px !important; }
+  .legal-body p, .legal-body li { font-size: 14.5px !important; }
+}

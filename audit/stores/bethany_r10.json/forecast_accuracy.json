@@ -1,0 +1,202 @@
+{
+ "store": "Bethany Discount Liquor",
+ "calibration_dates": 13,
+ "scored_dates": 42,
+ "interval_bands": {
+  "30": [
+   0.28941763980515584,
+   1.8850344710636973
+  ],
+  "60": [
+   0.35109480816815153,
+   1.7205197531368368
+  ],
+  "90": [
+   0.3655781858878393,
+   1.6695304335450225
+  ],
+  "120": [
+   0.35079149146673266,
+   1.6385128465001184
+  ]
+ },
+ "horizons": {
+  "30": {
+   "n": 8231,
+   "trailing_28": {
+    "wape_units": 52.15114563474506,
+    "wape_margin": 79.67614375193521,
+    "bias": 19.10438746658652
+   },
+   "last_year": {
+    "wape_units": 69.03583028446934,
+    "wape_margin": 68.38113550545624,
+    "bias": -14.026472477416249
+   },
+   "year_average": {
+    "wape_units": 47.67635152292306,
+    "wape_margin": 50.332181070248986,
+    "bias": -5.801778285689132
+   },
+   "engine": {
+    "wape_units": 42.39011596819722,
+    "wape_margin": 47.7807147537513,
+    "bias": 1.811274357443973,
+    "beats": [
+     "trailing_28",
+     "last_year",
+     "year_average"
+    ]
+   },
+   "engine_seasonal": {
+    "wape_units": 45.33711111302562,
+    "wape_margin": 51.779987620943544,
+    "bias": 11.023466041114759,
+    "beats": [
+     "trailing_28",
+     "last_year",
+     "year_average"
+    ]
+   },
+   "coverage_p10_p90": 80.9379176284777,
+   "best_model": "engine",
+   "engine_seasonal_beats": [
+    "trailing_28",
+    "last_year",
+    "year_average"
+   ]
+  },
+  "60": {
+   "n": 8231,
+   "trailing_28": {
+    "wape_units": 52.283011188836895,
+    "wape_margin": 85.68928369412475,
+    "bias": 22.285489640260124
+   },
+   "last_year": {
+    "wape_units": 62.85614736950471,
+    "wape_margin": 62.85603524083774,
+    "bias": -11.35953442206296
+   },
+   "year_average": {
+    "wape_units": 44.34397512813682,
+    "wape_margin": 46.468843542218416,
+    "bias": -3.3404817880646585
+   },
+   "engine": {
+    "wape_units": 39.66095403454545,
+    "wape_margin": 45.90977017646614,
+    "bias": 4.486908559445346,
+    "beats": [
+     "trailing_28",
+     "last_year",
+     "year_average"
+    ]
+   },
+   "engine_seasonal": {
+    "wape_units": 43.20373201591157,
+    "wape_margin": 50.689984218645456,
+    "bias": 13.813457810383131,
+    "beats": [
+     "trailing_28",
+     "last_year",
+     "year_average"
+    ]
+   },
+   "coverage_p10_p90": 80.26971206414774,
+   "best_model": "engine",
+   "engine_seasonal_beats": [
+    "trailing_28",
+    "last_year",
+    "year_average"
+   ]
+  },
+  "90": {
+   "n": 8231,
+   "trailing_28": {
+    "wape_units": 54.17755770757837,
+    "wape_margin": 91.91057991784238,
+    "bias": 25.353680734898404
+   },
+   "last_year": {
+    "wape_units": 59.67542731872179,
+    "wape_margin": 59.93789077780553,
+    "bias": -8.77443612884283
+   },
+   "year_average": {
+    "wape_units": 43.335207610930745,
+    "wape_margin": 45.287284179923965,
+    "bias": -0.9309798476650459
+   },
+   "engine": {
+    "wape_units": 39.55048429895948,
+    "wape_margin": 46.469807112579446,
+    "bias": 7.091415802360279,
+    "beats": [
+     "trailing_28",
+     "last_year",
+     "year_average"
+    ]
+   },
+   "engine_seasonal": {
+    "wape_units": 43.34766177924751,
+    "wape_margin": 51.77386356734892,
+    "bias": 16.414478807581524,
+    "beats": [
+     "trailing_28",
+     "last_year"
+    ]
+   },
+   "coverage_p10_p90": 80.11177256712429,
+   "best_model": "engine",
+   "engine_seasonal_beats": [
+    "trailing_28",
+    "last_year"
+   ]
+  },
+  "120": {
+   "n": 8231,
+   "trailing_28": {
+    "wape_units": 55.853564049671874,
+    "wape_margin": 96.45518929318246,
+    "bias": 27.829675743289105
+   },
+   "last_year": {
+    "wape_units": 57.55997839148302,
+    "wape_margin": 57.61913749327121,
+    "bias": -6.5041851663325785
+   },
+   "year_average": {
+    "wape_units": 43.06279735986037,
+    "wape_margin": 45.095287400055284,
+    "bias": 1.021416354576967
+   },
+   "engine": {
+    "wape_units": 40.04655711903176,
+    "wape_margin": 47.958220756358195,
+    "bias": 9.201232119525717,
+    "beats": [
+     "trailing_28",
+     "last_year",
+     "year_average"
+    ]
+   },
+   "engine_seasonal": {
+    "wape_units": 44.02948472260939,
+    "wape_margin": 53.527684350131196,
+    "bias": 18.71403816436682,
+    "beats": [
+     "trailing_28",
+     "last_year"
+    ]
+   },
+   "coverage_p10_p90": 80.96221601263515,
+   "best_model": "engine",
+   "engine_seasonal_beats": [
+    "trailing_28",
+    "last_year"
+   ]
+  }
+ },
+ "candidate_verdict": "REJECT"
+}

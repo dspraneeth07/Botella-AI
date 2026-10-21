@@ -1,0 +1,92 @@
+[
+ {
+  "location_id": 44,
+  "products": 14495,
+  "in_stock": 0,
+  "with_cost": 3,
+  "lines": 6068,
+  "first_sale": "2026-09-05T18:30:00.000Z",
+  "last_sale": "2026-10-04T18:30:00.000Z",
+  "cost_lines": 0
+ },
+ {
+  "location_id": 51,
+  "products": 14899,
+  "in_stock": 2,
+  "with_cost": 2098,
+  "lines": 17952,
+  "first_sale": "2026-09-05T18:30:00.000Z",
+  "last_sale": "2026-10-04T18:30:00.000Z",
+  "cost_lines": 0
+ },
+ {
+  "location_id": 105,
+  "lines": 741639,
+  "first_sale": "2024-03-25T18:30:00.000Z",
+  "last_sale": "2026-10-04T18:30:00.000Z",
+  "cost_lines": 0
+ },
+ {
+  "location_id": 106,
+  "products": 3,
+  "in_stock": 2,
+  "with_cost": 0
+ },
+ {
+  "location_id": 107
+ },
+ {
+  "location_id": 131
+ },
+ {
+  "location_id": 134,
+  "products": 7143,
+  "in_stock": 6541,
+  "with_cost": 0
+ },
+ {
+  "location_id": 135
+ },
+ {
+  "location_id": 139,
+  "products": 3,
+  "in_stock": 2,
+  "with_cost": 0
+ },
+ {
+  "location_id": 140
+ },
+ {
+  "location_id": 141
+ },
+ {
+  "location_id": 146
+ },
+ {
+  "location_id": 155,
+  "products": 2,
+  "in_stock": 1,
+  "with_cost": 0
+ },
+ {
+  "location_id": 173,
+  "products": 8936,
+  "in_stock": 6080,
+  "with_cost": 8928,
+  "lines": 34362,
+  "first_sale": "2026-07-04T18:30:00.000Z",
+  "last_sale": "2026-10-05T18:30:00.000Z",
+  "cost_lines": 34285,
+  "sync_credential": true
+ },
+ {
+  "location_id": 194,
+  "products": 3020,
+  "in_stock": 1374,
+  "with_cost": 2842,
+  "lines": 1597,
+  "first_sale": "2026-09-05T18:30:00.000Z",
+  "last_sale": "2026-10-04T18:30:00.000Z",
+  "cost_lines": 0
+ }
+]

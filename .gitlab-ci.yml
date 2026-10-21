@@ -1,0 +1,368 @@
+# GitLab CI/CD for BottleAI (backend + frontend + the Python engine).
+#
+# Pipeline: on merge requests AND on every branch push -> the Python suite, the
+# Node suites, the frontend suites and a from-scratch run of the analytics
+# migrations. On any branch -> build both images to the GitLab Container
+# Registry (shared runners), and the build NEEDS the tests, so an image cannot
+# exist for a commit that failed them. On main -> deploy ON the EC2 box via a
+# self-hosted runner (tag: ec2, shell executor) - no SSH, no open port 22 - and
+# the deploy NEEDS the builds, so nothing reaches the box untested.
+#
+# Before checklist 19 the test stage ran the card-statement suites on merge
+# requests and nothing else: the Python suite (1,900+ tests), the lift parity
+# between Node and Python, the holdout key, the service-token guard and the
+# migrations all had runnable checks and none of them could block a merge or a
+# deploy. A branch push built and could deploy an image no test had seen.
+#
+# Required CI/CD variables (Settings -> CI/CD -> Variables):
+#   BACKEND_ENV_B64   base64 of the production backend.env  (Protected + Masked)
+# The self-hosted runner removes the need for SSH_PRIVATE_KEY / EC2_HOST / EC2_USER.
+#
+# $CI_REGISTRY, $CI_REGISTRY_USER, $CI_REGISTRY_PASSWORD and $CI_REGISTRY_IMAGE are
+# provided automatically and authenticate to this project's registry.
+
+stages:
+  - test
+  - build
+  - deploy
+
+variables:
+  BACKEND_IMAGE: $CI_REGISTRY_IMAGE/botella-backend
+  FRONTEND_IMAGE: $CI_REGISTRY_IMAGE/botella-frontend
+
+# Every test job runs on merge-request pipelines and on branch pipelines. The
+# build jobs run on branch pipelines and `needs` these, and a needed job has to
+# exist in the same pipeline, so the tests cannot be MR-only any more. A push
+# to a branch with an open MR runs both pipelines; that costs a duplicate test
+# run and buys a build that is always gated.
+.test-rules: &test-rules
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH'
+
+# ---------- test ----------
+test-backend:
+  stage: test
+  image: node:20-bookworm-slim
+  <<: *test-rules
+  before_script:
+    # better-sqlite3 is a native module. When prebuild-install cannot fetch a
+    # binary for the runner's exact Node build it falls back to node-gyp, which
+    # needs a Python interpreter and a C++ toolchain that the slim image lacks -
+    # MR !5 failed on exactly that. Same three packages backend/Dockerfile's
+    # deps stage installs, so CI compiles against the base the image ships on.
+    # python3 also serves tests/lift-parity-verify.js, which runs the Python
+    # twin of lib/lift.js through lib/pythonRunner.js (pure stdlib, no venv).
+    - apt-get update && apt-get install -y --no-install-recommends python3 make g++
+  script:
+    - cd backend
+    - npm ci
+    # The card-statement suites (no DB, no network, no .env).
+    - npm test
+    # Every other suite that needs no database: holdout key, stage envelope,
+    # service token, store-gate decision, lift parity, PO duplicate identity.
+    # The list lives in tests/run-unit-tests.js and is explicit on purpose -
+    # most of tests/ opens the analytics database with sentinel tenants.
+    - npm run test:unit
+
+test-frontend:
+  stage: test
+  image: node:20-bookworm-slim
+  <<: *test-rules
+  variables:
+    # CRA fails a BUILD on lint warnings when CI=true; that is a separate
+    # decision from running the suites, so the build keeps CI=false here and
+    # `npm test` is non-interactive by its own --watchAll=false.
+    CI: "false"
+    REACT_APP_API_URL: /api
+  script:
+    - cd frontend
+    - npm ci
+    - npm test
+    - npm run build
+
+test-python:
+  stage: test
+  image: python:3.12-slim
+  <<: *test-rules
+  variables:
+    PIP_DISABLE_PIP_VERSION_CHECK: "1"
+  script:
+    - cd Botella_External_APIs
+    - python -m pip install -q -e ".[dev]"
+    # The three build guards. Rule 3: no new magic numbers; nothing branches on
+    # evidence state; every card family quotes a price.
+    - python scripts/check_no_literals.py
+    - python scripts/check_no_state_branches.py
+    - python scripts/check_families_quote_ev.py
+    # "how much of this engine is still guesswork" - printed on every run.
+    - python scripts/config_report.py
+    - python -m pytest -q
+    # ruff carries pre-existing findings (129 at the time this job was written)
+    # that are outside any checklist item. It is printed so the count is seen on
+    # every run and cannot grow unnoticed; it becomes blocking when it is clean.
+    - python -m ruff check app storeagent || echo "ruff findings above are advisory until the backlog is cleared"
+
+test-migrations:
+  stage: test
+  image: node:20-bookworm-slim
+  <<: *test-rules
+  services:
+    - name: postgres:16-alpine
+      alias: postgres
+  variables:
+    POSTGRES_DB: bottleai_analytics
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: ci
+    POSTGRES_HOST_AUTH_METHOD: trust
+    ANALYTICS_MIGRATE_DSN: postgres://postgres:ci@postgres:5432/bottleai_analytics
+  script:
+    - cd backend
+    # pg and dotenv are all migrate.js needs; --ignore-scripts skips the
+    # better-sqlite3 native build this job has no use for.
+    - npm ci --ignore-scripts
+    # The migrations GRANT to bottleai_writer from 000 onward, and GRANT errors
+    # on a role that does not exist. Production has the role; a fresh database
+    # does not. This is the only thing the job creates by hand, and it is the
+    # one line a fresh environment needs before `npm run migrate`.
+    - node -e "const {Pool}=require('pg');const p=new Pool({connectionString:process.env.ANALYTICS_MIGRATE_DSN});p.query('CREATE ROLE bottleai_writer NOLOGIN').then(()=>p.end()).catch(e=>{console.error(e.message);process.exit(1)})"
+    # Every analytics migration, in order, on an empty database. A migration
+    # that only works because production already had some table is found here
+    # rather than at 04:00 on the box.
+    - node database/migrate.js analytics
+    # And nothing may remain pending afterwards, which is what a failed
+    # multi-statement file would leave behind.
+    - node database/migrate.js analytics --status | tee /tmp/status.txt
+    - '! grep -q "^pending" /tmp/status.txt'
+    # The syncgo migrations are NOT run here on purpose: they alter a warehouse
+    # whose tables no migration creates, and 001 uses CREATE INDEX CONCURRENTLY,
+    # which cannot run inside the implicit transaction migrate.js wraps a file
+    # in. They need an owner DSN against the real warehouse (npm run
+    # migrate:syncgo) and a human watching.
+
+# The database-backed Node suites, against the schema the job above proves.
+#
+# Thirteen suites in backend/tests exercise the gates, the drift monitor, the
+# card lifecycle, the scoreboards, lead times, ingestion and the forward test
+# end to end against the analytics database with sentinel tenants (client ids
+# 9999xx) that they create and remove. The 19 October 2026 QA audit (defect 16)
+# found them passing by hand and never run in CI - "the most valuable Node
+# tests run only when someone remembers". The list is explicit, in
+# tests/run-db-tests.js, with the exclusions and the reason for each: the
+# evaluator's own suite (rec-eval-verify, 88 checks) stays out because its
+# owner-claim re-evaluation reads the real syncgo warehouse on a path the
+# test's mock does not reach, and on-hand-capture and rec-admission assert
+# live-estate freshness and env-dependent floors respectively.
+#
+# A separate job rather than more lines in test-migrations, so a failing suite
+# and a failing migration are different red marks, and so this one can carry
+# the full `npm ci` (the services under test require modules the migrations
+# runner does not) without slowing the migrations check down. It repeats the
+# role + migrate steps because a GitLab service container is per job.
+test-backend-db:
+  stage: test
+  image: node:20-bookworm-slim
+  <<: *test-rules
+  services:
+    - name: postgres:16-alpine
+      alias: postgres
+  variables:
+    POSTGRES_DB: bottleai_analytics
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: ci
+    POSTGRES_HOST_AUTH_METHOD: trust
+    ANALYTICS_MIGRATE_DSN: postgres://postgres:ci@postgres:5432/bottleai_analytics
+    # What the suites read (database/analytics-connection.js). The superuser
+    # stands in for bottleai_writer so the GRANT-dependent inserts just work.
+    ANALYTICS_PG_HOST: postgres
+    ANALYTICS_PG_PORT: "5432"
+    ANALYTICS_PG_DATABASE: bottleai_analytics
+    ANALYTICS_PG_USER: postgres
+    ANALYTICS_PG_PASSWORD: ci
+    # The syncgo warehouse does not exist in CI. PG_* is pointed at the SAME
+    # analytics service so that any suite which quietly opened a real warehouse
+    # pool would fail here on a missing relation rather than hang on a closed
+    # port - every listed suite either never opens one or mocks it, and this
+    # is what keeps that true.
+    PG_HOST: postgres
+    PG_PORT: "5432"
+    PG_DATABASE: bottleai_analytics
+    PG_USER: postgres
+    PG_PASSWORD: ci
+    # No .env in CI, so the floors the admission gate reads are the module
+    # defaults; stated here so a future override is a visible decision.
+    REC_MIN_PROFIT_USD: "1"
+    REC_MIN_CONFIDENCE: "0.35"
+  before_script:
+    # Same toolchain as test-backend: better-sqlite3 is a native module and the
+    # services under test are required whole, so this job cannot --ignore-scripts.
+    - apt-get update && apt-get install -y --no-install-recommends python3 make g++
+  script:
+    - cd backend
+    - npm ci
+    - node -e "const {Pool}=require('pg');const p=new Pool({connectionString:process.env.ANALYTICS_MIGRATE_DSN});p.query('CREATE ROLE bottleai_writer NOLOGIN').then(()=>p.end()).catch(e=>{console.error(e.message);process.exit(1)})"
+    - node database/migrate.js analytics
+    - npm run test:db
+
+# ---------- build & push images (shared runners, any branch) ----------
+.docker-build:
+  stage: build
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  rules:
+    - if: '$CI_COMMIT_BRANCH'          # build on ANY branch push (not just main)
+  # An image cannot exist for a commit the tests rejected.
+  needs:
+    - test-backend
+    - test-frontend
+    - test-python
+    - test-migrations
+    - test-backend-db
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+
+build-backend:
+  extends: .docker-build
+  script:
+    # Tag by immutable SHA and by branch slug (e.g. :cicd-changes) so you can pull
+    # a branch build for the parallel test. :latest is pushed ONLY from main, so a
+    # branch build never affects what production defaults to.
+    - docker pull "$BACKEND_IMAGE:latest" || true
+    # Context is the REPOSITORY ROOT, not backend/: the image also carries the
+    # pipeline scripts the nightly gate and calibration jobs run, which live in
+    # the sibling Botella_External_APIs checkout. The root .dockerignore keeps
+    # the context small. See backend/Dockerfile.
+    - docker build --cache-from "$BACKEND_IMAGE:latest"
+        -f backend/Dockerfile
+        -t "$BACKEND_IMAGE:$CI_COMMIT_SHA" -t "$BACKEND_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$BACKEND_IMAGE:$CI_COMMIT_SHA"
+    - docker push "$BACKEND_IMAGE:$CI_COMMIT_REF_SLUG"
+    - |
+      if [ "$CI_COMMIT_BRANCH" = "main" ]; then
+        docker tag "$BACKEND_IMAGE:$CI_COMMIT_SHA" "$BACKEND_IMAGE:latest"
+        docker push "$BACKEND_IMAGE:latest"
+      fi
+
+build-frontend:
+  extends: .docker-build
+  script:
+    # main is the only branch `deploy` will ship, so main is the only branch that
+    # builds a production bundle. A qa/* branch builds QA; everything else is
+    # staging. Both internal environments carry the tester-facing tools (the
+    # per-figure SQL reveal, Generate Insights). CRA bakes this at build time,
+    # so it has to be decided here rather than at container start.
+    - |
+      case "$CI_COMMIT_BRANCH" in
+        main)   APP_ENV=production ;;
+        qa|qa/*) APP_ENV=qa ;;
+        *)      APP_ENV=staging ;;
+      esac
+      echo "building frontend as REACT_APP_ENV=$APP_ENV"
+    - docker pull "$FRONTEND_IMAGE:latest" || true
+    - docker build --cache-from "$FRONTEND_IMAGE:latest"
+        --build-arg REACT_APP_API_URL=/api
+        --build-arg REACT_APP_ENV="$APP_ENV"
+        --build-arg REACT_APP_SHOW_CARD_STATEMENTS="${SHOW_CARD_STATEMENTS:-}"
+        -t "$FRONTEND_IMAGE:$CI_COMMIT_SHA" -t "$FRONTEND_IMAGE:$CI_COMMIT_REF_SLUG" frontend
+    - docker push "$FRONTEND_IMAGE:$CI_COMMIT_SHA"
+    - docker push "$FRONTEND_IMAGE:$CI_COMMIT_REF_SLUG"
+    - |
+      if [ "$CI_COMMIT_BRANCH" = "main" ]; then
+        docker tag "$FRONTEND_IMAGE:$CI_COMMIT_SHA" "$FRONTEND_IMAGE:latest"
+        docker push "$FRONTEND_IMAGE:latest"
+      fi
+
+# ---------- deploy on the EC2 box via a self-hosted runner (main only) ----------
+# These jobs carry `tags: [ec2]`, so they run on the self-hosted runner installed
+# ON the box (shell executor). The runner dials OUT to GitLab — no inbound SSH and
+# no security-group change. The deploy runs docker compose locally on the box.
+
+# Zero-risk pre-flight: proves the box runner works and can use docker + the
+# registry. Run this manual job first; if it's green, the real deploy will work.
+preflight:
+  stage: deploy
+  tags: [ec2]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: manual
+  script:
+    - echo "runner on $(hostname) as $(whoami)"
+    - docker --version
+    - docker compose version
+    - docker ps >/dev/null && echo "docker access OK"
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    - echo "registry login OK"
+
+deploy:
+  stage: deploy
+  tags: [ec2]                     # run on the box's self-hosted runner
+  resource_group: production      # serialize deploys
+  rules:
+    # Main only, manual. Runs docker compose ON the box (no SSH). Always targets
+    # PRODUCTION, pinned to this pipeline's $CI_COMMIT_SHA. The deploy binds host
+    # :3000/:8080, so stop the old pm2 app first. Drop `when: manual` to auto-deploy.
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      when: manual
+  # The builds need the tests, so this cannot be started for a commit that
+  # failed any of them - the manual button is simply absent until they pass.
+  needs:
+    - build-backend
+    - build-frontend
+  variables:
+    # Stable, runner-independent home for the running stack. NOT the CI build
+    # directory: that path embeds a runner build id, is mode 700 (so `ubuntu`
+    # can't read it), and the runner may clean or relocate it between pipelines.
+    # Deploying from there leaves production unoperable by hand afterwards.
+    # Mirrors how the Python service already keeps its prod env in /opt/botella.
+    DEPLOY_DIR: /opt/botella/node
+  script:
+    # One-time setup on the box (the runner cannot create this itself):
+    #   sudo install -d -o gitlab-runner -g gitlab-runner -m 755 /opt/botella/node
+    - |
+      test -w "$DEPLOY_DIR" || {
+        echo "FATAL: $DEPLOY_DIR is missing or not writable by $(whoami)."
+        echo "Run on the box: sudo install -d -o gitlab-runner -g gitlab-runner -m 755 $DEPLOY_DIR"
+        exit 1
+      }
+    # Ship the compose file from this commit to the stable directory, then work
+    # entirely from there (env_file/.env paths are relative to the compose file).
+    - cp "$CI_PROJECT_DIR/deploy/docker-compose.prod.yml" "$DEPLOY_DIR/"
+    - cd "$DEPLOY_DIR"
+    # Registry auth via the job token (pull access to this project's registry).
+    - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
+    # App secrets + image pins, next to the compose file (env_file is relative to it).
+    - echo "$BACKEND_ENV_B64" | base64 -d > backend.env
+    - chmod 600 backend.env
+    - printf 'BACKEND_IMAGE=%s\nFRONTEND_IMAGE=%s\nBACKEND_TAG=%s\nFRONTEND_TAG=%s\n' "$BACKEND_IMAGE" "$FRONTEND_IMAGE" "$CI_COMMIT_SHA" "$CI_COMMIT_SHA" > .env
+    # Stable project name so named volumes/containers persist across deploys.
+    - docker compose -p botella -f docker-compose.prod.yml pull
+    - docker compose -p botella -f docker-compose.prod.yml up -d
+    - sleep 8
+    - curl -fsS http://127.0.0.1:8080/api/health
+    # Upstream reachability, checked FROM INSIDE the backend container. The health
+    # check above only proves Node is up; it says nothing about whether Node can
+    # reach the Python service. Both URLs default to localhost in code, which
+    # inside a container is the container itself — so a missing variable is
+    # invisible at deploy time and only surfaces hours later as a failed cron.
+    # Fail the deploy here instead.
+    - |
+      docker compose -p botella -f docker-compose.prod.yml exec -T backend sh -c '
+        set -e
+        test -n "$REC_SERVICE_URL"    || { echo "REC_SERVICE_URL is not set";    exit 1; }
+        test -n "$STOREAGENT_API_URL" || { echo "STOREAGENT_API_URL is not set"; exit 1; }
+        curl -fsS "$REC_SERVICE_URL/health" > /dev/null
+        echo "backend -> python reachable at $REC_SERVICE_URL"
+        # Key checks. Node holds TWO separate keys that must both equal the Python
+        # side SERVICE_API_KEY, and they drift independently. /auth-check exists
+        # precisely for this: it is the only authenticated endpoint that costs
+        # nothing (every other one burns an LLM call or hits the Anthropic API).
+        curl -fsS -H "X-API-Key: $REC_SERVICE_API_KEY" "$REC_SERVICE_URL/auth-check" > /dev/null
+        echo "backend -> rec service authenticated OK"
+        # /storeagent/* is key-guarded, so this covers the second key.
+        curl -fsS -H "X-API-Key: $STOREAGENT_API_KEY" "$STOREAGENT_API_URL/health" > /dev/null
+        echo "backend -> storeagent authenticated OK"
+      '
+    - docker image prune -f

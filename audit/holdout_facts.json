@@ -1,0 +1,91 @@
+{
+ "generated": "2026-10-09T07:18:55.042Z",
+ "stores": [
+  171,
+  176,
+  177,
+  178,
+  181
+ ],
+ "cards": [
+  {
+   "location_id": 171,
+   "cards": 315,
+   "withheld": 62,
+   "shown": 253,
+   "voted": 0,
+   "claimed": 0,
+   "first_issued": "2026-08-24T18:30:00.000Z",
+   "last_issued": "2026-10-07T18:30:00.000Z"
+  },
+  {
+   "location_id": 176,
+   "cards": 10,
+   "withheld": 1,
+   "shown": 9,
+   "voted": 0,
+   "claimed": 0,
+   "first_issued": "2026-10-07T18:30:00.000Z",
+   "last_issued": "2026-10-07T18:30:00.000Z"
+  },
+  {
+   "location_id": 177,
+   "cards": 9,
+   "withheld": 1,
+   "shown": 8,
+   "voted": 0,
+   "claimed": 0,
+   "first_issued": "2026-10-07T18:30:00.000Z",
+   "last_issued": "2026-10-07T18:30:00.000Z"
+  },
+  {
+   "location_id": 178,
+   "cards": 5,
+   "withheld": 1,
+   "shown": 4,
+   "voted": 0,
+   "claimed": 0,
+   "first_issued": "2026-10-07T18:30:00.000Z",
+   "last_issued": "2026-10-07T18:30:00.000Z"
+  },
+  {
+   "location_id": 181,
+   "cards": 10,
+   "withheld": 3,
+   "shown": 7,
+   "voted": 0,
+   "claimed": 0,
+   "first_issued": "2026-10-07T18:30:00.000Z",
+   "last_issued": "2026-10-07T18:30:00.000Z"
+  }
+ ],
+ "outcomes": [
+  {
+   "location_id": 171,
+   "arm": "shown",
+   "scored": 600,
+   "with_lift": 140,
+   "avg_lift": "0.8650",
+   "purchases_seen": 0,
+   "purchase_evidence": 0,
+   "delivery_evidence": 0,
+   "stock_at_issue": 0
+  },
+  {
+   "location_id": 171,
+   "arm": "withheld",
+   "scored": 176,
+   "with_lift": 0,
+   "avg_lift": null,
+   "purchases_seen": 0,
+   "purchase_evidence": 0,
+   "delivery_evidence": 0,
+   "stock_at_issue": 0
+  }
+ ],
+ "preconditions": {
+  "both_arms_have_cards": true,
+  "both_arms_have_scored_lift": false,
+  "any_owner_action_recorded": false
+ }
+}

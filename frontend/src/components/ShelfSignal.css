@@ -1,0 +1,346 @@
+/* =============================================================================
+   SHELF SIGNAL - the signature visual
+   -----------------------------------------------------------------------------
+   Everything else on the page stays quiet so this can move. Pure CSS: no canvas,
+   no images, no JS animation loop, fixed aspect so there is zero layout shift.
+   ============================================================================= */
+
+.ss {
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+
+.ss-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* -- Frame ------------------------------------------------------------- */
+.ss-frame {
+  position: relative;
+  border: 1px solid var(--bx-border);
+  border-radius: var(--bx-radius-lg);
+  background:
+    radial-gradient(120% 90% at 78% -10%, rgba(139, 92, 246, 0.22), transparent 62%),
+    linear-gradient(168deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012));
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  padding: clamp(16px, 1.8vw, 24px);
+  box-shadow: var(--bx-shadow);
+  overflow: hidden;
+  isolation: isolate;
+}
+[data-theme="light"] .ss-frame {
+  background:
+    radial-gradient(120% 90% at 78% -10%, rgba(139, 92, 246, 0.16), transparent 62%),
+    linear-gradient(168deg, #FFFFFF, #F5F1FE);
+}
+/* ...EXCEPT inside a dark section. `.bx-sec-dark` pins --bx-text to white in
+   BOTH themes so the band reads as inverted either way, so painting the frame
+   white in there put white type on a white panel and the whole agent feed
+   disappeared on the light theme. One extra class out-ranks the rule above and
+   keeps the frame on the dark material its text is coloured for. */
+[data-theme="light"] .bx-sec-dark .ss-frame {
+  background:
+    radial-gradient(120% 90% at 78% -10%, rgba(139, 92, 246, 0.22), transparent 62%),
+    linear-gradient(168deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.012));
+}
+
+/* Faint grid behind the shelves - reads as a planogram. */
+.ss-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, currentColor 1px, transparent 1px),
+    linear-gradient(to bottom, currentColor 1px, transparent 1px);
+  background-size: 34px 34px;
+  color: var(--bx-text);
+  opacity: 0.045;
+}
+
+.ss-frame > * { position: relative; z-index: 1; }
+
+/* -- Head bar ---------------------------------------------------------- */
+.ss-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--bx-border);
+  font-family: var(--bx-font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--bx-muted);
+}
+.ss-head-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--bx-jade);
+  font-weight: 500;
+}
+.ss-head-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 0 rgba(31, 163, 126, 0.55);
+  animation: ss-ping 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes ss-ping {
+  0% { box-shadow: 0 0 0 0 rgba(31, 163, 126, 0.5); }
+  70% { box-shadow: 0 0 0 8px rgba(31, 163, 126, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(31, 163, 126, 0); }
+}
+.ss-head-title { color: var(--bx-text-2); }
+.ss-head-meta { margin-left: auto; }
+
+/* -- Shelves ----------------------------------------------------------- */
+.ss-shelves {
+  position: relative;
+  display: grid;
+  gap: clamp(10px, 1.2vw, 16px);
+  padding: clamp(14px, 1.6vw, 22px) 0 clamp(10px, 1.2vw, 16px);
+  overflow: hidden;
+}
+
+.ss-shelf { display: grid; gap: 6px; }
+
+.ss-bars {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  align-items: end;
+  gap: clamp(4px, 0.7vw, 9px);
+  height: clamp(56px, 7vw, 88px);
+}
+.ss-shelves.is-compact .ss-bars { height: clamp(40px, 4.4vw, 58px); }
+
+.ss-bar {
+  display: block;
+  height: var(--h);
+  min-height: 8px;
+  border-radius: 3px 3px 1px 1px;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.16));
+  border: 1px solid var(--bx-border);
+  transform-origin: bottom center;
+  animation: ss-grow 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--i);
+}
+[data-theme="light"] .ss-bar {
+  background: linear-gradient(to top, rgba(11, 13, 20, 0.05), rgba(11, 13, 20, 0.12));
+}
+@keyframes ss-grow {
+  from { transform: scaleY(0.06); opacity: 0; }
+  to { transform: scaleY(1); opacity: 1; }
+}
+
+/* Moving fast = cyan, running out = fuchsia. Jade is held back for the "Live"
+   status dot alone, so status and data never read as the same signal. */
+.ss-bar.is-fast {
+  background: linear-gradient(to top, rgba(86, 204, 242, 0.32), rgba(86, 204, 242, 0.92));
+  border-color: rgba(86, 204, 242, 0.6);
+  box-shadow: 0 0 20px -4px rgba(86, 204, 242, 0.75);
+}
+.ss-bar.is-low {
+  background: linear-gradient(to top, rgba(245, 139, 198, 0.34), rgba(245, 139, 198, 0.95));
+  border-color: rgba(245, 139, 198, 0.7);
+  box-shadow: 0 0 22px -4px rgba(245, 139, 198, 0.85);
+  animation: ss-grow 1.1s cubic-bezier(0.22, 1, 0.36, 1) both,
+             ss-flag 2.8s ease-in-out infinite 1.4s;
+}
+@keyframes ss-flag {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.45); }
+}
+.ss-bar.is-dead {
+  background: transparent;
+  border: 1px dashed var(--bx-border-strong);
+  opacity: 0.55;
+}
+
+.ss-plank {
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--bx-border-strong) 12%,
+    var(--bx-border-strong) 88%,
+    transparent
+  );
+}
+
+/* Scan line - the agent sweeping the catalog. */
+.ss-scan {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -20%;
+  width: 22%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(196, 166, 255, 0.2),
+    rgba(196, 166, 255, 0.04),
+    transparent
+  );
+  animation: ss-sweep 7.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes ss-sweep {
+  0% { transform: translateX(0); opacity: 0; }
+  8% { opacity: 1; }
+  75% { opacity: 1; }
+  100% { transform: translateX(560%); opacity: 0; }
+}
+
+/* -- Readout (hero variant) ------------------------------------------- */
+.ss-readout {
+  border-top: 1px solid var(--bx-border);
+  padding-top: clamp(14px, 1.6vw, 20px);
+  display: grid;
+  gap: 14px;
+}
+.ss-readout-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.ss-stat {
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: var(--bx-radius-sm);
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+}
+.ss-stat-v {
+  font-family: var(--bx-font-display);
+  font-size: clamp(1.35rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.ss-stat-l {
+  font-family: var(--bx-font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bx-muted);
+}
+.ss-tone-violet .ss-stat-v { color: var(--bx-accent); }
+.ss-tone-fuchsia .ss-stat-v { color: var(--bx-fuchsia); }
+.ss-tone-cyan .ss-stat-v { color: var(--bx-cyan); }
+.ss-tone-jade .ss-stat-v { color: var(--bx-jade); }
+.ss-tone-muted .ss-stat-v { color: var(--bx-text-2); }
+[data-theme="light"] .ss-tone-violet .ss-stat-v { color: var(--bx-accent); }
+.ss-tone-fuchsia .ss-stat-v { color: var(--bx-fuchsia); }
+.ss-tone-cyan .ss-stat-v { color: var(--bx-cyan); }
+
+.ss-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  font-family: var(--bx-font-mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bx-muted);
+}
+.ss-legend-item { display: inline-flex; align-items: center; gap: 7px; }
+.ss-legend-key {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  border: 1px solid var(--bx-border-strong);
+}
+.ss-legend-key.is-fast { background: rgba(86, 204, 242, 0.9); border-color: rgba(86, 204, 242, 0.9); }
+.ss-legend-key.is-low { background: rgba(245, 139, 198, 0.92); border-color: rgba(245, 139, 198, 0.92); }
+.ss-legend-key.is-dead { background: transparent; border-style: dashed; }
+
+/* -- Agent feed (console variant) ------------------------------------- */
+.ss-feed {
+  list-style: none;
+  margin: 0;
+  padding: clamp(14px, 1.6vw, 18px) 0 0;
+  border-top: 1px solid var(--bx-border);
+  display: grid;
+  gap: 8px;
+}
+.ss-feed-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: var(--bx-radius-sm);
+  background: var(--bx-surface);
+  border: 1px solid var(--bx-border);
+  border-left: 2px solid var(--bx-border-strong);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--bx-text-2);
+  animation: ss-slide 0.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--i) + 0.4s);
+}
+@keyframes ss-slide {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: none; }
+}
+.ss-feed-tag {
+  flex: none;
+  font-family: var(--bx-font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding-top: 3px;
+  min-width: 74px;
+  color: var(--bx-muted);
+}
+.ss-feed-text { color: var(--bx-text); }
+
+.ss-feed-row.ss-tone-violet { border-left-color: var(--bx-violet); }
+.ss-feed-row.ss-tone-jade { border-left-color: var(--bx-jade); }
+.ss-feed-row.ss-tone-cyan { border-left-color: var(--bx-cyan); }
+.ss-feed-row.ss-tone-fuchsia { border-left-color: var(--bx-fuchsia); }
+.ss-feed-row.ss-tone-muted { border-left-color: var(--bx-border-strong); }
+
+.ss-feed-row.ss-tone-violet .ss-feed-tag { color: var(--bx-accent); }
+.ss-feed-row.ss-tone-jade .ss-feed-tag { color: var(--bx-jade); }
+.ss-feed-row.ss-tone-cyan .ss-feed-tag { color: var(--bx-cyan); }
+.ss-feed-row.ss-tone-fuchsia .ss-feed-tag { color: var(--bx-fuchsia); }
+
+/* -- Responsive -------------------------------------------------------- */
+@media (max-width: 620px) {
+  .ss-bars { grid-template-columns: repeat(8, 1fr); }
+  .ss-bar:nth-child(n + 9) { display: none; }
+  .ss-readout-row { grid-template-columns: repeat(3, 1fr); gap: 7px; }
+  .ss-stat { padding: 10px; }
+  .ss-feed-row { flex-direction: column; gap: 4px; }
+  .ss-feed-tag { padding-top: 0; }
+  .ss-head-meta { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ss-scan { display: none; }
+  .ss-bar,
+  .ss-feed-row,
+  .ss-head-dot {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

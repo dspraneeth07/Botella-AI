@@ -1,0 +1,125 @@
+/* PoEffectiveness.css
+   -----------------------------------------------------------------------------
+   The purchase-order effectiveness report - blue/teal elite system, scoped
+   under .poe-*. Every colour aliases onto the shared app tokens, which flip
+   themselves, so there is no per-theme block here.
+   ------------------------------------------------------------------------- */
+
+.poe-page {
+  --p-card: #FFFFFF;
+  --p-bg: #F7F8FA;
+  --p-border: #EAEEF3;
+  --p-border-soft: #F0F3F7;
+  --p-text: #0F172A;
+  --p-soft: #64748B;
+  --p-muted: #94A3B8;
+  --p-blue: var(--accent);
+  --p-blue-ink: var(--accent);
+  --p-teal: var(--green);
+  --p-green: #067647;
+  --p-green-bg: #DCFCE7;
+  --p-red: #B42318;
+  --p-red-bg: #FEE4E2;
+  --p-chip: var(--text-primary);
+  --p-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 4px 16px -10px rgba(16, 24, 40, 0.12);
+
+  background: var(--p-bg);
+  color: var(--p-text);
+  padding: 22px 24px 44px;
+  box-sizing: border-box;
+  /* Fill the RecommendationsView sub-panel (a flex column) and scroll its own
+     content - same pattern as .sp-container / .sa-panel siblings. */
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Header */
+.poe-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.poe-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--p-blue-ink); }
+.poe-title { font-size: 1.4rem; font-weight: 750; letter-spacing: -0.02em; margin: 8px 0 4px; }
+.poe-sub { margin: 0; font-size: 0.9rem; line-height: 1.5; color: var(--p-soft); max-width: 62ch; }
+.poe-windows { display: inline-flex; gap: 3px; padding: 3px; background: var(--p-chip); border: 1px solid var(--p-border-soft); border-radius: 10px; }
+.poe-win { appearance: none; border: none; cursor: pointer; font: inherit; font-size: 0.82rem; font-weight: 600; padding: 6px 13px; border-radius: 8px; color: var(--p-soft); background: transparent; transition: background 0.2s, color 0.2s; }
+.poe-win:hover { color: var(--p-text); }
+.poe-win.is-on { background: var(--p-card); color: var(--p-blue-ink); box-shadow: 0 1px 3px rgba(16,24,40,0.12); }
+
+/* KPI band */
+.poe-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.poe-kpi { background: var(--p-card); border: 1px solid var(--p-border); border-radius: 16px; padding: 16px 18px; box-shadow: var(--p-shadow); min-width: 0; }
+.poe-kpi-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.poe-kpi-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--p-soft); }
+.poe-kpi-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; color: #fff; flex: 0 0 auto; }
+.poe-tone-blue .poe-kpi-icon { background: linear-gradient(145deg, var(--accent-light), var(--accent)); }
+.poe-tone-teal .poe-kpi-icon { background: linear-gradient(145deg, var(--green), var(--green)); }
+.poe-kpi-value { font-size: 1.7rem; font-weight: 760; letter-spacing: -0.03em; margin: 12px 0 2px; }
+.poe-kpi-meta { font-size: 0.75rem; color: var(--p-muted); }
+
+/* Verdict pills */
+.poe-verdicts { display: flex; flex-wrap: wrap; gap: 8px; }
+.poe-vpill { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 650; padding: 5px 12px; border-radius: 999px; background: var(--p-chip); color: var(--p-soft); }
+.poe-vpill.poe-good { color: var(--p-green); background: var(--p-green-bg); }
+.poe-vpill.poe-bad { color: var(--p-red); background: var(--p-red-bg); }
+
+/* Cards */
+.poe-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.poe-card { background: var(--p-card); border: 1px solid var(--p-border); border-radius: 18px; padding: 18px 20px; box-shadow: var(--p-shadow); min-width: 0; }
+.poe-card-head { margin-bottom: 12px; }
+.poe-kicker { display: inline-flex; align-items: center; gap: 6px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--p-muted); }
+.poe-kicker-good { color: var(--p-teal); }
+.poe-kicker-bad { color: var(--p-red); }
+.poe-card-head h3 { font-size: 1.02rem; font-weight: 700; margin: 4px 0 0; }
+
+.poe-reclist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.poe-recitem { border: 1px solid var(--p-border-soft); border-radius: 12px; padding: 11px 13px; }
+.poe-rec-main { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.poe-rec-name { font-weight: 650; font-size: 0.9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.poe-rec-verdict { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 8px; border-radius: 6px; flex: 0 0 auto; }
+.poe-rec-verdict.poe-good { color: var(--p-green); background: var(--p-green-bg); }
+.poe-rec-verdict.poe-bad { color: var(--p-red); background: var(--p-red-bg); }
+.poe-rec-verdict.poe-flat { color: var(--p-muted); background: var(--p-chip); }
+.poe-rec-stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; font-size: 0.78rem; color: var(--p-soft); }
+.poe-rec-rev { margin-left: auto; font-weight: 700; color: var(--p-text); }
+.poe-list-empty { padding: 22px 8px; text-align: center; color: var(--p-muted); font-size: 0.85rem; }
+
+/* Learning */
+.poe-learn-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.poe-learn-h { display: flex; align-items: center; gap: 6px; font-size: 0.76rem; font-weight: 700; margin-bottom: 8px; }
+.poe-learn-h.poe-good { color: var(--p-teal); }
+.poe-learn-h.poe-bad { color: var(--p-red); }
+.poe-learn-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.poe-learn-list li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 6px 10px; border-radius: 8px; background: var(--p-chip); }
+.poe-learn-name { font-size: 0.84rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.poe-learn-score { font-size: 0.8rem; font-weight: 700; flex: 0 0 auto; }
+.poe-learn-score.poe-good { color: var(--p-teal); }
+.poe-learn-score.poe-bad { color: var(--p-red); }
+.poe-learn-empty { font-size: 0.82rem; color: var(--p-muted); margin: 4px 0 0; }
+
+/* Empty / states */
+.poe-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 48px 24px; background: var(--p-card); border: 1px solid var(--p-border); border-radius: 18px; box-shadow: var(--p-shadow); color: var(--p-muted); }
+.poe-empty h3 { font-size: 1.1rem; font-weight: 700; color: var(--p-text); margin: 0; }
+.poe-empty p { font-size: 0.9rem; line-height: 1.6; max-width: 60ch; margin: 0; }
+.poe-seed-btn {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 6px;
+  font: inherit; font-size: 0.9rem; font-weight: 650; cursor: pointer; color: #fff; border: none;
+  padding: 11px 20px; border-radius: 11px;
+  background: linear-gradient(100deg, var(--accent), var(--green) 150%);
+  box-shadow: 0 10px 24px -12px rgba(124, 58, 237, 0.6); transition: transform 0.2s, box-shadow 0.2s;
+}
+.poe-seed-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 16px 30px -14px rgba(124, 58, 237, 0.7); }
+.poe-seed-btn:disabled { opacity: 0.7; cursor: default; }
+.poe-seed-note { font-size: 0.82rem; color: var(--p-soft); margin: 4px 0 0; }
+.poe-foot { text-align: center; font-size: 0.76rem; color: var(--p-muted); margin: 6px 0 0; }
+.poe-loading { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 60px; color: var(--p-soft); }
+.poe-spin { animation: poe-spin 0.9s linear infinite; }
+@keyframes poe-spin { to { transform: rotate(360deg); } }
+.poe-error { display: flex; align-items: center; gap: 10px; justify-content: center; margin: 50px auto; max-width: 520px; padding: 18px 22px; border: 1px solid var(--p-border); border-radius: 14px; background: var(--p-card); }
+.poe-error button { margin-left: 6px; font: inherit; font-weight: 600; cursor: pointer; padding: 6px 14px; border-radius: 9px; border: none; color: #fff; background: var(--p-blue); }
+
+/* Responsive */
+@media (max-width: 1024px) { .poe-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .poe-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .poe-kpis { grid-template-columns: minmax(0, 1fr); } .poe-learn-cols { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .poe-spin { animation: none; } }

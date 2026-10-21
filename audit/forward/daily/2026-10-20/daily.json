@@ -1,0 +1,186 @@
+{
+  "as_of": "2026-10-20",
+  "period_start": "2026-10-16",
+  "period_end": "2026-10-30",
+  "daily_run_number": 3,
+  "period_days": 15,
+  "pass": "post-generation",
+  "generation": {
+    "ok": 6,
+    "refused": 170,
+    "failed": 1,
+    "already": 62,
+    "stores_in_scope": 239
+  },
+  "cards_generated_today": 403,
+  "capture": {
+    "cards": 937,
+    "stores": 49,
+    "skus": 504,
+    "inserted": 26,
+    "already_captured": 455,
+    "without_product": 23,
+    "observed_stockouts": 315
+  },
+  "runs": [
+    {
+      "label": "period",
+      "window_mode": "fixed",
+      "run_id": "301",
+      "since": "2026-10-16",
+      "cards": 937,
+      "scored": 0,
+      "pending": 937,
+      "no_data": 0,
+      "rar_pct": null,
+      "rar_ci95": [
+        null,
+        null
+      ],
+      "met_forecast_rate_pct": null,
+      "median_velocity_ratio": null,
+      "ite": null,
+      "net_financial_impact": 0,
+      "counts": {
+        "successful": 0,
+        "partial_absorption": 0,
+        "overstocked": 0,
+        "understocked": 0,
+        "unutilized": 0,
+        "no_data": 0,
+        "pending": 937
+      }
+    },
+    {
+      "label": "period",
+      "window_mode": "intended",
+      "run_id": "302",
+      "since": "2026-10-16",
+      "cards": 937,
+      "scored": 0,
+      "pending": 937,
+      "no_data": 0,
+      "rar_pct": null,
+      "rar_ci95": [
+        null,
+        null
+      ],
+      "met_forecast_rate_pct": null,
+      "median_velocity_ratio": null,
+      "ite": null,
+      "net_financial_impact": 0,
+      "counts": {
+        "successful": 0,
+        "partial_absorption": 0,
+        "overstocked": 0,
+        "understocked": 0,
+        "unutilized": 0,
+        "no_data": 0,
+        "pending": 937
+      }
+    },
+    {
+      "label": "trailing30",
+      "window_mode": "fixed",
+      "run_id": "303",
+      "since": "2026-09-20",
+      "cards": 1204,
+      "scored": 244,
+      "pending": 960,
+      "no_data": 0,
+      "rar_pct": 0.8,
+      "rar_ci95": [
+        0.2,
+        2.9
+      ],
+      "met_forecast_rate_pct": 24,
+      "median_velocity_ratio": 0.299,
+      "ite": 0.216,
+      "net_financial_impact": 3965.48,
+      "counts": {
+        "successful": 2,
+        "partial_absorption": 15,
+        "overstocked": 117,
+        "understocked": 13,
+        "unutilized": 97,
+        "no_data": 0,
+        "pending": 960
+      }
+    },
+    {
+      "label": "trailing30",
+      "window_mode": "intended",
+      "run_id": "304",
+      "since": "2026-09-20",
+      "cards": 1204,
+      "scored": 35,
+      "pending": 1167,
+      "no_data": 2,
+      "rar_pct": 8.6,
+      "rar_ci95": [
+        3,
+        22.4
+      ],
+      "met_forecast_rate_pct": 8.6,
+      "median_velocity_ratio": 0.774,
+      "ite": 0.347,
+      "net_financial_impact": 930.46,
+      "counts": {
+        "successful": 3,
+        "partial_absorption": 21,
+        "overstocked": 10,
+        "understocked": 0,
+        "unutilized": 1,
+        "no_data": 2,
+        "pending": 1167
+      }
+    }
+  ],
+  "confidence": {
+    "definition": "score = measured performance x evidence sufficiency (a product, not an average); both halves are printed; a component with no measurement behind it is omitted, never scored 50",
+    "performance": {
+      "components": [],
+      "score": null,
+      "note": "no scored card yet, so no performance can be measured"
+    },
+    "sufficiency": {
+      "components": [
+        {
+          "key": "scored_cards",
+          "label": "Cards with a measured outcome",
+          "score": 0,
+          "detail": "0 scored cards against the 100 at which a rate first narrows enough to quote"
+        },
+        {
+          "key": "closed_windows",
+          "label": "Fixed windows closed",
+          "score": 0,
+          "detail": "0 of 937 cards have a closed 7-open-day window"
+        },
+        {
+          "key": "intended_closed",
+          "label": "Intended horizons closed",
+          "score": 0,
+          "detail": "0 of 937 cards have lived through the cover they were sized for"
+        },
+        {
+          "key": "period_coverage",
+          "label": "Mornings of the period run",
+          "score": 20,
+          "detail": "3 of 15 daily runs have happened"
+        },
+        {
+          "key": "shelf_observed",
+          "label": "Cards with an observed shelf count today",
+          "score": 94.66382070437567,
+          "detail": "887 of 937 cards have a captured stock_qty for today"
+        }
+      ],
+      "score": 22.9
+    },
+    "engine_confidence": 0,
+    "band": "insufficient evidence"
+  },
+  "observed_stockouts_on_cards": 609,
+  "shelf_covered_cards": 887
+}

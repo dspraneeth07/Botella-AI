@@ -1,0 +1,41 @@
+# PARALLEL SMOKE-TEST stack. Pulls the SAME registry images as production but on
+# ALTERNATE host ports, so it runs beside the live pm2/nginx app without touching
+# it. Run under its own project name so it can never clash with the prod stack:
+#
+#   cd /home/ubuntu/apps/botella-test
+#   docker compose -p botella-test -f docker-compose.test.yml up -d
+#
+# Needs, in the same directory:
+#   backend.env   production values, with ANALYTICS_PG_HOST=host.docker.internal
+#   .env          BACKEND_IMAGE / FRONTEND_IMAGE / BACKEND_TAG / FRONTEND_TAG
+#
+# NOTE: this test uses your real production DBs (read-only smoke test — log in,
+# view dashboards; don't create junk data). The Python service's callback still
+# hits the live pm2 backend on :3000, which is fine (read-only).
+services:
+  backend:
+    image: ${BACKEND_IMAGE}:${BACKEND_TAG:-latest}
+    env_file: ./backend.env
+    environment:
+      # Both paths need the host escape hatch — see docker-compose.prod.yml.
+      STOREAGENT_API_URL: http://host.docker.internal:8000/storeagent
+      REC_SERVICE_URL: http://host.docker.internal:8000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "127.0.0.1:3010:3000"    # ALT port — pm2 still owns host :3000
+    restart: "no"
+    networks: [botella-test]
+
+  frontend:
+    image: ${FRONTEND_IMAGE}:${FRONTEND_TAG:-latest}
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:8090:80"      # ALT port — host nginx / :8080 untouched
+    restart: "no"
+    networks: [botella-test]
+
+networks:
+  botella-test:
+    driver: bridge

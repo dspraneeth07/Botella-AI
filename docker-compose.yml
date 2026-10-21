@@ -1,0 +1,75 @@
+# Local + on-box TEST stack. Builds images from source and lets you pick host
+# ports so it can run ALONGSIDE the live pm2/nginx app without colliding.
+#
+# On-box parallel smoke test (does NOT touch production):
+#   BACKEND_HOST_PORT=3010 FRONTEND_HOST_PORT=8090 docker compose up -d --build
+#
+# The Python recommendation service is deployed separately (its own compose);
+# both stacks talk over the host via host.docker.internal. That name resolves to
+# the docker bridge gateway, so the backend must be published on all interfaces
+# for the Python container to call BACK into it:
+#   BACKEND_BIND_IP=0.0.0.0 docker compose up -d
+services:
+  backend:
+    build:
+      # Root context, not ./backend: the image carries the pipeline scripts the
+      # nightly gate and calibration jobs run. See backend/Dockerfile.
+      context: .
+      dockerfile: backend/Dockerfile
+    env_file: ./backend/.env
+    environment:
+      # Reach the Python service on the host. Both call paths (store-intelligence
+      # and recommendations) need this — their code defaults point at localhost,
+      # which inside a container is the container itself. Override either to aim
+      # this stack at a parallel Python instance, e.g.:
+      #   STOREAGENT_API_URL=http://host.docker.internal:8001/storeagent
+      #   REC_SERVICE_URL=http://host.docker.internal:8001
+      STOREAGENT_API_URL: ${STOREAGENT_API_URL:-http://host.docker.internal:8000/storeagent}
+      REC_SERVICE_URL: ${REC_SERVICE_URL:-http://host.docker.internal:8000}
+      # Apply pending analytics-DB migrations at container start (tracked in
+      # schema_migrations; non-fatal on failure). Set ANALYTICS_MIGRATE_DSN in
+      # backend/.env if the app role lacks schema-CREATE in this environment.
+      MIGRATE_ON_BOOT: ${MIGRATE_ON_BOOT:-true}
+    extra_hosts:
+      # Lets the container reach host-published services: the Python service on
+      # :8000 AND any Postgres running on the EC2 host (ANALYTICS_PG_HOST).
+      - "host.docker.internal:host-gateway"
+    ports:
+      # Loopback by default so a dev box never exposes the API. Set
+      # BACKEND_BIND_IP=0.0.0.0 when the Python service runs in its OWN compose
+      # project: it reaches Node via host.docker.internal, which resolves to the
+      # bridge gateway, and a gateway address CANNOT reach a 127.0.0.1-bound
+      # port — the connection fails with "All connection attempts failed".
+      # Only safe where the security group keeps 3000 closed (22/80/443 only).
+      - "${BACKEND_BIND_IP:-127.0.0.1}:${BACKEND_HOST_PORT:-3000}:3000"
+    restart: unless-stopped
+    networks: [botella]
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        REACT_APP_API_URL: /api
+        # qa | staging | production. Production is the DEFAULT and the fail-safe:
+        # the two internal values unlock the per-figure "show the query" control,
+        # which prints warehouse table and column names, and the Generate
+        # Insights button. A QA or staging box opts in by setting REACT_APP_ENV
+        # in the compose environment; anything that forgets gets the safe bundle.
+        REACT_APP_ENV: ${REACT_APP_ENV:-production}
+        # This compose file is the QA / demo box, so the store is renamed by
+        # DEFAULT here: a prospect watching QA must not see a pilot store's
+        # business name on the greeting or the sidebar. Production images are
+        # built by CI from deploy/docker-compose.prod.yml, which never passes
+        # this, so real owners keep their real name. Set it empty in the
+        # compose environment to show the real name on this box.
+        REACT_APP_DEMO_STORE_NAME: ${REACT_APP_DEMO_STORE_NAME-Demo Store}
+    depends_on:
+      - backend
+    ports:
+      - "127.0.0.1:${FRONTEND_HOST_PORT:-8080}:80"
+    restart: unless-stopped
+    networks: [botella]
+
+networks:
+  botella:
+    driver: bridge

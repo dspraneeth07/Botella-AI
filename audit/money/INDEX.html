@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>Money audits</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;margin:32px;color:#1a1713;background:#fbfaf7}
+table{border-collapse:collapse;width:100%}th,td{text-align:left;padding:6px 10px;border-bottom:1px solid #dfdad0;vertical-align:top}
+th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#6f675b}.bad{color:#be123c;font-weight:600}.good{color:#047857;font-weight:600}
+p{max-width:80ch}</style>
+<h1>Money audits</h1>
+<p>One row per store per run. "Lost" counts only cards the owner is CONFIRMED to have bought on whose net
+(incremental margin minus the holding cost of unsold units) came out negative after a closed window; a card nobody
+acted on cannot lose the store money. "Unconfirmed" cards have a net but no established purchase, and are attributed
+neither way. There is no estate line on purpose.</p>
+<table><thead><tr><th>Store</th><th>Loc</th><th>Run</th><th>Shown</th><th>Confirmed</th><th>Closed</th><th>Lost</th><th>Made</th>
+<th>Unconfirmed</th><th>Open</th><th>Unmeasurable</th><th>Net (closed, confirmed)</th><th>Largest loss</th><th>Open</th></tr></thead>
+<tbody><tr><td>Grapes and Grains</td><td>188</td><td>2026-10-19</td><td>0</td><td>0</td><td>0</td><td class="">0</td><td class="">0</td><td>0</td><td>0</td><td>0</td><td>n/a</td><td>none</td><td><a href="MONEY_AUDIT_188_2026-10-19.html">page</a> · <a href="MONEY_AUDIT_188_2026-10-19.json">json</a></td></tr>
+<tr><td>Tuscany</td><td>173</td><td>2026-10-19</td><td>29</td><td>2</td><td>0</td><td class="">0</td><td class="">0</td><td>0</td><td>29</td><td>0</td><td>n/a</td><td>none</td><td><a href="MONEY_AUDIT_173_2026-10-19.html">page</a> · <a href="MONEY_AUDIT_173_2026-10-19.json">json</a></td></tr>
+<tr><td>Bethany Discount Liquor</td><td>171</td><td>2026-10-19</td><td>276</td><td>118</td><td>253</td><td class="bad">6</td><td class="good">18</td><td>11</td><td>23</td><td>170</td><td>+$130.68 over 4</td><td>-$319.06 (card 34, 080480016210)</td><td><a href="MONEY_AUDIT_171_2026-10-19.html">page</a> · <a href="MONEY_AUDIT_171_2026-10-19.json">json</a></td></tr></tbody></table>
+<p>Generated 2026-10-19 09:37:12 UTC from the JSON beside each page. Run by hand: <code>node scripts/money-audit.js</code> (backend/).</p>

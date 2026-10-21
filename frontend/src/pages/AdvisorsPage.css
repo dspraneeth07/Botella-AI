@@ -1,0 +1,186 @@
+/* AdvisorsPage.css
+   -----------------------------------------------------------------------------
+   Scoped styles for /advisors. Everything is namespaced under .adv- and lives
+   inside the .bx design system, so it inherits the brand tokens (--bx-accent,
+   --bx-grad-signature, surfaces, borders) and both light + dark themes for
+   free. Only the advisor cards and avatars are defined here; hero, section and
+   CTA reuse the shared bx-/sp-/hp- classes.
+   ------------------------------------------------------------------------- */
+
+/* Responsive card grid. auto-fit + minmax means 2 advisors sit centred and a
+   3rd (or more) reflows onto the row with no markup change. */
+.adv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 22px;
+  max-width: 940px;
+  margin: 0 auto;
+}
+
+/* Two-card layouts read better a touch narrower and truly centred. */
+@media (min-width: 760px) {
+  .adv-grid { justify-content: center; }
+}
+
+.adv-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 34px 26px 28px;
+  border-radius: 20px;
+  background: var(--bx-surface, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--bx-border, rgba(255, 255, 255, 0.1));
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
+}
+
+.adv-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--bx-accent);
+  box-shadow: 0 18px 44px -22px rgba(109, 40, 217, 0.5);
+}
+
+/* ── Avatar ──────────────────────────────────────────────────────────────
+   A gradient ring around the photo (or the initials tile). The ring is the
+   card's element of brand; the photo sits inside it on a clean surface. */
+.adv-avatar {
+  --adv-size: 128px;
+  position: relative;
+  width: var(--adv-size);
+  height: var(--adv-size);
+  border-radius: 50%;
+  padding: 3px;
+  background: var(--bx-grad-signature, linear-gradient(104deg, #7C3AED, #9333EA));
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+  box-shadow: 0 10px 30px -12px rgba(109, 40, 217, 0.55);
+}
+
+.adv-avatar img,
+.adv-avatar-initials {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+.adv-avatar img {
+  object-fit: cover;
+  background: var(--bx-paper-100, #f3f0fb);
+}
+
+/* Initials fallback: brand gradient wordmark on ink, so a missing photo still
+   looks deliberate rather than broken. */
+.adv-avatar-initials {
+  display: grid;
+  place-items: center;
+  font-family: var(--bx-font-display, inherit);
+  font-weight: 700;
+  font-size: calc(var(--adv-size) * 0.34);
+  letter-spacing: 0.02em;
+  color: #fff;
+  background:
+    radial-gradient(120% 120% at 30% 20%, rgba(255, 255, 255, 0.18), transparent 60%),
+    var(--bx-grad-display, linear-gradient(104deg, #A21CAF, #6D28D9 48%, #4338CA));
+}
+
+/* ── Text ───────────────────────────────────────────────────────────────── */
+.adv-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 2px 0 0;
+  color: var(--bx-text, inherit);
+}
+
+.adv-role {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bx-accent);
+  margin: 4px 0 8px;
+}
+
+.adv-bio {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--bx-text-soft, rgba(255, 255, 255, 0.7));
+  margin: 0 0 16px;
+  max-width: 34ch;
+}
+
+/* ── LinkedIn pill ──────────────────────────────────────────────────────── */
+.adv-linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--bx-accent);
+  border: 1px solid var(--bx-border, rgba(255, 255, 255, 0.14));
+  background: transparent;
+  text-decoration: none;
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.adv-linkedin:hover {
+  color: var(--bx-accent-ink, #fff);
+  background: var(--bx-accent);
+  border-color: var(--bx-accent);
+  transform: translateY(-1px);
+}
+
+.adv-linkedin svg { flex: 0 0 auto; }
+
+.adv-linkedin .bx-link-arrow {
+  font-size: 0.85em;
+  opacity: 0.8;
+}
+
+/* ── Homepage advisors strip ──────────────────────────────────────────────
+   A compact, centred hand-off to /advisors. Reuses .adv-avatar for the faces
+   at a smaller size, so the two surfaces stay visually consistent. */
+.hp-advisors-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.hp-advisors-lead {
+  margin: 0 auto;
+  max-width: 56ch;
+}
+
+.hp-advisors-faces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin: 10px 0 6px;
+}
+
+.hp-advisor-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Smaller avatar for the strip. */
+.hp-advisor-face .adv-avatar { --adv-size: 84px; margin-bottom: 0; }
+
+.hp-advisor-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--bx-text, inherit);
+}

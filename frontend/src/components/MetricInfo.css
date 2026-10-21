@@ -1,0 +1,190 @@
+/* MetricInfo.css
+   -----------------------------------------------------------------------------
+   The ⓘ "what this means" popover and the staging-only query viewer.
+   Reads the shared app tokens, so it inherits the theme like everything else.
+   ============================================================================= */
+
+.mi-group { display: inline-flex; align-items: center; gap: 3px; vertical-align: middle; }
+.mi-wrap { position: relative; display: inline-flex; }
+
+.mi-btn {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  flex: none;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  vertical-align: middle;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.mi-btn:hover,
+.mi-btn:focus-visible,
+.mi-btn.is-open {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+/* The query viewer is a staging tool, so it is marked as one rather than
+   dressed to look like a normal product control. */
+.mi-btn-sql { border-style: dashed; }
+
+/* ── The popover ──────────────────────────────────────────────────────────── */
+/* Portalled to <body>, so it is positioned in viewport coordinates and cannot
+   be clipped by the rounded tile strip or a scrolling table wrapper. */
+.mi-pop {
+  position: fixed;
+  z-index: 1200;
+  /* Never inherit display typography from whatever mounted this. */
+  text-transform: none;
+  letter-spacing: normal;
+  font-family: var(--bx-font-body);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: max-content;
+  /* Snug around its words: a readable 13.5px in a box only as roomy as it
+     needs (12.5px text in 12-14px padding and 300px read as a big, empty
+     box); min() so it can never overflow a phone. */
+  max-width: min(264px, calc(100vw - 24px));
+  padding: 8px 11px 9px;
+  text-align: left;
+  white-space: normal;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 14px 36px -18px rgba(0, 0, 0, .75);
+}
+/* A small pointer back at the trigger, offset by the amount the popover was
+   clamped, so it still points at the icon near a screen edge. */
+.mi-pop::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: var(--mi-arrow, 50%);
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  background: var(--bg-elevated);
+  border-left: 1px solid var(--border);
+  border-top: 1px solid var(--border);
+  transform: rotate(45deg);
+}
+.mi-pop-title {
+  font-family: var(--bx-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.mi-pop-text {
+  font-size: 13.5px;
+  line-height: 1.42;
+  color: var(--text-primary);
+  font-weight: 400;
+  /* The trigger often sits inside a bold uppercase KPI label; the definition
+     must not inherit that. */
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ── The query viewer ─────────────────────────────────────────────────────── */
+.mi-sql-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  text-transform: none;
+  letter-spacing: normal;
+  font-family: var(--bx-font-body);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vmin;
+  background: rgba(0, 0, 0, .72);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+}
+.mi-sql {
+  display: flex;
+  flex-direction: column;
+  width: min(1000px, 100%);
+  max-height: 86vh;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.mi-sql-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+.mi-sql-titles { min-width: 0; }
+.mi-sql-title {
+  font-family: var(--bx-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.mi-sql-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.mi-sql-env {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  background: color-mix(in srgb, var(--yellow) 15%, transparent);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.mi-sql-actions { display: flex; gap: 6px; flex: none; }
+.mi-sql-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--bx-font-body);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.mi-sql-btn:hover { border-color: var(--accent); color: var(--accent); }
+.mi-sql-pre {
+  margin: 0;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 16px;
+  overflow: auto;
+  /* Monospace here is functional, not decorative: SQL is read by alignment. */
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  white-space: pre;
+  tab-size: 2;
+}
+
+@media (max-width: 620px) {
+  .mi-pop { max-width: calc(100vw - 28px); }
+  .mi-sql-pre { font-size: 11px; }
+}

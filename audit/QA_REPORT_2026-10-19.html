@@ -1,0 +1,627 @@
+<title>Botella QA Audit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: one reading column; status chips carry the verdict, tables carry the evidence. */
+:root{
+  --paper:#FBFAF7; --card:#FFFFFF; --sunk:#F3F1EC; --rule:#DFDAD0;
+  --ink:#1A1713; --body:#3D3830; --mute:#6F675B; --faint:#9A9184;
+  --blue:#1F4E79; --blue-bg:#E6EEF6; --blue-edge:#A9C4DD;
+  --green:#15613F; --green-bg:#E5F1E9; --green-edge:#A6CDB6;
+  --brass:#9A5A05; --brass-bg:#FCF1E0; --brass-edge:#E3C68E;
+  --red:#A32118; --red-bg:#FBEAE7; --red-edge:#E0AFA8;
+  --plum:#6B4489; --plum-bg:#F0E9F6; --plum-edge:#C9B3DC;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+  --plum:#C09BE0; --plum-bg:#1E1428; --plum-edge:#42305A;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+  --plum:#C09BE0; --plum-bg:#1E1428; --plum-edge:#42305A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);font-family:"Source Sans 3",system-ui,sans-serif;font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--ink);margin:0;font-family:"Source Serif 4",Georgia,serif;text-wrap:balance}
+a{color:var(--blue)}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:28px;padding-block:0 100px}
+header.mast{border-bottom:3px double var(--rule);padding:44px 0 24px;margin-bottom:30px}
+.dept{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--mute);margin-bottom:18px}
+h1{font-size:clamp(30px,5vw,50px);font-weight:700;line-height:1.05;letter-spacing:-.02em}
+.dek{font-family:"Source Serif 4",serif;font-size:clamp(17px,2vw,20px);line-height:1.5;margin-top:14px;max-width:66ch}
+.byline{margin-top:20px;padding-top:12px;border-top:1px solid var(--rule);font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:8px 24px}
+.byline b{color:var(--body);font-weight:600}
+nav.toc{font-family:"JetBrains Mono",monospace;font-size:11.5px;display:flex;flex-wrap:wrap;gap:6px 18px;margin:-8px 0 8px}
+nav.toc a{text-decoration:none;border-bottom:1px solid var(--blue-edge)}
+section{margin-top:56px;scroll-margin-top:20px}
+.sec-no{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+section>h2{font-size:clamp(24px,3.2vw,32px);font-weight:700;letter-spacing:-.015em;padding-bottom:12px;border-bottom:2px solid var(--ink);margin-bottom:22px}
+h3{font-size:19px;font-weight:600;margin:30px 0 10px}
+p{margin:0 0 14px;max-width:76ch}
+ul,ol{max-width:76ch;padding-left:22px;margin:0 0 14px}li{margin-bottom:6px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:"JetBrains Mono",monospace;font-size:.85em;background:var(--sunk);padding:1.5px 5px;border-radius:2px;color:var(--ink);word-break:break-word}
+.tw{overflow-x:auto;margin:18px 0;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:680px;background:var(--card)}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);font-weight:700;background:var(--sunk)}
+tbody tr:last-child td{border-bottom:none}
+td.mono{font-family:"JetBrains Mono",monospace;font-size:12px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"JetBrains Mono",monospace;white-space:nowrap}
+tr.grp td{background:var(--sunk);font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:700;padding:6px 11px}
+.tag{font-family:"JetBrains Mono",monospace;font-size:10px;padding:2px 7px;border:1px solid;border-radius:2px;white-space:nowrap;font-weight:700}
+.ok{color:var(--green);border-color:var(--green-edge);background:var(--green-bg)}
+.warn{color:var(--brass);border-color:var(--brass-edge);background:var(--brass-bg)}
+.bad{color:var(--red);border-color:var(--red-edge);background:var(--red-bg)}
+.info{color:var(--blue);border-color:var(--blue-edge);background:var(--blue-bg)}
+.na{color:var(--mute);border-color:var(--rule);background:var(--sunk)}
+tr.r-red td:first-child{box-shadow:inset 3px 0 var(--red)}
+tr.r-green td:first-child{box-shadow:inset 3px 0 var(--green)}
+tr.r-brass td:first-child{box-shadow:inset 3px 0 var(--brass)}
+tr.r-blue td:first-child{box-shadow:inset 3px 0 var(--blue)}
+.verdict{background:var(--card);border:1px solid var(--rule);border-left:5px solid var(--blue);padding:24px 28px;margin:30px 0}
+.verdict h2{font-size:22px;margin-bottom:10px;color:var(--blue)}
+.verdict p{margin:0 0 12px;max-width:74ch}.verdict p:last-child{margin:0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:22px 0}
+.tile{background:var(--card);border:1px solid var(--rule);padding:14px 16px}
+.tile .k{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.tile .v{font-family:"Source Serif 4",serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1.15;margin-top:4px;font-variant-numeric:tabular-nums}
+.tile .s{font-size:12.5px;color:var(--mute);margin-top:3px;line-height:1.4}
+.note{border:1px solid var(--rule);border-left:4px solid var(--blue);background:var(--card);padding:14px 18px;margin:18px 0}
+.note p{margin:0;max-width:74ch}.note p+p{margin-top:9px}
+.note .l,.fail .l,.good .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;font-weight:700;display:block;margin-bottom:5px}
+.note .l{color:var(--blue)}
+.fail{border:1px solid var(--red-edge);border-left:4px solid var(--red);background:var(--red-bg);padding:14px 18px;margin:18px 0}
+.fail p{margin:0;max-width:74ch;color:var(--ink)}.fail p+p{margin-top:9px}.fail .l{color:var(--red)}
+.good{border:1px solid var(--green-edge);border-left:4px solid var(--green);background:var(--green-bg);padding:14px 18px;margin:18px 0}
+.good p{margin:0;max-width:74ch;color:var(--ink)}.good p+p{margin-top:9px}.good .l{color:var(--green)}
+footer{margin-top:70px;padding-top:18px;border-top:3px double var(--rule);font-size:12.5px;color:var(--mute)}
+footer p{max-width:80ch}
+@media (max-width:480px){.wrap{padding-inline:16px}.verdict{padding:18px 16px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <div class="dept">Botella · quality assurance and audit · every codebase, every engine, every daily job</div>
+  <h1>Botella QA Audit</h1>
+  <p class="dek">What was tested, what passed, what failed, and whether each nightly job actually runs.
+  Measured on the working tree of <code>Enh_Engine_v1</code> on 19 October 2026, from the test
+  suites, the server log, the analytics database and the audit pages, not from the documentation.</p>
+  <div class="byline">
+    <span><b>Date</b> 19 October 2026, 10:30 IST; closed out 16:30 IST</span>
+    <span><b>Tree</b> 376c147 at audit time; f487427 after the fixes below</span>
+    <span><b>Codebases</b> Node backend · Python engine + StoreAgent · React frontend · CI/deploy</span>
+    <span><b>Written for</b> the Botella team and its reviewers</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#s1">01 Verdict</a><a href="#s2">02 Automated checks</a><a href="#s3">03 Backend</a>
+  <a href="#s4">04 Python engine</a><a href="#s5">05 Frontend</a><a href="#s6">06 Engine results</a>
+  <a href="#s7">07 Daily jobs</a><a href="#s8">08 Data state</a><a href="#s9">09 Defects</a><a href="#s10">10 Next actions</a><a href="#s11">11 External APIs</a><a href="#s12">12 Three-store readiness</a>
+</nav>
+
+<div class="verdict">
+  <h2>The code is well tested and the engine is measurably better than random. The operation around it is not yet reliable.</h2>
+  <p><strong>Every automated suite that can run passes:</strong> 2,029 Python tests, three build guards,
+  14 offline Node suites, 15 of 17 database-backed Node suites, 79 frontend tests, a clean production
+  build, and all 43 analytics migrations applied to an empty database. The two Node failures are a
+  local-environment artefact and a six-day-old shelf capture, both explained below.</p>
+  <p><strong>The engine's measured edge holds at all five pilot stores</strong> (+8 to +29 points over
+  a null that already knows about mean reversion, p = 0.0005), but <strong>only 2 of 5 stores pass
+  both release gates</strong>, the calibration curve is stale at all five, and the holdout experiment
+  is too starved to state a causal difference anywhere.</p>
+  <p><strong>Of 18 scheduled jobs, one date in the last eight (13 October) ran the full nightly
+  chain.</strong> The laptop that hosts the local stack slept or rebooted through four of the other
+  nights, one job (calibration refit) has failed on every run since it was written, one is a stub,
+  and three are disabled. The forward test lost three of its first four mornings to the same cause.
+  Fixes for the scheduling went in today; a reliability problem on a laptop is not a code problem,
+  and the honest answer to "does it run every day" is in Section 07, job by job. By 16:30 the same day, defects 1, 3, 4, 5, 9, 10, 11, 14, 15 and 16 were closed (commits 2da9658 to 01aa068), the Effectiveness tab was rebuilt so a card is "completed" only when the database shows the owner acted (f487427), the external-signal fit ran for the three deployment stores (b31e96f), and the scheduled generation completed for 67 stores including Bethany (8 cards) and Tuscany (10). Sections 11 and 12 hold the results.</p>
+</div>
+
+<!-- 01 -->
+<section id="s1">
+  <div class="sec-no">Section 01</div>
+  <h2>Scoreboard</h2>
+  <div class="tiles">
+    <div class="tile"><div class="k">Python tests</div><div class="v">2,040</div><div class="s">all pass · 110 files (2,029 at audit time)</div></div>
+    <div class="tile"><div class="k">Node suites</div><div class="v">29 / 31</div><div class="s">14 offline + 17 DB-backed; 2 fail (env, stale capture)</div></div>
+    <div class="tile"><div class="k">Frontend tests</div><div class="v">89</div><div class="s">6 suites · production build compiles (79 at audit time)</div></div>
+    <div class="tile"><div class="k">Build guards</div><div class="v">3 / 3</div><div class="s">no literals · no state branches · families quote a price</div></div>
+    <div class="tile"><div class="k">Migrations</div><div class="v">44</div><div class="s">000–039, apply clean from empty; 5 drifted (documented)</div></div>
+    <div class="tile"><div class="k">Settings</div><div class="v">171</div><div class="s">154 provisional · 14 measured</div></div>
+    <div class="tile"><div class="k">Pilot gates</div><div class="v">2 / 5</div><div class="s">stores clearing Gate A and Gate B</div></div>
+    <div class="tile"><div class="k">Nights with full chain</div><div class="v">1 / 8</div><div class="s">12–19 Oct, local host</div></div>
+    <div class="tile"><div class="k">Lint / types</div><div class="v">128 · 321</div><div class="s">ruff findings · mypy errors (advisory)</div></div>
+  </div>
+</section>
+
+<!-- 02 -->
+<section id="s2">
+  <div class="sec-no">Section 02</div>
+  <h2>Automated checks, run today</h2>
+  <p>Everything below was executed on this machine between 10:30 and 11:00 IST on 19 October against
+  the committed tree and the local analytics database. "DB" suites use sentinel tenants
+  (client ids 9999xx) and clean up after themselves.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Check</th><th>Codebase</th><th>Result</th><th>Detail</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="4">Runs in CI on every merge request and branch push</td></tr>
+      <tr class="r-green"><td><strong>pytest</strong></td><td>Python</td><td><span class="tag ok">PASS</span></td><td>2,029 passed in 74 s; conftest pins every network and model key, HTTP mocked with respx</td></tr>
+      <tr class="r-green"><td><strong>check_no_literals</strong></td><td>Python</td><td><span class="tag ok">PASS</span></td><td>No new magic numbers; 49 grandfathered in <code>storeagent/</code> on a shrinking baseline</td></tr>
+      <tr class="r-green"><td><strong>check_no_state_branches</strong></td><td>Python</td><td><span class="tag ok">PASS</span></td><td>Nothing branches on evidence state</td></tr>
+      <tr class="r-green"><td><strong>check_families_quote_ev</strong></td><td>Python</td><td><span class="tag ok">PASS</span></td><td>Every card family quotes units at stake, no literal confidences</td></tr>
+      <tr class="r-green"><td><strong>config_report</strong></td><td>Python</td><td><span class="tag info">REPORT</span></td><td>171 settings declared; 154 still PROVISIONAL (unfitted judgements); 14 MEASURED</td></tr>
+      <tr class="r-brass"><td><strong>ruff</strong></td><td>Python</td><td><span class="tag warn">128</span></td><td>Advisory in CI; 37 auto-fixable; none introduced by this month's work</td></tr>
+      <tr class="r-brass"><td><strong>mypy</strong></td><td>Python</td><td><span class="tag warn">321</span></td><td>In 17 of 145 files; not in CI; declared as a dev extra but never gated</td></tr>
+      <tr class="r-green"><td><strong>npm test</strong> (card statements)</td><td>Node</td><td><span class="tag ok">PASS</span></td><td>5 of 5 suites; no DB, no network</td></tr>
+      <tr class="r-green"><td><strong>npm run test:unit</strong></td><td>Node</td><td><span class="tag ok">PASS</span></td><td>9 of 9: holdout key, stage envelope, service token, store-gate decision, PO duplicate identity, rec surface, numbers, answer-verifier, lift parity Node ≡ Python</td></tr>
+      <tr class="r-green"><td><strong>jest</strong></td><td>Frontend</td><td><span class="tag ok">PASS</span></td><td>79 tests in 6 suites (recStatus, recommendationVoice, sentence, RetrievalNotice, storeagent availability and retrieval)</td></tr>
+      <tr class="r-green"><td><strong>react-scripts build</strong></td><td>Frontend</td><td><span class="tag ok">PASS</span></td><td>Compiles; CRA lint warnings are not failures because CI=false</td></tr>
+      <tr class="r-green"><td><strong>migrations from empty</strong></td><td>Node</td><td><span class="tag ok">PASS</span></td><td>43 applied, 0 pending, on postgres:16 with only the <code>bottleai_writer</code> role pre-created (CI job and a local throwaway container)</td></tr>
+      <tr class="grp"><td colspan="4">Database-backed Node suites (local DB; not in CI)</td></tr>
+      <tr class="r-green"><td>card-retirement · lead-time · quality-gate · drift · outcome-feedback · rec-eval · holdout-report · pilot-scoreboard · forward-test-daily · family-gate · daily-snapshot · ingestion · catalog-tracking · store-spectrum · holdout-assignment</td><td>Node</td><td><span class="tag ok">15 PASS</span></td><td>rec-eval 88 checks, pilot-scoreboard 38, forward-test-daily 44, drift 25, quality-gate 21, card-retirement 17, lead-time 27</td></tr>
+      <tr class="r-brass"><td><strong>on-hand-capture-verify</strong></td><td>Node</td><td><span class="tag warn">1 FAIL</span></td><td>Check 5: newest captured shelf count is 2026-10-12, newest sync is 2026-10-18. The 03:45 capture has not run since the 13th (Section 07); the test is right</td></tr>
+      <tr class="r-brass"><td><strong>rec-admission-verify</strong></td><td>Node</td><td><span class="tag warn">5 FAIL</span></td><td>Checks 3, 7, 7b, 8, 8b fail because this checkout's <code>.env</code> sets the profit and confidence floors to 0; passes with module defaults. Pre-existing, environmental</td></tr>
+      <tr class="grp"><td colspan="4">Not run</td></tr>
+      <tr><td>audit-verify · fixfinal-verify · hallucination-eval · reaudit-fixes · round5-e2e · routing-eval · metric-spike-eval</td><td>Node</td><td><span class="tag na">SKIPPED</span></td><td>Need a running server with a model key and spend LLM calls; not part of this audit</td></tr>
+      <tr><td>rls-and-index-proof.sh</td><td>Node</td><td><span class="tag na">SKIPPED</span></td><td>Needs local Postgres binaries (initdb)</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 03 -->
+<section id="s3">
+  <div class="sec-no">Section 03</div>
+  <h2>Backend (Node / Express)</h2>
+  <p><code>backend/</code>: 20 route files mounting about 125 endpoints, 26 services, 18 cron jobs,
+  43 analytics migrations, 46 test scripts. Node is the only writer of the analytics database; the
+  Python service reaches the warehouse only through this API.</p>
+
+  <h3>Routes</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Mount</th><th>Auth</th><th class="num">Endpoints</th><th>Purpose</th><th>Audit note</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">/api/auth · /api/leads</td><td>none</td><td class="num">2</td><td>Login (ASP.NET Identity v3 hashes); lead capture</td><td>Public by design</td></tr>
+      <tr><td class="mono">/api/chat · /api/summary · /api/insights · /api/dead-stock · /api/dashboard · /api/market-analysis · /api/bottlesense</td><td>JWT + pool</td><td class="num">11</td><td>Store screens: chat tool-loop, daily summary, insights, dead stock, dashboard, market, BottleSense</td><td>Tenant scoped through <code>attachPool</code>; RLS proven by <code>rls-and-index-proof.sh</code> (not run today)</td></tr>
+      <tr><td class="mono">/api/recommendations</td><td>JWT + pool</td><td class="num">16</td><td>Read, regenerate, vote, action-claim, digest, scoreboard</td><td>Owner actions persist since checklist 9; store gate on the read path since checklist 10</td></tr>
+      <tr><td class="mono">/api/purchase-orders · /api/po-effectiveness · /api/card-statements · /api/email · /api/imagegen</td><td>JWT (+pool)</td><td class="num">60</td><td>Invoice parsing (Claude), PO effectiveness, card-statement analysis, Gmail OAuth, image generation</td><td>PATCH <code>received_date</code> added for lead times (checklist 16)</td></tr>
+      <tr><td class="mono">/api/storeagent · /api/conversations · /api/feedback</td><td>JWT</td><td class="num">10</td><td>StoreAgent proxy and cache, chat history, feedback</td><td></td></tr>
+      <tr class="r-green"><td class="mono">/api/clients · /api/ingestion</td><td>service token + pool</td><td class="num">26</td><td>Data API for the Python service; ingestion control plane</td><td>Was open when <code>NODE_API_TOKEN</code> was unset; fails closed in production since checklist 6, loopback-only otherwise</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Tests, by what they need</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Class</th><th class="num">Files</th><th>In CI</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr class="r-green"><td>Offline unit and card-statement suites</td><td class="num">14</td><td><span class="tag ok">YES</span></td><td>Explicit list in <code>tests/run-unit-tests.js</code>; each proven to pass with every DB host pointed at a closed port</td></tr>
+      <tr class="r-brass"><td>Need the local analytics / syncgo database</td><td class="num">21</td><td><span class="tag warn">NO</span></td><td>Run by hand; 15 pass today, 2 fail for the reasons in Section 02. CI could run most of them against its postgres service with seeded sentinels; nobody has wired that</td></tr>
+      <tr><td>Need a running server, a model key, or network</td><td class="num">7</td><td><span class="tag na">NO</span></td><td>Evaluation harnesses (hallucination, routing, red team)</td></tr>
+      <tr><td>Libraries, graders, shell</td><td class="num">4</td><td><span class="tag na">NO</span></td><td>answer-verifier, grade-eval, redteam-verify, rls-and-index-proof.sh</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Migrations and configuration</h3>
+  <ul>
+    <li>43 analytics migrations, 000–038. Four numbers are used twice (005, 023, 024, 025); order is lexicographic so it works, and it is a trap for the next author.</li>
+    <li>Every server boot logs <strong>DRIFTED</strong> for 001, 002, 003, 004 and 029: files edited after they were applied, so their checksums no longer match. Harmless today; it means the file on disk is not what the database ran.</li>
+    <li><code>.env.example</code> documents 34 variables. The code reads about 20 more that are not in it: every cron schedule override, the Instagram and SMTP credentials, <code>PO_PARSE_MODEL</code>. <code>REC_SERVICE_URL</code> was unset on this host until today (the Rec cron logged <code>target: (unset → code default)</code>).</li>
+    <li><code>package.json</code> declares no <code>engines</code> field; CI and the image use Node 20, this machine runs Node 24.</li>
+  </ul>
+</section>
+
+<!-- 04 -->
+<section id="s4">
+  <div class="sec-no">Section 04</div>
+  <h2>Python engine and StoreAgent</h2>
+  <p><code>Botella_External_APIs/</code>: a FastAPI service with 12 endpoints, the 19-stage pipeline in
+  <code>app/pipeline/</code> (66 modules, 22,403 lines, pure standard library, no database handle), the
+  live route in <code>app/recommender/</code> (11 modules), 21 signal modules, StoreAgent (8 packages,
+  about 7,700 lines), 40 scripts and 109 test files.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Area</th><th>Size</th><th>State</th><th>Finding</th></tr></thead>
+    <tbody>
+      <tr class="r-green"><td><strong>Pipeline stages 1–19</strong></td><td>66 modules</td><td><span class="tag ok">TESTED</span></td><td>Every stage has unit tests; the three guards hold; replayable from recorded inputs (no clock, no sampler)</td></tr>
+      <tr class="r-green"><td><strong>Live route</strong> <code>app/recommender</code></td><td>11 modules, ~7,200 lines</td><td><span class="tag ok">TESTED</span></td><td>Selection in code (no model chooses); imports reversion, lifecycle, merchandise, calibration, policy quantity, portfolio, promise floor, predictive interval, store gate. Does <em>not</em> import evidence, priors, contracts, validate, rank/score or rank/order directly</td></tr>
+      <tr class="r-brass"><td><strong>Service auth</strong></td><td><code>app/dependencies.py</code></td><td><span class="tag warn">CONDITIONAL</span></td><td>With <code>SERVICE_API_KEY</code> unset the X-API-Key check is a no-op. The code says "set it in production"; nothing enforces that at startup the way Node's <code>NODE_API_TOKEN</code> now does</td></tr>
+      <tr class="r-brass"><td><strong>Module boundary</strong></td><td>app ↔ storeagent</td><td><span class="tag warn">CONTRADICTED</span></td><td><code>storeagent_api.py</code> says "Botella imports nothing from StoreAgent". Seven <code>app/</code> files import <code>storeagent</code> and three StoreAgent forecasting modules import <code>app.pipeline</code>. The boundary described does not exist</td></tr>
+      <tr class="r-green"><td><strong>Signals</strong></td><td>21 modules</td><td><span class="tag info">MOSTLY DORMANT</span></td><td>On by default with no key: weather, sports, holidays. Dormant until a key is set: Ticketmaster events, NewsData, email IMAP, Reddit, YouTube, Twitter/Apify. Off by design: Google Trends. Measured in October: 488 of 489 calendar-signal coefficients refused, so the engine is right not to price them</td></tr>
+      <tr class="r-red"><td><strong>Scripts</strong></td><td>40</td><td><span class="tag bad">1 BROKEN</span></td><td><code>scripts/run_pilot_audit.py</code> does not parse (unterminated f-string, line 143). Five scripts are called by Node nightly and are present-checked at boot; the rest are manual</td></tr>
+      <tr class="r-brass"><td><strong>Report text</strong></td><td>3 scripts</td><td><span class="tag warn">STALE</span></td><td><code>build_change_report.py</code>, <code>_index_report.py</code>, <code>_store_change_page.py</code> still print "calibration curve not wired into the live card path"; the live route has applied a bundle since checklist 5</td></tr>
+      <tr><td><strong>StoreAgent forecasting</strong></td><td>4 modules, 1,826 lines</td><td><span class="tag ok">TESTED</span></td><td>Syntetos-Boylan classification, per-class ensemble (ETS, Croston, SBA) with p10/p50/p90, walk-forward backtest. Measured in October to lose to the shrunk mean by 9–14 WAPE points on the audit path; now feeds the order quantity, not the selection</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 05 -->
+<section id="s5">
+  <div class="sec-no">Section 05</div>
+  <h2>Frontend (React 18, CRA)</h2>
+  <ul>
+    <li>17 authenticated views rendered inside one <code>ChatPage</code> shell behind <code>ProtectedRoute</code>; 15 public SEO pages; about 57 components; StoreAgent panel with 8 views.</li>
+    <li>79 tests in 6 suites, all passing; production build compiles. Lint warnings cannot fail the build because the image sets <code>CI=false</code> on purpose, so they accumulate unseen.</li>
+    <li>Owner actions (Accept / Complete / Dismiss) reach the server since checklist 9; the dismissal <em>reason</em> still lives only in the browser (no column for it).</li>
+    <li>Port drift after today's move: <code>package.json</code> proxies to 3010, while <code>README.md</code> and <code>.claude/launch.json</code> still say 3000. The frontend dev server still starts on 3001.</li>
+    <li>A stray <code>frontend/undefined</code> file and <code>frontend/build.rar</code> sit in the tree.</li>
+  </ul>
+</section>
+
+<!-- 06 -->
+<section id="s6">
+  <div class="sec-no">Section 06</div>
+  <h2>Engine results, as published</h2>
+  <p>From <code>audit/ENGINE_AUDIT.html</code> (generated 9 October) and the October scoreboards. The
+  gates are the engine's own release criteria: Gate A (accuracy: promise unbiased 85–115%, ECE under 5
+  points, interval coverage at least 90%, beats the null, worst bin within 10 points) and Gate B
+  (profit: at least $1,000 net margin a month).</p>
+  <div class="tw"><table>
+    <thead><tr><th>Store</th><th class="num">Backtest hit</th><th class="num">Null</th><th class="num">Edge</th><th class="num">April hit</th><th class="num">Promise</th><th class="num">Net / card</th><th class="num">April net</th><th>Verdict</th></tr></thead>
+    <tbody>
+      <tr class="r-green"><td><strong>178 Marshfield</strong></td><td class="num">92.9%</td><td class="num">63.7%</td><td class="num">+29.2</td><td class="num">80.2%</td><td class="num">83%</td><td class="num">$24.65</td><td class="num">$4,191</td><td><span class="tag ok">SHIP</span></td></tr>
+      <tr class="r-green"><td><strong>177 Mango Jo's</strong></td><td class="num">79.2%</td><td class="num">70.5%</td><td class="num">+8.7</td><td class="num">90.6%</td><td class="num">105%</td><td class="num">$24.24</td><td class="num">$3,319</td><td><span class="tag ok">SHIP</span></td></tr>
+      <tr class="r-red"><td><strong>171 Bethany</strong></td><td class="num">75.7%</td><td class="num">59.1%</td><td class="num">+16.6</td><td class="num">42.4%</td><td class="num">20%</td><td class="num">$22.98</td><td class="num">$1,356</td><td><span class="tag bad">DO NOT SHIP</span> promise biased</td></tr>
+      <tr class="r-red"><td><strong>181 Cork Runner</strong></td><td class="num">77.1%</td><td class="num">59.9%</td><td class="num">+17.2</td><td class="num">66.7%</td><td class="num">51%</td><td class="num">$6.95</td><td class="num">$688</td><td><span class="tag bad">DO NOT SHIP</span> promise, margin</td></tr>
+      <tr class="r-red"><td><strong>176 Northlake</strong></td><td class="num">71.8%</td><td class="num">63.7%</td><td class="num">+8.1</td><td class="num">83.9%</td><td class="num">60%</td><td class="num">$5.13</td><td class="num">$318</td><td><span class="tag bad">DO NOT SHIP</span> promise, margin</td></tr>
+    </tbody>
+  </table></div>
+  <p>Every store beats its reversion-matched null at p = 0.0005. Calibration ECE reads "n/a (STALE
+  curve)" at all five: the curve was fitted on March and nothing newer has enough outcomes.</p>
+
+  <h3>What the newer instruments say</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Instrument</th><th>Status</th><th>Reading</th></tr></thead>
+    <tbody>
+      <tr class="r-brass"><td><strong>Pilot scoreboards</strong> (monthly, two boards, one line per product)</td><td><span class="tag warn">THIN</span></td><td>October: Bethany 52% [34–70%] hit rate on 25 measured of 184 cards; the other four pilots have no closed window yet. Board B (holdout money) refused everywhere: 0 withheld outcomes measured at every store</td></tr>
+      <tr class="r-brass"><td><strong>Holdout experiment</strong></td><td><span class="tag warn">STARVED</span></td><td>264 withheld outcomes exist estate-wide, 248 measured in total; per store never 5 per arm. The causal question is unanswered</td></tr>
+      <tr class="r-brass"><td><strong>Forward test</strong> (16–30 Oct)</td><td><span class="tag warn">2 OF 15</span></td><td>Two mornings measured (16, 19); three lost to sleep, reboot and a port conflict. 286 period cards all pending; trailing-30 cards sold at a median 30% of the predicted rate. Engine Confidence Score 0.0 for lack of evidence</td></tr>
+      <tr class="r-red"><td><strong>Calibration</strong></td><td><span class="tag bad">STALE</span></td><td>7 bundles, last published 8 October; the nightly refit has failed on every run (Section 07). Displayed confidence is withheld where it does not discriminate</td></tr>
+      <tr><td><strong>Family gate</strong></td><td><span class="tag info">SHADOW</span></td><td>37 store-family pairs, all shadow, 0 live. Store gate: 3 live, 2 shadow, all measured for March, none carrying <code>valid_until</code> — so all five read as expired under the 120-day rule and <code>REC_GATE_ENFORCED</code> stays off</td></tr>
+      <tr><td><strong>Quality gate</strong> (after today's refresh)</td><td><span class="tag info">243 STORES</span></td><td>61 pass, 57 degraded, 16 quarantine, 109 reject (never synced). 67 stores would be admitted to generation tonight</td></tr>
+    </tbody>
+  </table></div>
+  <div class="fail">
+    <span class="l">Finding: the confidence figure, measured at Bethany (added 18:00)</span>
+    <p>Asked whether the stated confidence tells hits from misses. On the 129-card March/April ledger
+    the AUC is 0.568 [0.470, 0.672] at 30 days: the interval straddles 0.5, and an out-of-sample
+    isotonic fit made calibration <em>worse</em> (ECE 8.6 to 31.3 points) because it learned a March
+    base rate April did not keep. On the live engine's forward test at Bethany, 202 resolved cards,
+    rho is -0.315 and the AUC is 0.296 [0.200, 0.398], wholly below 0.5: higher stated confidence,
+    lower hit rate, and the fitted curve collapses to one constant. Isotonic is monotone, so
+    calibration cannot add the discrimination the figure lacks; p_hit is confined to 0.50-0.68 by its
+    own form. Conclusion: the number is a ranking score, not a probability, and it is now hidden from
+    owners, labelled on every card, and no longer used by the admission floor. What differentiates
+    cards is expected margin, which the slate already orders on. Tables:
+    <code>audit/calibration/DIFFERENTIATION_2026-10-19.html</code>.</p>
+  </div>
+
+</section>
+
+<!-- 07 -->
+<section id="s7">
+  <div class="sec-no">Section 07</div>
+  <h2>Daily jobs: does each one run?</h2>
+  <p>18 <code>cron.schedule</code> calls in <code>server.js</code>. Evidence is the server's own
+  "Done" line in <code>logs/combined.log</code> for 12–19 October. The server process on this host
+  started on 12 Oct (12:21 and 19:06) and again on 19 Oct (10:23, 10:24); between those it was down
+  or the machine was asleep. <strong>13 October is the only date with the full chain.</strong></p>
+  <div class="tw"><table>
+    <thead><tr><th>Job</th><th>Schedule</th><th>What it does</th><th>Ran 12–19 Oct</th><th>Runs daily?</th></tr></thead>
+    <tbody>
+      <tr class="r-brass"><td><strong>Ingest digest</strong></td><td class="mono">03:00</td><td>Refresh sync state from the warehouse; connector digest</td><td>13th only (1,055 store-entities)</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>Lead-time refresh</strong></td><td class="mono">03:10</td><td>Per-vendor lead times from receipts</td><td>13th only (0 measured: no receipt dates exist yet)</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>Store-intel warm</strong></td><td class="mono">03:30</td><td>Pre-warm StoreAgent caches</td><td>13th only (212 ok, 1,360 s)</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>On-hand capture</strong></td><td class="mono">03:45</td><td>Nightly shelf count per SKU</td><td>13th only (862,767 counts, 212 stores; 138 stores had none newer than 7 days)</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>Quality gates</strong></td><td class="mono">03:50</td><td>Sheet 02 verdicts per store</td><td>13th only; re-run by hand today</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>Recommendation batch</strong></td><td class="mono">04:00</td><td>Generate the day's cards for admitted stores</td><td>13th only: 7 ok, 1 failed, 204 refused. 17–19 Oct: none</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>Forward test</strong></td><td class="mono">04:15 IST</td><td>Capture shelf, score issued cards, generate if missing</td><td>Cron added 16 Oct, first scheduled tick missed; runs on 16 and 19 were manual</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>Evaluation</strong></td><td class="mono">05:00</td><td>Score every card's windows; holdout report</td><td>13th only (1,227 evaluations, 14 tenants)</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>Family gate</strong></td><td class="mono">06:00</td><td>Per store-family shadow / live / suspended</td><td>13th only (31 pairs, 0 live)</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-brass"><td><strong>Drift monitor</strong></td><td class="mono">06:30</td><td>Suspend a store below its null for a month</td><td>13th only (7 stores, all abstained: thin evidence)</td><td><span class="tag warn">WHEN HOST IS UP</span></td></tr>
+      <tr class="r-red"><td><strong>Calibration refit</strong></td><td class="mono">07:00</td><td>Fit the confidence curve and publish it</td><td>Ran on the 13th and 15th and <strong>failed both times</strong></td><td><span class="tag bad">FAILS EVERY RUN</span></td></tr>
+      <tr class="r-brass"><td><strong>Weekly digest</strong></td><td class="mono">Mon 05:30</td><td>Owner email of last week's results</td><td>Server down at both Monday slots</td><td><span class="tag warn">MISSED 2 OF 2</span></td></tr>
+      <tr class="r-brass"><td><strong>Signal-effect fit</strong></td><td class="mono">Sun 08:00</td><td>Weekly β per signal and family</td><td>Sunday 18th: host down</td><td><span class="tag warn">MISSED 1 OF 1</span></td></tr>
+      <tr><td><strong>Pilot scoreboards</strong></td><td class="mono">1st 07:30</td><td>Monthly per-store boards</td><td>Not yet due (next: 1 Nov)</td><td><span class="tag na">MONTHLY</span></td></tr>
+      <tr class="r-red"><td><strong>Email promo check</strong></td><td class="mono">08:00</td><td>Lists Gmail token files</td><td>Logs via console only</td><td><span class="tag bad">STUB</span> sends nothing</td></tr>
+      <tr><td><strong>Instagram trends</strong> ×3</td><td class="mono">02:00–02:30</td><td>Hashtag velocity, token refresh, watchdog</td><td>"Disabled: IG_USER_ID / IG_ACCESS_TOKEN not set"</td><td><span class="tag na">DISABLED</span></td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="fail">
+    <span class="l">Why the calibration refit fails</span>
+    <p><code>server.js</code> passes <code>--stores 2:2,4:4,…</code> (client:location pairs) to
+    <code>publish_calibration.py</code>, which parses each entry with <code>int()</code> and raises
+    <code>ValueError: invalid literal for int() with base 10: '2:2'</code> at line 254. The job has
+    never completed; the last published bundle (8 October) came from a manual run. This is a
+    one-line interface mismatch and it is why the curve is stale at all five pilot stores.</p>
+  </div>
+
+  <div class="note">
+    <span class="l">The hosting problem, stated plainly</span>
+    <p>Every "when host is up" above is the same fact: the local stack runs on a laptop. It slept at
+    21:19 on the 16th and was off until 22:01 on the 17th; it rebooted three times around 02:30 on
+    the 18th and neither service came back; it slept through 04:15 on the 19th. A deployed box
+    (the GitLab deploy job exists and is manual) would make every row above "yes".</p>
+    <p>Mitigations added today on this host: the forward-test task fires four times a day plus at
+    logon and is idempotent; a logon task restarts both services; the stack moved to ports 3010 /
+    8010 because another project now holds 3000. The tasks remain interactive-only (no admin rights)
+    and so cannot run from a locked or freshly rebooted machine.</p>
+  </div>
+
+  <h3>Windows scheduled tasks on this host</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Task</th><th>Trigger</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Botella Wake 0340 IST</td><td>daily 03:40, wake to run</td><td>Ran 17 Oct 23:13 (catch-up); not since</td></tr>
+      <tr><td>Botella Services at logon</td><td>logon +1 min; daily 04:05</td><td>Registered today</td></tr>
+      <tr class="r-brass"><td>Botella Forward Test 0415 IST</td><td>daily 04:15 · 10:00 · 16:00 · 22:00; logon +5 min</td><td>Task-launched runs died at ~35 s with Ctrl-C (17 Oct 23:13, 19 Oct 10:24, 10:47); probed and fixed at 11:00 by launching detached (<code>start /min</code>). First detached run completed</td></tr>
+      <tr><td>Botella Forward Test FINAL 2026-10-30</td><td>once, 30 Oct 06:00</td><td>Registered</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 08 -->
+<section id="s8">
+  <div class="sec-no">Section 08</div>
+  <h2>Data state (analytics database, 19 Oct 10:40 IST)</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Table / fact</th><th>Value</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>Stores in the warehouse</td><td class="num">239</td><td>74 with a sale in the last 90 days</td></tr>
+      <tr><td>Recommendations</td><td class="num">829</td><td>48 stores, 23 Aug – 16 Oct; none generated 17–19 Oct</td></tr>
+      <tr><td>Recommendation outcomes</td><td class="num">1,456</td><td>248 with a measurable lift; 264 withheld-arm rows</td></tr>
+      <tr><td>Evaluations</td><td class="num">1,456</td><td>419 with an inferred owner action</td></tr>
+      <tr><td>Retirements (lifecycle)</td><td class="num">30</td><td>Since checklist 17</td></tr>
+      <tr><td>Supplier lead times</td><td class="num">0</td><td>1 invoice uploaded, 0 with a receipt date</td></tr>
+      <tr><td>Calibration bundles</td><td class="num">7</td><td>Last 8 Oct</td></tr>
+      <tr><td>Pilot scoreboard rows</td><td class="num">18</td><td>Sept and Oct, 9 stores</td></tr>
+      <tr><td>Forward-test runs / snapshots</td><td class="num">32 / 538</td><td>Snapshots on 16 and 19 Oct only</td></tr>
+      <tr><td>Sync state</td><td class="num">243 stores</td><td>Before today's refresh: 0 fresh within 2 days; after: 317 fresh store-entities</td></tr>
+      <tr><td>Applied migrations</td><td class="num">43</td><td>Through 038; 5 flagged drifted</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 09 -->
+<section id="s9">
+  <div class="sec-no">Section 09</div>
+  <h2>Defects found by this audit</h2>
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Severity</th><th>Defect</th><th>Where</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr class="r-red"><td class="num">1</td><td><span class="tag bad">HIGH</span></td><td>Calibration refit passes <code>client:location</code> pairs to a script expecting integers</td><td class="mono">server.js ~1074 → scripts/publish_calibration.py:254</td><td>Failed every run until today. Fixed in this tree (the script now accepts <code>client:location</code>); the first corrected dry run reports honestly that the pool holds 39 outcomes against a 50 floor and publishes nothing</td></tr>
+      <tr class="r-red"><td class="num">2</td><td><span class="tag bad">HIGH</span></td><td>Nightly chain depends on a laptop being awake and logged on</td><td>host</td><td>1 full night in 8; forward test lost 3 of 4 mornings; no cards 17–19 Oct</td></tr>
+      <tr class="r-red"><td class="num">3</td><td><span class="tag bad">HIGH</span></td><td>Task-Scheduler-launched forward-test runs end with Ctrl-C within minutes</td><td>Windows task "Botella Forward Test 0415 IST"</td><td>Established by probe at 10:48: on this host ANY console process the scheduler owns receives Ctrl-C after about 35 seconds, node or cmd alike; a process detached with <code>start /min</code> runs to completion. Both forward-test tasks now launch detached; the 11:00 run survived and generated cards</td></tr>
+      <tr class="r-brass"><td class="num">4</td><td><span class="tag warn">MED</span></td><td>Python service auth is a no-op when <code>SERVICE_API_KEY</code> is unset; no startup refusal</td><td class="mono">app/dependencies.py:30</td><td><strong>Fixed 842a50c:</strong> the service refuses to start in production without the key, naming it</td></tr>
+      <tr class="r-brass"><td class="num">5</td><td><span class="tag warn">MED</span></td><td><code>run_pilot_audit.py</code> does not parse</td><td class="mono">scripts/run_pilot_audit.py:143</td><td><strong>Fixed 13f6304</strong></td></tr>
+      <tr class="r-brass"><td class="num">6</td><td><span class="tag warn">MED</span></td><td>Store gate verdicts carry no <code>valid_until</code>; family gate all shadow</td><td class="mono">store_gate_verdict</td><td>Enforcement would withhold every card; verdicts need republishing for a recent month</td></tr>
+      <tr class="r-brass"><td class="num">7</td><td><span class="tag warn">MED</span></td><td>Shelf-count capture is 6 days stale; 138 stores had no count newer than 7 days even on the 13th</td><td class="mono">feature_daily.on_hand</td><td>Stockout grading and the evaluator's open-day rate degrade</td></tr>
+      <tr class="r-brass"><td class="num">8</td><td><span class="tag warn">MED</span></td><td>Pilot store 177 quarantined by the anomaly gate</td><td class="mono">store_quality_state</td><td>No cards for a store that passes both release gates</td></tr>
+      <tr class="r-brass"><td class="num">9</td><td><span class="tag warn">MED</span></td><td>Three report scripts print a stale sentence about calibration not being on the live path</td><td class="mono">build_change_report.py:297 and two others</td><td><strong>Fixed 13f6304:</strong> the pages now say the curve is applied when a bundle exists, and why none is published yet</td></tr>
+      <tr class="r-brass"><td class="num">10</td><td><span class="tag warn">MED</span></td><td>Documented module boundary (Botella imports nothing from StoreAgent) is false in both directions</td><td class="mono">storeagent_api.py docstring</td><td><strong>Fixed 13f6304:</strong> the docstring states both directions and the boundary that does hold (eight files, not seven)</td></tr>
+      <tr class="r-brass"><td class="num">11</td><td><span class="tag warn">MED</span></td><td>Migration files 001–004 and 029 edited after being applied</td><td class="mono">schema_migrations checksums</td><td><strong>Documented 13f6304</strong> in analytics-migrations/README.md with the reconcile path; SQL untouched</td></tr>
+      <tr><td class="num">12</td><td><span class="tag info">LOW</span></td><td>mypy 321 errors, ruff 128 findings, neither gated</td><td>Python</td><td>Type and lint debt accumulates unseen</td></tr>
+      <tr><td class="num">13</td><td><span class="tag info">LOW</span></td><td>Email promo cron is a stub; Instagram trends disabled; 6 signal sources dormant without keys</td><td class="mono">server.js:278; app/config.py</td><td>Features exist in code and not in operation</td></tr>
+      <tr><td class="num">14</td><td><span class="tag info">LOW</span></td><td>Port documentation drift (README, launch.json say 3000) after today's move to 3010</td><td>docs</td><td><strong>Fixed 13f6304</strong></td></tr>
+      <tr><td class="num">15</td><td><span class="tag info">LOW</span></td><td>Duplicate migration numbers; no Node <code>engines</code> field; ~20 env vars undocumented; stray <code>frontend/undefined</code> and <code>build.rar</code></td><td>repo hygiene</td><td><strong>Fixed 13f6304:</strong> engines field, about 85 Node and 44 Python variables added to the templates, stray files removed, numbering rule written down</td></tr>
+      <tr><td class="num">16</td><td><span class="tag info">LOW</span></td><td>21 database-backed Node suites never run in CI</td><td class="mono">.gitlab-ci.yml</td><td><strong>Fixed 01aa068:</strong> 13 suites run in CI after the migrations job on the same postgres service (<code>npm run test:db</code>); rec-eval, on-hand-capture and rec-admission stay manual, with reasons</td></tr>
+      <tr class="r-brass"><td class="num">17</td><td><span class="tag warn">MED</span></td><td>Tuscany's purchases feed carries <code>-infinity</code> in <code>date</code> on all 7,646 rows, and every reader filtered, grouped or ordered on that column</td><td class="mono">syncgo client_pos_config QUERIES.purchases (LiquorPOS) → recommendationEvalService, poEffectivenessService, storeagent supplier_repo / inventory_repo / market_repo</td><td><strong>Diagnosed and mitigated in this tree.</strong> The POS has the date: the SyncGo query reads ORD_IN.DATE twice, <code>AS PurchaseDate</code> and <code>AS InvoiceDate</code>; the first alias is not one the uploader binds (every other connector says <code>AS Date</code>), so <code>date</code> gets the uploader's default and <code>invoice_date</code> gets the value. All four LiquorPOS stores (173, 182, 184, 186: 19,428 rows) are affected; no other connector is. Readers now take <code>COALESCE(NULLIF(date,'-infinity'), NULLIF(invoice_date,'-infinity'))</code> bounded at 1990. SyncGo should alias the column <code>AS Date</code>. Measured effect on 173 in Section 12</td></tr>
+          <tr class="r-red"><td class="num">18</td><td><span class="tag bad">HIGH</span></td><td>The card confidence figure is not a probability: 352 cards had no basis, Tuscany showed raw ranking scores unchanged, isotonic cards all read 0.444, and on the live engine higher stated confidence went with lower hit rates. The 0.35 admission floor filtered on it.</td><td class="mono">deterministic.py · families.py · validator.py · recommendationGateService.js</td><td><strong>Fixed 51c6f4e / 8ec8410, measured 53b1a00:</strong> number hidden from owners; <code>confidence_basis</code> mandatory with a closed vocabulary (migration 040); the floor applies only to an <code>isotonic</code> basis and says when it does not (migration 041); Bethany: ledger AUC 0.57 [0.47, 0.67], forward test AUC 0.30 [0.20, 0.40] - nothing publishable, nothing published</td></tr>
+      <tr class="r-brass"><td class="num">19</td><td><span class="tag warn">MED</span></td><td>Two deadlines for one bottle. Weber Ranch 1L at Bethany: the Recommendations card said "Order by Mon, Oct 19" and the Purchasing row said "Qty to cover 28 - Order by Thu, Oct 22". The card did its own arithmetic with a hard-coded seven-day lead; <code>utils/cover.js</code>, which Purchasing imports, used a lead of three that was never anyone's measured lead; the row's quantity came from a 21-day buying window the card never used; and nothing stored the card's date.</td><td class="mono">RecommendationsHome.js - cover.js - buying.py - storeagent/config.py</td><td><strong>Fixed 423db08:</strong> the engine computes <code>order_by</code> once (as_of + max(0, floor(days_cover - lead))) with the lead it quotes, and stores it with <code>lead_time_days</code> / <code>lead_time_basis</code> (migration 042); both screens read the stored value, and a Purchasing row with a card shows the card's quantity marked "from your recommendation". Buying review period 14 to 7 so uncovered rows size over the card's 14-day window. Proof on run 691: Weber Ranch, Titos and Svedka print one date and one quantity on both screens. +11 Python, +24 frontend, +1 Node suite</td></tr>
+      <tr class="r-brass"><td class="num">20</td><td><span class="tag warn">MED</span></td><td>The admission audit (expected profit at issue, floor applied, shown or withheld and why) was written only when a browser fetched <code>/latest</code>. A store nobody opened had cards with no record: Tuscany, 30 cards over three runs, 0 admission rows, so the money audit could not say what any Tuscany card promised when it was issued.</td><td class="mono">recommendationService.js generateAndPersist - getLatest</td><td><strong>Fixed 3f09b17:</strong> generation now reads the run back through the same path the screen uses, with a tenant-scoped pool and the audit awaited, so every card has its admission row before the run is reported done. Proof on Tuscany run 735: 10 cards, 10 admission rows, 10 with a profit figure</td></tr>
+      <tr><td class="num">21</td><td><span class="tag info">LOW</span></td><td>Tuscany has 105 days of sales because the uploader's first sales pull covers exactly the 30 days before the first successful pull; its purchases query is unwindowed, which is why purchases reach back to 2019. Every LiquorPOS store onboarded on 4 Aug starts sales on 5 Jul.</td><td class="mono">syncgo client_pos_config.meta_data.INITIAL_PULL_FROM (empty for the LiquorPOS stores)</td><td><strong>Not code in this repo.</strong> Ask SyncGo: set <code>INITIAL_PULL_FROM = "2023-01-01"</code> for 173 (and 184, 186) and run a one-off ranged sales pull 2023-01-01 to 2026-07-05, chunked by month, after confirming <code>storage.dbf</code> still holds the old tickets; rows dedupe on <code>unique_hash</code>. Bethany was re-pulled this way on 31 Jul and 7 Aug. With it Tuscany gets about 1,385 days of span, and the full backtest and the 365-day reversion window stop refusing</td></tr>
+</tbody>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <div class="sec-no">Section 10</div>
+  <h2>Next actions, in order</h2>
+  <ol>
+    <li><strong>Calibration refit argument</strong> (defect 1): fixed today in <code>publish_calibration.py</code>. The job will now run nightly and publish a curve the night the pooled outcomes cross the 50-outcome floor (39 today).</li>
+    <li><strong>Deploy the stack to the EC2 box</strong> (defect 2). The pipeline, images and manual deploy job exist; every "when host is up" in Section 07 becomes "yes" the day it runs there.</li>
+    <li><strong>Task-launched runs</strong> (defect 3): cause found and fixed today (scheduler-owned consoles are killed after ~35 s on this host; the tasks now launch a detached process). The 10:00 / 16:00 / 22:00 shots remain as idempotent fallbacks.</li>
+    <li><strong><code>SERVICE_API_KEY</code> required in production</strong> (defect 4): done, 842a50c.</li>
+    <li><strong>Republish the five store-gate verdicts for a recent month</strong> with <code>valid_until</code>, then decide on <code>REC_GATE_ENFORCED</code>.</li>
+    <li><strong>Confidence</strong>: a figure that differentiates needs different inputs than p_hit (the R9 classifier the engine docs name), fitted on outcomes; until one exists the number stays hidden and the floor stays off everything but <code>isotonic</code>. Done today: 51c6f4e, 8ec8410, 53b1a00.</li>
+    <li><strong>Look at store 177's quarantine</strong> before more pilot days pass without cards there.</li>
+    <li><strong>DB-backed Node suites in CI</strong>: done, 01aa068 (13 suites).</li>
+    <li>Script, sentences, docstring, ports, engines and templates: done, 13f6304.</li>
+    <li><strong>SyncGo config for the LiquorPOS connector</strong> (defect 17): in <code>client_pos_config.meta_data → QUERIES.purchases</code> for stores 173, 182, 184 and 186, change the second column from <code>DATE AS PurchaseDate</code> to <code>DATE AS Date</code> and re-pull purchases. Until then the readers in this tree fall back to <code>invoice_date</code>, which for this connector is the same POS field. The same query also emits <code>PO_NUM AS PurchaseId</code>, which is <code>0</code> on 7,290 of 7,646 rows: LiquorPOS receipts without a purchase order carry no order reference, so the fulfilment evidence will name the invoice number more often than the order.</li>
+    <li><strong>SyncGo: Tuscany history</strong> (defect 21): <code>INITIAL_PULL_FROM = "2023-01-01"</code> for 173, 184, 186 and a ranged sales pull 2023-01-01 to 2026-07-05.</li>
+    <li><strong>Production env</strong>: <code>REC_MIN_PROFIT_USD=1</code>, <code>REC_REQUIRE_PROFIT_FIGURE=true</code>, <code>REC_CRON_LOCATIONS=171:171,173:173,188:188</code>; the full list with reasons is <code>docs/GO-LIVE-RUNBOOK-THREE-STORES.md</code>.</li>
+    <li><strong>Money audit weekly</strong> during the pilot (<code>node scripts/money-audit.js</code>) and read the confirmed losses at Bethany, which are concentrated in $0.34-a-unit SKUs that sold under baseline; the first Tuscany windows close this week.</li>
+    <li>Order-by unification (defect 19, 423db08) and the admission audit at issue (defect 20): done.</li>
+  </ol>
+  <div class="good">
+    <span class="l">What is solid</span>
+    <p>The engine's core claims are measured, reproducible and conservatively stated: every store beats
+    a hard null, every threshold is a declared setting with an owner, the three guards hold, and the
+    system refuses where it cannot measure. The gap between "the code is right" and "it runs every
+    night" is operational, and it is the whole of what stands between this and a pilot.</p>
+  </div>
+</section>
+
+
+<!-- 11 -->
+<section id="s11">
+  <div class="sec-no">Section 11</div>
+  <h2>External APIs and their measured impact</h2>
+  <p>Measured at 11:05 IST by exporting stores 171, 173 and 188 and running the weekly signal-effect
+  fit end to end against the local Node (commit b31e96f). The engine prices a signal only when it
+  has earned a coefficient: a regression of log units on the signal with day-of-week, month and trend
+  controls, refused whenever the interval includes zero or the history is too thin (120 trading days,
+  20 active days per cell).</p>
+  <div class="tw"><table>
+    <thead><tr><th>Source (module)</th><th>State</th><th>Key / switch</th><th>Observed, last 30 d (171 / 173)</th><th>Fitted effects with a usable β</th><th>Reaches a card today</th></tr></thead>
+    <tbody>
+      <tr class="r-green"><td><strong>Weather, NWS</strong> (<code>weather.py</code>)</td><td><span class="tag ok">ON</span></td><td class="mono">NWS_USER_AGENT</td><td>4 of 6 run-days / 2 of 2</td><td>171: <strong>heat_advisory × beer +15.8% [+0.1%, +37%]</strong>, n = 172, 96 active days. 173: none (105 trading days &lt; 120)</td><td>No card has cited it since the deterministic engine; <code>cold_box</code> can now price it at 171 on the next heat advisory</td></tr>
+      <tr><td><strong>Sports, ESPN</strong> (<code>sports.py</code>)</td><td><span class="tag warn">ON, 403s daily</span></td><td>none</td><td>4 / 6 (613 items), 2 / 2</td><td>mlb / nba / nhl refused: interval spans zero; nfl 8 active days &lt; 20</td><td>None</td></tr>
+      <tr><td><strong>Holidays</strong> (<code>holidays.py</code>)</td><td><span class="tag ok">ON</span></td><td>none</td><td>1 / 6, 2 / 2</td><td>All <code>holiday_*</code> / <code>pre_*</code> refused: 2–18 active days &lt; 20</td><td>None</td></tr>
+      <tr><td><strong>Events, Ticketmaster</strong></td><td><span class="tag info">ON here; dormant on .env.example</span></td><td class="mono">TICKETMASTER_API_KEY</td><td>3 / 6, 2 / 2</td><td>Refused: 1–5 days of history</td><td>None</td></tr>
+      <tr><td><strong>News, NewsData</strong></td><td><span class="tag info">ON here; dormant on .env.example</span></td><td class="mono">NEWSDATA_API_KEY</td><td>3 / 6, 0 / 2</td><td>Refused: 1 day</td><td>None</td></tr>
+      <tr><td><strong>Email newsletters, IMAP</strong></td><td><span class="tag ok">ON</span></td><td class="mono">EMAIL_SIGNAL_ENABLED, EMAIL_IMAP_*</td><td>4 / 6, 1 / 2</td><td>Refused: 1 day</td><td>None</td></tr>
+      <tr><td><strong>YouTube · Twitter (Apify)</strong></td><td><span class="tag ok">ON</span></td><td class="mono">YOUTUBE_API_KEY · APIFY_TOKEN</td><td>3 / 6 (429s), 2 / 2</td><td><code>trend_*</code> refused: 1–8 days</td><td>None</td></tr>
+      <tr class="r-brass"><td><strong>Reddit</strong></td><td><span class="tag na">DORMANT</span></td><td class="mono">REDDIT_CLIENT_ID / _SECRET (empty)</td><td>0</td><td>—</td><td>None</td></tr>
+      <tr><td><strong>Google Trends</strong></td><td><span class="tag info">ON locally, OFF by design in template</span></td><td class="mono">GOOGLE_TRENDS_ENABLED</td><td>3 / 6 (429), 2 / 2</td><td>Refused</td><td>None</td></tr>
+      <tr class="r-brass"><td><strong>Instagram</strong> (Node poller)</td><td><span class="tag na">DISABLED</span></td><td class="mono">IG_ACCESS_TOKEN, IG_USER_ID</td><td>0 snapshots</td><td>—</td><td>None</td></tr>
+      <tr><td><strong>Register trends</strong> (internal, own POS)</td><td><span class="tag ok">ON</span></td><td class="mono">REGISTER_TRENDS_ENABLED</td><td>n/a</td><td>Not fitted</td><td>Up to 1 card a run by design</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <span class="l">Conclusion, measured</span>
+    <p>As of 19 October the external APIs contribute <strong>one</strong> priced effect to these three
+    stores: at Bethany a heat advisory lifts beer about 16% (lower bound barely above zero). The other
+    227 of 228 fitted cells refuse with a stated reason. The signal layer gathers and records
+    correctly on the days the engine runs (eight sources answer on most run-days; ESPN 403s and
+    social 429s are logged as such), but the engine ran on 6 of the last 30 days for Bethany and 2 for
+    Tuscany on this host, so captured history is days deep and cannot reach the 20-active-day floor
+    before late November. No card issued to any of the three stores in the last two weeks cites an
+    external signal. The new <code>GET /api/signal-impact</code> ledger states this per signal, with
+    the refusal reasons, so the Effectiveness tab can show it rather than imply it.</p>
+    <p>Two defects found on the way, fixed: the fit asked the signal-history route for a <code>limit</code>
+    it never read (now asks for the 365 days it can serve and prints the span it got); and the
+    archived 2023–2025 weather and fixture history is outside that 365-day window, which the fit now
+    says instead of silently fitting on a year.</p>
+  </div>
+</section>
+
+<!-- 12 -->
+<section id="s12">
+  <div class="sec-no">Section 12</div>
+  <h2>Readiness of the three deployment stores</h2>
+  <p>Facts from both databases at 11:00 IST on 19 October, plus the first run of the new fulfilment
+  state machine (commit f487427): a card is "completed" only when a purchases-feed row, a matched
+  invoice, an attributable stock inflow, a price drop or a catalogue arrival shows the owner acted.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Store</th><th>Data</th><th>Engine state</th><th>Owner actions, confirmed from data</th><th>Readiness</th></tr></thead>
+    <tbody>
+      <tr class="r-green"><td><strong>171 Bethany Discount Liquor</strong>, Allen TX<br><span class="mono">PCAmerica, on-prem uploader</span></td>
+        <td>3.75 years of sales (2 Jan 2023 to 16 Oct 2026, 266,890 lines), 9,810 SKUs with stock, 90% with cost. Purchases feed dead (2 rows from 2020); 1 invoice uploaded, no receipt date.</td>
+        <td>Quality <span class="tag ok">pass</span>; store gate live (March); 332 cards, 65 withheld; 1,220 outcomes, 140 with a measurable lift. Release gates: Gate A fails on promise bias (20%), Gate B passes ($1,356 April net). 8 new cards generated today at 11:11.</td>
+        <td>332 cards stated: <strong>150 confirmed</strong> (stock inflow), 52 not followed, 67 pending, 63 unobservable. Confirmation comes from the shelf, since there is no purchases feed.</td>
+        <td><span class="tag ok">READY TO PILOT</span> — the engine's edge is proven here (+16.6 over the null, p = 0.0005); the promise sentence is biased and the gate says so; run it as a pilot with the Effectiveness tab on, not as a finished product.</td></tr>
+      <tr class="r-brass"><td><strong>173 Tuscany Wine, Spirits + Craft</strong><br><span class="mono">LiquorPOS, on-prem uploader</span></td>
+        <td>105 days of sales (4 Jul to 16 Oct 2026, 38,663 lines), 9,002 SKUs, 99.9% with cost. <strong>Live purchases feed</strong>: 7,646 rows with invoice dates through 17 Oct, 188 suppliers.</td>
+        <td>Quality <span class="tag ok">pass</span>; no gate verdict yet; 30 cards since 7 Oct, 0 closed outcome windows; the backtest refuses (needs 492 days); engine confidence 12.8/100 for lack of evidence (Tuscany report, 15 Oct). 10 new cards generated today.</td>
+        <td>30 cards stated: 2 confirmed (stock inflow), 25 pending, 3 unobservable, re-run after the purchase-date fix (defect 17) with the same result. The feed was never silent: on the corrected day it holds <strong>12 rows (12 SKUs, 5 invoices) since the first card on 12 Oct</strong>, where the bare <code>date</code> filter read 0. None of those rows is for a recommended SKU, and only 4 of the 20 recommended SKUs have ever been bought through this feed (latest 7 Feb 2026). "No order" for these cards is now a statement about a live feed, not an artefact of the column.</td>
+        <td><span class="tag warn">PILOT ON THE FORWARD TEST</span> — the live route works and degrades honestly on a short history (the long-run window is what arrived, recorded as such); the first 30-day outcomes close in November. The purchases <code>date</code> reading is fixed in this tree; the feed can now confirm or refute an order the day it appears.</td></tr>
+      <tr class="r-red"><td><strong>188 Grapes and Grains Liquor</strong><br><span class="mono">PCAmerica, on-prem uploader</span></td>
+        <td>Sales 6 Jul to <strong>5 Aug 2026</strong>, then nothing (5,016 lines in 27 trading days). 10,606 SKUs with stock, 91% with cost. Products last synced 18 Oct, so the product master still flows.</td>
+        <td>Quality <span class="tag bad">degraded, 73.7 days stale</span>; refused by the generation gate every night (<code>data_too_stale</code>); 0 cards ever; no sync jobs enabled server-side: the store's own uploader stopped pushing sales.</td>
+        <td>Nothing to confirm.</td>
+        <td><span class="tag bad">BLOCKED, NOT BY CODE</span> — until the on-prem uploader pushes sales again, no recommendation can be generated, and the gate is right to refuse. The engine needs about four months of sales after the feed returns before its own backtest can judge the store.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note">
+    <span class="l">Finding: Tuscany's purchase dates (defect 17)</span>
+    <p><strong>What the source holds.</strong> In syncgo, store 173's 7,646 purchase rows all carry <code>-infinity</code> in <code>date</code>
+    (0 null, 0 sane) and a real <code>invoice_date</code> on every row (1 Dec 2019 to 17 Oct 2026; 254 invoices, 188 suppliers,
+    3,581 SKUs; 81 rows in the last 60 days). Stores 182, 184 and 186, the other LiquorPOS sites, show the identical pattern
+    (3,808 / 6,188 / 1,786 rows). Every Korona, EPOSNow and PCAmerica store has a sane <code>date</code>; the PCAmerica stores
+    whose query says <code>null as InvoiceDate</code> carry <code>-infinity</code> in <code>invoice_date</code> instead, the same
+    mechanism in the other column. <code>job_runs_history</code> has no rows for 173, so the sync logged no warning.</p>
+    <p><strong>What the sync does.</strong> The LiquorPOS extraction query is
+    <code>SELECT PO_NUM AS PurchaseId, DATE AS PurchaseDate, …, DATE AS InvoiceDate, … FROM ORD_IN WHERE QTY &gt; 0</code>.
+    One Visual FoxPro column, <code>ORD_IN.DATE</code>, feeds both; the copy aliased <code>InvoiceDate</code> arrives intact, the
+    copy aliased <code>PurchaseDate</code> does not, and every other connector's query names that column <code>Date</code>. The
+    uploader binds by alias, finds no <code>Date</code>, writes its default DateTime, and the driver stores that as
+    <code>-infinity</code>. The POS has the dates; the sync loses them on the alias. The fix belongs in SyncGo's config:
+    <code>DATE AS Date</code>. It is not a VFP empty-date problem (an empty <code>{}</code> would read 1899-12-30, and there are none).</p>
+    <p><strong>What this tree changed.</strong> Every reader of the purchase day now uses
+    <code>COALESCE(NULLIF(date,'-infinity'), NULLIF(invoice_date,'-infinity'))</code>, kept to days on or after 1990-01-01:
+    the evaluator's two feed loaders, the PO-effectiveness feed count and per-SKU orders, StoreAgent's supplier cadence
+    (median gap between orders), latest purchase cost and "what I bought" window, and the SQL-check mirrors. Lead times
+    are untouched: an invoice day is an order day, not a receipt, and <code>leadTimeService</code> reads uploaded documents
+    only. Pinned by <code>tests/purchase-date-verify.js</code>, scenario N of <code>fulfilment-verify</code> (a sentinel row
+    through the mocked warehouse) and <code>tests/test_supplier_repo.py</code>.</p>
+    <p><strong>Measured effect on 173.</strong> The evaluation re-ran for the real tenant: 30 cards, still 2 confirmed (both from
+    stock inflow), 25 pending, 3 unobservable; no card is confirmed from the purchases feed. What changed is what the feed
+    says: 12 rows across 12 SKUs and 5 invoices since 12 Oct where the old filter saw none, so the store is ordering, just
+    not the 20 SKUs on its cards (4 of them have any history here; the last such purchase was 7 Feb 2026). The earlier
+    sentence "no rows for any recommended SKU" was true on both readings; the reason it was true is now the store, not the
+    column.</p>
+  </div>
+  <div class="note">
+    <span class="l">Finding: is any store losing money on a recommendation? (money audit, 15:05 IST)</span>
+    <p>A new per-card audit (<code>services/moneyAuditService.js</code>, page <code>audit/money/INDEX.html</code>,
+    route <code>GET /api/recommendations/money-audit</code>, commit 8b92e93) answers the question the way it has to be
+    answered: card by card. At issue it reads the gate's expected profit and the engine's holding cost if unsold;
+    after the window it reads the evaluator's incremental margin, the unsold units and the holding cost actually
+    incurred; net = margin minus holding. A loss is counted only on a card the owner is <em>confirmed</em> to have
+    bought on (fulfilment state machine, migration 039), and so is a gain. A negative margin with no holding figure is
+    a loss of <em>at least</em> that much, never "unmeasurable". One product-window counts once: 181 of Bethany's 276
+    shown cards repeat another card for the same product on the same day (the forward test regenerates), and summing
+    them reported $3,975 where the distinct figure is $131.</p>
+    <ul>
+      <li><strong>171 Bethany.</strong> Not "no". 276 cards shown, 95 distinct product-windows, 118 confirmed, 253 closed
+      (36 at 30 days, 217 at 7). Distinct verdicts: <strong>5 lost money, 3 made money</strong>, 9 have a net but no
+      confirmed purchase, 19 were not followed (no money at risk), 14 are open, 45 cannot be priced (no baseline, or no
+      holding figure on pre-September cards). Realised net over the 4 fully priced confirmed product-windows:
+      <strong>+$130.68</strong> (too few to bound), with <strong>4 further confirmed losses bounded at &ge; $347.08</strong>
+      between them. Largest loss: card 34, SKU 080480016210, issued 24 Aug, <strong>&minus;$319.06</strong>: bought (stock inflow),
+      sold 162 against a 354-unit 30-day baseline at $0.34 a unit, nothing left unsold. The other four: &le;&minus;$184.50,
+      &le;&minus;$95.46, &le;&minus;$50.57, &le;&minus;$16.55. The losses sit in low-margin, high-volume SKUs that sold under their
+      baseline; the gains include two zero-baseline products where every unit sold counts as increment.</li>
+      <li><strong>173 Tuscany.</strong> Nothing measurable either way: 29 cards shown, oldest 12 Oct, <strong>0 closed windows</strong>,
+      2 confirmed purchases. The first 7-day windows close this week, 30-day windows in November. Until today no Tuscany card had
+      an admission row (defect 20); from run 735 every card records its expected profit at issue.</li>
+      <li><strong>188 Grapes and Grains.</strong> No recommendation in 120 days, so no loss and no clean bill: the feed has been dead
+      since 5 Aug.</li>
+    </ul>
+    <p>Also measured on the way: <code>REC_MIN_PROFIT_USD=0</code> on this host (the dollar floor is off, by a deliberate
+    local setting); 0 of Bethany's cards would have fallen under a $1 floor, so production can set it to 1 at no cost in
+    cards. The holdout cannot yet say whether recommending <em>caused</em> any of the above: 24 shown, 0 withheld measured.</p>
+  </div>
+  <div class="note">
+    <span class="l">Finding: why Tuscany has 105 days of sales, and how to get three years (defect 21)</span>
+    <p>The DU uploader's first sales pull covers the 30 days before the first successful pull, so every LiquorPOS
+    store onboarded on 4 Aug 2026 starts sales on 5 Jul; the purchases query has no date filter, which is why
+    Tuscany's purchases reach back to 2019. <code>INITIAL_PULL_FROM</code> in <code>client_pos_config.meta_data</code>
+    is empty for the LiquorPOS stores (it reads "2023-09-28" for 193 and "2023-10-01" for 214). Bethany went through the
+    same thing and was re-pulled from 2023 on 31 Jul and 7 Aug, so the mechanism exists. The ask is in the go-live runbook
+    (<code>docs/GO-LIVE-RUNBOOK-THREE-STORES.md</code>, section 6): set <code>INITIAL_PULL_FROM = "2023-01-01"</code>
+    for 173, 184 and 186 and run a historical ranged sales pull 2023-01-01 to 2026-07-05, chunked by month. Rows dedupe
+    on <code>unique_hash</code>, so overlap is safe. That gives Tuscany about 1,385 days of span, enough for the full backtest
+    (492 days) and the 365-day reversion window.</p>
+  </div>
+  <div class="fail">
+    <span class="l">On "world-class profitable"</span>
+    <p>Profitability is measured here, not promised. Bethany clears the $1,000-a-month profit gate
+    ($1,356 in April, $24.65 per card) and fails the accuracy gate on a biased promise; Tuscany has no
+    closed outcome window yet; Grapes and Grains has no data. The honest claim for the pilot is the one
+    the gates make: a measured edge over mean reversion at every store that has data, money per card
+    stated with its interval, and a refusal to state what has not been measured. The Effectiveness
+    tab now reports owner follow-through from the database, which is what turns "profitable in a
+    backtest" into "profitable in this shop" over the pilot months.</p>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Method.</strong> Three read-only inventories of the backend, the Python service and the
+  frontend/deploy/audit folders; every automated suite run on this machine on 19 October 2026;
+  counts queried from the analytics database; cron evidence taken from the server's own log lines;
+  the money audit run at 15:05 IST against the same database (<code>audit/money/</code>).
+  Figures from the engine audit pages are as published on 8–9 October. Where a number could not be
+  measured it is marked as such rather than estimated.</p>
+  <p><strong>Not covered.</strong> The LLM evaluation harnesses (hallucination, routing, red team),
+  the row-level-security proof script, load and performance, and the deployed EC2 environment,
+  which this host cannot reach.</p>
+</footer>
+</div>

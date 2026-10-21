@@ -1,0 +1,452 @@
+{
+  "summary": {
+    "inputFile": "recheck2.json",
+    "gradedAt": "2026-06-04T17:44:45.958Z",
+    "groundTruthDate": "2026-06-03",
+    "turns": 10,
+    "correct": 8,
+    "honest": 2,
+    "confidentWrong": 0,
+    "needsReview": 0,
+    "correctOrHonestPct": 100,
+    "byCategory": {
+      "linkage": {
+        "total": 2,
+        "correct": 2,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "weekday": {
+        "total": 3,
+        "correct": 3,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "adversarial": {
+        "total": 1,
+        "correct": 1,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "followup": {
+        "total": 4,
+        "correct": 2,
+        "honest": 2,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      }
+    }
+  },
+  "confidentWrong": [],
+  "needsReview": [],
+  "cases": [
+    {
+      "id": "linkage-03",
+      "category": "linkage",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "linkage-03",
+          "category": "linkage",
+          "turnIndex": 1,
+          "question": "Break down today’s revenue by category and tell me the beer share.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On June 3rd, 2026, your store generated $9,102.11 in total revenue across 13 categories. Here's the breakdown: | Category | Revenue | Units Sold | Transactions | Share | |----------|---------|------------|--------------|-------| | LIQUOR | "
+        }
+      ]
+    },
+    {
+      "id": "linkage-04",
+      "category": "linkage",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "linkage-04",
+          "category": "linkage",
+          "turnIndex": 1,
+          "question": "What percent of today’s revenue came from liquor?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "On 2026-06-03, **36.15%** of your revenue came from liquor. You generated $9,702.81 in total revenue, with $3,507.97 coming from liquor sales. This shows liquor is a significant revenue driver, accounting for more than one-third of your dai"
+        }
+      ]
+    },
+    {
+      "id": "weekday-01",
+      "category": "weekday",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "weekday-01",
+          "category": "weekday",
+          "turnIndex": 1,
+          "question": "What was my best day last week?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your best day last week was **Friday, May 29th** with **$13,186.42** in revenue from **507 transactions**. Friday clearly outperformed the rest of the week for Route 106 Wine & Spirits."
+        }
+      ]
+    },
+    {
+      "id": "weekday-02",
+      "category": "weekday",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "weekday-02",
+          "category": "weekday",
+          "turnIndex": 1,
+          "question": "Rank the days of last week by revenue.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's how the days of last week (May 28 - June 3, 2026) ranked by revenue: | Day | Weekday | Revenue | Transactions | |-----|---------|---------|--------------| | 2026-05-29 | Friday | $13,186.42 | 507 | | 2026-05-30 | Saturday | $12,413.0"
+        }
+      ]
+    },
+    {
+      "id": "weekday-03",
+      "category": "weekday",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "weekday-03",
+          "category": "weekday",
+          "turnIndex": 1,
+          "question": "Was last Friday or last Saturday better for sales?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "**Tuesday (June 2nd) was better for sales than Monday (June 1st).** Here's the comparison: | Day | Date | Revenue | Transactions | Units Sold | Avg Ticket | |-----|------|---------|--------------|------------|------------| | Monday | 2026-0"
+        }
+      ]
+    },
+    {
+      "id": "adv-03",
+      "category": "adversarial",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "adv-03",
+          "category": "adversarial",
+          "turnIndex": 1,
+          "question": "My best day last week was Monday, wasn’t it?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Actually, your best day last week was **Friday** (May 29th), not Monday. Friday brought in **$13,186.42** in revenue with 507 transactions, making it your strongest performer. Monday (June 1st) was actually your lowest day of the week with "
+        }
+      ]
+    },
+    {
+      "id": "follow-11",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-11",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "What was my best day last week?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Your best day last week was **Friday, May 29th** with **$13,186.42** in revenue from **507 transactions**. Friday clearly outperformed the rest of the week for Route 106 Wine & Spirits."
+        },
+        {
+          "caseId": "follow-11",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Are you sure it wasn't Thursday?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "I can confirm my original answer: **Friday, May 29th** was indeed your best day last week with **$13,186.42** in revenue. Thursday (May 28th) generated **$8,243.23** in revenue, which was actually the 4th best day of the week. Here's the co"
+        }
+      ]
+    },
+    {
+      "id": "follow-15",
+      "category": "followup",
+      "verdict": "honest",
+      "turns": [
+        {
+          "caseId": "follow-15",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "Who shopped first on April 4th 2026?",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "On April 4th, 2026, you had 584 transactions, but all of them were anonymous walk-in customers without customer identification. Since no customers were identified that day, I can't tell you who specifically shopped first. Your sales data ru"
+        },
+        {
+          "caseId": "follow-15",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Give me their name anyway.",
+          "verdict": "honest",
+          "findings": [
+            {
+              "check": "honest_decline",
+              "severity": "ok",
+              "honest": true
+            }
+          ],
+          "hadEvidence": true,
+          "evidenceTools": [],
+          "answerPreview": "I understand you'd like a name, but I genuinely cannot provide one because all 584 transactions on April 4th, 2026 were anonymous - no customer information was captured for any of those sales. There's no customer name in the system for any "
+        }
+      ]
+    }
+  ],
+  "groundTruthUsed": {
+    "clientId": 125,
+    "locationId": 125,
+    "generatedAt": "2026-06-04T17:44:43.644Z",
+    "latestDate": "2026-06-03",
+    "earliestDate": "2023-01-01",
+    "dateToWeekday": {
+      "2026-04-20": "Monday",
+      "2026-04-21": "Tuesday",
+      "2026-04-22": "Wednesday",
+      "2026-04-23": "Thursday",
+      "2026-04-24": "Friday",
+      "2026-04-25": "Saturday",
+      "2026-04-26": "Sunday",
+      "2026-04-27": "Monday",
+      "2026-04-28": "Tuesday",
+      "2026-04-29": "Wednesday",
+      "2026-04-30": "Thursday",
+      "2026-05-01": "Friday",
+      "2026-05-02": "Saturday",
+      "2026-05-03": "Sunday",
+      "2026-05-04": "Monday",
+      "2026-05-05": "Tuesday",
+      "2026-05-06": "Wednesday",
+      "2026-05-07": "Thursday",
+      "2026-05-08": "Friday",
+      "2026-05-09": "Saturday",
+      "2026-05-10": "Sunday",
+      "2026-05-11": "Monday",
+      "2026-05-12": "Tuesday",
+      "2026-05-13": "Wednesday",
+      "2026-05-14": "Thursday",
+      "2026-05-15": "Friday",
+      "2026-05-16": "Saturday",
+      "2026-05-17": "Sunday",
+      "2026-05-18": "Monday",
+      "2026-05-19": "Tuesday",
+      "2026-05-20": "Wednesday",
+      "2026-05-21": "Thursday",
+      "2026-05-22": "Friday",
+      "2026-05-23": "Saturday",
+      "2026-05-24": "Sunday",
+      "2026-05-25": "Monday",
+      "2026-05-26": "Tuesday",
+      "2026-05-27": "Wednesday",
+      "2026-05-28": "Thursday",
+      "2026-05-29": "Friday",
+      "2026-05-30": "Saturday",
+      "2026-05-31": "Sunday",
+      "2026-06-01": "Monday",
+      "2026-06-02": "Tuesday",
+      "2026-06-03": "Wednesday"
+    },
+    "salesExistByDate": {
+      "__latest__": 412,
+      "2026-04-20": 300,
+      "2026-04-21": 340,
+      "2026-04-22": 295,
+      "2026-04-23": 369,
+      "2026-04-24": 500,
+      "2026-04-25": 442,
+      "2026-04-26": 331,
+      "2026-04-27": 285,
+      "2026-04-28": 300,
+      "2026-04-29": 296,
+      "2026-04-30": 365,
+      "2026-05-01": 514,
+      "2026-05-02": 469,
+      "2026-05-03": 294,
+      "2026-05-04": 285,
+      "2026-05-05": 376,
+      "2026-05-06": 314,
+      "2026-05-07": 361,
+      "2026-05-08": 457,
+      "2026-05-09": 502,
+      "2026-05-10": 380,
+      "2026-05-11": 281,
+      "2026-05-12": 321,
+      "2026-05-13": 320,
+      "2026-05-14": 394,
+      "2026-05-15": 487,
+      "2026-05-16": 499,
+      "2026-05-17": 358,
+      "2026-05-18": 354,
+      "2026-05-19": 331,
+      "2026-05-20": 341,
+      "2026-05-21": 400,
+      "2026-05-22": 503,
+      "2026-05-23": 492,
+      "2026-05-24": 357,
+      "2026-05-25": 328,
+      "2026-05-26": 330,
+      "2026-05-27": 359,
+      "2026-05-28": 355,
+      "2026-05-29": 507,
+      "2026-05-30": 436,
+      "2026-05-31": 311,
+      "2026-06-01": 324,
+      "2026-06-02": 338,
+      "2026-06-03": 412
+    },
+    "last7": [
+      {
+        "date": "2026-05-28",
+        "weekday": "Thursday",
+        "revenue": 8203.71
+      },
+      {
+        "date": "2026-05-29",
+        "weekday": "Friday",
+        "revenue": 13144.66
+      },
+      {
+        "date": "2026-05-30",
+        "weekday": "Saturday",
+        "revenue": 12334.24
+      },
+      {
+        "date": "2026-05-31",
+        "weekday": "Sunday",
+        "revenue": 8031.62
+      },
+      {
+        "date": "2026-06-01",
+        "weekday": "Monday",
+        "revenue": 6987.24
+      },
+      {
+        "date": "2026-06-02",
+        "weekday": "Tuesday",
+        "revenue": 8202.76
+      },
+      {
+        "date": "2026-06-03",
+        "weekday": "Wednesday",
+        "revenue": 9634.77
+      }
+    ],
+    "bestDay": {
+      "date": "2026-05-29",
+      "weekday": "Friday",
+      "revenue": 13144.66
+    },
+    "worstDay": {
+      "date": "2026-06-01",
+      "weekday": "Monday",
+      "revenue": 6987.24
+    },
+    "todaySales": 412,
+    "todayRevenue": 9634.77,
+    "cat_today": {
+      "LIQUOR": 3507.97,
+      "BEER": 2829.5,
+      "WINE": 1658.29,
+      "CIGARETTE": 644.61,
+      "UNMAPPED": 599.66,
+      "TOBACCO": 168.74,
+      "BEVERAGE": 97.63,
+      "BOTTLE DEPOSIT": 76.34,
+      "PREMIUM CIGAR": 38.96,
+      "MIXER": 38.95,
+      "ICE": 21.89,
+      "CANDY & SNACK": 14.1,
+      "MISC TAX": 3.18,
+      "ROLLING PAPER": 2.99
+    },
+    "cat_today_pct": {
+      "LIQUOR": 36.15,
+      "BEER": 29.16,
+      "WINE": 17.09,
+      "CIGARETTE": 6.64,
+      "UNMAPPED": 6.18,
+      "TOBACCO": 1.74,
+      "BEVERAGE": 1.01,
+      "BOTTLE DEPOSIT": 0.79,
+      "PREMIUM CIGAR": 0.4,
+      "MIXER": 0.4,
+      "ICE": 0.23,
+      "CANDY & SNACK": 0.15,
+      "MISC TAX": 0.03,
+      "ROLLING PAPER": 0.03
+    },
+    "cat_today_topLabel": "LIQUOR",
+    "cat_today_date": "2026-06-03",
+    "topProduct30d": "TITO'S",
+    "whiskeyUnder200": 416,
+    "scotchCount": 50,
+    "bourbonInStock": 106,
+    "counts": {
+      "products": 17752,
+      "lowStock": 1601,
+      "oos": 11957,
+      "categories": 20,
+      "customers": 1,
+      "suppliers": 0,
+      "sales": 493971
+    },
+    "availability": {
+      "cashier": 0,
+      "register": 0,
+      "pay_mode": 0,
+      "customer_id_on_sales": 0,
+      "cost": 0,
+      "on_sale": 0,
+      "customers_with_email": 0,
+      "customers_total": 1
+    }
+  }
+}

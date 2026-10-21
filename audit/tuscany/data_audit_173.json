@@ -1,0 +1,266 @@
+{
+  "store_id": 173,
+  "username": "tuscanyliquors",
+  "location_id": 173,
+  "generated_at": "2026-10-15",
+  "census": [
+    {
+      "table": "client_activity_log",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_alerts",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_credentials",
+      "rows": 2,
+      "date_column": "created_at",
+      "first": "2026-07-17",
+      "last": "2026-08-04",
+      "distinct_days": 2,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_log_entries",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_pull_state",
+      "rows": 1,
+      "date_column": "updated_at",
+      "first": "2026-10-14",
+      "last": "2026-10-14",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_du_schedule",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_locations",
+      "rows": 1,
+      "date_column": "updated_at",
+      "first": "2026-08-04",
+      "last": "2026-08-04",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_pos_config",
+      "rows": 1,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "client_push_state",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "clients",
+      "rows": 1,
+      "date_column": "updated_at",
+      "first": "2026-07-17",
+      "last": "2026-07-17",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "customers",
+      "rows": 5493,
+      "date_column": "updated_at",
+      "first": "2026-08-04",
+      "last": "2026-08-04",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "job_runs_history",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "jobs",
+      "rows": 5,
+      "date_column": "started_at",
+      "first": null,
+      "last": null,
+      "distinct_days": 0,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "pending_jobs",
+      "rows": 0,
+      "date_column": null,
+      "first": null,
+      "last": null,
+      "distinct_days": null,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "products",
+      "rows": 8976,
+      "date_column": "last_updated",
+      "first": "2026-08-04",
+      "last": "2026-10-14",
+      "distinct_days": 53,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "purchases",
+      "rows": 7634,
+      "date_column": "date",
+      "first": null,
+      "last": null,
+      "distinct_days": 0,
+      "non_finite_dates": 7634
+    },
+    {
+      "table": "sale_items",
+      "rows": 37035,
+      "date_column": "sale_date",
+      "first": "2026-07-05",
+      "last": "2026-10-13",
+      "distinct_days": 101,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "sales",
+      "rows": 19572,
+      "date_column": "sale_date",
+      "first": "2026-07-05",
+      "last": "2026-10-13",
+      "distinct_days": 101,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "suppliers",
+      "rows": 93,
+      "date_column": "updated_at",
+      "first": "2026-08-04",
+      "last": "2026-09-16",
+      "distinct_days": 4,
+      "non_finite_dates": 0
+    },
+    {
+      "table": "users",
+      "rows": 1,
+      "date_column": "created_at",
+      "first": "2026-07-17",
+      "last": "2026-07-17",
+      "distinct_days": 1,
+      "non_finite_dates": 0
+    }
+  ],
+  "quality": {
+    "receipts": {
+      "rows": 19572,
+      "trading_days": 101,
+      "first": "2026-07-05",
+      "last": "2026-10-13",
+      "voids": 0,
+      "null_subtotal": 0,
+      "with_customer": 2032
+    },
+    "lines": {
+      "rows": 37035,
+      "distinct_skus": 4133,
+      "sold": 37028,
+      "null_qty": 0,
+      "nonpositive_qty": 92,
+      "with_price": 36951,
+      "with_cost": 36952,
+      "blank_sku": 0
+    },
+    "products": {
+      "rows": 8976,
+      "named": 8976,
+      "with_cost": 8968,
+      "with_stock": 8976,
+      "with_category": 8936,
+      "newest": "2026-10-14"
+    },
+    "customers": {
+      "rows": 5493,
+      "contactable": 45,
+      "deleted": 0
+    },
+    "purchases": {
+      "rows": 7634,
+      "suppliers": 187,
+      "skus": 3574,
+      "first": null,
+      "last": null,
+      "non_finite_dates": 7634,
+      "with_cost": 7589
+    }
+  },
+  "sku_depth": {
+    "distinct_skus": 4132,
+    "sold_on_1_day_only": 1052,
+    "at_least_2_days": 3080,
+    "at_least_5_days": 1690,
+    "at_least_10_days": 852,
+    "at_least_20_days": 314,
+    "at_least_30_days": 163
+  },
+  "monthly": [
+    {
+      "month": "2026-07",
+      "trading_days": 27,
+      "receipts": 5046,
+      "revenue": 123120.82
+    },
+    {
+      "month": "2026-08",
+      "trading_days": 31,
+      "receipts": 5942,
+      "revenue": 139414.75
+    },
+    {
+      "month": "2026-09",
+      "trading_days": 30,
+      "receipts": 5965,
+      "revenue": 144124.43
+    },
+    {
+      "month": "2026-10",
+      "trading_days": 13,
+      "receipts": 2619,
+      "revenue": 61476.04
+    }
+  ]
+}

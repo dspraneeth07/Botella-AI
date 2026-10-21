@@ -1,0 +1,51 @@
+{
+  "horizon_days": 3,
+  "note": "Each configuration scores a DIFFERENT date range, because the first scorable date is span_start + long_run + 5. They are therefore not comparable to one another, which is why this sweep does not settle the question it was run to answer.",
+  "rows": [
+    {
+      "long_run": 6,
+      "dates": 13,
+      "first": "2026-07-18",
+      "trailing": 82.94,
+      "engine": 86.97,
+      "last": "2026-08-01",
+      "edge": -4.03
+    },
+    {
+      "long_run": 8,
+      "dates": 12,
+      "first": "2026-07-20",
+      "trailing": 84.97,
+      "engine": 85.22,
+      "last": "2026-08-01",
+      "edge": -0.25
+    },
+    {
+      "long_run": 10,
+      "dates": 10,
+      "first": "2026-07-22",
+      "trailing": 85.03,
+      "engine": 85.65,
+      "last": "2026-08-01",
+      "edge": -0.62
+    },
+    {
+      "long_run": 12,
+      "dates": 8,
+      "first": "2026-07-24",
+      "trailing": 83.4,
+      "engine": 84.31,
+      "last": "2026-08-01",
+      "edge": -0.91
+    },
+    {
+      "long_run": 15,
+      "dates": 6,
+      "first": "2026-07-27",
+      "trailing": 79.97,
+      "engine": 79.19,
+      "last": "2026-08-01",
+      "edge": 0.78
+    }
+  ]
+}

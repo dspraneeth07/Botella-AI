@@ -1,0 +1,929 @@
+{
+  "generatedAt": "2026-06-04T16:59:12.655Z",
+  "apiBase": "http://127.0.0.1:3100/api",
+  "clientId": 125,
+  "locationId": 125,
+  "categories": {
+    "simple": "simple factual DB questions",
+    "sales": "sales/revenue questions",
+    "inventory": "product/inventory questions",
+    "ambiguous": "ambiguous free-form questions",
+    "followup": "multi-turn follow-up conversations",
+    "obscure": "obscure/deep-cut questions",
+    "linkage": "product-sales linkage (known-broken data)",
+    "honesty": "honest-decline (unpopulated fields)",
+    "weekday": "weekday / best-day correctness",
+    "search": "search recall",
+    "dateedge": "date-edge cases",
+    "adversarial": "adversarial false-premise pushback"
+  },
+  "totalSingle": 2,
+  "totalConvo": 0,
+  "results": [
+    {
+      "id": "sales-09",
+      "category": "sales",
+      "question": "Break down today’s sales by category.",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "pairing_from",
+            "from": "cat_today"
+          },
+          {
+            "type": "no_closure"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "Break down today’s sales by category.",
+          "answer": "Here's your sales breakdown by category for **June 3, 2026**:\n\n| Category | Revenue | Units Sold | Transactions | % of Total |\n|----------|---------|------------|--------------|------------|\n| LIQUOR | $3,507.97 | 633 | 175 | 38.6% |\n| BEER | $2,815.52 | 263 | 177 | 31.0% |\n| WINE | $1,658.29 | 136 | 76 | 18.2% |\n| CIGARETTE | $644.61 | 55 | 39 | 7.1% |\n| TOBACCO | $168.74 | 26 | 9 | 1.9% |\n| BEVERAGE | $97.63 | 39 | 28 | 1.1% |\n| BOTTLE DEPOSIT | $76.34 | 1,526 | 172 | 0.8% |\n| PREMIUM CIGAR | $38.96 | 4 | 1 | 0.4% |\n| MIXER | $38.95 | 5 | 4 | 0.4% |\n| ICE | $21.89 | 11 | 9 | 0.2% |\n| CANDY & SNACK | $14.10 | 10 | 7 | 0.2% |\n| MISC TAX | $3.18 | 2 | 2 | 0.0% |\n| ROLLING PAPER | $2.99 | 1 | 1 | 0.0% |\n\n[download:94a4189b32202e4d]\n\nYour alcohol categories dominated today's sales, with liquor leading at 38.6% of revenue, followed by beer at 31.0% and wine at 18.2%. Together, these three categories generated nearly 88% of your total revenue. Beer had the highest transaction count (177), suggesting strong volume sales, while liquor achieved the highest revenue per transaction.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT MAX(si.sale_date::date) AS sale_day,\n       p.category, \n       SUM(si.total_amount) AS revenue,\n       SUM(si.quantity) AS units_sold, \n       COUNT(DISTINCT si.sale_id) AS transactions,\n       ROUND(100.0 * SUM(si.total_amount) / SUM(SUM(si.total_amount)) OVER (), 1) AS pct_of_total\nFROM sale_items si\nLEFT JOIN products p ON TRIM(p.upc) = TRIM(si.sku) AND p.client_id = si.client_id AND p.location_id = si.location_id\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date = (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND NULLIF(TRIM(p.category), '') IS NOT NULL\nGROUP BY p.category\nORDER BY revenue DESC"
+              },
+              "sql": "SELECT MAX(si.sale_date::date) AS sale_day,\n       p.category, \n       SUM(si.total_amount) AS revenue,\n       SUM(si.quantity) AS units_sold, \n       COUNT(DISTINCT si.sale_id) AS transactions,\n       ROUND(100.0 * SUM(si.total_amount) / SUM(SUM(si.total_amount)) OVER (), 1) AS pct_of_total\nFROM sale_items si\nLEFT JOIN products p ON TRIM(p.upc) = TRIM(si.sku) AND p.client_id = si.client_id AND p.location_id = si.location_id\nWHERE si.client_id = '125' AND si.location_id = '125'\n  AND si.sale_date::date = (SELECT MAX(sale_date::date) FROM sale_items WHERE client_id = '125' AND location_id = '125')\n  AND NULLIF(TRIM(p.category), '') IS NOT NULL\nGROUP BY p.category\nORDER BY revenue DESC",
+              "success": true,
+              "row_count": 13,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "LIQUOR",
+                    "revenue": "3507.9700",
+                    "units_sold": "633",
+                    "transactions": "175",
+                    "pct_of_total": "38.6"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "BEER",
+                    "revenue": "2815.5200",
+                    "units_sold": "263",
+                    "transactions": "177",
+                    "pct_of_total": "31.0"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "WINE",
+                    "revenue": "1658.2900",
+                    "units_sold": "136",
+                    "transactions": "76",
+                    "pct_of_total": "18.2"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "CIGARETTE",
+                    "revenue": "644.6100",
+                    "units_sold": "55",
+                    "transactions": "39",
+                    "pct_of_total": "7.1"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "TOBACCO",
+                    "revenue": "168.7400",
+                    "units_sold": "26",
+                    "transactions": "9",
+                    "pct_of_total": "1.9"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "BEVERAGE",
+                    "revenue": "97.6300",
+                    "units_sold": "39",
+                    "transactions": "28",
+                    "pct_of_total": "1.1"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "BOTTLE DEPOSIT",
+                    "revenue": "76.3400",
+                    "units_sold": "1526",
+                    "transactions": "172",
+                    "pct_of_total": "0.8"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "PREMIUM CIGAR",
+                    "revenue": "38.9600",
+                    "units_sold": "4",
+                    "transactions": "1",
+                    "pct_of_total": "0.4"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "MIXER",
+                    "revenue": "38.9500",
+                    "units_sold": "5",
+                    "transactions": "4",
+                    "pct_of_total": "0.4"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "ICE",
+                    "revenue": "21.8900",
+                    "units_sold": "11",
+                    "transactions": "9",
+                    "pct_of_total": "0.2"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "CANDY & SNACK",
+                    "revenue": "14.1000",
+                    "units_sold": "10",
+                    "transactions": "7",
+                    "pct_of_total": "0.2"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "MISC TAX",
+                    "revenue": "3.1800",
+                    "units_sold": "2",
+                    "transactions": "2",
+                    "pct_of_total": "0.0"
+                  },
+                  {
+                    "sale_day": "2026-06-03",
+                    "category": "ROLLING PAPER",
+                    "revenue": "2.9900",
+                    "units_sold": "1",
+                    "transactions": "1",
+                    "pct_of_total": "0.0"
+                  }
+                ],
+                "rowCount": 13,
+                "truncated": false,
+                "downloadId": "94a4189b32202e4d"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    },
+    {
+      "id": "inv-05",
+      "category": "inventory",
+      "question": "What whiskeys do you have under $200?",
+      "mustUseTool": true,
+      "verify": {
+        "checks": [
+          {
+            "type": "min_count",
+            "from": "whiskeyUnder200"
+          }
+        ]
+      },
+      "turns": [
+        {
+          "question": "What whiskeys do you have under $200?",
+          "answer": "You have **423 whiskeys** under $200 in your inventory. Here are the highest-priced ones, ranging from $199.99 down to $54.99:\n\n| Product Name | Price | Stock |\n|--------------|-------|-------|\n| CHICKEN COCK COTTON CLUB RYE 2 | $199.99 | 0 |\n| JACK DAN TWICE BBLHERIT RYE 75 | $199.99 | 0 |\n| GLENFIDDICH BOURBON BARREL 19 YEARS | $189.99 | 1 |\n| YELLOWSTONE 101 BOURBON WHISKE | $179.99 | 0 |\n| BLACKENED X WILLETT RYE 750ML | $159.99 | 0 |\n| RARE HARE BOURBON 15YR | $149.99 | 1 |\n| E.H. TAYLOR STRAIGHT RYE | $149.99 | 1 |\n| SHENK'S HOMESTEAD SOUR MASH WHISKEY | $139.99 | 2 |\n| GLENFIDDICH SINGLE MALT 18YR | $139.99 | 4 |\n| YELLOW SPOT 12YR | $139.99 | 3 |\n| WHISTLE PIG OLD WORLD RYE 750 | $129.99 | 0 |\n| BOOKER'S BOURBON 2023-02 | $129.99 | 5 |\n| BOOKER'S BOURBON 2024-04 | $119.99 | 1 |\n| HIGH WEST BOURYE | $119.99 | 1 |\n| EAGLE RARE BOURBON | $119.99 | 5 |\n| BOOKERS BOURBON 2022 | $119.99 | 1 |\n| BOOKER'S BOURBON 2023-04 | $119.99 | 6 |\n| BOOKER'S BOURBON 2025 | $119.99 | 0 |\n| BOOKER'S BOURBON 2023-01 | $119.99 | 2 |\n| HEAVEN HILL BOURBON | $114.99 | 7 |\n\n[download:74bdba30d56cdb77]\n\nYour whiskey selection spans the full spectrum from premium single malts and rare bourbons down to accessible everyday options. I matched whiskey, bourbon, scotch, rye, and single malt products across your entire catalog. Many of your premium bottles (like the Chicken Cock and Jack Daniel's special releases) are currently out of stock, but you have good availability on popular brands like Booker's, Glenfiddich, and Eagle Rare.",
+          "evidence": [
+            {
+              "iteration": 1,
+              "tool": "run_sql",
+              "input": {
+                "query": "SELECT product_name, price, stock_qty, category, sub_category\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '(whisky|whiskey|bourbon|scotch|rye|single malt)'\n       OR sub_category ~* '(whisky|whiskey|bourbon|scotch|rye|single malt)'\n       OR category ~* '(whisky|whiskey|bourbon|scotch|rye|single malt)')\n  AND (price IS NOT NULL AND price > 0)\n  AND price < 200\nORDER BY price DESC"
+              },
+              "sql": "SELECT product_name, price, stock_qty, category, sub_category\nFROM products\nWHERE client_id = '125' AND location_id = '125'\n  AND (product_name ~* '(whisky|whiskey|bourbon|scotch|rye|single malt)'\n       OR sub_category ~* '(whisky|whiskey|bourbon|scotch|rye|single malt)'\n       OR category ~* '(whisky|whiskey|bourbon|scotch|rye|single malt)')\n  AND (price IS NOT NULL AND price > 0)\n  AND price < 200\nORDER BY price DESC",
+              "success": true,
+              "row_count": 423,
+              "error": null,
+              "result": {
+                "rows": [
+                  {
+                    "product_name": "CHICKEN COCK COTTON CLUB RYE 2",
+                    "price": "199.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "CHICKEN COCK"
+                  },
+                  {
+                    "product_name": "JACK DAN TWICE BBLHERIT RYE 75",
+                    "price": "199.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "JACK DANIEL'S"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 19 YEARS",
+                    "price": "189.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "YELLOWSTONE 101 BOURBON WHISKE",
+                    "price": "179.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "yellow stone"
+                  },
+                  {
+                    "product_name": "BLACKENED X WILLETT RYE 750ML",
+                    "price": "159.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "blackened"
+                  },
+                  {
+                    "product_name": "RARE HARE BOURBON 15YR",
+                    "price": "149.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "RARE HARE"
+                  },
+                  {
+                    "product_name": "E.H. TAYLOR STRAIGHT RYE",
+                    "price": "149.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "E H TAYLOR"
+                  },
+                  {
+                    "product_name": "SHENK'S HOMESTEAD SOUR MASH WHISKEY",
+                    "price": "139.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "MICHTER'S"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH SINGLE MALT 18YR",
+                    "price": "139.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "YELLOW SPOT 12YR",
+                    "price": "139.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "SPOT WHISKEY"
+                  },
+                  {
+                    "product_name": "WHISTLE PIG OLD WORLD RYE 750",
+                    "price": "129.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "WHISTLEPIG"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-02",
+                    "price": "129.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2024-04",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "HIGH WEST BOURYE",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "HIGH WEST"
+                  },
+                  {
+                    "product_name": "EAGLE RARE BOURBON",
+                    "price": "119.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "EAGLE RARE"
+                  },
+                  {
+                    "product_name": "BOOKERS BOURBON 2022",
+                    "price": "119.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-04",
+                    "price": "119.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2025",
+                    "price": "119.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "BOOKER'S BOURBON 2023-01",
+                    "price": "119.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "BOOKER'S"
+                  },
+                  {
+                    "product_name": "HEAVEN HILL BOURBON",
+                    "price": "114.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "HEAVEN HILL"
+                  },
+                  {
+                    "product_name": "HEAVEN HILL RYE",
+                    "price": "114.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "HEAVEN HILL"
+                  },
+                  {
+                    "product_name": "JOSEPH MAGNUS TRIPLE CASK FINISHED",
+                    "price": "109.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "jos magnus bourbon"
+                  },
+                  {
+                    "product_name": "BLUE RUN  EMERALD RYE",
+                    "price": "109.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "blue run"
+                  },
+                  {
+                    "product_name": "JOS.A.MAGNUS MURRAY HILL CLUB",
+                    "price": "109.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "jos magnus bourbon"
+                  },
+                  {
+                    "product_name": "WHISTLEPIG FARMSTOCK RYE",
+                    "price": "99.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "WHISTLEPIG"
+                  },
+                  {
+                    "product_name": "BLUE RUN  HIGH RYE",
+                    "price": "99.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "blue run"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH SINGLE MALT 12YR",
+                    "price": "99.9900",
+                    "stock_qty": 13,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "WHISTLEPIG BEYOND BOURBON 750",
+                    "price": "99.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "WHISTLEPIG"
+                  },
+                  {
+                    "product_name": "TEMPLETON RYE 10 YR 750",
+                    "price": "99.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "TEMPLETON"
+                  },
+                  {
+                    "product_name": "BEN HOLLADAY 1856 ORIGINAL ONE BARREL BOURBON 8YR",
+                    "price": "99.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BEN HOLLADAY"
+                  },
+                  {
+                    "product_name": "BLANTON'S BOURBON",
+                    "price": "99.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BLANTONS"
+                  },
+                  {
+                    "product_name": "BLUE SPOT WHISKEY 750",
+                    "price": "89.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "SPOT WHISKEY"
+                  },
+                  {
+                    "product_name": "HEAVEN’S DOOR STRAIGHT RYE",
+                    "price": "89.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "heavens door"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH SINGLE MALT 15YR",
+                    "price": "89.9900",
+                    "stock_qty": 10,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "MIDDLE WEST SHERRY BOURBON",
+                    "price": "89.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "Middle West"
+                  },
+                  {
+                    "product_name": "ANGEL'S ENVY FINISHED RYE",
+                    "price": "89.9900",
+                    "stock_qty": 12,
+                    "category": "LIQUOR",
+                    "sub_category": "ANGEL'S ENVY"
+                  },
+                  {
+                    "product_name": "HIBIKI 12YR WHISKY",
+                    "price": "85.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "HIBIKI"
+                  },
+                  {
+                    "product_name": "EZRA BROOKS OLD EZRA 7Y RYE",
+                    "price": "84.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BULLEIT"
+                  },
+                  {
+                    "product_name": "GREEN SPOT",
+                    "price": "79.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "SPOT WHISKEY"
+                  },
+                  {
+                    "product_name": "WHISTLEPIG 10YR TOASTED BARREL BOURBON",
+                    "price": "79.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "WHISTLEPIG"
+                  },
+                  {
+                    "product_name": "CREAM OF KENTUCKY RYE BOTTLED IN BOND",
+                    "price": "79.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "CREAM OF KENTUCKY"
+                  },
+                  {
+                    "product_name": "KNOB CREEK CASK STRENGTH RYE",
+                    "price": "79.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "KNOB CREEK"
+                  },
+                  {
+                    "product_name": "PENELOPE TOASTED RYE 750ML",
+                    "price": "79.9900",
+                    "stock_qty": -1,
+                    "category": "LIQUOR",
+                    "sub_category": "PENELOPE"
+                  },
+                  {
+                    "product_name": "JACK DANIEL’S SINGLE BARREL PROOF RYE",
+                    "price": "79.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "JACK DANIEL'S"
+                  },
+                  {
+                    "product_name": "ALBERTA PREMIUM CASK STRAIGHT RYE",
+                    "price": "79.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "KNOB CREEK"
+                  },
+                  {
+                    "product_name": "BLACKENED RYE",
+                    "price": "79.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "blackened"
+                  },
+                  {
+                    "product_name": "KNOB CREEK RYE 175",
+                    "price": "79.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "KNOB CREEK"
+                  },
+                  {
+                    "product_name": "DALWHINNIE SINGLE MALT 15YR",
+                    "price": "79.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "DALWHINNIE"
+                  },
+                  {
+                    "product_name": "SUNTORY WORLD WHISKY AO",
+                    "price": "74.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "SUNTORY"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S OCEAN AGED AT SEA RYE DOUBLE BARREL VOYAGE 26",
+                    "price": "74.9900",
+                    "stock_qty": 13,
+                    "category": "LIQUOR",
+                    "sub_category": "JEFFERSON'S"
+                  },
+                  {
+                    "product_name": "KINGS COUNTY BOURBON",
+                    "price": "74.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "KINGS COUNTY DISTILLERY"
+                  },
+                  {
+                    "product_name": "HOUSE LANNISTER 750",
+                    "price": "74.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "GAME OF THRONES SCOTCH"
+                  },
+                  {
+                    "product_name": "ELIJAH CRAIG BARREL PROOF RYE",
+                    "price": "74.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "ELIJAH CRAIG"
+                  },
+                  {
+                    "product_name": "WHISTLEPIG RYE 10YR",
+                    "price": "73.9900",
+                    "stock_qty": 18,
+                    "category": "LIQUOR",
+                    "sub_category": "WHISTLEPIG"
+                  },
+                  {
+                    "product_name": "GLENKINCHIE DBL MATURED SCOTCH",
+                    "price": "71.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENKINCHIE"
+                  },
+                  {
+                    "product_name": "OLD ELK  WHEATED BOURBON 750ML",
+                    "price": "71.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "old elk"
+                  },
+                  {
+                    "product_name": "PEPPER BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "JACK DANIEL'S"
+                  },
+                  {
+                    "product_name": "WESTWARD AMERICAN SINGLE MALT",
+                    "price": "69.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "WESTWARD"
+                  },
+                  {
+                    "product_name": "SHIBUI MALT WHISKY",
+                    "price": "69.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "SHIBUI"
+                  },
+                  {
+                    "product_name": "PINHOOK BOURBON WAR 6YR",
+                    "price": "69.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "PINHOOK"
+                  },
+                  {
+                    "product_name": "WILLETT STRAIGHT RYE",
+                    "price": "69.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "WILLETT"
+                  },
+                  {
+                    "product_name": "RARE HARE BOURBON 7YR",
+                    "price": "69.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "RARE HARE"
+                  },
+                  {
+                    "product_name": "PINHOOK TIZ RYE TIME 6YR",
+                    "price": "69.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "PINHOOK"
+                  },
+                  {
+                    "product_name": "ELIJAH CRAIG TOASTED RYE",
+                    "price": "69.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "ELIJAH CRAIG"
+                  },
+                  {
+                    "product_name": "PUNCHER'S CHANCE BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "PUNCHER'S CHANCE"
+                  },
+                  {
+                    "product_name": "CHARLES GOODNIGHT TEXAS BOURBON",
+                    "price": "69.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "CHARLES GOODNIGHT"
+                  },
+                  {
+                    "product_name": "RUSSELL’S RESERVE SINGLE BARREL RYE",
+                    "price": "69.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "russell's"
+                  },
+                  {
+                    "product_name": "UNCLE NEAREST RYE",
+                    "price": "68.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "UNCLE NEAREST"
+                  },
+                  {
+                    "product_name": "KNOB CREEK RYE 10YR",
+                    "price": "67.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "KNOB CREEK"
+                  },
+                  {
+                    "product_name": "MASTERSON'S 10 YEAR OLD RYE",
+                    "price": "66.9900",
+                    "stock_qty": 7,
+                    "category": "LIQUOR",
+                    "sub_category": "MASTERSON'S"
+                  },
+                  {
+                    "product_name": "WILLETT BOURBON 4YR",
+                    "price": "65.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "WILLETT"
+                  },
+                  {
+                    "product_name": "BLUE NOTE HONEY RYE CASK 2025 RELEASE",
+                    "price": "64.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "BLUE NOTE"
+                  },
+                  {
+                    "product_name": "WILD TURKEY RARE BREED RYE",
+                    "price": "64.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "WILD TURKEY"
+                  },
+                  {
+                    "product_name": "KNOB CREEK BOURBON 12YR",
+                    "price": "64.9900",
+                    "stock_qty": 9,
+                    "category": "LIQUOR",
+                    "sub_category": "KNOB CREEK"
+                  },
+                  {
+                    "product_name": "WATHEN'S BOURBON 750ML",
+                    "price": "64.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "WATHEN'S"
+                  },
+                  {
+                    "product_name": "BELLE MEADE RESERVE BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "BELLE MEADE"
+                  },
+                  {
+                    "product_name": "COPPER & CASK WHEATED BOURBON",
+                    "price": "62.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "NEW RIFF SINGLE BARREL RYE",
+                    "price": "59.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "new riff"
+                  },
+                  {
+                    "product_name": "BARDSTOWN ORGIN SERIES RYE",
+                    "price": "59.9900",
+                    "stock_qty": 4,
+                    "category": "LIQUOR",
+                    "sub_category": "BARDSTOWN"
+                  },
+                  {
+                    "product_name": "COPPER & CASK BOURBON 750ML",
+                    "price": "59.9900",
+                    "stock_qty": -1,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "PINHOOK TIZ RYE TIME 5YR",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "PINHOOK"
+                  },
+                  {
+                    "product_name": "OLD PEPPER BOTTLE IN BOND RYE",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "JACK DANIEL'S"
+                  },
+                  {
+                    "product_name": "JACK DANIEL’S SINGLE BARREL RYE",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "JACK DANIEL'S"
+                  },
+                  {
+                    "product_name": "JEFFERSON’S RESERVE BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "JEFFERSON'S"
+                  },
+                  {
+                    "product_name": "CHICKEN COCK RYE",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "CHICKEN COCK"
+                  },
+                  {
+                    "product_name": "CHICKEN COCK BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "CHICKEN COCK"
+                  },
+                  {
+                    "product_name": "COPPER & CASK BOURBON 6 YERS 7",
+                    "price": "59.9900",
+                    "stock_qty": 5,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "PINHOOK HARD RYE GUY & RYE HUMOR",
+                    "price": "59.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "PINHOOK"
+                  },
+                  {
+                    "product_name": "CLERMONT STEEP AMERICAN SINGLE MALT",
+                    "price": "59.9900",
+                    "stock_qty": 10,
+                    "category": "LIQUOR",
+                    "sub_category": "Clermont Steep"
+                  },
+                  {
+                    "product_name": "ABERFELDY SINGLE MALT 15YR",
+                    "price": "59.9900",
+                    "stock_qty": 1,
+                    "category": "LIQUOR",
+                    "sub_category": "ABERFELDY"
+                  },
+                  {
+                    "product_name": "10TH MOUNTAIN BOURBON 750ML",
+                    "price": "59.9900",
+                    "stock_qty": 0,
+                    "category": "LIQUOR",
+                    "sub_category": "OLD FORESTER"
+                  },
+                  {
+                    "product_name": "COPPER & CASK STRAIGHT BOURBON",
+                    "price": "59.9900",
+                    "stock_qty": 13,
+                    "category": "LIQUOR",
+                    "sub_category": "copper & cask"
+                  },
+                  {
+                    "product_name": "OLD FORESTER 1910 OLD FINE WHISKY",
+                    "price": "56.9900",
+                    "stock_qty": 3,
+                    "category": "LIQUOR",
+                    "sub_category": "OLD FORESTER"
+                  },
+                  {
+                    "product_name": "NOAH’S MILL BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "NOAH'S MILL"
+                  },
+                  {
+                    "product_name": "WHEAT PENNY BOURBON 75O",
+                    "price": "54.9900",
+                    "stock_qty": 8,
+                    "category": "LIQUOR",
+                    "sub_category": "HIGH WEST"
+                  },
+                  {
+                    "product_name": "WILDERNESS TRAIL RYE WHSKY",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "WILDERNESS TRAIL"
+                  },
+                  {
+                    "product_name": "PINHOOK BOURBON WAR 5YR",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "PINHOOK"
+                  },
+                  {
+                    "product_name": "DEXTER SMALL BATCH RYE BOURBON",
+                    "price": "54.9900",
+                    "stock_qty": 2,
+                    "category": "LIQUOR",
+                    "sub_category": "dexter"
+                  },
+                  {
+                    "product_name": "GLENFIDDICH BOURBON BARREL 14YR",
+                    "price": "54.9900",
+                    "stock_qty": 37,
+                    "category": "LIQUOR",
+                    "sub_category": "GLENFIDDICH"
+                  },
+                  {
+                    "product_name": "INDRI SINGLE MALT",
+                    "price": "54.9900",
+                    "stock_qty": 6,
+                    "category": "LIQUOR",
+                    "sub_category": "INDRI"
+                  }
+                ],
+                "rowCount": 423,
+                "truncated": true,
+                "downloadId": "74bdba30d56cdb77"
+              }
+            }
+          ],
+          "sqlQueries": [],
+          "score": {
+            "status": "pass",
+            "usedTool": true,
+            "safeRefusal": false,
+            "evidenceCount": 1,
+            "notes": ""
+          }
+        }
+      ],
+      "finalScore": "pass"
+    }
+  ]
+}

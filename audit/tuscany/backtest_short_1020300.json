@@ -1,0 +1,168 @@
+{
+  "store": "Tuscany Liquors",
+  "data": {
+    "lines": 37035,
+    "products": 4132,
+    "trading_days": 101,
+    "span_days": 100,
+    "first_day": "2026-07-05",
+    "last_day": "2026-10-13",
+    "cost_coverage_pct": 99.78
+  },
+  "production_requirement_days": 492,
+  "production_windows": {
+    "long_run_days": 365,
+    "horizons": [
+      30,
+      60,
+      90,
+      120
+    ]
+  },
+  "windows_used": {
+    "long_run_days": 40,
+    "horizons": [
+      10,
+      20,
+      30
+    ],
+    "baseline_window_days": 28
+  },
+  "dates": {
+    "total": 12,
+    "calibration": 3,
+    "scored": 9,
+    "first": "2026-08-19",
+    "last": "2026-09-10"
+  },
+  "interval_bands": {
+    "10": [
+      0.0,
+      1.7834042497134803
+    ],
+    "20": [
+      0.21686227131515362,
+      1.671047341922392
+    ],
+    "30": [
+      0.26733393671582456,
+      1.6182460492666826
+    ]
+  },
+  "baseline_collapse": {
+    "10": {
+      "identical_to_trailing_28": 2974,
+      "of": 2974
+    },
+    "20": {
+      "identical_to_trailing_28": 2974,
+      "of": 2974
+    },
+    "30": {
+      "identical_to_trailing_28": 2974,
+      "of": 2974
+    }
+  },
+  "degenerate_baselines": [
+    "last_year",
+    "year_average"
+  ],
+  "by_horizon": {
+    "10": {
+      "forecasts": 2974,
+      "skus": 456,
+      "actual_units": 25804.0,
+      "interval_coverage_pct": 88.5,
+      "interval_coverage_ci95": [
+        87.2,
+        89.6
+      ],
+      "models": {
+        "trailing_28": {
+          "wape_pct": 48.34,
+          "bias_pct": 3.17
+        },
+        "last_year": {
+          "wape_pct": 48.34,
+          "bias_pct": 3.17
+        },
+        "year_average": {
+          "wape_pct": 48.36,
+          "bias_pct": -0.44
+        },
+        "engine": {
+          "wape_pct": 47.83,
+          "bias_pct": 0.77
+        },
+        "engine_seasonal": {
+          "wape_pct": 48.04,
+          "bias_pct": 1.63
+        }
+      }
+    },
+    "20": {
+      "forecasts": 2974,
+      "skus": 456,
+      "actual_units": 51352.0,
+      "interval_coverage_pct": 79.0,
+      "interval_coverage_ci95": [
+        77.9,
+        80.0
+      ],
+      "models": {
+        "trailing_28": {
+          "wape_pct": 42.35,
+          "bias_pct": 3.69
+        },
+        "last_year": {
+          "wape_pct": 42.35,
+          "bias_pct": 3.69
+        },
+        "year_average": {
+          "wape_pct": 42.03,
+          "bias_pct": 0.06
+        },
+        "engine": {
+          "wape_pct": 41.53,
+          "bias_pct": 1.27
+        },
+        "engine_seasonal": {
+          "wape_pct": 41.56,
+          "bias_pct": 1.39
+        }
+      }
+    },
+    "30": {
+      "forecasts": 2974,
+      "skus": 456,
+      "actual_units": 76228.0,
+      "interval_coverage_pct": 79.9,
+      "interval_coverage_ci95": [
+        78.7,
+        80.8
+      ],
+      "models": {
+        "trailing_28": {
+          "wape_pct": 39.12,
+          "bias_pct": 4.77
+        },
+        "last_year": {
+          "wape_pct": 39.12,
+          "bias_pct": 4.77
+        },
+        "year_average": {
+          "wape_pct": 38.8,
+          "bias_pct": 1.11
+        },
+        "engine": {
+          "wape_pct": 38.22,
+          "bias_pct": 2.33
+        },
+        "engine_seasonal": {
+          "wape_pct": 38.26,
+          "bias_pct": 2.52
+        }
+      }
+    }
+  }
+}

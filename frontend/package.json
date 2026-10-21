@@ -1,0 +1,53 @@
+{
+  "name": "liquor-metrics-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "lucide-react": "^0.344.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
+    "react-scripts": "5.0.1",
+    "recharts": "^2.12.0"
+  },
+  "scripts": {
+    "start": "set PORT=3001&& react-scripts start",
+    "build": "react-scripts build && node scripts/apply-noindex.js",
+    "test": "react-scripts test --watchAll=false",
+    "prestart": "node scripts/check-env.js",
+    "prebuild": "node scripts/check-env.js && node scripts/check-routes.js && node scripts/check-hook-order.js",
+    "check-env": "node scripts/check-env.js",
+    "check-routes": "node scripts/check-routes.js"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
+    "rules": {
+      "no-use-before-define": [
+        "warn",
+        {
+          "functions": false,
+          "classes": false,
+          "variables": true
+        }
+      ]
+    }
+  },
+  "proxy": "http://localhost:3010",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

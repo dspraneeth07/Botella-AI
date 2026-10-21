@@ -1,0 +1,2097 @@
+/* ============================================================================
+   PAGE EFFECTS - unique hero visualisations + CSS-only 3D animations
+   ============================================================================
+   Each SEO page replaces its generic .cp-mock with a `hv-*` (hero visual)
+   container. Every visualisation is CSS-only - no JS deps, no canvas, no
+   WebGL - and uses perspective + transform-style: preserve-3d for the 3D
+   effects so they GPU-accelerate cleanly on every modern browser.
+   ============================================================================ */
+
+/* ─── Shared 3D scene wrapper ──────────────────────────────────────────── */
+.hv {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  perspective: 1400px;
+  -webkit-perspective: 1400px;
+}
+
+/* Disable expensive 3D for users who asked for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hv *,
+  .hv *::before,
+  .hv *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ─── Shared 3D keyframes ──────────────────────────────────────────────── */
+@keyframes pe-float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-12px); }
+}
+
+@keyframes pe-float-tilt {
+  0%, 100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); }
+  50%      { transform: translateY(-10px) rotateX(2deg) rotateY(2deg); }
+}
+
+@keyframes pe-spin-slow {
+  from { transform: rotateY(0deg); }
+  to   { transform: rotateY(360deg); }
+}
+
+@keyframes pe-pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0.5); }
+  70%  { box-shadow: 0 0 0 22px rgba(167, 139, 250, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(167, 139, 250, 0); }
+}
+
+@keyframes pe-grow-h {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes pe-draw-line {
+  from { stroke-dashoffset: 1000; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes pe-rotate-tilt {
+  0%, 100% { transform: perspective(1200px) rotateY(-8deg) rotateX(6deg); }
+  50%      { transform: perspective(1200px) rotateY(8deg) rotateX(-6deg); }
+}
+
+@keyframes pe-flow {
+  0%   { transform: translateX(-50px); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateX(150px); opacity: 0; }
+}
+
+@keyframes pe-typing {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30%           { opacity: 1;   transform: translateY(-3px); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-RETAILERS - multi-store constellation
+   3 store cards arranged in 3D space with connecting lines and pulse beacons
+   ════════════════════════════════════════════════════════════════════════════ */
+/* Every child here is position:absolute, so this element has no content height
+   of its own and its animated children were free to travel outside it and paint
+   over the copy and buttons above. `isolation` gives it its own stacking
+   context and `clip-path` keeps the animation inside its own box - the cards
+   still float, they just cannot leave the frame any more. */
+.hv-retailers {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+  clip-path: inset(0 round var(--bx-radius-lg, 28px));
+  transform-style: preserve-3d;
+  animation: pe-rotate-tilt 18s ease-in-out infinite;
+}
+
+.hv-retailers .hv-store {
+  position: absolute;
+  width: 200px;
+  padding: 16px 18px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  transform-style: preserve-3d;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.hv-retailers .hv-store:nth-child(1) {
+  top: 30px;  left: 40px;
+  transform: translateZ(60px);
+  animation: pe-float-tilt 5s ease-in-out infinite;
+}
+.hv-retailers .hv-store:nth-child(2) {
+  top: 150px; right: 30px;
+  transform: translateZ(120px);
+  animation: pe-float-tilt 6s ease-in-out 0.4s infinite;
+}
+.hv-retailers .hv-store:nth-child(3) {
+  bottom: 40px; left: 80px;
+  transform: translateZ(20px);
+  animation: pe-float-tilt 7s ease-in-out 0.8s infinite;
+}
+
+.hv-retailers .hv-store h5 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lp-text);
+  margin: 0 0 4px;
+}
+
+.hv-retailers .hv-store .meta {
+  font-size: 11px;
+  color: var(--lp-muted);
+  margin-bottom: 10px;
+}
+
+.hv-retailers .hv-store .rev {
+  font-size: 22px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #22c55e, var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.hv-retailers .hv-store .dot {
+  position: absolute;
+  top: 14px; right: 16px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #22c55e;
+  animation: pe-pulse-ring 2s ease-out infinite;
+}
+
+[data-theme="light"] .hv-retailers .hv-store {
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.10);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-DISTILLERIES - production funnel with bottles flowing
+   3D-tilted funnel + animated dots representing bottles
+   ════════════════════════════════════════════════════════════════════════════ */
+.hv-distilleries {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.hv-distilleries .hv-funnel {
+  position: relative;
+  width: 320px;
+  height: 360px;
+  transform: perspective(1200px) rotateY(-12deg) rotateX(8deg);
+  transform-style: preserve-3d;
+  animation: pe-float-y 6s ease-in-out infinite;
+}
+
+.hv-distilleries .hv-layer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 12px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  padding: 14px 16px;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.hv-distilleries .hv-layer:nth-child(1) { top: 0;    width: 90%;  }
+.hv-distilleries .hv-layer:nth-child(2) { top: 110px; width: 70%; transform: translateX(-50%) translateZ(40px); }
+.hv-distilleries .hv-layer:nth-child(3) { top: 220px; width: 50%; transform: translateX(-50%) translateZ(80px); }
+
+.hv-distilleries .hv-layer .v {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #f59e0b, var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hv-distilleries .hv-layer .lbl {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--lp-muted);
+  margin-top: 2px;
+}
+
+.hv-distilleries .hv-flow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.hv-distilleries .hv-bottle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f59e0b, var(--lp-accent-light));
+  box-shadow: 0 0 12px rgba(240, 171, 252, 0.6);
+}
+
+.hv-distilleries .hv-bottle:nth-child(1) { left: 30px;  top: 50%;  animation: pe-flow 3s ease-in-out infinite; }
+.hv-distilleries .hv-bottle:nth-child(2) { left: 60px;  top: 40%;  animation: pe-flow 3s ease-in-out 0.6s infinite; }
+.hv-distilleries .hv-bottle:nth-child(3) { left: 0;     top: 60%;  animation: pe-flow 3s ease-in-out 1.2s infinite; }
+.hv-distilleries .hv-bottle:nth-child(4) { left: 20px;  top: 55%;  animation: pe-flow 3s ease-in-out 1.8s infinite; }
+
+[data-theme="light"] .hv-distilleries .hv-layer {
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-INVENTORY - 3D shelves with animated stock-level bars
+   ════════════════════════════════════════════════════════════════════════════ */
+.hv-inventory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  perspective: 1400px;
+}
+
+.hv-inventory .hv-rack {
+  width: 360px;
+  transform: perspective(1400px) rotateY(-18deg) rotateX(8deg);
+  transform-style: preserve-3d;
+  animation: pe-float-y 7s ease-in-out infinite;
+}
+
+.hv-inventory .hv-shelf {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  margin-bottom: 8px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform-style: preserve-3d;
+}
+
+.hv-inventory .hv-shelf:nth-child(1) { transform: translateZ(40px); }
+.hv-inventory .hv-shelf:nth-child(2) { transform: translateZ(20px); }
+.hv-inventory .hv-shelf:nth-child(3) { transform: translateZ(0); }
+.hv-inventory .hv-shelf:nth-child(4) { transform: translateZ(-20px); }
+
+.hv-inventory .hv-shelf .name {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--lp-text);
+}
+
+.hv-inventory .hv-shelf .bar {
+  flex: 0 0 100px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hv-inventory .hv-shelf .bar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  transform-origin: left;
+  animation: pe-grow-h 1.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.hv-inventory .hv-shelf:nth-child(1) .bar::before { width: 85%; background: linear-gradient(90deg, #22c55e, #06b6d4); }
+.hv-inventory .hv-shelf:nth-child(2) .bar::before { width: 30%; background: linear-gradient(90deg, #ef4444, #f59e0b); }
+.hv-inventory .hv-shelf:nth-child(3) .bar::before { width: 95%; background: linear-gradient(90deg, #22c55e, var(--lp-accent-light)); }
+.hv-inventory .hv-shelf:nth-child(4) .bar::before { width: 55%; background: linear-gradient(90deg, #f59e0b, var(--lp-accent-light)); }
+
+.hv-inventory .hv-shelf .pct {
+  flex: 0 0 auto;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--lp-text);
+  width: 38px;
+  text-align: right;
+}
+
+[data-theme="light"] .hv-inventory .hv-shelf {
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .hv-inventory .hv-shelf .bar {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-CUSTOMERS - orbiting avatar cards
+   3 avatar bubbles arranged in 3D space, each rotating slightly
+   ════════════════════════════════════════════════════════════════════════════ */
+.hv-customers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  perspective: 1200px;
+}
+
+.hv-customers .hv-orbit {
+  position: relative;
+  width: 360px;
+  height: 360px;
+  transform-style: preserve-3d;
+  animation: pe-spin-slow 30s linear infinite;
+}
+
+.hv-customers .hv-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light), #F472B6);
+  box-shadow: 0 0 60px rgba(167, 139, 250, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: #fff;
+  animation: pe-pulse-ring 3s ease-out infinite;
+}
+
+.hv-customers .hv-avatar {
+  position: absolute;
+  width: 90px;
+  padding: 12px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+  /* Counter-rotate so labels stay readable while orbit spins */
+  animation: pe-spin-slow 30s linear infinite reverse;
+}
+
+.hv-customers .hv-avatar:nth-child(2) { top: 20px;   left: 50%;   transform: translate(-50%, 0) translateZ(60px); }
+.hv-customers .hv-avatar:nth-child(3) { bottom: 20px; left: 30px; transform: translateZ(80px); }
+.hv-customers .hv-avatar:nth-child(4) { bottom: 30px; right: 30px; transform: translateZ(40px); }
+
+.hv-customers .hv-avatar .em {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+
+.hv-customers .hv-avatar .name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lp-text);
+  margin-bottom: 2px;
+}
+
+.hv-customers .hv-avatar .v {
+  font-size: 10px;
+  color: var(--lp-accent-light);
+  font-weight: 600;
+}
+
+[data-theme="light"] .hv-customers .hv-avatar {
+  background: #fff;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-ANALYTICS - animated 3D bar chart
+   ════════════════════════════════════════════════════════════════════════════ */
+.hv-analytics {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  perspective: 1400px;
+}
+
+.hv-analytics .hv-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  height: 320px;
+  padding: 20px 28px;
+  transform: perspective(1200px) rotateY(-22deg) rotateX(12deg);
+  transform-style: preserve-3d;
+  animation: pe-float-y 7s ease-in-out infinite;
+}
+
+.hv-analytics .hv-bar {
+  position: relative;
+  width: 50px;
+  background: linear-gradient(180deg, var(--lp-accent-light), var(--lp-accent));
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 8px 24px rgba(167, 139, 250, 0.4);
+  transform-origin: bottom;
+  animation: pe-grow-h 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.hv-analytics .hv-bar:nth-child(1) { height: 40%;  animation-delay: 0.0s; }
+.hv-analytics .hv-bar:nth-child(2) { height: 65%;  animation-delay: 0.1s; }
+.hv-analytics .hv-bar:nth-child(3) { height: 55%;  animation-delay: 0.2s; }
+.hv-analytics .hv-bar:nth-child(4) { height: 80%;  animation-delay: 0.3s; }
+.hv-analytics .hv-bar:nth-child(5) { height: 100%; animation-delay: 0.4s;
+                                      background: linear-gradient(180deg, #F472B6, var(--lp-accent)); }
+.hv-analytics .hv-bar:nth-child(6) { height: 75%;  animation-delay: 0.5s; }
+
+.hv-analytics .hv-bar .top {
+  position: absolute;
+  top: -22px; left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lp-accent-light);
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-REORDERING - circular forecast cycle clock
+   ════════════════════════════════════════════════════════════════════════════ */
+.hv-reordering {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.hv-reordering .hv-clock {
+  position: relative;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(167, 139, 250,0.10), transparent 60%);
+  transform: perspective(1200px) rotateX(60deg);
+  transform-style: preserve-3d;
+}
+
+.hv-reordering .hv-clock-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px dashed rgba(167, 139, 250, 0.35);
+  animation: pe-spin-slow 24s linear infinite;
+}
+
+.hv-reordering .hv-clock-tick {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 76px;
+  padding: 8px 10px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lp-text);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transform-origin: center;
+  /* Counter-rotate so labels read horizontally on the tilted face */
+  animation: pe-float-y 4s ease-in-out infinite;
+}
+
+.hv-reordering .hv-clock-tick:nth-child(2) { transform: translate(-50%, -50%) translate(0, -120px) rotateX(-60deg); }
+.hv-reordering .hv-clock-tick:nth-child(3) { transform: translate(-50%, -50%) translate(120px, 0)  rotateX(-60deg); }
+.hv-reordering .hv-clock-tick:nth-child(4) { transform: translate(-50%, -50%) translate(0, 120px)  rotateX(-60deg); }
+.hv-reordering .hv-clock-tick:nth-child(5) { transform: translate(-50%, -50%) translate(-120px, 0) rotateX(-60deg); }
+
+.hv-reordering .hv-clock-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light));
+  transform: translate(-50%, -50%) rotateX(-60deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
+  box-shadow: 0 0 40px rgba(167, 139, 250, 0.5);
+  animation: pe-pulse-ring 2.5s ease-out infinite;
+}
+
+[data-theme="light"] .hv-reordering .hv-clock-tick {
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.10);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-MARGIN - stacked profit blocks
+   ════════════════════════════════════════════════════════════════════════════ */
+.hv-margin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+}
+
+.hv-margin .hv-stack {
+  position: relative;
+  width: 280px;
+  transform: perspective(1100px) rotateX(15deg) rotateY(-15deg);
+  transform-style: preserve-3d;
+  animation: pe-float-y 6s ease-in-out infinite;
+}
+
+.hv-margin .hv-block {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35);
+  transform-style: preserve-3d;
+}
+
+.hv-margin .hv-block:nth-child(1) {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  transform: translateZ(60px);
+  width: 100%;
+}
+.hv-margin .hv-block:nth-child(2) {
+  background: linear-gradient(135deg, #F472B6, var(--lp-accent));
+  transform: translateZ(40px);
+  width: 88%;
+}
+.hv-margin .hv-block:nth-child(3) {
+  background: linear-gradient(135deg, var(--lp-accent), var(--lp-accent-light));
+  transform: translateZ(20px);
+  width: 72%;
+}
+.hv-margin .hv-block:nth-child(4) {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  transform: translateZ(0);
+  width: 56%;
+}
+.hv-margin .hv-block:nth-child(5) {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  transform: translateZ(-20px);
+  width: 38%;
+}
+
+.hv-margin .hv-block .name {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.hv-margin .hv-block .pct {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-RECOMMEND - 3D card flip showing customer → suggestion
+   ════════════════════════════════════════════════════════════════════════════ */
+.hv-recommend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  perspective: 1400px;
+}
+
+.hv-recommend .hv-cards {
+  position: relative;
+  width: 320px; height: 360px;
+  transform-style: preserve-3d;
+}
+
+.hv-recommend .hv-card {
+  position: absolute;
+  width: 240px;
+  padding: 22px 24px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 18px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+  transform-style: preserve-3d;
+  animation: pe-float-tilt 6s ease-in-out infinite;
+}
+
+.hv-recommend .hv-card-1 {
+  top: 30px; left: 0;
+  transform: translateZ(20px) rotateY(-12deg);
+  animation-delay: 0.2s;
+}
+
+.hv-recommend .hv-card-2 {
+  bottom: 30px; right: 0;
+  transform: translateZ(60px) rotateY(12deg);
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.20), rgba(124, 58, 237, 0.10));
+  border-color: rgba(167, 139, 250, 0.40);
+}
+
+.hv-recommend .hv-card .em {
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.hv-recommend .hv-card .lbl {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--lp-muted);
+  margin-bottom: 6px;
+}
+
+.hv-recommend .hv-card .name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--lp-text);
+  margin-bottom: 6px;
+}
+
+.hv-recommend .hv-card .meta {
+  font-size: 11.5px;
+  color: var(--lp-secondary);
+  line-height: 1.5;
+}
+
+.hv-recommend .hv-card-2 .lbl {
+  color: var(--lp-accent-light);
+}
+
+.hv-recommend .hv-arrow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) translateZ(80px);
+  font-size: 36px;
+  color: var(--lp-accent-light);
+  animation: pe-float-y 2s ease-in-out infinite;
+}
+
+[data-theme="light"] .hv-recommend .hv-card {
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.10);
+}
+
+[data-theme="light"] .hv-recommend .hv-card-2 {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.10), rgba(124, 58, 237, 0.05));
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   HV-AIAGENT - enhance the existing chat mock with 3D tilt + typing
+   Applied alongside .cp-mock so the mock gets a subtle 3D float effect
+   ════════════════════════════════════════════════════════════════════════════ */
+.hv-aiagent .cp-mock {
+  transform: perspective(1200px) rotateY(-6deg) rotateX(4deg);
+  animation: pe-float-tilt 7s ease-in-out infinite;
+  transition: transform 0.3s ease;
+}
+
+.hv-aiagent .cp-mock:hover {
+  animation-play-state: paused;
+  transform: perspective(1200px) rotateY(0deg) rotateX(0deg) scale(1.02);
+}
+
+.hv-aiagent .cp-float-callout {
+  animation: pe-float-y 4s ease-in-out infinite;
+}
+
+.hv-aiagent .cp-float-callout:nth-of-type(2) {
+  animation-delay: 1.5s;
+}
+
+/* Responsive - kill heavy 3D on mobile to keep things performant */
+@media (max-width: 760px) {
+  .hv {
+    min-height: 320px;
+    perspective: 800px;
+  }
+  .hv-retailers .hv-store { width: 160px; padding: 12px; }
+  .hv-distilleries .hv-funnel { width: 260px; height: 280px; }
+  .hv-inventory .hv-rack { width: 280px; }
+  .hv-customers .hv-orbit { width: 280px; height: 280px; }
+  .hv-customers .hv-center { width: 110px; height: 110px; font-size: 36px; }
+  .hv-customers .hv-avatar { width: 75px; padding: 10px; }
+  .hv-analytics .hv-chart { padding: 12px 16px; }
+  .hv-analytics .hv-bar { width: 36px; }
+  .hv-reordering .hv-clock { width: 260px; height: 260px; }
+  .hv-margin .hv-stack { width: 240px; }
+  .hv-recommend .hv-cards { width: 280px; }
+  .hv-recommend .hv-card { width: 200px; padding: 18px; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   CI-MOCK - flat dashboard mockup used in the Customer Insights hero.
+   Static (no 3D, no animation), shows real-looking customer rows + a
+   "top segment" footer bar so the visual communicates the page's
+   actual feature set (segmentation, CLV, visit frequency, trends).
+   ════════════════════════════════════════════════════════════════════════════ */
+.ci-mock {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 18px 20px 16px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 18px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+}
+
+.ci-mock-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.ci-mock-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--lp-text);
+}
+
+.ci-mock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lp-accent-light);
+  box-shadow: 0 0 8px var(--lp-accent-light);
+}
+
+.ci-mock-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  color: var(--lp-accent-light);
+  background: var(--lp-accent-glow);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.ci-mock-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ci-mock-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--lp-border);
+}
+
+.ci-mock-avatar {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+.ci-mock-avatar-1 { background: linear-gradient(135deg, #B79CFF, #D6BBFF); }
+.ci-mock-avatar-2 { background: linear-gradient(135deg, #F472B6, #F472B6); }
+.ci-mock-avatar-3 { background: linear-gradient(135deg, #ec4899, #f472b6); }
+.ci-mock-avatar-4 { background: linear-gradient(135deg, #14b8a6, #2dd4bf); }
+
+.ci-mock-row-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.ci-mock-row-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lp-text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ci-mock-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #f59e0b, #F5C2FF);
+  color: #1f2937;
+}
+
+.ci-mock-row-tag {
+  font-size: 11px;
+  color: var(--lp-muted);
+  margin-top: 2px;
+}
+
+.ci-mock-row-metric {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--lp-accent-light);
+  text-align: right;
+  white-space: nowrap;
+}
+.ci-mock-row-metric span {
+  color: var(--lp-muted);
+  font-weight: 500;
+  font-size: 10.5px;
+  margin-left: 2px;
+}
+
+.ci-mock-foot {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--lp-border);
+}
+
+.ci-mock-foot-label {
+  font-size: 11px;
+  color: var(--lp-muted);
+  font-weight: 600;
+}
+
+.ci-mock-foot-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.ci-mock-foot-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--lp-accent), var(--lp-accent-light));
+}
+
+.ci-mock-foot-value {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lp-accent-light);
+}
+
+[data-theme="light"] .ci-mock {
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .ci-mock-row {
+  background: rgba(167, 139, 250, 0.04);
+}
+[data-theme="light"] .ci-mock-foot-bar {
+  background: rgba(167, 139, 250, 0.10);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PR-MOCK - flat recommendation-panel mockup used in the Product
+   Recommendations hero. Static (no 3D, no card-flip), shows three AI
+   suggestions (upsell, cross-sell, bundle) with confidence bars so the
+   visual communicates the page's actual feature set.
+   ════════════════════════════════════════════════════════════════════════════ */
+.pr-mock {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 18px 20px 16px;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 18px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
+}
+
+.pr-mock-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.pr-mock-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--lp-text);
+}
+
+.pr-mock-spark {
+  font-size: 14px;
+  color: var(--lp-accent-light);
+}
+
+.pr-mock-pill {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+  color: var(--lp-accent-light);
+  background: var(--lp-accent-glow);
+  border: 1px solid rgba(167, 139, 250, 0.3);
+}
+
+.pr-mock-context {
+  font-size: 11.5px;
+  color: var(--lp-muted);
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--lp-border);
+  margin-bottom: 12px;
+}
+.pr-mock-context strong {
+  color: var(--lp-text);
+  font-weight: 600;
+}
+
+.pr-mock-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pr-mock-item {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--lp-border);
+}
+
+.pr-mock-item-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.pr-mock-item-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lp-text);
+}
+
+.pr-mock-item-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.pr-mock-item-tag-upsell {
+  color: #fff;
+  background: linear-gradient(135deg, #B79CFF, #D6BBFF);
+}
+.pr-mock-item-tag-cross {
+  color: #fff;
+  background: linear-gradient(135deg, #14b8a6, #2dd4bf);
+}
+.pr-mock-item-tag-bundle {
+  color: #1f2937;
+  background: linear-gradient(135deg, #f59e0b, #F5C2FF);
+}
+
+.pr-mock-item-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.pr-mock-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.pr-mock-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--lp-accent), var(--lp-accent-light));
+}
+
+.pr-mock-metric {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--lp-accent-light);
+  white-space: nowrap;
+}
+
+[data-theme="light"] .pr-mock {
+  background: #fff;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.08);
+}
+[data-theme="light"] .pr-mock-context,
+[data-theme="light"] .pr-mock-item {
+  background: rgba(167, 139, 250, 0.04);
+}
+[data-theme="light"] .pr-mock-bar {
+  background: rgba(167, 139, 250, 0.10);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   BODY SECTION THEMING - each page reskins its stat row, feature grid,
+   compare-pair, FAQ and CTA so the WHOLE page (not just the hero) feels
+   distinct from every other SEO page.
+
+   Each block is scoped under .page-<name> to avoid bleeding into others.
+   All effects are CSS-only (no JS).
+   ════════════════════════════════════════════════════════════════════════════ */
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   1. RETAILERS - floating-tile stats + zigzag feature cards
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-retailers .cp-stats {
+  grid-template-columns: repeat(5, 1fr);
+  perspective: 1200px;
+}
+
+.page-retailers .cp-stat {
+  border-radius: 18px;
+  transform: rotateY(-4deg);
+  transition: transform 0.4s ease;
+}
+
+.page-retailers .cp-stat:nth-child(odd) {
+  transform: rotateY(-6deg) translateZ(10px);
+}
+
+.page-retailers .cp-stat:nth-child(even) {
+  transform: rotateY(6deg) translateZ(-5px);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.06), rgba(167, 139, 250, 0.03));
+}
+
+.page-retailers .cp-stat:hover {
+  transform: rotateY(0) translateZ(20px) scale(1.03);
+}
+
+.page-retailers .cp-stat-n {
+  background: linear-gradient(135deg, #22c55e, var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Zigzag feature cards - alternate left + right offset like a constellation */
+.page-retailers .cp-feat-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.page-retailers .cp-feat-card {
+  border-left: 3px solid #22c55e;
+  border-radius: 0 18px 18px 0;
+  padding-left: 28px;
+}
+
+.page-retailers .cp-feat-card:nth-child(even) {
+  border-left: none;
+  border-right: 3px solid var(--lp-accent-light);
+  border-radius: 18px 0 0 18px;
+  padding-left: 24px;
+  padding-right: 28px;
+  margin-left: 24px;
+  background: linear-gradient(90deg, var(--lp-card), rgba(167, 139, 250, 0.04));
+}
+
+.page-retailers .cp-feat-card:nth-child(odd) {
+  margin-right: 24px;
+  background: linear-gradient(90deg, rgba(34, 197, 94, 0.04), var(--lp-card));
+}
+
+.page-retailers .cp-feat-icon {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.20), rgba(167, 139, 250, 0.10));
+  border-color: rgba(34, 197, 94, 0.30);
+}
+
+/* FAQ - store-style storefront cards */
+.page-retailers .cp-faq-grid {
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  max-width: var(--cp-measure);
+}
+
+.page-retailers .cp-faq-card {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  gap: 16px;
+  align-items: start;
+  border-left: 4px solid #22c55e;
+}
+
+.page-retailers .cp-faq-card::before {
+  content: '🏪';
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(34, 197, 94, 0.12);
+  border-radius: 12px;
+  width: 60px;
+  height: 60px;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   2. DISTILLERIES - funnel-narrowing stats + vertical flow features
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-distilleries .cp-stats {
+  grid-template-columns: 1fr;
+  margin: 48px auto 64px;
+  gap: 8px;
+  max-width: var(--cp-measure);
+}
+
+.page-distilleries .cp-stat {
+  text-align: left;
+  padding: 20px 28px;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  align-items: center;
+  gap: 24px;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0 14px 14px 0;
+}
+
+/* Funnel widths - each stat narrower than the last */
+.page-distilleries .cp-stat:nth-child(1) { width: 100%; }
+.page-distilleries .cp-stat:nth-child(2) { width: 92%;  margin-left: 4%; }
+.page-distilleries .cp-stat:nth-child(3) { width: 84%;  margin-left: 8%; }
+.page-distilleries .cp-stat:nth-child(4) { width: 76%;  margin-left: 12%; }
+.page-distilleries .cp-stat:nth-child(5) { width: 68%;  margin-left: 16%; }
+
+.page-distilleries .cp-stat-n {
+  font-size: 32px;
+  text-align: right;
+  background: linear-gradient(135deg, #f59e0b, var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-distilleries .cp-stat-l {
+  text-align: left;
+}
+
+/* Vertical flow features - each card connected by a faint line */
+.page-distilleries .cp-feat-grid {
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  position: relative;
+  max-width: var(--cp-measure);
+}
+
+.page-distilleries .cp-feat-grid::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  bottom: 40px;
+  left: 40px;
+  width: 2px;
+  background: linear-gradient(180deg, #f59e0b, var(--lp-accent-light), transparent);
+}
+
+.page-distilleries .cp-feat-card {
+  padding-left: 80px;
+  position: relative;
+  border-radius: 18px;
+}
+
+.page-distilleries .cp-feat-card .cp-feat-icon {
+  position: absolute;
+  left: 16px;
+  top: 24px;
+  background: linear-gradient(135deg, rgba(240, 171, 252, 0.25), rgba(167, 139, 250, 0.12));
+  border: 2px solid var(--lp-bg);
+  box-shadow: 0 0 0 2px rgba(240, 171, 252, 0.40);
+  z-index: 1;
+  margin-bottom: 0;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   3. INVENTORY - horizontal shelf-bar stats + warehouse-row features
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-inventory .cp-stats {
+  grid-template-columns: 1fr;
+  gap: 8px;
+  max-width: var(--cp-measure);
+  margin-inline: auto;
+}
+
+.page-inventory .cp-stat {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 22px;
+  text-align: left;
+  border-radius: 12px;
+  border-left: 4px solid #06b6d4;
+}
+
+.page-inventory .cp-stat::after {
+  /* Stock-level style horizontal bar */
+  content: '';
+  display: block;
+  height: 6px;
+  background: linear-gradient(90deg, #06b6d4, var(--lp-accent-light));
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+.page-inventory .cp-stat-n {
+  font-size: 28px;
+  text-align: left;
+  background: linear-gradient(135deg, #06b6d4, var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-inventory .cp-stat-l {
+  text-align: left;
+}
+
+/* Full-width feature rows - was a 3-column grid (icon | h3 | p) when each
+   card had a leading 64px emoji icon. The emoji icons were removed in the
+   de-AI-ify-the-look cleanup, which left h3 auto-placing into the orphan
+   64px column and wrapping word-by-word ("Reduced" / "Stockouts" on
+   separate lines, "Inventory Optimization" overflowing the description).
+   Now a simple single-column block layout: h3 above p, each with the full
+   card width - no awkward word-wrap. */
+.page-inventory .cp-feat-grid {
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  gap: 8px;
+  max-width: var(--cp-measure);
+}
+
+.page-inventory .cp-feat-card {
+  padding: 20px 24px;
+  border-radius: 12px;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.page-inventory .cp-feat-card:hover {
+  transform: translateX(6px);
+}
+
+.page-inventory .cp-feat-card h3 {
+  margin: 0 0 6px !important;
+}
+
+.page-inventory .cp-feat-card p {
+  margin: 0 !important;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   4. CUSTOMER INSIGHTS - avatar-bubble stats + chat-card features
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-customers .cp-stats {
+  grid-template-columns: repeat(5, 1fr);
+  perspective: 1000px;
+}
+
+.page-customers .cp-stat {
+  border-radius: 50% 50% 14px 14px;
+  padding-top: 32px;
+  padding-bottom: 22px;
+  position: relative;
+  border: 2px solid var(--lp-border);
+  overflow: visible;
+}
+
+.page-customers .cp-stat::before {
+  /* Avatar bubble at top */
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f472b6, var(--lp-accent-light));
+  box-shadow: 0 0 16px rgba(244, 114, 182, 0.5);
+  animation: pe-pulse-ring 3s ease-out infinite;
+}
+
+.page-customers .cp-stat-n {
+  background: linear-gradient(135deg, #f472b6, var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Chat-bubble feature cards */
+.page-customers .cp-feat-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.page-customers .cp-feat-card {
+  border-radius: 18px 18px 18px 4px;
+  position: relative;
+}
+
+.page-customers .cp-feat-card:nth-child(even) {
+  border-radius: 18px 18px 4px 18px;
+  margin-top: 16px;
+}
+
+.page-customers .cp-feat-card::before {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 24px;
+  width: 0; height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--lp-card);
+}
+
+.page-customers .cp-feat-card:nth-child(even)::before {
+  left: auto;
+  right: 24px;
+}
+
+.page-customers .cp-feat-icon {
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.20), rgba(167, 139, 250, 0.08));
+  border-color: rgba(244, 114, 182, 0.30);
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   5. SALES ANALYTICS - chart-tile stats + dashboard-card features
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-analytics .cp-stats {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.page-analytics .cp-stat {
+  text-align: left;
+  padding: 22px 20px 16px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.page-analytics .cp-stat::after {
+  /* Mini bar-chart skyline at bottom */
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 16px;
+  right: 16px;
+  height: 28px;
+  background:
+    linear-gradient(to top, var(--lp-accent), transparent),
+    repeating-linear-gradient(90deg,
+      transparent 0, transparent 8px,
+      rgba(167, 139, 250, 0.18) 8px, rgba(167, 139, 250, 0.18) 12px);
+  -webkit-mask: linear-gradient(to top, black 30%, transparent);
+  mask: linear-gradient(to top, black 30%, transparent);
+  opacity: 0.5;
+}
+
+.page-analytics .cp-stat-n {
+  font-size: 32px;
+  letter-spacing: -1px;
+}
+
+.page-analytics .cp-stat-l {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+/* Dashboard-tile features */
+.page-analytics .cp-feat-grid {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+}
+
+.page-analytics .cp-feat-card:nth-child(1) {
+  grid-column: span 2;
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.10), var(--lp-card));
+  border-color: rgba(167, 139, 250, 0.30);
+}
+
+.page-analytics .cp-feat-card:nth-child(1) .cp-feat-icon {
+  width: 56px; height: 56px;
+  font-size: 26px;
+}
+
+.page-analytics .cp-feat-card:nth-child(1) h3 {
+  font-size: 20px !important;
+}
+
+.page-analytics .cp-feat-card {
+  border-radius: 14px;
+}
+
+.page-analytics .cp-feat-icon {
+  background: linear-gradient(135deg, rgba(214, 187, 255, 0.20), rgba(124, 58, 237, 0.12));
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   6. REORDERING - circular ring stats + cycle-step features
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-reordering .cp-stats {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.page-reordering .cp-stat {
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border: 2px dashed rgba(6, 182, 212, 0.40);
+  position: relative;
+}
+
+.page-reordering .cp-stat::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(167, 139, 250, 0.20);
+}
+
+.page-reordering .cp-stat-n {
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, var(--lp-accent), #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-reordering .cp-stat-l {
+  font-size: 10.5px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+/* Cycle-step features - numbered cards with connecting arrows */
+.page-reordering .cp-feat-grid {
+  grid-template-columns: repeat(3, 1fr);
+  position: relative;
+  gap: 28px;
+}
+
+.page-reordering .cp-feat-card {
+  position: relative;
+  border-radius: 18px;
+  text-align: center;
+  padding-top: 56px;
+}
+
+.page-reordering .cp-feat-card::before {
+  content: counter(feat);
+  counter-increment: feat;
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lp-accent), #06b6d4);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(167, 139, 250, 0.40);
+}
+
+.page-reordering .cp-feat-grid {
+  counter-reset: feat;
+}
+
+.page-reordering .cp-feat-icon {
+  display: none;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   7. MARGIN OPTIMIZATION - stacked-block stats + tier features
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-margin .cp-stats {
+  grid-template-columns: 1fr;
+  margin: 48px auto 64px;
+  gap: 6px;
+  perspective: 1100px;
+  max-width: var(--cp-measure);
+}
+
+.page-margin .cp-stat {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  align-items: center;
+  padding: 18px 28px;
+  text-align: left;
+  border-radius: 12px;
+  transform-style: preserve-3d;
+}
+
+.page-margin .cp-stat:nth-child(1) {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.16), rgba(34, 197, 94, 0.04));
+  border-color: rgba(34, 197, 94, 0.35);
+  transform: translateZ(20px);
+}
+.page-margin .cp-stat:nth-child(2) {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(124, 58, 237, 0.04));
+  border-color: rgba(124, 58, 237, 0.35);
+  width: 92%;
+}
+.page-margin .cp-stat:nth-child(3) {
+  background: linear-gradient(135deg, rgba(167, 139, 250, 0.16), rgba(167, 139, 250, 0.04));
+  border-color: rgba(167, 139, 250, 0.35);
+  width: 84%;
+}
+.page-margin .cp-stat:nth-child(4) {
+  background: linear-gradient(135deg, rgba(240, 171, 252, 0.16), rgba(240, 171, 252, 0.04));
+  border-color: rgba(240, 171, 252, 0.35);
+  width: 76%;
+}
+.page-margin .cp-stat:nth-child(5) {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.16), rgba(239, 68, 68, 0.04));
+  border-color: rgba(239, 68, 68, 0.35);
+  width: 68%;
+}
+
+.page-margin .cp-stat-n {
+  font-size: 32px;
+  text-align: right;
+}
+
+.page-margin .cp-stat-l {
+  text-align: left;
+  font-weight: 600;
+  color: var(--lp-text);
+}
+
+/* Tiered features - each card stepped down */
+.page-margin .cp-feat-grid {
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  max-width: var(--cp-measure);
+}
+
+.page-margin .cp-feat-card {
+  border-radius: 16px;
+  border-left: 5px solid;
+}
+
+.page-margin .cp-feat-card:nth-child(1) { border-left-color: #22c55e; }
+.page-margin .cp-feat-card:nth-child(2) { border-left-color: #F472B6; width: 96%; }
+.page-margin .cp-feat-card:nth-child(3) { border-left-color: var(--lp-accent); width: 92%; }
+.page-margin .cp-feat-card:nth-child(4) { border-left-color: #f59e0b; width: 88%; }
+.page-margin .cp-feat-card:nth-child(5) { border-left-color: #06b6d4; width: 84%; }
+.page-margin .cp-feat-card:nth-child(6) { border-left-color: #f472b6; width: 80%; }
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   8. PRODUCT RECOMMENDATIONS - card-deck stats + playing-card features
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-recommend .cp-stats {
+  grid-template-columns: repeat(5, 1fr);
+  perspective: 1400px;
+  gap: 14px;
+}
+
+.page-recommend .cp-stat {
+  border-radius: 16px;
+  position: relative;
+  transition: transform 0.3s ease;
+  background: linear-gradient(180deg, var(--lp-card) 0%, var(--lp-card) 70%, rgba(167, 139, 250, 0.08) 100%);
+}
+
+.page-recommend .cp-stat::before {
+  /* Card corner label like a playing card */
+  content: '★';
+  position: absolute;
+  top: 8px; right: 12px;
+  font-size: 12px;
+  color: var(--lp-accent-light);
+  opacity: 0.6;
+}
+
+.page-recommend .cp-stat::after {
+  content: '★';
+  position: absolute;
+  bottom: 8px; left: 12px;
+  font-size: 12px;
+  color: var(--lp-accent-light);
+  opacity: 0.6;
+  transform: rotate(180deg);
+}
+
+.page-recommend .cp-stat:nth-child(2n) {
+  transform: rotate(-1deg);
+}
+.page-recommend .cp-stat:nth-child(2n+1) {
+  transform: rotate(1deg);
+}
+
+.page-recommend .cp-stat:hover {
+  transform: rotate(0) translateY(-6px) scale(1.04);
+  border-color: var(--lp-accent);
+  box-shadow: 0 16px 40px rgba(124, 58, 237, 0.25);
+}
+
+.page-recommend .cp-stat-n {
+  background: linear-gradient(135deg, #F472B6, var(--lp-accent-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Playing-card features - corners + accent border */
+.page-recommend .cp-feat-grid {
+  grid-template-columns: repeat(3, 1fr);
+  perspective: 1400px;
+}
+
+.page-recommend .cp-feat-card {
+  border-radius: 18px;
+  position: relative;
+  background:
+    radial-gradient(circle at top right, rgba(124, 58, 237, 0.10), transparent 60%),
+    var(--lp-card);
+  border: 1px solid rgba(124, 58, 237, 0.20);
+}
+
+.page-recommend .cp-feat-card::before {
+  content: '';
+  position: absolute;
+  top: 12px; left: 12px;
+  width: 14px; height: 14px;
+  border-top: 2px solid var(--lp-accent-light);
+  border-left: 2px solid var(--lp-accent-light);
+  border-radius: 4px 0 0 0;
+  opacity: 0.6;
+}
+
+.page-recommend .cp-feat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 12px; right: 12px;
+  width: 14px; height: 14px;
+  border-bottom: 2px solid var(--lp-accent-light);
+  border-right: 2px solid var(--lp-accent-light);
+  border-radius: 0 0 4px 0;
+  opacity: 0.6;
+}
+
+.page-recommend .cp-feat-card:hover {
+  transform: translateY(-4px) rotateY(-2deg);
+  border-color: var(--lp-accent);
+  box-shadow: 0 20px 50px rgba(124, 58, 237, 0.30);
+}
+
+.page-recommend .cp-feat-icon {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.22), rgba(124, 58, 237, 0.10));
+  border-color: rgba(124, 58, 237, 0.35);
+}
+
+/* Real outputs gallery - 4-card grid showing actual product output
+   images. Images live in public/screenshots/ and are served as WebP
+   with PNG fallback. Each card lifts + tilts slightly on hover. */
+/* Real-output gallery - sized for exactly 3 promo cards (was 4 before
+   the Red Bull card was removed). Keeping `repeat(4, 1fr)` with 3 cards
+   would either stretch each card to 25%-too-wide or leave a visibly
+   empty 4th column. Capped max-width so cards don't balloon past the
+   800×800 source-image dimensions on wide screens. */
+.cp-real-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin: 8px auto 0;
+  max-width: 980px;
+}
+
+.cp-real-card {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cp-real-card:hover {
+  transform: translateY(-4px) rotate(-1deg);
+  border-color: var(--lp-accent);
+  box-shadow: 0 18px 44px rgba(124, 58, 237, 0.30);
+}
+
+.cp-real-card:nth-child(even):hover {
+  transform: translateY(-4px) rotate(1deg);
+}
+
+.cp-real-card picture,
+.cp-real-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+/* Caption now sits in a static row BELOW the image instead of as an
+   absolute-positioned overlay on top. The promo images already have
+   their own product name + offer text baked into the artwork - having
+   the figcaption overlap that printed text was double-printing the
+   same info and looked muddled. Separate row reads cleanly and gives
+   each card a predictable height. */
+.cp-real-card figcaption {
+  padding: 14px 18px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--lp-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.cp-real-card figcaption strong {
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: var(--lp-text);
+}
+
+.cp-real-card figcaption em {
+  font-style: normal;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--lp-accent-light);
+  white-space: nowrap;
+}
+
+[data-theme="light"] .cp-real-card {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="light"] .cp-real-card figcaption {
+  background: rgba(0, 0, 0, 0.015);
+  border-top-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .cp-real-card figcaption em {
+  color: var(--lp-accent);
+}
+
+@media (max-width: 960px) {
+  .cp-real-gallery {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cp-real-gallery {
+    grid-template-columns: 1fr;
+    max-width: 380px;
+  }
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   COMPARE-PAIR variants - give each page a slightly different compare style
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-retailers .cp-compare-pair {
+  grid-template-columns: 1fr 1fr;
+  position: relative;
+}
+.page-retailers .cp-compare-col.good { border-left-color: #22c55e; }
+
+.page-distilleries .cp-compare-pair {
+  gap: 0;
+  grid-template-columns: 1fr 60px 1fr;
+}
+.page-distilleries .cp-compare-pair::before {
+  content: '→';
+  grid-column: 2;
+  align-self: center;
+  text-align: center;
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--lp-accent-light);
+}
+.page-distilleries .cp-compare-col.bad { border-left-color: #f59e0b; }
+
+.page-inventory .cp-compare-pair {
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--lp-card);
+  border: 1px solid var(--lp-border);
+  gap: 0;
+}
+.page-inventory .cp-compare-col {
+  border: none;
+  border-radius: 0;
+  background: transparent !important;
+}
+.page-inventory .cp-compare-col.bad { border-right: 1px solid var(--lp-border); }
+
+.page-customers .cp-compare-col {
+  border-radius: 18px 18px 18px 4px;
+}
+.page-customers .cp-compare-col.good {
+  border-radius: 18px 18px 4px 18px;
+}
+
+.page-analytics .cp-compare-col {
+  border-radius: 4px;
+  border-left-width: 6px;
+}
+
+.page-reordering .cp-compare-col {
+  border-radius: 24px;
+}
+
+.page-margin .cp-compare-col.bad,
+.page-margin .cp-compare-col.good {
+  border-left: none;
+  border-top: 4px solid;
+  border-radius: 12px;
+}
+.page-margin .cp-compare-col.bad  { border-top-color: #ef4444; }
+.page-margin .cp-compare-col.good { border-top-color: #22c55e; }
+
+.page-recommend .cp-compare-pair {
+  grid-template-columns: 1fr 1fr;
+}
+.page-recommend .cp-compare-col {
+  border-radius: 18px;
+  border-width: 2px;
+}
+.page-recommend .cp-compare-col.good {
+  border-color: rgba(124, 58, 237, 0.50);
+  background: radial-gradient(circle at top right, rgba(124, 58, 237, 0.08), transparent), var(--lp-card);
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   FAQ - varied per page
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-distilleries .cp-faq-grid {
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  counter-reset: faq;
+  max-width: var(--cp-measure);
+}
+.page-distilleries .cp-faq-card {
+  padding-left: 60px;
+  position: relative;
+}
+.page-distilleries .cp-faq-card::before {
+  content: counter(faq, decimal-leading-zero);
+  counter-increment: faq;
+  position: absolute;
+  left: 20px; top: 22px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--bx-accent, #B79CFF);
+  font-family: var(--bx-font-display);
+}
+
+.page-inventory .cp-faq-grid {
+  grid-template-columns: 1fr;
+  border: 1px solid var(--lp-border);
+  border-radius: 14px;
+  overflow: hidden;
+  gap: 0;
+  max-width: var(--cp-measure);
+  margin-inline: auto;
+}
+.page-inventory .cp-faq-card {
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid var(--lp-border);
+}
+.page-inventory .cp-faq-card:last-child { border-bottom: none; }
+.page-inventory .cp-faq-card:hover { transform: none; background: rgba(6, 182, 212, 0.04); }
+
+.page-customers .cp-faq-card {
+  border-radius: 18px 18px 18px 4px;
+}
+.page-customers .cp-faq-card:nth-child(even) {
+  border-radius: 18px 18px 4px 18px;
+}
+
+.page-analytics .cp-faq-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.page-analytics .cp-faq-card {
+  border-radius: 4px;
+  border-left: 3px solid var(--lp-accent-light);
+}
+
+.page-reordering .cp-faq-grid {
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  max-width: var(--cp-measure);
+}
+.page-reordering .cp-faq-card {
+  border-radius: 28px;
+  padding: 22px 32px;
+}
+
+.page-recommend .cp-faq-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.page-recommend .cp-faq-card {
+  border-radius: 16px;
+  border-top: 3px solid #F472B6;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   FINAL CTA - distinct gradient per page
+   ════════════════════════════════════════════════════════════════════════════ */
+.page-retailers .cp-final-cta {
+  background:
+    radial-gradient(ellipse 60% 80% at 20% 0%, rgba(34, 197, 94, 0.16), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 100%, rgba(167, 139, 250, 0.10), transparent),
+    var(--lp-card);
+}
+
+.page-distilleries .cp-final-cta {
+  background:
+    radial-gradient(ellipse 60% 80% at 20% 0%, rgba(240, 171, 252, 0.18), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 100%, rgba(167, 139, 250, 0.10), transparent),
+    var(--lp-card);
+}
+
+.page-inventory .cp-final-cta {
+  background:
+    radial-gradient(ellipse 60% 80% at 20% 0%, rgba(6, 182, 212, 0.16), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 100%, rgba(167, 139, 250, 0.10), transparent),
+    var(--lp-card);
+}
+
+.page-customers .cp-final-cta {
+  background:
+    radial-gradient(ellipse 60% 80% at 20% 0%, rgba(244, 114, 182, 0.16), transparent),
+    radial-gradient(ellipse 60% 80% at 80% 100%, rgba(167, 139, 250, 0.10), transparent),
+    var(--lp-card);
+}
+
+.page-reordering .cp-final-cta {
+  background:
+    radial-gradient(circle at center, rgba(6, 182, 212, 0.15), transparent 60%),
+    var(--lp-card);
+}
+
+.page-margin .cp-final-cta {
+  background:
+    linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(167, 139, 250, 0.10), rgba(239, 68, 68, 0.08)),
+    var(--lp-card);
+}
+
+.page-recommend .cp-final-cta {
+  background:
+    radial-gradient(ellipse 70% 90% at 30% 0%, rgba(124, 58, 237, 0.20), transparent),
+    radial-gradient(ellipse 70% 90% at 70% 100%, rgba(167, 139, 250, 0.12), transparent),
+    var(--lp-card);
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   Responsive - collapse all theme-specific tweaks on mobile
+   ════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 760px) {
+  .page-retailers .cp-stats,
+  .page-customers .cp-stats,
+  .page-analytics .cp-stats,
+  .page-reordering .cp-stats,
+  .page-recommend .cp-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-retailers .cp-feat-grid,
+  .page-customers .cp-feat-grid,
+  .page-analytics .cp-feat-grid,
+  .page-reordering .cp-feat-grid,
+  .page-recommend .cp-feat-grid {
+    grid-template-columns: 1fr;
+  max-width: var(--cp-measure);
+  margin-inline: auto;
+}
+
+  .page-retailers .cp-feat-card,
+  .page-retailers .cp-feat-card:nth-child(even),
+  .page-retailers .cp-feat-card:nth-child(odd) {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .page-distilleries .cp-stat,
+  .page-margin .cp-stat,
+  .page-margin .cp-feat-card {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+
+  .page-distilleries .cp-compare-pair {
+    grid-template-columns: 1fr;
+  }
+  .page-distilleries .cp-compare-pair::before {
+    display: none;
+  }
+
+  .page-analytics .cp-feat-card:nth-child(1) {
+    grid-column: span 1;
+  }
+}

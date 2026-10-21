@@ -1,0 +1,334 @@
+{
+  "summary": {
+    "inputFile": "recheck3.json",
+    "gradedAt": "2026-06-04T23:02:10.250Z",
+    "groundTruthDate": "2026-06-04",
+    "turns": 5,
+    "correct": 5,
+    "honest": 0,
+    "confidentWrong": 0,
+    "needsReview": 0,
+    "correctOrHonestPct": 100,
+    "byCategory": {
+      "inventory": {
+        "total": 1,
+        "correct": 1,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "search": {
+        "total": 2,
+        "correct": 2,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      },
+      "followup": {
+        "total": 2,
+        "correct": 2,
+        "correctOrHonestPct": 100,
+        "confidentWrong": 0
+      }
+    }
+  },
+  "confidentWrong": [],
+  "needsReview": [],
+  "cases": [
+    {
+      "id": "inv-06",
+      "category": "inventory",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "inv-06",
+          "category": "inventory",
+          "turnIndex": 1,
+          "question": "Which bourbons are currently in stock?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **106 bourbons currently in stock**. Here are your bourbon selections organized by price, from highest to lowest: | Product Name | Price | Stock Qty | |--------------|-------|-----------| | WILLETT BOURBON 8YRS 750ML | $399.99 | 3 "
+        }
+      ]
+    },
+    {
+      "id": "search-01",
+      "category": "search",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "search-01",
+          "category": "search",
+          "turnIndex": 1,
+          "question": "List your scotch selection.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "Here's your complete scotch selection, sorted by price from highest to lowest: | Product Name | Price | Stock Qty | |--------------|-------|-----------| | HOUSE LANNISTER 750 | $74.99 | 0 | | GLENKINCHIE DBL MATURED SCOTCH | $71.99 | 0 | | "
+        }
+      ]
+    },
+    {
+      "id": "search-03",
+      "category": "search",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "search-03",
+          "category": "search",
+          "turnIndex": 1,
+          "question": "Which bourbons do I have in stock right now?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql"
+          ],
+          "answerPreview": "You have **106 bourbons** currently in stock. Here are your top bourbon selections by stock level: | Product Name | Price | Stock Qty | SKU | |--------------|-------|-----------|-----| | BIRD DOG BOURBON | $1.00 | 350 | 19632 | | BULLEIT BO"
+        }
+      ]
+    },
+    {
+      "id": "follow-04",
+      "category": "followup",
+      "verdict": "correct",
+      "turns": [
+        {
+          "caseId": "follow-04",
+          "category": "followup",
+          "turnIndex": 1,
+          "question": "List bourbon products.",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "You have **175 bourbon products** in your inventory. Here are the first 20 by name — say 'show next 20' or 'show all' if you'd like more: | Product Name | Price | Stock Qty | Category | Sub Category | |--------------|-------|-----------|---"
+        },
+        {
+          "caseId": "follow-04",
+          "category": "followup",
+          "turnIndex": 2,
+          "question": "Which of those are in stock?",
+          "verdict": "correct",
+          "findings": [],
+          "hadEvidence": true,
+          "evidenceTools": [
+            "run_sql",
+            "run_sql"
+          ],
+          "answerPreview": "You have **106 bourbon products currently in stock**. Here are the first 20 by name — say 'show next 20' or 'show all' if you'd like more: | Product Name | Price | Stock Qty | Category | Sub Category | |--------------|-------|-----------|--"
+        }
+      ]
+    }
+  ],
+  "groundTruthUsed": {
+    "clientId": 125,
+    "locationId": 125,
+    "generatedAt": "2026-06-04T23:02:07.819Z",
+    "latestDate": "2026-06-04",
+    "earliestDate": "2023-01-01",
+    "dateToWeekday": {
+      "2026-04-21": "Tuesday",
+      "2026-04-22": "Wednesday",
+      "2026-04-23": "Thursday",
+      "2026-04-24": "Friday",
+      "2026-04-25": "Saturday",
+      "2026-04-26": "Sunday",
+      "2026-04-27": "Monday",
+      "2026-04-28": "Tuesday",
+      "2026-04-29": "Wednesday",
+      "2026-04-30": "Thursday",
+      "2026-05-01": "Friday",
+      "2026-05-02": "Saturday",
+      "2026-05-03": "Sunday",
+      "2026-05-04": "Monday",
+      "2026-05-05": "Tuesday",
+      "2026-05-06": "Wednesday",
+      "2026-05-07": "Thursday",
+      "2026-05-08": "Friday",
+      "2026-05-09": "Saturday",
+      "2026-05-10": "Sunday",
+      "2026-05-11": "Monday",
+      "2026-05-12": "Tuesday",
+      "2026-05-13": "Wednesday",
+      "2026-05-14": "Thursday",
+      "2026-05-15": "Friday",
+      "2026-05-16": "Saturday",
+      "2026-05-17": "Sunday",
+      "2026-05-18": "Monday",
+      "2026-05-19": "Tuesday",
+      "2026-05-20": "Wednesday",
+      "2026-05-21": "Thursday",
+      "2026-05-22": "Friday",
+      "2026-05-23": "Saturday",
+      "2026-05-24": "Sunday",
+      "2026-05-25": "Monday",
+      "2026-05-26": "Tuesday",
+      "2026-05-27": "Wednesday",
+      "2026-05-28": "Thursday",
+      "2026-05-29": "Friday",
+      "2026-05-30": "Saturday",
+      "2026-05-31": "Sunday",
+      "2026-06-01": "Monday",
+      "2026-06-02": "Tuesday",
+      "2026-06-03": "Wednesday",
+      "2026-06-04": "Thursday"
+    },
+    "salesExistByDate": {
+      "__latest__": 138,
+      "2026-04-21": 340,
+      "2026-04-22": 295,
+      "2026-04-23": 369,
+      "2026-04-24": 500,
+      "2026-04-25": 442,
+      "2026-04-26": 331,
+      "2026-04-27": 285,
+      "2026-04-28": 300,
+      "2026-04-29": 296,
+      "2026-04-30": 365,
+      "2026-05-01": 514,
+      "2026-05-02": 469,
+      "2026-05-03": 294,
+      "2026-05-04": 285,
+      "2026-05-05": 376,
+      "2026-05-06": 314,
+      "2026-05-07": 361,
+      "2026-05-08": 457,
+      "2026-05-09": 502,
+      "2026-05-10": 380,
+      "2026-05-11": 281,
+      "2026-05-12": 321,
+      "2026-05-13": 320,
+      "2026-05-14": 394,
+      "2026-05-15": 487,
+      "2026-05-16": 499,
+      "2026-05-17": 358,
+      "2026-05-18": 354,
+      "2026-05-19": 331,
+      "2026-05-20": 341,
+      "2026-05-21": 400,
+      "2026-05-22": 503,
+      "2026-05-23": 492,
+      "2026-05-24": 357,
+      "2026-05-25": 328,
+      "2026-05-26": 330,
+      "2026-05-27": 359,
+      "2026-05-28": 355,
+      "2026-05-29": 507,
+      "2026-05-30": 436,
+      "2026-05-31": 311,
+      "2026-06-01": 324,
+      "2026-06-02": 338,
+      "2026-06-03": 412,
+      "2026-06-04": 138
+    },
+    "last7": [
+      {
+        "date": "2026-05-29",
+        "weekday": "Friday",
+        "revenue": 13144.66
+      },
+      {
+        "date": "2026-05-30",
+        "weekday": "Saturday",
+        "revenue": 12334.24
+      },
+      {
+        "date": "2026-05-31",
+        "weekday": "Sunday",
+        "revenue": 8031.62
+      },
+      {
+        "date": "2026-06-01",
+        "weekday": "Monday",
+        "revenue": 6987.24
+      },
+      {
+        "date": "2026-06-02",
+        "weekday": "Tuesday",
+        "revenue": 8202.76
+      },
+      {
+        "date": "2026-06-03",
+        "weekday": "Wednesday",
+        "revenue": 9634.77
+      },
+      {
+        "date": "2026-06-04",
+        "weekday": "Thursday",
+        "revenue": 3324.89
+      }
+    ],
+    "bestDay": {
+      "date": "2026-05-29",
+      "weekday": "Friday",
+      "revenue": 13144.66
+    },
+    "worstDay": {
+      "date": "2026-06-04",
+      "weekday": "Thursday",
+      "revenue": 3324.89
+    },
+    "todaySales": 138,
+    "todayRevenue": 3324.89,
+    "cat_today": {
+      "BEER": 1059.38,
+      "LIQUOR": 1043.99,
+      "WINE": 679.58,
+      "CIGARETTE": 238.39,
+      "UNMAPPED": 206.6,
+      "BOTTLE DEPOSIT": 33.15,
+      "BEVERAGE": 26.94,
+      "MISC TAX": 15.92,
+      "ICE": 13.93,
+      "MIXER": 10.99,
+      "CANDY & SNACK": 1.96
+    },
+    "cat_today_pct": {
+      "BEER": 31.81,
+      "LIQUOR": 31.34,
+      "WINE": 20.4,
+      "CIGARETTE": 7.16,
+      "UNMAPPED": 6.2,
+      "BOTTLE DEPOSIT": 1,
+      "BEVERAGE": 0.81,
+      "MISC TAX": 0.48,
+      "ICE": 0.42,
+      "MIXER": 0.33,
+      "CANDY & SNACK": 0.06
+    },
+    "cat_today_topLabel": "BEER",
+    "cat_today_date": "2026-06-04",
+    "topProduct30d": "TITO'S",
+    "whiskeyUnder200": 416,
+    "scotchCount": 30,
+    "bourbonInStock": 106,
+    "counts": {
+      "products": 17752,
+      "lowStock": 1611,
+      "oos": 11959,
+      "categories": 20,
+      "customers": 1,
+      "suppliers": 0,
+      "sales": 494109
+    },
+    "availability": {
+      "cashier": 0,
+      "register": 0,
+      "pay_mode": 0,
+      "customer_id_on_sales": 0,
+      "cost": 0,
+      "on_sale": 0,
+      "customers_with_email": 0,
+      "customers_total": 1
+    }
+  }
+}

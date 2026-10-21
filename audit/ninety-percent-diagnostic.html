@@ -1,0 +1,1087 @@
+<title>The Ninety Percent Problem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  color-scheme:light;
+  --paper:#FBFAF7; --card:#FFFFFF; --sunk:#F3F1EC; --rule:#DFDAD0;
+  --ink:#1A1713; --body:#3D3830; --mute:#6F675B; --faint:#9A9184;
+  --blue:#1F4E79; --blue-bg:#E6EEF6; --blue-edge:#A9C4DD;
+  --green:#15613F; --green-bg:#E5F1E9; --green-edge:#A6CDB6;
+  --brass:#9A5A05; --brass-bg:#FCF1E0; --brass-edge:#E3C68E;
+  --plum:#7A4E9A; --plum-bg:#F0E9F6; --plum-edge:#C9B3DC;
+  --red:#A32118; --red-bg:#FBEAE7; --red-edge:#E0AFA8;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --plum:#C09BE0; --plum-bg:#1E1428; --plum-edge:#42305A;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#141210; --card:#1C1917; --sunk:#100E0C; --rule:#302B25;
+  --ink:#F2EEE7; --body:#CFC7BB; --mute:#9A9184; --faint:#6F675B;
+  --blue:#7FB2DE; --blue-bg:#0C1D2B; --blue-edge:#204058;
+  --green:#68C398; --green-bg:#0D2318; --green-edge:#1F4A33;
+  --brass:#E3A94E; --brass-bg:#2B1D0A; --brass-edge:#5A3F16;
+  --plum:#C09BE0; --plum-bg:#1E1428; --plum-edge:#42305A;
+  --red:#F0857A; --red-bg:#2E1512; --red-edge:#5E2A24;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--body);
+  font-family:"Source Sans 3",system-ui,sans-serif;font-size:16.5px;line-height:1.66;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{color:var(--ink);margin:0;font-family:"Source Serif 4",Georgia,serif;text-wrap:balance}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:0 110px;padding-inline:28px}
+
+header.mast{border-bottom:3px double var(--rule);padding:46px 0 26px;margin-bottom:34px}
+.dept{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:20px}
+h1{font-size:clamp(34px,5.4vw,56px);font-weight:700;line-height:1.04;letter-spacing:-.02em}
+.dek{font-family:"Source Serif 4",serif;font-size:clamp(17px,2.1vw,21px);line-height:1.5;
+  margin-top:16px;max-width:62ch}
+.byline{margin-top:22px;padding-top:14px;border-top:1px solid var(--rule);
+  font-size:13px;color:var(--mute);display:flex;flex-wrap:wrap;gap:8px 26px}
+.byline b{color:var(--body);font-weight:600}
+
+.verdict{background:var(--card);border:1px solid var(--rule);border-left:5px solid var(--green);
+  padding:26px 30px;margin:32px 0}
+.verdict h2{font-size:24px;margin-bottom:12px;color:var(--green)}
+.verdict p{margin:0 0 13px;max-width:74ch}.verdict p:last-child{margin:0}
+
+section{margin-top:62px;scroll-margin-top:20px}
+.sec-no{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:9px}
+section>h2{font-size:clamp(25px,3.3vw,34px);font-weight:700;letter-spacing:-.015em;
+  padding-bottom:13px;border-bottom:2px solid var(--ink);margin-bottom:24px}
+h3{font-size:20px;font-weight:600;margin:32px 0 11px}
+h4{font-size:16px;font-weight:600;margin:22px 0 8px}
+p{margin:0 0 15px;max-width:76ch}
+ul,ol{max-width:76ch;padding-left:22px;margin:0 0 15px}li{margin-bottom:7px}
+strong{color:var(--ink);font-weight:600}
+code{font-family:"JetBrains Mono",monospace;font-size:.85em;background:var(--sunk);
+  padding:1.5px 5px;border-radius:2px;color:var(--ink);word-break:break-word}
+
+pre{font-family:"JetBrains Mono",monospace;font-size:12.5px;background:var(--sunk);
+  border:1px solid var(--rule);padding:0;margin:12px 0;overflow-x:auto;color:var(--ink)}
+pre code{background:none;padding:0;font-size:inherit;display:block;white-space:normal}
+.ln{display:block;padding:1px 14px;white-space:pre;line-height:1.5}
+.ln.cmt{color:var(--mute)}
+.ln.hi{background:var(--blue-bg);border-left:3px solid var(--blue);padding-left:11px;font-weight:500}
+.ln.ok{background:var(--green-bg);border-left:3px solid var(--green);padding-left:11px}
+.ln.no{background:var(--red-bg);border-left:3px solid var(--red);padding-left:11px}
+pre code .cmt{color:var(--mute)}
+
+.comp{border:1px solid var(--rule);background:var(--card);margin:24px 0;overflow:hidden}
+.comp-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;padding:14px 20px;
+  background:var(--sunk);border-bottom:1px solid var(--rule)}
+.comp-h .id{font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;color:var(--red)}
+.comp-h h3{margin:0;font-size:19px;flex:1 1 300px}
+.comp-h .cl{margin-left:auto;font-family:"JetBrains Mono",monospace;font-size:9.5px;
+  letter-spacing:.08em;color:var(--red);background:var(--red-bg);padding:3px 9px;
+  border-radius:2px;border:1px solid var(--red-edge);font-weight:700;white-space:nowrap}
+.comp-b{padding:18px 20px}.comp-b>*:last-child{margin-bottom:0}
+.comp{border-left:5px solid var(--red)}
+.comp.sev-hi{border-left-color:var(--red)}
+.comp.sev-md{border-left-color:var(--brass)}
+.comp.sev-md .id{color:var(--brass)}
+.comp.sev-md .cl{color:var(--brass);background:var(--brass-bg);border-color:var(--brass-edge)}
+
+.fix{border:1px solid var(--green-edge);border-left:4px solid var(--green);
+  background:var(--green-bg);padding:12px 16px;margin:14px 0}
+.fix .l{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--green);font-weight:700;display:block;margin-bottom:4px}
+.fix p{margin:0;font-size:13.5px;max-width:72ch;color:var(--ink)}
+.fix p+p{margin-top:8px}
+.ev{border:1px solid var(--rule);border-left:4px solid var(--mute);background:var(--sunk);
+  padding:11px 15px;margin:14px 0}
+.ev .l{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--mute);font-weight:700;display:block;margin-bottom:4px}
+.ev p{margin:0;font-size:13px;max-width:74ch}
+.ev p+p{margin-top:6px}
+
+.io{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin:14px 0}
+.io div{background:var(--card);padding:11px 13px}
+.io .t{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--mute);margin-bottom:5px;font-weight:700}
+.io .c{font-size:12.5px;line-height:1.5}
+.io code{font-size:11.5px}
+
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:680px;background:var(--card)}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--mute);font-weight:700;background:var(--sunk)}
+tbody tr:last-child td{border-bottom:none}
+td.mono{font-family:"JetBrains Mono",monospace;font-size:12px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;
+  font-family:"JetBrains Mono",monospace;white-space:nowrap}
+td.good{color:var(--green);font-weight:600}
+td.bad{color:var(--red);font-weight:600}
+td.warn{color:var(--brass);font-weight:600}
+.tag{font-family:"JetBrains Mono",monospace;font-size:10px;padding:2px 7px;border:1px solid;
+  border-radius:2px;white-space:nowrap;font-weight:700}
+.t-b{color:var(--blue);border-color:var(--blue-edge);background:var(--blue-bg)}
+.t-g{color:var(--green);border-color:var(--green-edge);background:var(--green-bg)}
+.t-r{color:var(--red);border-color:var(--red-edge);background:var(--red-bg)}
+.t-o{color:var(--brass);border-color:var(--brass-edge);background:var(--brass-bg)}
+.t-p{color:var(--plum);border-color:var(--plum-edge);background:var(--plum-bg)}
+
+.note{border:1px solid var(--rule);border-left:4px solid var(--blue);background:var(--card);
+  padding:15px 19px;margin:20px 0}
+.note p{margin:0;max-width:74ch}.note p+p{margin-top:10px}
+.note .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--blue);font-weight:700;display:block;margin-bottom:5px}
+.good{border:1px solid var(--green-edge);border-left:4px solid var(--green);
+  background:var(--green-bg);padding:15px 19px;margin:20px 0}
+.good p{margin:0;max-width:74ch;color:var(--ink)}.good p+p{margin-top:10px}
+.good .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--green);font-weight:700;display:block;margin-bottom:5px}
+.bad{border:1px solid var(--red-edge);border-left:4px solid var(--red);
+  background:var(--red-bg);padding:15px 19px;margin:20px 0}
+.bad p{margin:0;max-width:74ch;color:var(--ink)}.bad p+p{margin-top:10px}
+.bad .l{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--red);font-weight:700;display:block;margin-bottom:5px}
+
+figure{margin:26px 0;background:var(--card);border:1px solid var(--rule);padding:20px 18px 14px}
+figure svg{display:block;width:100%;max-width:100%;height:auto}
+.scroll-x{overflow-x:auto}
+figcaption{font-size:12.5px;color:var(--mute);line-height:1.55;margin-top:12px;
+  padding-top:11px;border-top:1px solid var(--rule)}
+footer{margin-top:74px;padding-top:20px;border-top:3px double var(--rule);
+  font-size:12.5px;color:var(--mute)}
+footer p{max-width:80ch}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+@media print{body{background:#fff}.comp{break-inside:avoid}figure{break-inside:avoid}}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <div class="dept">Engine Three · diagnostic · the route to a 90% guarantee</div>
+  <h1>One number is doing two jobs</h1>
+  <p class="dek">The engine tells the owner to expect the <em>average</em> outcome. An average is
+  beaten about half the time by construction — so the promise fails roughly half the time no matter
+  how good the forecast gets. Ninety percent is reachable, and the first step is arithmetic, not a
+  model.</p>
+  <div class="byline">
+    <span><b>Date</b> 5 October 2026</span>
+    <span><b>Scope</b> every component of the live engine, read in source</span>
+    <span><b>Baseline</b> 75.9% selection · promise kept at 1 of 5 stores · 4 of 5 net negative</span>
+  </div>
+</header>
+
+<div class="verdict">
+  <h2>What is actually wrong, in three sentences</h2>
+  <p><strong>One.</strong> The quantity on the card is the <em>mean</em> of the demand gap. For a
+  product selling 14 units a month, the probability that reality reaches its own mean is
+  <strong>53.5%</strong> — so a promise built on the mean is a coin flip <em>even with a perfect
+  forecast</em>. Promise 10 units instead of 14 and the same forecast keeps its word
+  <strong>89.1%</strong> of the time. That single change is most of the way to 90%, and it needs no
+  new data and no new model.</p>
+  <p><strong>Two.</strong> The engine uses that same mean to decide <em>how much to buy</em>, and
+  there it is too <em>small</em>. For a bottle carrying $10 of margin and about $1 a cycle of
+  carrying cost, the economically correct stocking point is the <strong>91st percentile</strong> —
+  19 units, not 14. Under-stocking costs margin; over-stocking liquor costs pennies, because it does
+  not spoil. <strong>The order quantity and the promise are two different numbers and the engine
+  prints one.</strong></p>
+  <p><strong>Three.</strong> The confidence figure on every card is not calibrated. It is
+  <code>p_hit</code>, an algebraic ratio, passed through a calibration stage whose fitted curve does
+  not exist because <code>recommendation_evaluations</code> has zero rows — so it falls through
+  unchanged. <strong>"74% likely" is currently an assertion, not a frequency.</strong> No accuracy
+  guarantee of any kind can be made until that number is earned.</p>
+  <p>Beyond those three, the <em>selection</em> ceiling of roughly 73% is an information limit, not a
+  modelling one: at the sizes this engine picks, a 27% dip is one standard deviation of pure chance,
+  so telling a noise dip from a real decline is not possible from counts alone. Breaking that ceiling
+  needs <strong>new inputs</strong> — on-hand, receipts, price events — and section 06 says which to
+  start capturing tonight.</p>
+</div>
+
+<!-- ════════════ 1 ════════════ -->
+<section id="s1">
+  <div class="sec-no">Section 01</div>
+  <h2>The one-number mistake</h2>
+
+  <p>This is the finding that matters most, so it goes first. Take a product selling about 14 units
+  in 30 days — the median pick the engine actually makes. Demand over a window is a count, so its
+  distribution is roughly Poisson, and that distribution is <em>not</em> symmetric around a useful
+  decision point.</p>
+
+  <figure>
+    <div class="scroll-x">
+    <svg viewBox="0 0 980 500" role="img" aria-label="The demand distribution for a product selling about 14 units in 30 days, drawn as a Poisson histogram from 0 to 28 units. Three decision points are marked. The mean at 14 units is what the card promises today, and reality reaches it only 53.5 percent of the time. The tenth percentile at 10 units, if promised instead, is reached 89.1 percent of the time. The 91st percentile at 19 units is the economically correct amount to order, because unsold liquor costs about a dollar a cycle while a lost sale costs ten dollars of margin. The engine currently uses the mean for both the promise and the order quantity.">
+      <defs>
+        <marker id="d1a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+      </defs>
+
+      <text x="6" y="18" font-size="12" fill="currentColor" opacity=".85">One product, 14 units a month. Every bar is the chance that next month's demand lands on exactly that many units.</text>
+
+      <!-- bars: k=0..28 at x = 90 + k*30, width 24, baseline y=340, max height 190 -->
+      <g fill="var(--blue)" opacity=".30">
+        <rect x="210" y="338" width="24" height="2"/><rect x="240" y="332" width="24" height="8"/>
+        <rect x="270" y="325" width="24" height="15"/><rect x="300" y="310" width="24" height="30"/>
+        <rect x="330" y="285" width="24" height="55"/>
+      </g>
+      <g fill="var(--green)" opacity=".42">
+        <rect x="360" y="255" width="24" height="85"/><rect x="390" y="220" width="24" height="120"/>
+      </g>
+      <g fill="var(--blue)" opacity=".52">
+        <rect x="420" y="188" width="24" height="152"/><rect x="450" y="163" width="24" height="177"/>
+        <rect x="480" y="150" width="24" height="190"/><rect x="510" y="150" width="24" height="190"/>
+        <rect x="540" y="163" width="24" height="177"/><rect x="570" y="184" width="24" height="156"/>
+        <rect x="600" y="213" width="24" height="127"/><rect x="630" y="241" width="24" height="99"/>
+      </g>
+      <g fill="var(--blue)" opacity=".30">
+        <rect x="660" y="266" width="24" height="74"/><rect x="690" y="289" width="24" height="51"/>
+        <rect x="720" y="306" width="24" height="34"/><rect x="750" y="319" width="24" height="21"/>
+        <rect x="780" y="327" width="24" height="13"/><rect x="810" y="333" width="24" height="7"/>
+        <rect x="840" y="336" width="24" height="4"/><rect x="870" y="338" width="24" height="2"/>
+      </g>
+
+      <line x1="86" y1="340" x2="930" y2="340" stroke="currentColor" stroke-width="1.3"/>
+      <g font-family="JetBrains Mono, monospace" font-size="9.5" fill="var(--mute)" text-anchor="middle">
+        <text x="102" y="356">0</text><text x="222" y="356">4</text><text x="342" y="356">8</text>
+        <text x="462" y="356">12</text><text x="582" y="356">16</text><text x="702" y="356">20</text>
+        <text x="822" y="356">24</text><text x="912" y="356">27</text>
+      </g>
+      <text x="508" y="374" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.2" fill="var(--mute)" text-anchor="middle">UNITS SOLD IN THE NEXT 30 DAYS</text>
+
+      <!-- markers -->
+      <line x1="402" y1="134" x2="402" y2="348" stroke="var(--green)" stroke-width="2.4"/>
+      <line x1="522" y1="134" x2="522" y2="348" stroke="var(--red)" stroke-width="2.4" stroke-dasharray="6 4"/>
+      <line x1="672" y1="134" x2="672" y2="348" stroke="var(--brass)" stroke-width="2.4"/>
+
+      <text x="402" y="126" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" text-anchor="middle" fill="var(--green)">PROMISE 10</text>
+      <text x="522" y="126" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" text-anchor="middle" fill="var(--red)">THE MEAN 14</text>
+      <text x="672" y="126" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" text-anchor="middle" fill="var(--brass)">ORDER TO 19</text>
+
+      <text x="402" y="110" font-size="11" font-weight="700" text-anchor="middle" fill="var(--green)">kept 89.1%</text>
+      <text x="522" y="110" font-size="11" font-weight="700" text-anchor="middle" fill="var(--red)">kept 53.5%</text>
+      <text x="672" y="110" font-size="11" font-weight="700" text-anchor="middle" fill="var(--brass)">q* = 91%</text>
+
+      <!-- explanation rows -->
+      <rect x="6" y="392" width="968" height="24" rx="3" fill="var(--red-bg)"/>
+      <text x="18" y="409" font-size="12.5" fill="var(--ink)"><tspan font-weight="700" fill="var(--red)">TODAY —</tspan> the card promises the mean AND orders to the mean. One number, two jobs, and it is the wrong value for both of them.</text>
+
+      <rect x="6" y="420" width="968" height="24" rx="3" fill="var(--green-bg)"/>
+      <text x="18" y="437" font-size="12.5" fill="var(--ink)"><tspan font-weight="700" fill="var(--green)">THE PROMISE —</tspan> say 10. Reality clears it 89.1% of the time, so the owner's trust survives. Under-promising is free; breaking a promise is not.</text>
+
+      <rect x="6" y="448" width="968" height="24" rx="3" fill="var(--brass-bg)"/>
+      <text x="18" y="465" font-size="12.5" fill="var(--ink)"><tspan font-weight="700" fill="var(--brass)">THE ORDER —</tspan> buy 19. A lost sale costs $10 of margin; a bottle sitting a month longer costs about $1. The asymmetry sets the quantile, not a policy guess.</text>
+
+      <text x="6" y="490" font-size="12.5" fill="currentColor"><tspan font-weight="700">Same forecast. Same data. Same code path.</tspan> Promise kept goes from 53.5% to 89.1% and the stock position improves at the same time, because the two numbers were never supposed to be equal.</text>
+    </svg>
+    </div>
+    <figcaption><strong>Why the promise fails at four stores out of five.</strong> Nothing here is a
+    forecasting failure — the distribution is what it is. The failure is reporting its centre as
+    though it were its floor. Quantiles computed for a Poisson mean of 14: p10 = 9, p25 = 11,
+    p50 = 14, p91 = 19.</figcaption>
+  </figure>
+
+  <div class="good">
+    <span class="l">Why this is the highest-leverage change in the whole engine</span>
+    <p>It explains <em>both</em> open problems at once. The promise is unkept because the mean is
+    promised; the stores are net negative because the mean is also ordered, and the mean is below the
+    economically correct stocking point for a high-margin, non-perishable good — so the engine
+    simultaneously over-promises and under-stocks, then gets charged for the stock it did buy.</p>
+    <p>And it is cheap. <code>app/pipeline/policy/inventory.py</code> already computes a
+    service-level quantity from the <code>p10</code>–<code>p90</code> interval and already refuses to
+    answer without one. The interval already exists and is already calibrated to 80–82% coverage. The
+    work is routing the live path through it and splitting one field into two.</p>
+  </div>
+
+  <h3>The arithmetic, so it can be checked</h3>
+
+<pre><code><span class="ln cmt">A product whose true rate is 14 units per 30 days. Demand is a COUNT, so the</span>
+<span class="ln cmt">spread is sqrt(14) = 3.74 units — about 27% of the mean. Nothing removes it.</span>
+<span class="ln"></span>
+<span class="ln no">  promise 14  (the mean — what the card says today)   kept 53.5% of the time</span>
+<span class="ln">  promise 12                                         kept 74.0%</span>
+<span class="ln">  promise 11  (p25)                                  kept 82.4%</span>
+<span class="ln ok">  promise 10                                         kept 89.1%   ← the target</span>
+<span class="ln ok">  promise  9  (p10)                                  kept 93.8%</span>
+<span class="ln"></span>
+<span class="ln cmt">And the ORDER quantity runs the other way, set by the cost asymmetry:</span>
+<span class="ln"></span>
+<span class="ln hi">     q* = Cu / (Cu + Co)        Cu = margin lost if it stocks out</span>
+<span class="ln hi">                                Co = cost of holding one extra unit a cycle</span>
+<span class="ln"></span>
+<span class="ln">  $10 margin, $0.50 carrying  ->  q* = 95.2%   order to the p95</span>
+<span class="ln hi">  $10 margin, $1.00 carrying  ->  q* = 90.9%   order to the p91 = 19 units</span>
+<span class="ln">  $10 margin, $4.00 carrying  ->  q* = 71.4%   order to the p71</span>
+<span class="ln"></span>
+<span class="ln cmt">Liquor does not spoil, so Co is small and q* is HIGH. The current service</span>
+<span class="ln cmt">levels (policy.service_level.*) are PROVISIONAL business guesses. They should</span>
+<span class="ln cmt">be DERIVED from this SKU's own margin and carrying cost, per SKU, per cycle.</span></code></pre>
+
+  <div class="bad">
+    <span class="l">And a measurement error that makes the profit picture look worse than it is</span>
+    <p>The ledger charges over-ordering at <code>over_units × full unit cost</code>
+    (<code>daily_recommendation_ledger.py:203</code>). That treats every unsold bottle as a total
+    write-off. <strong>Liquor does not spoil.</strong> An unsold bottle is inventory that sells next
+    month; its true cost is capital tied up plus shelf opportunity — cents on the dollar per cycle,
+    not the whole cost of goods.</p>
+    <p>So the headline "four of five stores are net negative" is partly an artifact of charging 100%
+    of COGS against a card whose stock is still on the shelf and still saleable. <strong>This must be
+    corrected before anyone concludes the engine loses money</strong>, and it must be corrected
+    <em>before</em> the sizing change, or the sizing change will be measured against a broken
+    ruler.</p>
+  </div>
+</section>
+
+<!-- ════════════ 2 ════════════ -->
+<section id="s2">
+  <div class="sec-no">Section 02</div>
+  <h2>Why 90% cannot come from the current metric</h2>
+
+  <p>The number being quoted as accuracy today is the <strong>hit rate</strong>: did a recommended
+  product beat its own trailing rate. It is at 75.9%. Pushing it to 90% is not an engineering target
+  — it is arithmetically out of reach, and the engine's own settings file already says so with
+  measurements.</p>
+
+  <figure>
+    <div class="scroll-x">
+    <svg viewBox="0 0 980 470" role="img" aria-label="Two panels. The left panel shows the measured precision-coverage trade-off: at a p_hit floor of 0.40 the engine fills a ten-card slate at about 73 percent; at 0.50 it issues 5.1 cards at 75.9 percent; at 0.55 it issues 2.4 cards at about 77 percent and loses more than half its margin. Extrapolated, a 90 percent floor issues almost no cards. The right panel shows why: at the sizes the engine picks, one standard deviation of pure chance is 27 percent of the mean, so a 27 percent dip caused by noise and a 27 percent dip caused by a real decline look identical in the data.">
+      <text x="6" y="18" font-size="12" fill="currentColor" opacity=".85">Left: the price of precision, as measured. Right: why the price is so steep.</text>
+
+      <!-- LEFT PANEL -->
+      <rect x="6" y="34" width="476" height="368" rx="4" fill="var(--sunk)"/>
+      <text x="22" y="56" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.3" font-weight="700" fill="var(--ink)">PRECISION IS BOUGHT WITH COVERAGE</text>
+
+      <!-- axes: x = cards per run 0..10 -> 70..450 ; y = hit rate 70..92 -> 330..80 -->
+      <line x1="70" y1="330" x2="456" y2="330" stroke="currentColor" stroke-width="1.2"/>
+      <line x1="70" y1="330" x2="70" y2="76" stroke="currentColor" stroke-width="1.2"/>
+      <g font-family="JetBrains Mono, monospace" font-size="9" fill="var(--mute)" text-anchor="end">
+        <text x="64" y="84">90%</text><text x="64" y="175">82%</text><text x="64" y="266">75%</text><text x="64" y="333">70%</text>
+      </g>
+      <g font-family="JetBrains Mono, monospace" font-size="9" fill="var(--mute)" text-anchor="middle">
+        <text x="108" y="346">1</text><text x="184" y="346">3</text><text x="260" y="346">5</text>
+        <text x="336" y="346">7</text><text x="450" y="346">10</text>
+      </g>
+      <text x="263" y="364" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.1" fill="var(--mute)" text-anchor="middle">CARDS ISSUED PER RUN</text>
+      <line x1="70" y1="80" x2="456" y2="80" stroke="var(--red)" stroke-width="1.4" stroke-dasharray="5 4"/>
+      <text x="452" y="74" font-size="10" font-weight="700" text-anchor="end" fill="var(--red)">the 90% target</text>
+
+      <!-- measured points: 0.40 -> 10 cards, 73%; 0.50 -> 5.1 cards, 75.9%; 0.55 -> 2.4 cards, 77% -->
+      <polyline points="450,292 261,254 253,241 143,228" fill="none" stroke="var(--green)" stroke-width="2.2"/>
+      <polyline points="143,228 100,205 82,150" fill="none" stroke="var(--green)" stroke-width="2" stroke-dasharray="5 4" opacity=".6"/>
+
+      <circle cx="450" cy="292" r="4.5" fill="var(--green)"/>
+      <text x="444" y="309" font-size="10" text-anchor="end" fill="var(--ink)">floor 0.40 · 10 cards · ~73%</text>
+      <circle cx="253" cy="241" r="5.5" fill="var(--green)" stroke="var(--card)" stroke-width="1.5"/>
+      <text x="262" y="236" font-size="10.5" font-weight="700" fill="var(--green)">floor 0.50 — SHIPPING</text>
+      <text x="262" y="250" font-size="10" fill="var(--ink)">5.1 cards · 75.9%</text>
+      <circle cx="143" cy="228" r="4.5" fill="var(--green)"/>
+      <text x="152" y="214" font-size="10" fill="var(--ink)">floor 0.55 · 2.4 cards · ~77%</text>
+      <text x="152" y="227" font-size="10" font-weight="700" fill="var(--red)">margin cut by more than half</text>
+
+      <text x="88" y="130" font-size="10.5" font-weight="700" fill="var(--red)">↑ to reach 90% here</text>
+      <text x="88" y="144" font-size="10.5" fill="var(--red)">the slate is empty</text>
+
+      <text x="22" y="384" font-size="11.5" fill="currentColor">Three points measured over 52 decision dates, 208 runs, 1,056 cards.</text>
+      <text x="22" y="398" font-size="11.5" fill="currentColor">Raising the floor is not an improvement. It is a decision to stop advising.</text>
+
+      <!-- RIGHT PANEL -->
+      <rect x="498" y="34" width="476" height="368" rx="4" fill="var(--sunk)"/>
+      <text x="514" y="56" font-family="JetBrains Mono, monospace" font-size="9.5" letter-spacing="1.3" font-weight="700" fill="var(--ink)">AND WHY — THE TWO DIPS ARE IDENTICAL</text>
+
+      <text x="514" y="80" font-size="11.5" fill="currentColor" opacity=".85">A product selling 14 a month. One standard deviation of pure</text>
+      <text x="514" y="96" font-size="11.5" fill="currentColor" opacity=".85">chance is √14 = 3.7 units — <tspan font-weight="700">27% of the mean.</tspan></text>
+
+      <!-- two sparklines -->
+      <rect x="514" y="112" width="444" height="96" rx="3" fill="var(--card)" stroke="var(--rule)"/>
+      <text x="526" y="130" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--green)">A · QUIET BY CHANCE — reverts</text>
+      <polyline points="526,178 572,160 618,186 664,150 710,192 756,158 802,188 848,154 894,182 940,164" fill="none" stroke="var(--green)" stroke-width="1.8"/>
+      <line x1="526" y1="170" x2="940" y2="170" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3" opacity=".5"/>
+      <text x="940" y="202" font-size="9.5" text-anchor="end" fill="currentColor" opacity=".7">last 4 weeks read 10.3 — one sigma low</text>
+
+      <rect x="514" y="216" width="444" height="96" rx="3" fill="var(--card)" stroke="var(--rule)"/>
+      <text x="526" y="234" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700" fill="var(--red)">B · QUIET BECAUSE IT IS DYING — does not</text>
+      <polyline points="526,252 572,256 618,262 664,268 710,274 756,282 802,288 848,294 894,300 940,304" fill="none" stroke="var(--red)" stroke-width="1.8"/>
+      <line x1="526" y1="274" x2="940" y2="274" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3" opacity=".5"/>
+      <text x="940" y="306" font-size="9.5" text-anchor="end" fill="currentColor" opacity=".7">last 4 weeks read 10.3 — a real decline</text>
+
+      <text x="514" y="334" font-size="12" font-weight="700" fill="var(--ink)">Both windows report the same 10.3 units. From counts alone, nothing</text>
+      <text x="514" y="350" font-size="12" font-weight="700" fill="var(--ink)">in 28 days of data separates them.</text>
+      <text x="514" y="372" font-size="11.5" fill="currentColor" opacity=".85">The measured ceiling says exactly this: top decile of the strongest</text>
+      <text x="514" y="388" font-size="11.5" fill="currentColor" opacity=".85">signal caps at 65–69%, best worst-horizon 73.1%, best single card 71.1%.</text>
+
+      <line x1="6" y1="422" x2="974" y2="422" stroke="currentColor" stroke-width="1" opacity=".22"/>
+      <text x="6" y="444" font-size="12.5" fill="currentColor"><tspan font-weight="700" fill="var(--red)">So the honest conclusion:</tspan> 90% selection accuracy is not available from sales counts. It requires information that says WHY the window is quiet —</text>
+      <text x="6" y="462" font-size="12.5" fill="currentColor">whether the shelf was empty, whether stock arrived late, whether the price moved. That is a data-capture programme, and it is section 06.</text>
+    </svg>
+    </div>
+    <figcaption><strong>Two reasons 90% cannot be dialled in.</strong> Left: the precision/coverage
+    curve, with all three points taken from the engine's own measured settings — buying precision
+    costs coverage and costs margin faster. Right: the information limit underneath it. A 27% dip is
+    one sigma of chance at the median pick size, so the engine is being asked to separate two
+    indistinguishable series.</figcaption>
+  </figure>
+
+  <h3>Four things "90% accurate" could mean, and which are reachable</h3>
+
+  <p>This is the decision to make, because the engineering follows from it. Only one of these is
+  being measured today, and it is the one that cannot get there.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Definition</th><th>What the owner is told</th><th class="num">Today</th><th>90% reachable?</th><th>What it takes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>D1 · Selection</strong><br><span style="color:var(--mute)">beats its own trailing rate</span></td>
+        <td>"this product will pick up"</td><td class="num">75.9%</td>
+        <td class="bad">No — ceiling ≈73%</td>
+        <td>Nothing available. Three independent measurements put the lid below 75%</td>
+      </tr>
+      <tr>
+        <td><strong>D2 · Interval coverage</strong><br><span style="color:var(--mute)">actual lands in the stated range</span></td>
+        <td>"expect 8 to 19 units"</td><td class="num">80–82%</td>
+        <td class="good">Yes — this quarter</td>
+        <td>Widen p10–p90 to p5–p95 and refit per demand class. It is a choice of quantile</td>
+      </tr>
+      <tr>
+        <td><strong>D3 · Promise kept</strong><br><span style="color:var(--mute)">realised ≥ promised units</span></td>
+        <td>"at least 10 more units"</td><td class="num">21–150%</td>
+        <td class="good">Yes — arithmetic</td>
+        <td>Promise the p10 of the gap instead of the mean. Section 01</td>
+      </tr>
+      <tr>
+        <td><strong>D4 · Decision profit</strong><br><span style="color:var(--mute)">the card made money</span></td>
+        <td>"this earns you $X"</td><td class="num">not measured</td>
+        <td class="warn">Yes, with abstention</td>
+        <td>Correct the carrying-cost model, order to q*, then withhold cards whose expected net is negative</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <span class="l">The recommendation</span>
+    <p><strong>Stop quoting D1 as the accuracy number.</strong> Keep measuring it — it is the right
+    way to test whether <em>selection</em> is improving, and the +16.6 point edge over a
+    reversion-matched null is a real result. But it is a research metric, not a promise to an owner,
+    and it has a lid.</p>
+    <p><strong>Make D2 and D3 the guarantees on the card</strong>, both at 90%, both verifiable by
+    the owner from their own till. Then make D4 the number the business is run on. A store owner has
+    never once asked whether a product beat its trailing rate.</p>
+  </div>
+</section>
+
+<!-- ════════════ 3 ════════════ -->
+<section id="s3">
+  <div class="sec-no">Section 03</div>
+  <h2>Every component, and its true state</h2>
+
+  <p>Read in source rather than from documentation. The important column is not what exists — most of
+  it exists — but <strong>what is actually on the path a store owner's recommendation travels</strong>.
+  Four components that would materially help are built and not connected, and two of the proving
+  stages are starved of the data they need to function.</p>
+
+  <figure>
+    <div class="scroll-x">
+    <svg viewBox="0 0 980 820" role="img" aria-label="The complete current architecture in five layers, with every component marked by its real state: live on the request path, built but not connected to that path, built but starved of data, or absent and needing to be written. Layer one Data has the feature store, data contracts, peer cohorts and calendar facts live, and is missing on-hand snapshots and receipt dates. Layer two Predict has patterns, temporal reversion, cohort shrinkage, the per-class forecast and elasticity live, and is missing censoring correction and an intermittent-demand method. Layer three Decide has candidates and the composer live, while the merchandise contract, card lifecycle, inventory policy and constraints are built but not on the request path, and the newsvendor fractile, portfolio budget and abstention are absent. Layer four Explain has retrieval, the writer-only model and the validator live, while confidence calibration is live but has no fitted curve. Layer five Prove has the lift definition live, the calibration fit, monitor and matched gate built but starved, the holdout switched off, and the backtest and forecast harnesses offline only.">
+      <defs>
+        <marker id="a3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
+      </defs>
+
+      <!-- legend -->
+      <rect x="6" y="6" width="968" height="34" rx="4" fill="var(--sunk)"/>
+      <g font-size="10.5">
+        <rect x="18" y="16" width="14" height="14" rx="2" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="38" y="27" fill="currentColor">live on the request path</text>
+        <rect x="196" y="16" width="14" height="14" rx="2" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="216" y="27" fill="currentColor">built — NOT on the request path</text>
+        <rect x="424" y="16" width="14" height="14" rx="2" fill="var(--brass-bg)" stroke="var(--brass)" stroke-width="2"/>
+        <text x="444" y="27" fill="currentColor">built — starved of data, cannot function</text>
+        <rect x="700" y="16" width="14" height="14" rx="2" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2" stroke-dasharray="3 3"/>
+        <text x="720" y="27" fill="currentColor">absent — has to be written</text>
+      </g>
+
+      <!-- LAYER 1 -->
+      <rect x="6" y="50" width="968" height="136" rx="5" fill="var(--sunk)" opacity=".55"/>
+      <text x="20" y="78" font-family="Source Serif 4, serif" font-size="22" font-weight="700" fill="currentColor" opacity=".6">1</text>
+      <text x="20" y="98" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">DATA</text>
+      <text x="20" y="118" font-size="9.5" fill="currentColor" opacity=".6">what is known</text>
+      <text x="20" y="131" font-size="9.5" fill="currentColor" opacity=".6">about this store</text>
+
+      <g>
+        <rect x="128" y="62" width="160" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="138" y="78" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--green)">features/build.py</text>
+        <text x="138" y="93" font-size="10.5" fill="var(--ink)">feature store · OPEN days</text>
+        <text x="138" y="108" font-size="10.5" fill="var(--ink)">closures absent, not zeroed</text>
+
+        <rect x="296" y="62" width="150" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="306" y="78" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--green)">contracts/gates.py</text>
+        <text x="306" y="93" font-size="10.5" fill="var(--ink)">per-field coverage gates</text>
+        <text x="306" y="108" font-size="10.5" fill="var(--ink)">abstains, never defaults</text>
+
+        <rect x="454" y="62" width="150" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="464" y="78" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--green)">priors/cohort.py</text>
+        <text x="464" y="93" font-size="10.5" fill="var(--ink)">peer priors, 5 levels</text>
+        <text x="464" y="108" font-size="10.5" fill="var(--ink)">always resolves</text>
+
+        <rect x="612" y="62" width="150" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="622" y="78" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--green)">features/calendar.py</text>
+        <text x="622" y="93" font-size="10.5" fill="var(--ink)">moving dates computed</text>
+        <text x="622" y="108" font-size="10.5" fill="var(--ink)">facts only — no multiplier</text>
+
+        <rect x="770" y="58" width="192" height="62" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="780" y="74" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--red)">ABSENT · THE REAL CEILING</text>
+        <text x="780" y="89" font-size="10.5" font-weight="700" fill="var(--red)">on-hand snapshots</text>
+        <text x="780" y="103" font-size="10.5" font-weight="700" fill="var(--red)">receipt / delivery dates</text>
+        <text x="780" y="116" font-size="9.5" fill="var(--red)">cannot be backfilled — start tonight</text>
+      </g>
+      <text x="128" y="138" font-size="10" fill="var(--red)" font-weight="700">Consequence: a zero sales day cannot be told from an empty shelf, so demand is right-censored and every rate is biased LOW.</text>
+      <text x="128" y="155" font-size="10" fill="currentColor" opacity=".75">That biases the deficit UP — the engine over-promises — and it corrupts the grade, because a restock then scores as skill. Findings F7 and F13.</text>
+      <text x="128" y="174" font-size="10" fill="currentColor" opacity=".75">purchase_orders has the right columns and zero rows at four of five stores, so lead time is a declared assumption carried on the card.</text>
+
+      <!-- LAYER 2 -->
+      <rect x="6" y="196" width="968" height="130" rx="5" fill="var(--sunk)" opacity=".55"/>
+      <text x="20" y="224" font-family="Source Serif 4, serif" font-size="22" font-weight="700" fill="currentColor" opacity=".6">2</text>
+      <text x="20" y="244" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">PREDICT</text>
+      <text x="20" y="264" font-size="9.5" fill="currentColor" opacity=".6">how much will</text>
+      <text x="20" y="277" font-size="9.5" fill="currentColor" opacity=".6">sell, as a range</text>
+
+      <g>
+        <rect x="128" y="208" width="124" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="136" y="224" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--green)">patterns · 9</text>
+        <text x="136" y="239" font-size="10" fill="var(--ink)">dow · trend · month</text>
+        <text x="136" y="253" font-size="10" fill="var(--ink)">affinity · gaps · price</text>
+
+        <rect x="260" y="204" width="134" height="62" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.6"/>
+        <text x="268" y="220" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--green)">blend/reversion.py</text>
+        <text x="268" y="235" font-size="10" font-weight="700" fill="var(--ink)">shrink across TIME</text>
+        <text x="268" y="249" font-size="10" fill="var(--ink)">deficit_units · p_hit</text>
+        <text x="268" y="262" font-size="9" fill="var(--green)">v1.1.0 · the 2026 gain</text>
+
+        <rect x="402" y="208" width="124" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="410" y="224" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--green)">blend/shrink.py</text>
+        <text x="410" y="239" font-size="10" fill="var(--ink)">shrink across STORES</text>
+        <text x="410" y="253" font-size="10" fill="var(--ink)">one shared k</text>
+
+        <rect x="534" y="208" width="130" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="542" y="224" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--green)">assemble.py</text>
+        <text x="542" y="239" font-size="10" fill="var(--ink)">forecast per demand</text>
+        <text x="542" y="253" font-size="10" fill="var(--ink)">class · p10/p50/p90</text>
+
+        <rect x="672" y="208" width="112" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="680" y="224" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--green)">elasticity/</text>
+        <text x="680" y="239" font-size="10" fill="var(--ink)">OLS, interval</text>
+        <text x="680" y="253" font-size="10" fill="var(--ink)">dropped if spans 0</text>
+
+        <rect x="792" y="204" width="170" height="62" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2" stroke-dasharray="4 3"/>
+        <text x="800" y="220" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--red)">ABSENT</text>
+        <text x="800" y="235" font-size="10.5" font-weight="700" fill="var(--red)">censoring correction</text>
+        <text x="800" y="249" font-size="10.5" font-weight="700" fill="var(--red)">Croston / SBA for</text>
+        <text x="800" y="262" font-size="10.5" font-weight="700" fill="var(--red)">intermittent SKUs</text>
+      </g>
+      <text x="128" y="286" font-size="10" fill="var(--red)" font-weight="700">shrink.py's own comment: "intermittent SKUs are the majority" — and the method applied to them is a shrunk MEAN. That is a mis-specification, F8.</text>
+      <text x="128" y="303" font-size="10" fill="currentColor" opacity=".75">It is why the prediction interval needed three attempts: a Gaussian-shaped band on lumpy count demand is the wrong shape before it is the wrong width.</text>
+      <text x="128" y="320" font-size="10" fill="currentColor" opacity=".75">The interval that finally worked is empirical — fitted from the estimator's own track record — which is a workaround for the missing count model.</text>
+
+      <!-- LAYER 3 -->
+      <rect x="6" y="336" width="968" height="162" rx="5" fill="var(--sunk)" opacity=".55"/>
+      <text x="20" y="364" font-family="Source Serif 4, serif" font-size="22" font-weight="700" fill="var(--red)">3</text>
+      <text x="20" y="384" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">DECIDE</text>
+      <text x="20" y="404" font-size="9.5" fill="currentColor" opacity=".6">what to do and</text>
+      <text x="20" y="417" font-size="9.5" fill="currentColor" opacity=".6">how much to buy</text>
+      <text x="20" y="440" font-size="9.5" font-weight="700" fill="var(--red)">the broken</text>
+      <text x="20" y="453" font-size="9.5" font-weight="700" fill="var(--red)">layer</text>
+
+      <g>
+        <rect x="128" y="348" width="138" height="58" rx="3" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="136" y="364" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--blue)">candidates/merchandise</text>
+        <text x="136" y="379" font-size="10" fill="var(--ink)">45 of 44,398 refused</text>
+        <text x="136" y="393" font-size="10" fill="var(--blue)" font-weight="700">route uses a narrower</text>
+        <text x="136" y="404" font-size="10" fill="var(--blue)" font-weight="700">screen of its own</text>
+
+        <rect x="274" y="348" width="124" height="58" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="282" y="364" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--green)">candidates/generate</text>
+        <text x="282" y="379" font-size="10" fill="var(--ink)">reorder · promote</text>
+        <text x="282" y="393" font-size="10" fill="var(--ink)">bundle · clear · sub</text>
+
+        <rect x="406" y="348" width="124" height="58" rx="3" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="414" y="364" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--blue)">candidates/lifecycle</text>
+        <text x="414" y="379" font-size="10" fill="var(--ink)">retire + suppress</text>
+        <text x="414" y="393" font-size="10" fill="var(--blue)" font-weight="700">162 → 69 cards</text>
+
+        <rect x="538" y="344" width="156" height="66" rx="3" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2.6" stroke-dasharray="4 2"/>
+        <text x="546" y="360" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--blue)">policy/inventory.py</text>
+        <text x="546" y="375" font-size="10" fill="var(--ink)">z(SL)·σ·√L · σ from the</text>
+        <text x="546" y="389" font-size="10" fill="var(--ink)">interval · refuses without</text>
+        <text x="546" y="403" font-size="10" fill="var(--blue)" font-weight="700">THE FIX LIVES HERE, UNUSED</text>
+
+        <rect x="702" y="348" width="118" height="58" rx="3" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="710" y="364" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--blue)">constraints/apply</text>
+        <text x="710" y="379" font-size="10" fill="var(--ink)">case packs · MOQ</text>
+        <text x="710" y="393" font-size="10" fill="var(--ink)">shelf caps</text>
+
+        <rect x="828" y="344" width="134" height="66" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2.6"/>
+        <text x="836" y="360" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--green)">rank/score.py</text>
+        <text x="836" y="375" font-size="10" font-weight="700" fill="var(--ink)">ranks on the DEFICIT</text>
+        <text x="836" y="389" font-size="10" fill="var(--ink)">× confidence × urgency</text>
+        <text x="836" y="403" font-size="9" fill="var(--green)">top-k, family-capped</text>
+      </g>
+
+      <rect x="128" y="418" width="440" height="66" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text x="138" y="434" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--red)">ABSENT — AND THIS IS WHERE THE MONEY LEAKS</text>
+      <text x="138" y="449" font-size="10.5" font-weight="700" fill="var(--red)">newsvendor fractile q* = Cu/(Cu+Co) · promise/order split</text>
+      <text x="138" y="463" font-size="10.5" font-weight="700" fill="var(--red)">portfolio cash + shelf budget · abstention as a valid slate</text>
+      <text x="138" y="477" font-size="10.5" font-weight="700" fill="var(--red)">cannibalisation check — did the units come out of a neighbour?</text>
+
+      <text x="582" y="434" font-size="10" fill="currentColor" opacity=".8">The live route sizes with</text>
+      <text x="582" y="448" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="var(--red)">qty = max(1, round(deficit_units))</text>
+      <text x="582" y="464" font-size="10" fill="currentColor" opacity=".8">— a mean, with no σ, no lead time, no review</text>
+      <text x="582" y="478" font-size="10" fill="currentColor" opacity=".8">period and no on-hand. F4.</text>
+
+      <!-- LAYER 4 -->
+      <rect x="6" y="508" width="968" height="108" rx="5" fill="var(--sunk)" opacity=".55"/>
+      <text x="20" y="536" font-family="Source Serif 4, serif" font-size="22" font-weight="700" fill="var(--brass)">4</text>
+      <text x="20" y="556" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">EXPLAIN</text>
+      <text x="20" y="576" font-size="9.5" fill="currentColor" opacity=".6">put it in words</text>
+
+      <g>
+        <rect x="128" y="520" width="150" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="136" y="536" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--green)">retrieval</text>
+        <text x="136" y="551" font-size="10.5" fill="var(--ink)">past outcomes here</text>
+        <text x="136" y="565" font-size="10.5" fill="var(--ink)">never touches the maths</text>
+
+        <rect x="286" y="520" width="150" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="294" y="536" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--green)">llm · writer only</text>
+        <text x="294" y="551" font-size="10.5" fill="var(--ink)">temperature 0, pinned</text>
+        <text x="294" y="565" font-size="10.5" fill="var(--ink)">never selects or ranks</text>
+
+        <rect x="444" y="520" width="150" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="452" y="536" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--green)">validator.py</text>
+        <text x="452" y="551" font-size="10.5" fill="var(--ink)">numeric fidelity</text>
+        <text x="452" y="565" font-size="10.5" fill="var(--ink)">provenance required</text>
+
+        <rect x="602" y="516" width="360" height="62" rx="3" fill="var(--brass-bg)" stroke="var(--brass)" stroke-width="2.6"/>
+        <text x="612" y="532" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" fill="var(--brass)">calibrate/apply.py — RUNS, BUT HAS NOTHING TO APPLY</text>
+        <text x="612" y="547" font-size="10.5" fill="var(--ink)">confidence = p_hit, an algebraic ratio. The isotonic curve is fitted from</text>
+        <text x="612" y="561" font-size="10.5" fill="var(--ink)">outcomes; there are none, so it returns no_fit_for_cell and passes through.</text>
+        <text x="612" y="574" font-size="10" font-weight="700" fill="var(--brass)">Every stated confidence in production is uncalibrated. F3.</text>
+      </g>
+
+      <!-- LAYER 5 -->
+      <rect x="6" y="626" width="968" height="124" rx="5" fill="var(--sunk)" opacity=".55"/>
+      <text x="20" y="654" font-family="Source Serif 4, serif" font-size="22" font-weight="700" fill="var(--brass)">5</text>
+      <text x="20" y="674" font-size="11.5" font-weight="700" letter-spacing="1.2" fill="currentColor">PROVE</text>
+      <text x="20" y="694" font-size="9.5" fill="currentColor" opacity=".6">earn the screen</text>
+
+      <g>
+        <rect x="128" y="638" width="124" height="54" rx="3" fill="var(--green-bg)" stroke="var(--green)" stroke-width="2"/>
+        <text x="136" y="654" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--green)">outcomes/lift.py</text>
+        <text x="136" y="669" font-size="10" fill="var(--ink)">one lift definition</text>
+        <text x="136" y="683" font-size="10" fill="var(--ink)">pinned to lift.js</text>
+
+        <rect x="260" y="638" width="124" height="54" rx="3" fill="var(--brass-bg)" stroke="var(--brass)" stroke-width="2"/>
+        <text x="268" y="654" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--brass)">calibrate/fit.py</text>
+        <text x="268" y="669" font-size="10" fill="var(--ink)">isotonic, per cell</text>
+        <text x="268" y="683" font-size="10" font-weight="700" fill="var(--brass)">no outcomes to fit</text>
+
+        <rect x="392" y="638" width="124" height="54" rx="3" fill="var(--brass-bg)" stroke="var(--brass)" stroke-width="2"/>
+        <text x="400" y="654" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--brass)">calibrate/monitor</text>
+        <text x="400" y="669" font-size="10" fill="var(--ink)">Brier · ECE · bins</text>
+        <text x="400" y="683" font-size="10" font-weight="700" fill="var(--brass)">nothing to monitor</text>
+
+        <rect x="524" y="638" width="124" height="54" rx="3" fill="var(--brass-bg)" stroke="var(--brass)" stroke-width="2"/>
+        <text x="532" y="654" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--brass)">gate/matched · state</text>
+        <text x="532" y="669" font-size="10" fill="var(--ink)">shown vs withheld</text>
+        <text x="532" y="683" font-size="10" font-weight="700" fill="var(--brass)">no withheld arm</text>
+
+        <rect x="656" y="634" width="150" height="62" rx="3" fill="var(--red-bg)" stroke="var(--red)" stroke-width="2.6" stroke-dasharray="4 3"/>
+        <text x="664" y="650" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--red)">THE HOLDOUT</text>
+        <text x="664" y="665" font-size="10.5" font-weight="700" fill="var(--red)">REC_HOLDOUT_PCT = 0</text>
+        <text x="664" y="679" font-size="10" fill="var(--red)">recommendation_evaluations</text>
+        <text x="664" y="691" font-size="10" font-weight="700" fill="var(--red)">has zero rows</text>
+
+        <rect x="814" y="638" width="148" height="54" rx="3" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="2" stroke-dasharray="4 2"/>
+        <text x="822" y="654" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700" fill="var(--blue)">scripts/ harnesses</text>
+        <text x="822" y="669" font-size="10" fill="var(--ink)">backtest · WAPE · ledger</text>
+        <text x="822" y="683" font-size="10" fill="var(--blue)">offline only, by design</text>
+      </g>
+
+      <text x="128" y="712" font-size="10.5" fill="var(--red)" font-weight="700">One switch — REC_HOLDOUT_PCT — unblocks four starved components at once: the calibration fit, the monitor, the matched gate and any causal claim.</text>
+      <text x="128" y="729" font-size="10" fill="currentColor" opacity=".8">It is the cheapest high-value change on this page. Until it is on, the engine cannot learn from its own outcomes and no confidence figure can be earned.</text>
+      <text x="128" y="744" font-size="10" fill="currentColor" opacity=".8">Nobody has acted on any card measured so far, so every result to date is forecasting evidence, not causal evidence. F12.</text>
+
+      <g stroke="currentColor" opacity=".4" fill="none" stroke-width="1.2">
+        <line x1="490" y1="186" x2="490" y2="194" marker-end="url(#a3)"/>
+        <line x1="490" y1="326" x2="490" y2="334" marker-end="url(#a3)"/>
+        <line x1="490" y1="498" x2="490" y2="506" marker-end="url(#a3)"/>
+        <line x1="490" y1="616" x2="490" y2="624" marker-end="url(#a3)"/>
+      </g>
+
+      <line x1="6" y1="766" x2="974" y2="766" stroke="currentColor" stroke-width="1" opacity=".22"/>
+      <text x="6" y="788" font-size="12.5" fill="currentColor"><tspan font-weight="700">The shape of the problem:</tspan> layers 1, 2 and 4 are in good order. Layer 3 decides the quantity with the wrong statistic and ignores four built modules;</text>
+      <text x="6" y="806" font-size="12.5" fill="currentColor">layer 5 cannot do its job because one flag is off. Almost nothing here needs inventing — it needs connecting, and one switch turning on.</text>
+    </svg>
+    </div>
+    <figcaption><strong>The current engine, component by component, by real state.</strong> Green is
+    on the path a store owner's recommendation actually travels. Blue dashed is built, tested and
+    bypassed. Brass is built and starved. Red dashed has to be written. The concentration of problems
+    in layer 3 — and the single flag blocking layer 5 — is the whole diagnosis.</figcaption>
+  </figure>
+</section>
+
+<!-- ════════════ 4 ════════════ -->
+<section id="s4">
+  <div class="sec-no">Section 04</div>
+  <h2>The findings, one by one</h2>
+
+  <p>Sixteen, each verified by reading the source rather than the documentation, each with the line
+  that proves it and the fix that closes it. The first five carry essentially all of the accuracy and
+  profit loss.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>#</th><th>Finding</th><th>Costs</th><th class="num">Severity</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">F1</td><td>The promise is the <strong>mean</strong> of the gap — structurally a coin flip</td><td>Promise kept; owner trust</td><td class="num bad">critical</td></tr>
+      <tr><td class="mono">F2</td><td>The order quantity is also the mean — <strong>below</strong> the economic stocking point</td><td>Lost margin on stockouts</td><td class="num bad">critical</td></tr>
+      <tr><td class="mono">F3</td><td>Stated confidence is <strong>uncalibrated</strong>; the isotonic curve has no data to fit</td><td>Every accuracy claim</td><td class="num bad">critical</td></tr>
+      <tr><td class="mono">F4</td><td>The live route bypasses <code>policy/inventory.py</code> and sizes from the raw deficit</td><td>Lead time, σ, on-hand all ignored</td><td class="num bad">critical</td></tr>
+      <tr><td class="mono">F5</td><td>No newsvendor / asymmetric loss anywhere; service levels are PROVISIONAL guesses</td><td>Systematically wrong quantiles</td><td class="num bad">critical</td></tr>
+      <tr><td class="mono">F6</td><td>Over-ordering charged at full COGS, so "net negative" is <strong>overstated</strong></td><td>Misdirects the whole roadmap</td><td class="num bad">critical</td></tr>
+      <tr><td class="mono">F7</td><td>Demand is right-censored by stockouts and nothing corrects for it</td><td>Rates biased low → over-promising</td><td class="num warn">high</td></tr>
+      <tr><td class="mono">F8</td><td>Intermittent SKUs are the majority and get a shrunk <strong>mean</strong></td><td>Interval shape; long-horizon bias</td><td class="num warn">high</td></tr>
+      <tr><td class="mono">F9</td><td>No cannibalisation check — a hit may be a transfer from a neighbour</td><td>Incremental margin overstated</td><td class="num warn">high</td></tr>
+      <tr><td class="mono">F10</td><td>No cash or shelf budget across the slate; top-k with a family cap</td><td>Advice the owner cannot fund</td><td class="num warn">high</td></tr>
+      <tr><td class="mono">F11</td><td>Lifecycle and the merchandise contract are not on the live route</td><td>Repeat cards; measured gain unrealised</td><td class="num warn">high</td></tr>
+      <tr><td class="mono">F12</td><td>Holdout off → no causal claim, and calibration can never fit</td><td>Blocks F3 and the gate</td><td class="num bad">critical</td></tr>
+      <tr><td class="mono">F13</td><td>Lead time declared, not measured — <code>purchase_orders</code> empty at 4 of 5</td><td>Every reorder date</td><td class="num warn">high</td></tr>
+      <tr><td class="mono">F14</td><td>One calibration scalar per store, fitted on recent windows → stale</td><td>Promise holds at 1 of 5</td><td class="num warn">high</td></tr>
+      <tr><td class="mono">F15</td><td>106 of 120 settings PROVISIONAL, including the ones that move money</td><td>Unearned precision</td><td class="num warn">medium</td></tr>
+      <tr><td class="mono">F16</td><td>Ranked on a 30-day deficit, graded at 30/60/90/120</td><td>Bias +6.7% and +8.8% at 90/120d</td><td class="num warn">medium</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>The six that matter, in full</h3>
+
+  <div class="comp sev-hi">
+    <div class="comp-h"><span class="id">F1 · F2</span><h3>One field is being asked to be both a floor and a ceiling</h3><span class="cl">critical · arithmetic</span></div>
+    <div class="comp-b">
+      <p><code>deficit_units</code> is the expected gap between the long-run rate and the recent rate
+      over the horizon. It is an <em>expectation</em>. It is then used, unchanged, as the number the
+      card promises <strong>and</strong> the number the owner is told to order.</p>
+      <div class="ev"><span class="l">Evidence</span>
+        <p><code>app/recommender/deterministic.py</code>:
+        <code>qty = max(1, int(round(p.deficit_units)))</code> — and the same figure is formatted into
+        the card's expectation sentence.</p>
+      </div>
+      <p>A promise must be a quantity reality clears reliably: a <strong>low</strong> quantile. An
+      order must cover the upside, because a stockout costs margin while an extra bottle of spirits
+      costs a little capital: a <strong>high</strong> quantile. The mean is the one value that is
+      wrong for both purposes simultaneously.</p>
+      <div class="fix"><span class="l">The fix — implementable this sprint</span>
+        <p>Split the field. <code>promise_units = quantile(gap, 0.10)</code> for the card's sentence
+        and the promise-kept measurement; <code>order_units = quantile(demand, q*)</code> routed
+        through the existing <code>policy/inventory.py</code>. Both quantiles come from the interval
+        the forecast already returns.</p>
+        <p>Keep <code>deficit_units</code> as the <em>ranking</em> quantity — that is what the +16.6
+        point edge was measured on, and changing it would invalidate that result.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp sev-hi">
+    <div class="comp-h"><span class="id">F3 · F12</span><h3>The confidence on the card has never been checked against reality</h3><span class="cl">critical · blocks every claim</span></div>
+    <div class="comp-b">
+      <p>The chain is built correctly and ends in nothing. <code>deterministic.py</code> sets
+      <code>confidence = p_hit</code>, where <code>p_hit = s/(1+s)</code> and
+      <code>s = uplift × steadiness</code> — a closed-form ratio. <code>validator.py</code> then calls
+      <code>_apply_calibration</code>, which looks up an isotonic fit for the
+      (family × demand_class) cell. That fit is produced by <code>calibrate/fit.py</code> from
+      recorded outcomes. There are no recorded outcomes.</p>
+      <div class="ev"><span class="l">Evidence</span>
+        <p><code>calibrate/apply.py</code> returns <code>no_fit_for_cell:{family}/{demand_class}</code>
+        and passes the raw value through "WITH ITS REASON" — the module is explicit that an
+        unexplained passthrough would become permanent. It is working as designed; it has nothing to
+        work with.</p>
+      </div>
+      <p>So when a card says <strong>74% likely</strong>, no one has ever verified that cards in that
+      bucket succeed 74% of the time. The figure also multiplies into the ranking score, so an
+      uncalibrated probability is reordering the slate.</p>
+      <div class="fix"><span class="l">The fix — one flag, then three weeks</span>
+        <p>Set <code>REC_HOLDOUT_PCT = 20</code>. Outcomes begin accumulating immediately; after
+        roughly 50 per cell the isotonic fit becomes real and <code>calibrate/monitor.py</code> starts
+        reporting Brier and ECE, both of which already exist.</p>
+        <p>Then make it a build gate: <strong>a card may not state a confidence whose reliability bin
+        deviates by more than 10 points.</strong> Below that, state a band or state nothing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp sev-hi">
+    <div class="comp-h"><span class="id">F5</span><h3>The service level is a business guess where it should be a derived number</h3><span class="cl">critical · the profit lever</span></div>
+    <div class="comp-b">
+      <p><code>policy/inventory.py</code> is the strongest module in the engine: σ comes from the
+      p10–p90 interval, the divisor is computed from the quantile settings rather than hard-coded, and
+      a forecast without a usable interval is <strong>refused</strong>. Its one weakness is the
+      service level, which is a <code>Setting</code> per category family, PROVISIONAL, awaiting
+      commercial sign-off.</p>
+      <p>It does not need sign-off. The service level <em>is</em> the critical fractile, and it is
+      computable per SKU from figures already in the warehouse:</p>
+<pre><code><span class="ln hi">q* = Cu / (Cu + Co)</span>
+<span class="ln"></span>
+<span class="ln">Cu  = unit margin            (price − cost)           already known where cost exists</span>
+<span class="ln">Co  = carrying cost / cycle  = unit cost × WACC × days/365</span>
+<span class="ln">                             + shelf opportunity</span>
+<span class="ln">                             + obsolescence hazard   (≈ 0 for spirits, real for seasonal)</span>
+<span class="ln"></span>
+<span class="ln ok">Spirits: $10 margin, ~$1 carrying   → q* ≈ 91%   — stock generously</span>
+<span class="ln no">Seasonal/limited: $10 margin, $4    → q* ≈ 71%   — stock tightly</span></code></pre>
+      <div class="fix"><span class="l">The fix</span>
+        <p>Replace <code>SERVICE_LEVEL_BY_FAMILY</code> with a computed <code>q*</code>, keeping the
+        existing Settings as the <em>fallback</em> when cost is absent — which is five of ten stores,
+        so the fallback matters. Mark the computed path MEASURED and the fallback PROVISIONAL, so a
+        card says which it used.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp sev-hi">
+    <div class="comp-h"><span class="id">F6</span><h3>The profitability verdict is measured against a broken ruler</h3><span class="cl">critical · fix before anything else</span></div>
+    <div class="comp-b">
+      <p>"Four of five stores are net negative in April" is the headline that drove this whole
+      investigation. The cost side of it is <code>over_ordered_cost = over_units × unit_cost</code>
+      — the <strong>entire</strong> cost of goods, charged as though the stock were destroyed.</p>
+      <p>A case of bourbon that did not sell in April is not a loss. It is on the shelf in May. The
+      real cost is capital at perhaps 10% a year plus shelf opportunity — on a $20 bottle held one
+      extra month, cents, not $20. The current model overstates the downside by one to two orders of
+      magnitude on exactly the products the engine recommends most.</p>
+      <div class="fix"><span class="l">The fix — do this first, it is a day's work</span>
+        <p><code>over_ordered_cost = over_units × unit_cost × (WACC/365 × days_held) +
+        obsolescence_hazard × unit_cost</code>, with the hazard near zero for spirits and real for
+        dated or seasonal stock. Then re-run the five-store ledger.</p>
+        <p><strong>Expect the sign to change at two or three stores.</strong> That is not good news
+        to be celebrated — it is a measurement correction, and it must land before the sizing change
+        so the sizing change is judged fairly.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp sev-md">
+    <div class="comp-h"><span class="id">F7</span><h3>Zero sales and an empty shelf are the same row</h3><span class="cl">high · the information ceiling</span></div>
+    <div class="comp-b">
+      <p>No module in the engine distinguishes "nobody wanted it" from "there was none to sell". The
+      feature store correctly omits closed <em>store</em> days, but a SKU that was out of stock while
+      the store traded contributes observed zeros to its own rate.</p>
+      <p>The damage runs in both directions, which is why it is worth fixing properly:</p>
+      <ul>
+        <li><strong>The rate is biased low</strong>, so <code>r_long</code> understates true demand,
+        so the deficit is <em>overstated</em> — the engine promises more than the product can deliver.
+        This is a direct contributor to the unkept promise.</li>
+        <li><strong>The grade is corrupted.</strong> A SKU that was out of stock and gets restocked
+        shows a large "lift" that the engine takes credit for predicting.</li>
+      </ul>
+      <div class="fix"><span class="l">The fix — in two halves</span>
+        <p><strong>Now, from existing data:</strong> infer a probable stockout as a day where a SKU
+        with an established rhythm sold zero <em>while its category traded normally</em>, and treat
+        those days as <em>censored</em> — excluded from the denominator rather than counted as zero
+        demand. This is estimable today and testable against the few stores that do carry on-hand.</p>
+        <p><strong>From tonight, properly:</strong> snapshot on-hand nightly per SKU. It cannot be
+        backfilled, so every night without it is permanently lost evidence.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="comp sev-md">
+    <div class="comp-h"><span class="id">F8</span><h3>The majority of SKUs get a method built for the minority</h3><span class="cl">high · mis-specification</span></div>
+    <div class="comp-b">
+      <p><code>blend/shrink.py</code> states it plainly: <em>"intermittent SKUs are the majority, so
+      this k is high"</em>. The engine knows the demand is intermittent and still models it as a rate
+      with a shrunk mean. For a SKU selling in bursts of six every three weeks, a mean rate of 0.28 a
+      day is arithmetically true and operationally meaningless.</p>
+      <p>There is a <code>demand_class</code> concept threaded through the calibration cells and the
+      forecast is documented as using "the method the demand CLASS selects" — but there is no
+      <code>app/pipeline/forecast/</code> module, and no Croston, SBA or bootstrap implementation
+      anywhere. The class currently selects between variations of one method.</p>
+      <div class="fix"><span class="l">The fix</span>
+        <p>Classify properly (Syntetos–Boylan on average inter-demand interval and the squared
+        coefficient of variation), then pick the method by class: the shrunk mean for smooth,
+        <strong>Croston/SBA</strong> for intermittent, and an <strong>empirical bootstrap over
+        historical windows</strong> for lumpy — which also produces an honest interval instead of a
+        fitted band, and so partly subsumes the three-attempt interval workaround.</p>
+        <p>Pure standard library throughout, which a bootstrap is and a gradient-boosted model is
+        not.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ 5 ════════════ -->
+<section id="s5">
+  <div class="sec-no">Section 05</div>
+  <h2>The plan, with a gate on every phase</h2>
+
+  <p>Ordered so that each phase is measurable before the next begins, and so that the measurement
+  fixes come before the things they measure. Durations assume one engineer on the pipeline.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th class="num">Phase</th><th>Work</th><th>Closes</th><th>Gate — the phase is not done until this is true</th><th class="num">Time</th></tr></thead>
+    <tbody>
+      <tr>
+        <td class="num"><strong>P0</strong></td>
+        <td><strong>Make the ruler honest.</strong> Carrying-cost model replaces the COGS write-off; per-card net margin becomes the primary scored outcome; <code>REC_HOLDOUT_PCT = 20</code></td>
+        <td class="mono">F6 F12</td>
+        <td>A net-margin-per-card figure exists per store with a clustered interval, and outcomes are accumulating in <code>recommendation_evaluations</code></td>
+        <td class="num">1–2 wk</td>
+      </tr>
+      <tr>
+        <td class="num"><strong>P1</strong></td>
+        <td><strong>Split the promise from the order.</strong> <code>promise_units</code> = p10 of the gap; <code>order_units</code> routed through <code>policy/inventory.py</code>; service level becomes the computed <code>q*</code></td>
+        <td class="mono">F1 F2 F4 F5</td>
+        <td><strong>Promise kept lands in 85–95% at every pilot store</strong>, and net margin per card is positive at ≥4 of 5</td>
+        <td class="num">3–4 wk</td>
+      </tr>
+      <tr>
+        <td class="num"><strong>P2</strong></td>
+        <td><strong>Earn the confidence figure.</strong> Isotonic fit per family × demand class × velocity band, from holdout outcomes; reliability diagram and ECE as a build gate</td>
+        <td class="mono">F3 F14</td>
+        <td>ECE &lt; 5 points, and no card states a confidence whose bin deviates by more than 10</td>
+        <td class="num">3 wk</td>
+      </tr>
+      <tr>
+        <td class="num"><strong>P3</strong></td>
+        <td><strong>Connect what is already built.</strong> Lifecycle memory and the merchandise contract onto the live route; constraints and case-pack rounding with them</td>
+        <td class="mono">F11</td>
+        <td>No SKU is recommended on consecutive days while failing; the 162→69 card reduction reproduces in production</td>
+        <td class="num">2 wk</td>
+      </tr>
+      <tr>
+        <td class="num"><strong>P4</strong></td>
+        <td><strong>Fix the inputs.</strong> Stockout inference and censored denominators; Syntetos–Boylan classification; Croston/SBA and a bootstrap interval per class</td>
+        <td class="mono">F7 F8</td>
+        <td>Bias inside ±5% at <em>all four</em> horizons, not just 30 and 60; interval coverage ≥90% at p5–p95</td>
+        <td class="num">5–6 wk</td>
+      </tr>
+      <tr>
+        <td class="num"><strong>P5</strong></td>
+        <td><strong>Decide as a portfolio.</strong> Cash and shelf budget across the slate; abstention as a valid outcome; category conservation check for cannibalisation</td>
+        <td class="mono">F9 F10</td>
+        <td><strong>≥90% of issued cards are net-margin-positive</strong> at a stated coverage, with coverage printed beside it</td>
+        <td class="num">3 wk</td>
+      </tr>
+      <tr>
+        <td class="num"><strong>P6</strong></td>
+        <td><strong>Earn the settings.</strong> Fit the PROVISIONAL k values and horizons from holdout; rank per horizon rather than one 30-day deficit</td>
+        <td class="mono">F15 F16</td>
+        <td>Fewer than 40 of 120 settings still PROVISIONAL, and every money-moving one is MEASURED</td>
+        <td class="num">ongoing</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <div class="good">
+    <span class="l">Where 90% actually arrives, phase by phase</span>
+    <p><strong>After P1 — the 90% promise.</strong> "At least N more units" kept 85–95% of the time,
+    verifiable by the owner against their own till. This is the guarantee to put on the card, and it
+    is reachable with no new data.</p>
+    <p><strong>After P2 — the 90% confidence.</strong> A card that says 90% belongs to a bucket that
+    succeeds 90% of the time, with a reliability diagram to show it.</p>
+    <p><strong>After P4 — the 90% range.</strong> Interval coverage at p5–p95 ≥ 90% across all four
+    horizons, for the right reason rather than by widening the band until it cannot be wrong.</p>
+    <p><strong>After P5 — the 90% that pays.</strong> Of the cards the engine chooses to issue, 90%
+    make money. Coverage falls and is reported honestly; "nothing worth doing today" becomes a
+    legitimate answer instead of a slate filled to a quota.</p>
+  </div>
+
+  <h3>The one thing not to do</h3>
+  <div class="bad">
+    <span class="l">Do not raise the p_hit floor to manufacture the number</span>
+    <p>It is the obvious move and the engine's own settings already price it: 0.50 gives 75.9% at 5.1
+    cards a run; 0.55 buys about one point, cuts coverage to 2.4 cards and <strong>halves the
+    margin</strong>. A floor high enough to show 90% would issue almost nothing.</p>
+    <p>A dashboard reading 90% beside an empty slate is a worse product than one reading 76% with
+    five useful cards, and the owner will notice within a week. Abstention in P5 is a different thing
+    entirely: it withholds cards whose <em>expected profit</em> is negative, and it publishes the
+    coverage it chose.</p>
+  </div>
+</section>
+
+<!-- ════════════ 6 ════════════ -->
+<section id="s6">
+  <div class="sec-no">Section 06</div>
+  <h2>What no model can fix</h2>
+
+  <p>The selection ceiling at roughly 73% is an information limit. Three fields would move it, none
+  of them can be backfilled, and every night they are not captured is evidence permanently lost. This
+  is the part of the programme that is not engineering.</p>
+
+  <div class="tw"><table>
+    <thead><tr><th>Capture</th><th>Why it breaks the ceiling</th><th>Cost of waiting</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Nightly on-hand per SKU</strong></td>
+        <td>Separates "nobody wanted it" from "the shelf was empty" — the single confusion that caps selection accuracy. Also makes a reorder point computable rather than assumed</td>
+        <td class="bad">Unrecoverable. Every night without it is a night that can never be used for training or grading</td>
+      </tr>
+      <tr>
+        <td><strong>Received / delivered dates</strong></td>
+        <td>Lead time becomes measured instead of declared, per vendor. Every reorder date on every card currently rests on an assumption</td>
+        <td class="bad"><code>purchase_orders</code> has the columns and zero rows at four of five stores. One conversation per store</td>
+      </tr>
+      <tr>
+        <td><strong>Price-change events</strong></td>
+        <td>A dip caused by a competitor's promotion is not a dip to recover from. Realised unit price is already stored; the <em>event</em> is not</td>
+        <td class="warn">Partly reconstructable from realised prices, which is a weaker signal than the event itself</td>
+      </tr>
+      <tr>
+        <td><strong>The holdout arm</strong></td>
+        <td>Turns forecasting evidence into causal evidence, and is the only thing that can ever answer "does acting on this advice cause the sale?"</td>
+        <td class="bad">It is a flag. Zero engineering cost, and it has been off for the entire programme</td>
+      </tr>
+    </tbody>
+  </table></div>
+
+  <div class="note">
+    <span class="l">And a sentence to keep saying out loud</span>
+    <p>Nobody has acted on a single recommendation in any measurement produced so far. Every figure
+    in every report, including the +16.6 point edge, says the engine <em>points at products that go
+    on to move</em>. None of it says that acting on the advice causes the movement. Those are
+    different claims and only the holdout separates them — which is why P0 turns it on before
+    anything else is built on top.</p>
+  </div>
+
+  <h3>The honest summary for the CEO</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Question</th><th>Answer</th></tr></thead>
+    <tbody>
+      <tr><td>Can the engine be 90% accurate?</td><td><strong>Yes</strong> — on the promise it makes, the confidence it states, and the range it gives. Roughly two to three months, mostly from arithmetic and connecting existing modules</td></tr>
+      <tr><td>Can the hit rate reach 90%?</td><td><strong>No.</strong> Three independent measurements cap it near 73%, and the reason is Poisson noise at the order sizes a liquor store trades in. Chasing it would mean issuing almost no cards</td></tr>
+      <tr><td>Can the recommendations be profitable?</td><td><strong>Yes</strong>, and the current verdict is partly a measurement artifact. The over-order cost charges full COGS on stock that is still saleable. Fix the ruler, then order to the economic quantile</td></tr>
+      <tr><td>What is the single highest-value change?</td><td>Splitting the promise from the order quantity. It takes promise-kept from ~54% to ~89% on arithmetic alone, with no new data, no new model and no re-measurement of the ranking result</td></tr>
+      <tr><td>What is the cheapest change?</td><td><code>REC_HOLDOUT_PCT = 20</code>. One flag, and it unblocks four components that are built and idle</td></tr>
+      <tr><td>What cannot be bought with engineering?</td><td>On-hand and receipt dates. Until they are captured, the engine cannot tell a stockout from a slow seller, and the selection ceiling stands</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>
+  <p><strong>How this was produced.</strong> Every finding was verified by reading the source on
+  branch <code>Enh_Engine_v1</code>, not from documentation: the sizing path in
+  <code>app/recommender/deterministic.py</code>, the calibration chain through
+  <code>app/pipeline/calibrate/apply.py</code> and <code>fit.py</code>, the unused service-level
+  machinery in <code>app/pipeline/policy/inventory.py</code>, the absence of any newsvendor,
+  censoring, cannibalisation or budget logic, and the measured precision/coverage prices recorded in
+  the <code>MIN_HIT_PROBABILITY</code> setting. The distributional figures (53.5%, 89.1%, 93.8%,
+  q* = 90.9%) are Poisson computations for a mean of 14 units over 30 days — the engine's own median
+  pick size — and are reproducible in a few lines of standard library.</p>
+  <p><strong>What is judgement rather than measurement.</strong> The phase durations are estimates.
+  The claim that correcting the carrying-cost model will change the sign at two or three stores is a
+  prediction, not a result — it has to be re-run to know. The ~73% selection ceiling is an empirical
+  finding from three measurements on five stores, not a theorem; new information could move it, which
+  is exactly what section 06 proposes. Everything else on this page is either a line of code or an
+  arithmetic identity.</p>
+</footer>
+
+</div>

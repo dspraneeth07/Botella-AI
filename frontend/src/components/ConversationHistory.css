@@ -1,0 +1,261 @@
+/* ConversationHistory.css
+   -----------------------------------------------------------------------------
+   The previous-conversations list inside the sidebar (Ask Botella only).
+
+   The whole point of this file is the height contract. `.sidebar-content` is a
+   flex COLUMN with `height: 100%` and `overflow: hidden`; the nav buttons and
+   the store profile are fixed-size. `.ch-wrap` is therefore the one child
+   allowed to absorb the leftover space (`flex: 1 1 auto` + `min-height: 0`),
+   and `.ch-list` inside it is the one element that scrolls. `min-height: 0` is
+   load-bearing: without it a flex child refuses to shrink below its content,
+   which is exactly how the old column grew off the bottom of the screen.
+
+   Everything reads the shared app tokens, so it flips with the theme and can
+   never sit white-on-white the way the old panel did in the light register.
+   ============================================================================= */
+
+.ch-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* Secondary action: outlined, never solid - the solid fill belongs to the one
+   primary action on a screen. */
+.ch-new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  font-family: var(--bx-font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.ch-new:hover {
+  background: var(--bg-hover);
+  border-color: var(--accent);
+}
+
+.ch-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-primary);
+  color: var(--text-muted);
+}
+.ch-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-family: var(--bx-font-body);
+  font-size: 12.5px;
+  color: var(--text-primary);
+}
+.ch-search input::placeholder { color: var(--text-muted); }
+.ch-search-clear {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: flex;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+.ch-search-clear:hover { color: var(--text-primary); }
+
+/* The one scroll region. `min-height: 0` lets it shrink; `flex: 1` lets it take
+   whatever the fixed rows above and below leave behind. */
+.ch-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0 -4px;
+  padding: 2px 4px;
+}
+
+.ch-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.ch-group-label {
+  font-family: var(--bx-font-display);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 2px;
+}
+
+/* The row is now a positioned container, not the clickable element itself:
+   it holds the select button, the "..." control and the popover. The padding
+   and border moved off it onto .ch-item-main so the hit area still covers the
+   whole row. */
+.ch-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.ch-item:hover { background: var(--bg-hover); }
+
+.ch-item-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  /* Right padding leaves room for the "..." button so a long title is clipped
+     by the line clamp rather than running underneath it. */
+  padding: 8px 30px 8px 10px;
+  font-family: var(--bx-font-body);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* The "..." control. Hidden until the row is hovered or its menu is open, so a
+   quiet list stays quiet - but always present for keyboard users, who reach it
+   by focus, and on touch, where there is no hover to reveal it with. */
+.ch-item-more {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  color: var(--text-muted);
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+.ch-item:hover .ch-item-more,
+.ch-item-menu-open .ch-item-more,
+.ch-item-more:focus-visible { opacity: 1; }
+.ch-item-more:hover { background: var(--bg-hover); color: var(--text-primary); }
+@media (hover: none) { .ch-item-more { opacity: 1; } }
+
+.ch-menu {
+  position: absolute;
+  top: 28px;
+  right: 6px;
+  z-index: 20;
+  min-width: 132px;
+  padding: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.ch-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 9px;
+  font-family: var(--bx-font-body);
+  font-size: 12.5px;
+  color: var(--text-primary);
+  text-align: left;
+  background: none;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.ch-menu-item:hover { background: var(--bg-hover); }
+.ch-menu-danger { color: var(--danger, #d1495b); }
+
+.ch-item-renaming { padding: 4px; }
+.ch-rename-input {
+  width: 100%;
+  padding: 6px 8px;
+  font-family: var(--bx-font-body);
+  font-size: 12.5px;
+  color: var(--text-primary);
+  background: var(--bg-input, var(--bg-card));
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  outline: none;
+}
+
+.ch-item-pin {
+  /* Sits on the title's baseline rather than above it, so a pinned row is the
+     same height as every other one. */
+  vertical-align: -1px;
+  margin-right: 4px;
+  color: var(--accent);
+}
+
+.ch-item-active {
+  background: var(--accent-glow);
+  border-color: var(--accent);
+}
+
+.ch-item-title {
+  width: 100%;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.ch-item-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.ch-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 26px 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+.ch-empty p { margin: 0; font-size: 12.5px; }

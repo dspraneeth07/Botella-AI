@@ -1,0 +1,41 @@
+{
+  "name": "liquor-metrics-backend",
+  "version": "2.0.0",
+  "description": "BotellaAI - Liquor Store Intelligence Backend (PostgreSQL + Claude AI)",
+  "main": "server.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node tests/run-card-statement-tests.js",
+    "test:unit": "node tests/run-unit-tests.js",
+    "test:db": "node tests/run-db-tests.js",
+    "migrate": "node database/migrate.js analytics",
+    "migrate:status": "node database/migrate.js analytics --status",
+    "migrate:dry-run": "node database/migrate.js analytics --dry-run",
+    "migrate:syncgo": "node database/migrate.js syncgo",
+    "ig:trends": "node scripts/igTrendsPoll.js",
+    "check-routes": "node scripts/check-routes.js",
+    "doctor": "node scripts/doctor.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "aspnetcore-identity-password-hasher": "^1.0.1",
+    "bcryptjs": "^3.0.3",
+    "better-sqlite3": "^12.8.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.0",
+    "express": "^4.18.2",
+    "googleapis": "^171.4.0",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^8.0.7",
+    "openai": "^6.33.0",
+    "pg": "^8.13.0",
+    "pg-query-stream": "^4.17.1",
+    "winston": "^3.19.0",
+    "xlsx": "^0.18.5"
+  }
+}

@@ -1,0 +1,329 @@
+/* =============================================================================
+   ASK BAR  (ab- prefix)
+   -----------------------------------------------------------------------------
+   The persistent assistant dock: a glass pill floating at the bottom of the
+   content area, over whatever page is open.
+
+   Anchored inside .chat-page rather than to the viewport, so it centres on the
+   CONTENT column and not on the window - with the sidebar open, a viewport-fixed
+   bar would sit visibly off-centre. .chat-page does not scroll (each view owns
+   its own scrolling), so absolute here behaves like fixed without inheriting the
+   window's idea of centre.
+   ============================================================================= */
+
+.ab-dock {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 80;
+  display: flex;
+  justify-content: center;
+  padding: 0 20px 18px;
+  /* The dock spans the column so the bar can centre in it, but only the bar
+     itself may take the pointer - the rest of it must let the page through. */
+  pointer-events: none;
+}
+
+.ab {
+  width: min(760px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+/* ── The pill ─────────────────────────────────────────────────────────── */
+/* `html` on the selector is load-bearing. index.js imports App BEFORE
+   ./styles/app-theme.css, so this file is emitted first and `.glass` - which
+   sets `border-radius: var(--radius)` - won the specificity tie against a bare
+   `.ab-bar`. The bar was rendering at 14px, not as a pill. Same trap the KPI
+   tiles' tone border hit; same fix. */
+html .ab-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 9px 9px 12px;
+  /* Fully round: this is one object, not a form with a button stuck on the end,
+     and the radius is what says so. With a ~62px bar that is a ~31px curve. */
+  border-radius: 999px;
+  /* V9: no drop shadow. The bar is a flat object with a hairline, so it reads
+     as part of the page rather than floating above it. */
+  border: 1px solid var(--border);
+  box-shadow: none;
+  transition: border-color 0.28s ease, box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html[data-theme="light"] .ab-bar {
+  box-shadow: none;
+}
+
+/* The whole pill lights on focus - the input has no border of its own, so
+   without this there is no focus indicator at all. */
+html .ab-bar:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.ab-mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  /* Its own small pane of glass: a violet-tinted disc with a lit top edge, so
+     the mark reads as part of the bar's material rather than pasted onto it. */
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03) 55%),
+    radial-gradient(120% 120% at 30% 0%, rgba(139, 92, 246, 0.55), rgba(109, 40, 217, 0.28) 70%);
+  border: 1px solid rgba(196, 166, 255, 0.30);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.42),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.28),
+    0 4px 14px -6px rgba(124, 58, 237, 0.85);
+}
+html[data-theme="light"] .ab-mark {
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.35) 55%),
+    radial-gradient(120% 120% at 30% 0%, rgba(139, 92, 246, 0.30), rgba(109, 40, 217, 0.14) 70%);
+  border-color: rgba(109, 40, 217, 0.26);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 1),
+    0 4px 12px -6px rgba(124, 58, 237, 0.5);
+}
+
+.ab-mark-glyph {
+  font-family: var(--bx-font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  /* Optical centring: the cap "B" is taller than the disc's optical middle and
+     the full stop hangs off the right, so the glyph pair needs nudging back. */
+  transform: translate(-1px, 0);
+  background: linear-gradient(150deg, #FFFFFF 0%, #E9D5FF 45%, #C4A6FF 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+html[data-theme="light"] .ab-mark-glyph {
+  background: linear-gradient(150deg, #7C3AED 0%, #6D28D9 55%, #9333EA 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* The stop is the accent inside the mark - the same device the site wordmark
+   uses on its ".ai". */
+.ab-mark-glyph em {
+  font-style: normal;
+  -webkit-text-fill-color: #C4A6FF;
+  color: #C4A6FF;
+}
+html[data-theme="light"] .ab-mark-glyph em {
+  -webkit-text-fill-color: #7C3AED;
+  color: #7C3AED;
+}
+
+.ab-field { flex: 1; min-width: 0; display: flex; }
+.ab-field input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  outline: none;
+  padding: 12px 2px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+.ab-field input::placeholder { color: var(--text-muted); }
+
+.ab-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex: none;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 620;
+  color: #FFFFFF;
+  cursor: pointer;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.03) 46%, rgba(255, 255, 255, 0) 54%),
+    linear-gradient(104deg, #7C3AED 0%, #6D28D9 52%, #9333EA 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 8px 22px -12px rgba(124, 58, 237, 0.9);
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease, opacity 0.2s ease;
+}
+.ab-go:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.34),
+    0 14px 30px -12px rgba(147, 51, 234, 1);
+}
+.ab-go:disabled { opacity: 0.45; cursor: default; box-shadow: none; }
+.ab-go-arrow { transition: transform 0.3s ease; }
+.ab-go:hover:not(:disabled) .ab-go-arrow { transform: translateX(3px); }
+
+/* ── Suggestions ─────────────────────────────────────────────────────────
+   Hidden at rest so the dock is a single quiet line, revealed on focus. Kept
+   out of the tab order and the accessibility tree while hidden, so they are
+   never a set of invisible tab stops over the page. */
+.ab-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.28s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.28s;
+}
+.ab.is-focused .ab-chips {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.ab-chip {
+  font-family: inherit;
+  font-size: 0.74rem;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border);
+  background-color: var(--bg-card);
+  background-image: var(--glass-bg);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  color: var(--text-secondary);
+  cursor: pointer;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.16), 0 6px 18px -10px rgba(0, 0, 0, 0.6);
+  transition: color 0.2s ease, border-color 0.2s ease, transform 0.25s ease;
+}
+.ab-chip:hover {
+  color: var(--text-primary);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* ── Room for the dock ───────────────────────────────────────────────────
+   Every view owns its own scrolling, so each needs its own bottom runway or the
+   bar covers the last row of content. */
+.chat-page .dash-container,
+.chat-page .st-page,
+.chat-page .sx-page,
+.chat-page .ins-page,
+.chat-page .cc-page,
+.chat-page .rh-page,
+.chat-page .ref-page,
+.chat-page .rec-view,
+.chat-page .ma-container { padding-bottom: 104px; }
+
+@media (max-width: 620px) {
+  .ab-dock { padding: 0 12px 12px; }
+  html .ab-bar { padding-left: 10px; gap: 8px; }
+  .ab-go span { display: none; }
+  .ab-go { padding: 10px 13px; }
+  .ab-chips { display: none; }
+  .chat-page .dash-container,
+  .chat-page .st-page,
+  .chat-page .sx-page,
+  .chat-page .ins-page,
+  .chat-page .cc-page,
+.chat-page .rh-page,
+.chat-page .ref-page,
+  .chat-page .rec-view,
+  .chat-page .ma-container { padding-bottom: 88px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab-bar, .ab-go, .ab-go-arrow, .ab-chips, .ab-chip { transition: none; }
+  html .ab-bar:focus-within,
+  .ab-go:hover:not(:disabled),
+  .ab-chip:hover { transform: none; }
+  .ab-chips { transform: none; }
+}
+
+/* =============================================================================
+   DISPATCH - the bar releasing a question
+   -----------------------------------------------------------------------------
+   The two views used to cut: you pressed Ask now and the chat was simply there.
+   This is the first half of one movement - the pill braces, the arrow leaves,
+   and a ring of light expands from where the question was. The chat's arrival
+   (global.css, .chat-container.is-arriving) is the second half, and it starts
+   from the bottom of the screen where this ends.
+   ============================================================================= */
+
+/* The pill compresses and settles back, the way a key does under a finger.
+   Also stops accepting input for the moment it takes. */
+.ab.is-launching .ab-bar {
+  animation: ab-dispatch 0.34s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  pointer-events: none;
+}
+@keyframes ab-dispatch {
+  0% { transform: translateY(0) scale(1); }
+  38% { transform: translateY(1px) scale(0.982); }
+  100% { transform: translateY(-3px) scale(1); }
+}
+
+/* The question fades as it goes, so the words look like they LEFT rather than
+   like the field was wiped. */
+.ab.is-launching .ab-field input {
+  animation: ab-release 0.3s ease-in both;
+}
+@keyframes ab-release {
+  0% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(10px); }
+}
+
+/* The arrow carries on out of the button. */
+.ab.is-launching .ab-go-arrow {
+  animation: ab-arrow 0.3s cubic-bezier(0.4, 0, 0.9, 0.4) both;
+}
+@keyframes ab-arrow {
+  0% { transform: translateX(0); opacity: 1; }
+  100% { transform: translateX(16px); opacity: 0; }
+}
+
+/* The mark pulses once as the question passes it. */
+.ab.is-launching .ab-mark {
+  animation: ab-mark-pulse 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes ab-mark-pulse {
+  0% { transform: scale(1); box-shadow: 0 4px 14px -6px rgba(124, 58, 237, 0.85); }
+  40% { transform: scale(1.12); box-shadow: 0 0 0 8px rgba(139, 92, 246, 0.22), 0 4px 14px -6px rgba(124, 58, 237, 1); }
+  100% { transform: scale(1); box-shadow: 0 0 0 18px rgba(139, 92, 246, 0), 0 4px 14px -6px rgba(124, 58, 237, 0.85); }
+}
+
+/* The ring: a single expanding outline from the pill's own shape, which is what
+   ties the gesture to the glow that rises behind the chat. */
+.ab.is-launching .ab-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(196, 166, 255, 0.55);
+  pointer-events: none;
+  animation: ab-ring 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes ab-ring {
+  0% { transform: scale(1); opacity: 0.9; }
+  100% { transform: scale(1.06); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab.is-launching .ab-bar,
+  .ab.is-launching .ab-field input,
+  .ab.is-launching .ab-go-arrow,
+  .ab.is-launching .ab-mark,
+  .ab.is-launching .ab-bar::after { animation: none; }
+  /* The field still clears, so the dispatch is not silent - it is just instant. */
+  .ab.is-launching .ab-field input { opacity: 0.5; }
+}

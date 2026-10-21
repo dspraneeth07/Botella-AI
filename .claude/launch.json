@@ -1,0 +1,20 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "backend",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["backend/server.js"],
+      "port": 3010,
+      "autoPort": false
+    },
+    {
+      "name": "frontend",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["start-frontend.js"],
+      "port": 3001,
+      "autoPort": false
+    }
+  ],
+  "autoVerify": false
+}

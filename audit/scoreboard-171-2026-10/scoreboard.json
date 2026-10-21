@@ -1,0 +1,3024 @@
+{
+  "month": "2026-10",
+  "store": {
+    "client_id": 171,
+    "location_id": 171,
+    "name": "Bethany Discount Liquor Allen, TX"
+  },
+  "window_days": 30,
+  "month_rule": "a card belongs to the calendar month its 30-day window ended in",
+  "generated_at": "2026-10-08T12:47:37.440Z",
+  "data_through": "2026-10-06",
+  "accuracy": {
+    "what_this_board_measures": "Did what the card predicted come true. Graded on the prediction alone; needs no owner action, and reads neither the arm, the inferred action, the votes nor the money.",
+    "window_days": 30,
+    "both_arms_counted": true,
+    "hit_rule": "lift >= 1.0: the product sold at least what its own trailing rate projected over the 30-day window",
+    "summary": {
+      "cards": 184,
+      "products": 43,
+      "measured_on": 25,
+      "hits": 13,
+      "hit_rate": 0.52,
+      "hit_rate_interval_95": {
+        "low": 0.335,
+        "high": 0.7
+      },
+      "mean_lift": 1.133,
+      "promise_fill": {
+        "cards_with_quantity": 138,
+        "recommended_units": 2009,
+        "sold_units": 613,
+        "fill_ratio": 0.305
+      },
+      "interval_coverage": {
+        "cards_with_range": 0,
+        "inside_range": 0,
+        "range_refused": 0,
+        "coverage": null
+      },
+      "stockout_grade": {
+        "cards": 93,
+        "sold_through": 0,
+        "not_sold_through": 0,
+        "ungraded": 93
+      }
+    },
+    "lines": [
+      {
+        "sku": "088110151058",
+        "product": "Hennessy VSOP 750ml",
+        "cards": 15,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 15,
+          "recommended_units": 134,
+          "sold_units": 1,
+          "fill_ratio": 0.007
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 13,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 13
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "082928399855",
+        "product": "di Amore Sambuca 750ml",
+        "cards": 14,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 14,
+          "recommended_units": 70,
+          "sold_units": 28,
+          "fill_ratio": 0.4
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 13,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 13
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "088004063849",
+        "product": "Eh Taylor Single Barrel",
+        "cards": 14,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 14,
+          "recommended_units": 70,
+          "sold_units": 140,
+          "fill_ratio": 2
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 13,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 13
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "283842",
+        "product": "MARLBORO GLD",
+        "cards": 14,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 14,
+          "recommended_units": 196,
+          "sold_units": 14,
+          "fill_ratio": 0.071
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 13,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 13
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "854493005710",
+        "product": "Ironroot Industrial Luciano",
+        "cards": 14,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 14,
+          "recommended_units": 252,
+          "sold_units": 42,
+          "fill_ratio": 0.167
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 13,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 13
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080432500149",
+        "product": "Jameson 375 ML",
+        "cards": 11,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 2.67,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 156,
+          "sold_units": 12,
+          "fill_ratio": 0.077
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080686012511",
+        "product": "Otr  Watermelon Margarita 4pk",
+        "cards": 10,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 10,
+          "recommended_units": 110,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 9,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 9
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "744607068307",
+        "product": "El Jimador Blanco 1L",
+        "cards": 8,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 2.25,
+        "promise_fill": {
+          "cards_with_quantity": 7,
+          "recommended_units": 235,
+          "sold_units": 95,
+          "fill_ratio": 0.404
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 5,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 5
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "619947000037",
+        "product": "Titos 1.75L",
+        "cards": 6,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "816751022105",
+        "product": "Cutwater Mango Margarita",
+        "cards": 6,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 6,
+          "recommended_units": 48,
+          "sold_units": 30,
+          "fill_ratio": 0.625
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 5,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 5
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "861150000285",
+        "product": "Bishops Crackberry 6pk",
+        "cards": 6,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 6,
+          "recommended_units": 84,
+          "sold_units": 48,
+          "fill_ratio": 0.571
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 5,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 5
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "619947000013",
+        "product": "Titos 1L",
+        "cards": 5,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "857674007985",
+        "product": "Buzz Ball Cocktails",
+        "cards": 5,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 5,
+          "recommended_units": 50,
+          "sold_units": 10,
+          "fill_ratio": 0.2
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 4,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 4
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "096749007233",
+        "product": "Heaven Hill Double Mash 9 Year",
+        "cards": 4,
+        "measured": 2,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.34,
+        "promise_fill": {
+          "cards_with_quantity": 4,
+          "recommended_units": 190,
+          "sold_units": 14,
+          "fill_ratio": 0.074
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "812136031373",
+        "product": "Fever Tree Sparkling Lemonade",
+        "cards": 4,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 33,
+          "sold_units": 6,
+          "fill_ratio": 0.182
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080432500170",
+        "product": "Jameson Irish Whiskey 750ml",
+        "cards": 3,
+        "measured": 1,
+        "hits": 1,
+        "hit_rate": 1,
+        "mean_lift": 2,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 25,
+          "sold_units": 5,
+          "fill_ratio": 0.2
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080686010760",
+        "product": "Knob Creek CS Single Barrel",
+        "cards": 3,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "810168273006",
+        "product": "Torch BlueRZ Lemonade 60mg THC",
+        "cards": 3,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "856750",
+        "product": "New Amsterdam Pink Whitney 50m",
+        "cards": 3,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "021296006019",
+        "product": "Paul Masson Brandy 750ML",
+        "cards": 2,
+        "measured": 2,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.8,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080432401057",
+        "product": "Martell Cordon Bleu 1L",
+        "cards": 2,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 18,
+          "sold_units": 2,
+          "fill_ratio": 0.111
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "082000109693",
+        "product": "Popov 1.75L",
+        "cards": 2,
+        "measured": 2,
+        "hits": 2,
+        "hit_rate": 1,
+        "mean_lift": 2.08,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 42,
+          "sold_units": 50,
+          "fill_ratio": 1.19
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "085000029862",
+        "product": "High Noon Variety 12 pk",
+        "cards": 2,
+        "measured": 2,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.55,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 7,
+          "sold_units": 3,
+          "fill_ratio": 0.429
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "088004005528",
+        "product": "Eh Taylor Barrel Proof 750",
+        "cards": 2,
+        "measured": 2,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.325,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 38,
+          "sold_units": 4,
+          "fill_ratio": 0.105
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "643390004243",
+        "product": "Starlight Cigar Batch",
+        "cards": 2,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "810096403896",
+        "product": "Black Maple Hill Red",
+        "cards": 2,
+        "measured": 2,
+        "hits": 2,
+        "hit_rate": 1,
+        "mean_lift": 1,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 20,
+          "sold_units": 8,
+          "fill_ratio": 0.4
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "810183690253",
+        "product": "Bardstown SSW Wheated SB",
+        "cards": 2,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 24,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "850044534036",
+        "product": "Short Barrel Bees Knees",
+        "cards": 2,
+        "measured": 2,
+        "hits": 2,
+        "hit_rate": 1,
+        "mean_lift": 1.56,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 22,
+          "sold_units": 14,
+          "fill_ratio": 0.636
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "850059701010",
+        "product": "Weber Ranch 1L",
+        "cards": 2,
+        "measured": 2,
+        "hits": 2,
+        "hit_rate": 1,
+        "mean_lift": 1.94,
+        "promise_fill": {
+          "cards_with_quantity": 2,
+          "recommended_units": 46,
+          "sold_units": 60,
+          "fill_ratio": 1.304
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "850424002766",
+        "product": "Redneck Riviera Whiskey 75",
+        "cards": 2,
+        "measured": 2,
+        "hits": 2,
+        "hit_rate": 1,
+        "mean_lift": 2,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "855880008420",
+        "product": "On the Rocks Espresso Martini",
+        "cards": 2,
+        "measured": 2,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 6,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080244009229",
+        "product": "Buffalo Trace 1L",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "080244009236",
+        "product": "Buffalo Trace 750ml",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "083089004077",
+        "product": "Corazon Blanco 1L",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 39,
+          "sold_units": 5,
+          "fill_ratio": 0.128
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "085000017739",
+        "product": "La Marca Prosecco 750ML",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 0,
+          "recommended_units": 0,
+          "sold_units": 0,
+          "fill_ratio": null
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "promise fill: no card for this product asked for a quantity",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "085246500460",
+        "product": "Maker's Mark Private Select",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 5,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "087236701451",
+        "product": "Bruichladdich Octomore 16.2",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 13,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "5010496001493",
+        "product": "Bowmore Aston Martin 21 Year",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 12,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "811041030013",
+        "product": "Lalo Blanco Tequila 750ml",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 18,
+          "sold_units": 4,
+          "fill_ratio": 0.222
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "850044534166",
+        "product": "Shortbarrel Cigar Batch",
+        "cards": 1,
+        "measured": 1,
+        "hits": 0,
+        "hit_rate": 0,
+        "mean_lift": 0.22,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 13,
+          "sold_units": 1,
+          "fill_ratio": 0.077
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "850050071082",
+        "product": "Surfside Lemonade 8pk",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 8,
+          "sold_units": 2,
+          "fill_ratio": 0.25
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "858481005447",
+        "product": "Driftless Glen SSW SB",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 19,
+          "sold_units": 15,
+          "fill_ratio": 0.789
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      },
+      {
+        "sku": "898627001308",
+        "product": "Tequila Ocho Plata 750ml",
+        "cards": 1,
+        "measured": 0,
+        "hits": 0,
+        "hit_rate": null,
+        "mean_lift": null,
+        "promise_fill": {
+          "cards_with_quantity": 1,
+          "recommended_units": 6,
+          "sold_units": 0,
+          "fill_ratio": 0
+        },
+        "interval_coverage": {
+          "cards_with_range": 0,
+          "inside_range": 0,
+          "range_refused": 0,
+          "coverage": null
+        },
+        "stockout_grade": {
+          "cards": 0,
+          "sold_through": 0,
+          "not_sold_through": 0,
+          "ungraded": 0
+        },
+        "refusals": [
+          "hit rate: no card for this product had a measurable lift",
+          "interval coverage: no range stored on any card for this product"
+        ]
+      }
+    ],
+    "refusals": [
+      "interval coverage: no range stored on any card this month",
+      "stockout grade: 93 stockout card(s) closed and none could be graded"
+    ]
+  },
+  "holdout": {
+    "what_this_board_measures": "Did telling the store change anything. Shown against withheld, per product; dollars are per product, never totals; the action is inferred from the purchases feed, an uploaded invoice, the stock delta or a price drop. This board states no hit rate.",
+    "window_days": 30,
+    "min_measured_per_arm_for_a_difference": 5,
+    "dollars_are_per_product": true,
+    "summary": {
+      "shown": {
+        "products": 44,
+        "measurable": 15,
+        "avg_lift": 1.187,
+        "priced": 31,
+        "dollars": 1923.99,
+        "dollars_per_product": 62.06
+      },
+      "withheld": {
+        "products": 9,
+        "measurable": 0,
+        "avg_lift": null,
+        "priced": 3,
+        "dollars": 1065.19,
+        "dollars_per_product": 355.06
+      },
+      "difference": {
+        "lift": null,
+        "dollars_per_product": null,
+        "refused_reason": "needs 5 measured outcomes per arm; have 15 shown and 0 withheld"
+      },
+      "totals_for_the_record": {
+        "shown_dollars_total": 1923.99,
+        "withheld_dollars_total": 1065.19,
+        "note": "The arms are different sizes by design; the difference is taken per product above."
+      },
+      "action_inferred_on_shown": {
+        "acted": 4,
+        "not_acted": 18,
+        "unobservable": 22,
+        "detectors": {
+          "stock delta": 4
+        }
+      },
+      "line": "holdout 30d NOT YET MEASURABLE - needs 5 measured outcomes per arm; have 15 shown and 0 withheld"
+    },
+    "by_family": [
+      {
+        "family": "reorder",
+        "shown": {
+          "products": 12,
+          "measurable": 3,
+          "avg_lift": 0.833,
+          "priced": 8,
+          "dollars": 369.15,
+          "dollars_per_product": 46.14
+        },
+        "withheld": {
+          "products": 4,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 3 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "promote",
+        "shown": {
+          "products": 11,
+          "measurable": 3,
+          "avg_lift": 1.36,
+          "priced": 9,
+          "dollars": 721.03,
+          "dollars_per_product": 80.11
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 392.22,
+          "dollars_per_product": 392.22
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 3 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "endcap",
+        "shown": {
+          "products": 9,
+          "measurable": 4,
+          "avg_lift": 1.113,
+          "priced": 5,
+          "dollars": 272.98,
+          "dollars_per_product": 54.6
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 4 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "bundle",
+        "shown": {
+          "products": 2,
+          "measurable": 1,
+          "avg_lift": 1.56,
+          "priced": 1,
+          "dollars": 111.09,
+          "dollars_per_product": 111.09
+        },
+        "withheld": {
+          "products": 3,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 2,
+          "dollars": 672.97,
+          "dollars_per_product": 336.49
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 1 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "pre_stock",
+        "shown": {
+          "products": 5,
+          "measurable": 2,
+          "avg_lift": 0.275,
+          "priced": 5,
+          "dollars": 367.2,
+          "dollars_per_product": 73.44
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 2 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "liquidate",
+        "shown": {
+          "products": 3,
+          "measurable": 2,
+          "avg_lift": 2.335,
+          "priced": 2,
+          "dollars": 57.54,
+          "dollars_per_product": 28.77
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 2 shown and 0 withheld"
+        }
+      },
+      {
+        "family": "markdown",
+        "shown": {
+          "products": 2,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 25,
+          "dollars_per_product": 25
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "difference": {
+          "lift": null,
+          "dollars_per_product": null,
+          "refused_reason": "needs 5 measured outcomes per arm; have 0 shown and 0 withheld"
+        }
+      }
+    ],
+    "lines": [
+      {
+        "sku": "080432500149",
+        "product": "Jameson 375 ML",
+        "families": [
+          "liquidate",
+          "markdown"
+        ],
+        "shown": {
+          "products": 3,
+          "measurable": 1,
+          "avg_lift": 2.67,
+          "priced": 2,
+          "dollars": 56.25,
+          "dollars_per_product": 28.13
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 3,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "744607068307",
+        "product": "El Jimador Blanco 1L",
+        "families": [
+          "endcap",
+          "promote",
+          "reorder"
+        ],
+        "shown": {
+          "products": 3,
+          "measurable": 1,
+          "avg_lift": 2.25,
+          "priced": 3,
+          "dollars": 734.3,
+          "dollars_per_product": 244.77
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 2,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "080432401057",
+        "product": "Martell Cordon Bleu 1L",
+        "families": [
+          "liquidate",
+          "endcap"
+        ],
+        "shown": {
+          "products": 2,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "080432500170",
+        "product": "Jameson Irish Whiskey 750ml",
+        "families": [
+          "liquidate",
+          "promote"
+        ],
+        "shown": {
+          "products": 2,
+          "measurable": 1,
+          "avg_lift": 2,
+          "priced": 1,
+          "dollars": 26.29,
+          "dollars_per_product": 26.29
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "088110151058",
+        "product": "Hennessy VSOP 750ml",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 2,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 2,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "096749007233",
+        "product": "Heaven Hill Double Mash 9 Year",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.34,
+          "priced": 1,
+          "dollars": -209.87,
+          "dollars_per_product": -209.87
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "both arms: shown 0.34 lift / $-209.87 per product over 1 window(s), withheld no lift / unpriced over 1; no difference stated - needs 5 measured outcomes per arm; have 1 shown and 0 withheld",
+        "refusals": [
+          "withheld margin: cost unknown on every withheld window",
+          "withheld lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "619947000013",
+        "product": "Titos 1L",
+        "families": [
+          "bundle"
+        ],
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 2,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 2,
+          "dollars": 672.97,
+          "dollars_per_product": 336.49
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "withheld only: this product was never shown this month",
+        "refusals": [
+          "withheld lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "812136031373",
+        "product": "Fever Tree Sparkling Lemonade",
+        "families": [
+          "promote",
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 18.26,
+          "dollars_per_product": 18.26
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "both arms: shown no lift / $18.26 per product over 1 window(s), withheld no lift / unpriced over 1; no difference stated - needs 5 measured outcomes per arm; have 0 shown and 0 withheld",
+        "refusals": [
+          "withheld margin: cost unknown on every withheld window",
+          "shown lift: no measurable window",
+          "withheld lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "021296006019",
+        "product": "Paul Masson Brandy 750ML",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.8,
+          "priced": 1,
+          "dollars": -1.4,
+          "dollars_per_product": -1.4
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "080244009229",
+        "product": "Buffalo Trace 1L",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 261.19,
+          "dollars_per_product": 261.19
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "080244009236",
+        "product": "Buffalo Trace 750ml",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 392.22,
+          "dollars_per_product": 392.22
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "withheld only: this product was never shown this month",
+        "refusals": [
+          "withheld lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "080686010760",
+        "product": "Knob Creek CS Single Barrel",
+        "families": [
+          "bundle"
+        ],
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "withheld only: this product was never shown this month",
+        "refusals": [
+          "withheld margin: cost unknown on every withheld window",
+          "withheld lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "080686012511",
+        "product": "Otr  Watermelon Margarita 4pk",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "082000109693",
+        "product": "Popov 1.75L",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 2.08,
+          "priced": 1,
+          "dollars": 32.75,
+          "dollars_per_product": 32.75
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "082928399855",
+        "product": "di Amore Sambuca 750ml",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "withheld only: this product was never shown this month",
+        "refusals": [
+          "withheld margin: cost unknown on every withheld window",
+          "withheld lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "083089004077",
+        "product": "Corazon Blanco 1L",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 34.95,
+          "dollars_per_product": 34.95
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "085000017739",
+        "product": "La Marca Prosecco 750ML",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 20.36,
+          "dollars_per_product": 20.36
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "085000029862",
+        "product": "High Noon Variety 12 pk",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.55,
+          "priced": 1,
+          "dollars": -16.55,
+          "dollars_per_product": -16.55
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "085246500460",
+        "product": "Maker's Mark Private Select",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0,
+          "priced": 1,
+          "dollars": -140.22,
+          "dollars_per_product": -140.22
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "087236701451",
+        "product": "Bruichladdich Octomore 16.2",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "088004005528",
+        "product": "Eh Taylor Barrel Proof 750",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.4,
+          "priced": 1,
+          "dollars": -86.28,
+          "dollars_per_product": -86.28
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "088004063849",
+        "product": "Eh Taylor Single Barrel",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 281.3,
+          "dollars_per_product": 281.3
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "283842",
+        "product": "MARLBORO GLD",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "withheld only: this product was never shown this month",
+        "refusals": [
+          "withheld margin: cost unknown on every withheld window",
+          "withheld lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "5010496001493",
+        "product": "Bowmore Aston Martin 21 Year",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "619947000037",
+        "product": "Titos 1.75L",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 148.7,
+          "dollars_per_product": 148.7
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "643390004243",
+        "product": "Starlight Cigar Batch",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "810096403896",
+        "product": "Black Maple Hill Red",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1,
+          "priced": 1,
+          "dollars": 0,
+          "dollars_per_product": 0
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "810168273006",
+        "product": "Torch BlueRZ Lemonade 60mg THC",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 45.96,
+          "dollars_per_product": 45.96
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "810183690253",
+        "product": "Bardstown SSW Wheated SB",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "withheld only: this product was never shown this month",
+        "refusals": [
+          "withheld margin: cost unknown on every withheld window",
+          "withheld lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "811041030013",
+        "product": "Lalo Blanco Tequila 750ml",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 48.85,
+          "dollars_per_product": 48.85
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "816751022105",
+        "product": "Cutwater Mango Margarita",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 19.15,
+          "dollars_per_product": 19.15
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "850044534036",
+        "product": "Short Barrel Bees Knees",
+        "families": [
+          "bundle"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.56,
+          "priced": 1,
+          "dollars": 111.09,
+          "dollars_per_product": 111.09
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "850044534166",
+        "product": "Shortbarrel Cigar Batch",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0.22,
+          "priced": 1,
+          "dollars": -95.46,
+          "dollars_per_product": -95.46
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "850050071082",
+        "product": "Surfside Lemonade 8pk",
+        "families": [
+          "bundle"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "850059701010",
+        "product": "Weber Ranch 1L",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 1.94,
+          "priced": 1,
+          "dollars": 150.73,
+          "dollars_per_product": 150.73
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "850424002766",
+        "product": "Redneck Riviera Whiskey 75",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 2,
+          "priced": 1,
+          "dollars": 5.5,
+          "dollars_per_product": 5.5
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "854493005710",
+        "product": "Ironroot Industrial Luciano",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 82.47,
+          "dollars_per_product": 82.47
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "855880008420",
+        "product": "On the Rocks Espresso Martini",
+        "families": [
+          "promote"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 1,
+          "avg_lift": 0,
+          "priced": 1,
+          "dollars": -5.04,
+          "dollars_per_product": -5.04
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": []
+      },
+      {
+        "sku": "856750",
+        "product": "New Amsterdam Pink Whitney 50m",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 4.08,
+          "dollars_per_product": 4.08
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "857674007985",
+        "product": "Buzz Ball Cocktails",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 1,
+          "not_acted": 0,
+          "unobservable": 0,
+          "detectors": {
+            "stock delta": 1
+          }
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "858481005447",
+        "product": "Driftless Glen SSW SB",
+        "families": [
+          "pre_stock"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 371.19,
+          "dollars_per_product": 371.19
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "861150000285",
+        "product": "Bishops Crackberry 6pk",
+        "families": [
+          "reorder"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 1,
+          "dollars": 25.44,
+          "dollars_per_product": 25.44
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 1,
+          "unobservable": 0,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown lift: no measurable window"
+        ]
+      },
+      {
+        "sku": "898627001308",
+        "product": "Tequila Ocho Plata 750ml",
+        "families": [
+          "endcap"
+        ],
+        "shown": {
+          "products": 1,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "withheld": {
+          "products": 0,
+          "measurable": 0,
+          "avg_lift": null,
+          "priced": 0,
+          "dollars": null,
+          "dollars_per_product": null
+        },
+        "action_inferred_on_shown": {
+          "acted": 0,
+          "not_acted": 0,
+          "unobservable": 1,
+          "detectors": {}
+        },
+        "note": "shown only: no withheld window for this product this month",
+        "refusals": [
+          "shown margin: cost unknown on every shown window",
+          "shown lift: no measurable window"
+        ]
+      }
+    ],
+    "refusals": [
+      "difference: needs 5 measured outcomes per arm; have 15 shown and 0 withheld"
+    ]
+  },
+  "refusals": [],
+  "pilot_store": true
+}
