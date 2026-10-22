@@ -1,8 +1,8 @@
 """Capability service: runs the pipeline behind the shared TTL result cache.
 
 Capability runs hit the read-only warehouse and can take seconds, so identical
-requests within the TTL reuse the last result (runtime/result_cache — shared
-with the overview action queue, single-flighted). Pure data-plumbing — no HTTP
+requests within the TTL reuse the last result (runtime/result_cache - shared
+with the overview action queue, single-flighted). Pure data-plumbing - no HTTP
 here, so it's unit-testable.
 """
 from __future__ import annotations
@@ -34,7 +34,7 @@ CAPABILITIES = {
     # "pricing": {
     #     "label": "Pricing & Margin",
     #     "default_store": PILOT_CLIENT_ID,
-    #     "description": "Raise under-priced fast movers, cut over-priced slow movers — vs your category norms.",
+    #     "description": "Raise under-priced fast movers, cut over-priced slow movers - vs your category norms.",
     #     "runner": run_pricing,
     # },
     "buying": {
@@ -50,7 +50,7 @@ CAPABILITIES = {
     # "basket": {
     #     "label": "Basket & Cross-sell",
     #     "default_store": PILOT_CLIENT_ID,
-    #     "description": "What sells together — bundle, co-locate, and cross-sell ideas by affinity (lift).",
+    #     "description": "What sells together - bundle, co-locate, and cross-sell ideas by affinity (lift).",
     #     "runner": run_basket,
     # },
     "customers": {
@@ -70,7 +70,7 @@ CAPABILITIES = {
     "market": {
         "label": "Market Intelligence",
         "default_store": PILOT_CLIENT_ID,
-        "description": "Products nearby stores sell well that you don't carry — with projected profit to stock them.",
+        "description": "Products nearby stores sell well that you don't carry - with projected profit to stock them.",
         "runner": run_market,
     },
 }
@@ -86,7 +86,7 @@ def _compute(cfg: dict, store: int, location: int, narrate: bool,
     if window is not None:  # only the inventory runner accepts it (HTTP validates)
         kwargs["window_days"] = window
     # SQL debug (STOREAGENT_DEBUG_SQL=true): echo the exact warehouse queries
-    # behind this result so every figure can be audited. Off by default — the
+    # behind this result so every figure can be audited. Off by default - the
     # payload flows through the Node proxy to the browser and exposes the
     # warehouse schema. Cached results keep the log of the run that made them.
     if DEBUG_SQL:
@@ -120,7 +120,7 @@ def run_capability(capability: str, store: int | None = None,
         raise KeyError(capability)
     store = store or cfg["default_store"]
     # location=None means CLIENT-WIDE (legacy behavior): the repos skip their
-    # location_id filter entirely. It must NOT default to the store id — with
+    # location_id filter entirely. It must NOT default to the store id - with
     # location scoping live in the repos, filtering on a client id that isn't
     # a real location id would silently zero every figure. Production (the
     # Node proxy) always sends the JWT's real location; only direct callers

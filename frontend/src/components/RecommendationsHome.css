@@ -467,7 +467,7 @@
   background: none;
   border: 1px solid var(--bd);
   border-radius: 50%;
-  cursor: help;
+  cursor: var(--cursor-info, help);
   vertical-align: middle;
 }
 .rh-info:hover { color: var(--ac2); border-color: var(--ac); }
@@ -551,3 +551,9 @@
 .rh-notfollowed { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: #B8860B; }
 .rh-fulfil { flex-basis: 100%; margin: 0; font-size: 12.5px; line-height: 1.45; color: var(--tx2); }
 .rh-fulfil-note { font-size: 12px; color: var(--mu); }
+
+/* A source chip that is a BUTTON: it opens the Active Signals popup on that
+   source's tab (22 Oct 2026). Same look as the span, plus a hand cursor. */
+button.rh-chip { font: inherit; font-size: 12px; font-weight: 600; border: none; cursor: pointer; }
+button.rh-chip:hover { filter: brightness(0.92); text-decoration: underline; }
+.rh-sigchip { cursor: pointer; }

@@ -1,5 +1,5 @@
 /**
- * Ingestion control plane — durability, isolation, classification, aggregation.
+ * Ingestion control plane - durability, isolation, classification, aggregation.
  *
  * WHAT THIS IS, AND WHAT IT IS NOT
  *   It is NOT a POS connector. The fetching is done by an external service
@@ -12,7 +12,7 @@
  *   batch runner that stops one store sinking a run, the staleness marker
  *   downstream stages refuse on, and the connector-level digest.
  *
- *   services/integrationService.js is a different thing entirely — the
+ *   services/integrationService.js is a different thing entirely - the
  *   Python-facing READ API. Nothing here touches it.
  *
  * WHY IT EXISTS
@@ -24,10 +24,10 @@
  *   The failure corpus says the fix belongs at the connector, not the store.
  *   Measured on the live warehouse, ~92% of failures are two conditions that
  *   will never resolve by retrying:
- *     ~27,000  Clover   "Status: 401 Unauthorized"        — dead credential
- *     ~15,000  EPOSNow  "Status: 403 Forbidden"           — dead credential
+ *     ~27,000  Clover   "Status: 401 Unauthorized"        - dead credential
+ *     ~15,000  EPOSNow  "Status: 403 Forbidden"           - dead credential
  *     ~12,600  Gokul/Clover "Service 'X' does not implement method 'Y'"
- *                                                          — capability gap
+ *                                                          - capability gap
  *   Those are four bad merchant tokens and two connectors missing an entity.
  *   Six tickets, retried a hundred thousand times.
  *
@@ -58,7 +58,7 @@ const BACKOFF_BASE_MS = parseInt(process.env.SYNC_BACKOFF_BASE_MS || '1000', 10)
 
 /**
  * Days after which a store counts as stale in the digest.
- * Not a refusal threshold — sheet 02 owns that decision and reads the raw
+ * Not a refusal threshold - sheet 02 owns that decision and reads the raw
  * `days_stale`. This only decides what the digest highlights.
  */
 const STALE_AFTER_DAYS = parseInt(process.env.SYNC_STALE_AFTER_DAYS || '2', 10);
@@ -73,7 +73,7 @@ const FAILURE_CLASSES = Object.freeze(['transient', 'credential', 'schema', 'dea
 /**
  * Patterns are ordered: the FIRST match wins, so the specific ones come before
  * the general ones. Every pattern here was taken from a real, counted failure
- * in job_runs_history — none is speculative.
+ * in job_runs_history - none is speculative.
  */
 const CLASSIFIERS = [
   // ── credential ─────────────────────────────────────────────────────────
@@ -109,7 +109,7 @@ const CLASSIFIERS = [
  *
  * Accepts an Error, a string, or a raw job_runs_history.result blob.
  *
- * `result` in the warehouse is a multi-LINE job log, not an error message —
+ * `result` in the warehouse is a multi-LINE job log, not an error message -
  * it opens with "Start | Processing job for ClientId=..." and the actual
  * cause is on the last line ("Summary | POS service message: ... Status: 401
  * Unauthorized"). Matching the whole blob would classify every failure by its
@@ -169,7 +169,7 @@ const sha256 = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
  * arrived, because `payload` is stored as jsonb and **Postgres jsonb does not
  * preserve key order**. A payload landed as {"zebra":1,"alpha":2} reads back
  * as {"alpha":2,"zebra":1}. Hashing the original bytes would therefore
- * produce a digest that can never be re-verified against the stored row —
+ * produce a digest that can never be re-verified against the stored row -
  * the integrity check would be broken the moment you tried to use it.
  *
  * Hashing the canonical form also makes DEDUPE mean the right thing: if a POS
@@ -190,7 +190,7 @@ function canonicalJson(value) {
  * Land a fetch AS RECEIVED, before any parsing.
  *
  * Replay then becomes reading a row instead of re-fetching from a POS that may
- * no longer hold the data — and a parser bug becomes repairable for history
+ * no longer hold the data - and a parser bug becomes repairable for history
  * instead of permanent.
  *
  * Identical bytes for the same connector+store+entity are RECORDED, not
@@ -348,7 +348,7 @@ async function recordFailure(analyticsPool, {
  * How fresh is this store? The read sheet 02 refuses on.
  *
  * `days_stale` is null when the store has NEVER synced successfully, which is
- * a different and worse condition than "stale by 11 days" — callers must be
+ * a different and worse condition than "stale by 11 days" - callers must be
  * able to tell them apart, so it is not collapsed to Infinity or to 9999.
  */
 async function getStoreFreshness(analyticsPool, clientId, locationId, entity = null) {
@@ -387,7 +387,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
  * exception that aborts the run means the other 1,499 do not sync because one
  * merchant rotated a token.
  *
- * Retries only what is worth retrying. A 401 is not retried at all — that is
+ * Retries only what is worth retrying. A 401 is not retried at all - that is
  * how one dead credential became 27,000 identical rows.
  *
  * @param {Array<{clientId:number, locationId:number, entity?:string, connector?:string}>} stores
@@ -527,7 +527,7 @@ function normalizeConnector(value) {
  * last success and the current failure streak per (store, entity) and mirrors
  * it into analytics, where every downstream reader already connects.
  *
- * Idempotent — safe to run as often as you like.
+ * Idempotent - safe to run as often as you like.
  */
 async function refreshSyncState(analyticsPool, syncgoPool, { batchSize = 500 } = {}) {
   const { rows } = await syncgoPool.query(
@@ -696,7 +696,7 @@ async function coverageByConnector(syncgoPool) {
 /**
  * Build (and archive) the daily digest, grouped by connector.
  *
- * ONE row per connector per day. Never one per store — that is the single
+ * ONE row per connector per day. Never one per store - that is the single
  * change that makes 1,500 stores operable. A reader sees "clover: 1,778 runs,
  * 1,778 failed, all credential, 1 store dark 30 days" and opens one ticket.
  */
@@ -746,7 +746,7 @@ async function buildConnectorDigest(analyticsPool, syncgoPool, { date = null, pe
   }
 
   // Staleness comes from our own state table, which is the thing downstream
-  // stages read — so the digest and the refusal rule can never disagree.
+  // stages read - so the digest and the refusal rule can never disagree.
   const stale = await analyticsPool.query(
     `SELECT COALESCE(connector, '(unmapped)') AS connector,
             count(*) FILTER (WHERE last_successful_sync IS NULL)::int AS stores_never,
@@ -837,7 +837,7 @@ async function buildConnectorDigest(analyticsPool, syncgoPool, { date = null, pe
   return digest;
 }
 
-/** The last non-empty line — where the real error is in a job log blob. */
+/** The last non-empty line - where the real error is in a job log blob. */
 function lastLine(text) {
   const lines = String(text || '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
   return lines[lines.length - 1] || '';
@@ -846,11 +846,11 @@ function lastLine(text) {
 /** Render the digest as the plain-text daily report. One block per connector. */
 function formatDigest(rows, { date = null } = {}) {
   if (!rows.length) return 'No connectors to report.';
-  const header = `POS ingestion digest — ${date || rows[0].digest_date}`;
+  const header = `POS ingestion digest - ${date || rows[0].digest_date}`;
   const lines = [header, '='.repeat(header.length), ''];
 
   for (const r of rows) {
-    lines.push(`${r.connector.toUpperCase()}  —  ${r.stores} store(s)`);
+    lines.push(`${r.connector.toUpperCase()}  -  ${r.stores} store(s)`);
     lines.push(`  runs ${r.runs}   failed ${r.failed} (${r.failure_pct}%)`);
     if (r.failed) {
       lines.push(

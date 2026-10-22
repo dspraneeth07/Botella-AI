@@ -80,6 +80,10 @@ const TYPE_TAG = {
 // five hid the second card of every kind. The validator caps the daily slate
 // at ten plus four trending cards, so fourteen here shows every admitted card.
 const MAIN_CARD_LIMIT = 14;
+// The "Effectiveness to date" tile in the right rail. OFF on this screen
+// (22 Oct 2026, by request); the Effectiveness screen, its nav item and the
+// Recommendations sub-tab still follow SHOW_EFFECTIVENESS in features.js.
+const SHOW_EFFECTIVENESS_TILE = false;
 
 const VALUE_KIND_LABEL = {
   sales_protected: 'sales protected', projected_sales: 'projected sales',
@@ -285,6 +289,16 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
   const [dismissing, setDismissing] = useState(null); // rec id showing reason menu
   const [showFolded, setShowFolded] = useState(false); // A3 collapsed low-value group
   const [signalsOpen, setSignalsOpen] = useState(false);
+  // Which tab the Active Signals popup opens on. A source chip on a card
+  // opens the popup on that source (22 Oct 2026); "View all" opens on All.
+  // The card chips use the frontend's domain words ('holiday'); the popup
+  // uses the snapshot's ('holidays').
+  const [signalsTab, setSignalsTab] = useState('all');
+  const openSignals = useCallback((domain) => {
+    const dom = domain === 'holiday' ? 'holidays' : (domain || 'all');
+    setSignalsTab(dom);
+    setSignalsOpen(true);
+  }, []);
   const [typeFilter, setTypeFilter] = useState('all'); // §10 type filter (replaces priority filter)
   // ONE open menu rather than a boolean per dropdown. Two independent
   // booleans let both menus stand open at once (and neither closed when you
@@ -1270,9 +1284,20 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
                           </p>
                         )}
                         <div className="rh-chips">
-                          {ev.map((e, i) => { const Ico = SOURCE_ICON[e.source] || Package; return (
-                            <span key={i} className={`rh-chip rh-src-${e.source}`}><Ico size={12} /> {e.label}</span>
-                          ); })}
+                          {ev.map((e, i) => {
+                            const Ico = SOURCE_ICON[e.source] || Package;
+                            // A signal source opens the Active Signals popup on
+                            // its own tab; "Your sales" and comparable-store
+                            // evidence are not signals and stay as labels.
+                            const isSignal = ['events', 'weather', 'holiday', 'sports', 'social', 'news'].includes(e.source);
+                            return isSignal ? (
+                              <button key={i} type="button" className={`rh-chip rh-src-${e.source}`} onClick={() => openSignals(e.source)} title={`Open ${e.label} in Active Signals`}>
+                                <Ico size={12} /> {e.label}
+                              </button>
+                            ) : (
+                              <span key={i} className={`rh-chip rh-src-${e.source}`}><Ico size={12} /> {e.label}</span>
+                            );
+                          })}
                         </div>
                       </div>
 
@@ -1342,11 +1367,14 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
                         <p className="rh-rationale">{r.rationale}</p>
                         {(r.signals_cited || []).length > 0 && (
                           <div className="rh-sigchips">
-                            {(r.signals_cited || []).slice(0, 6).map((s, i) => (
-                              <button key={i} type="button" className="rh-sigchip" onClick={() => setSignalsOpen(true)}>
-                                {resolveSignalLabel(typeof s === 'string' ? s : (s.key || s.kind), snapshot)}
-                              </button>
-                            ))}
+                            {(r.signals_cited || []).slice(0, 6).map((s, i) => {
+                              const key = String(typeof s === 'string' ? s : (s.key || s.kind) || '').toLowerCase();
+                              return (
+                                <button key={i} type="button" className="rh-sigchip" onClick={() => openSignals(domainOfKey(key, keyDomain))} title="Open in Active Signals">
+                                  {resolveSignalLabel(key, snapshot)}
+                                </button>
+                              );
+                            })}
                           </div>
                         )}
                         {/* WHAT EACH LIVE SIGNAL WAS FOUND TO DO HERE (migration
@@ -1358,9 +1386,12 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
                             beer; none measurable yet - too_few_active_days:7<20".
                             Printed verbatim; a card from before 043 has none
                             and prints nothing, which is the truth. */}
-                        {r.signal_impact_summary && (
-                          <p className="rh-sigimpact">{r.signal_impact_summary}</p>
-                        )}
+                        {/* NOT PRINTED (22 Oct 2026, by request). The sentence
+                            read "14 live signal(s) checked against spirits; none
+                            measurable yet - too_few_days:1<120" on nearly every
+                            card: an internal refusal code on an owner's screen.
+                            The field still travels on the API and the Active
+                            Signals popup remains the place to see the signals. */}
                         <div className="rh-detail-foot">
                           {/* Words, not a percentage. "74%" invites a precision
                               nobody has earned; the calibrated estimate's honest
@@ -1374,7 +1405,10 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
                           {SHOW_CARD_CONFIDENCE && !conf && confNote && <span className="rh-conf-line rh-conf-flat">{confNote}</span>}
                           {dl.iso && <span className="rh-foot-sep">·</span>}
                           {dl.iso && <span>{DEADLINE_VERB[r.action_type] || 'Act by'} {fmtDate(dl.iso)}</span>}
-                          <button type="button" className="rh-support" onClick={() => {
+                          {/* No link when there is nothing behind it: a card
+                              that says "No sales history to project from" has
+                              no supporting rows to show (22 Oct 2026). */}
+                          {!v.unmeasured && <button type="button" className="rh-support" onClick={() => {
                             // C1: carry the recommendation's rows + label into the reference
                             // screen so it highlights, scrolls, and shows a return path.
                             try {
@@ -1382,7 +1416,7 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
                               sessionStorage.setItem('botella_ref_highlight', JSON.stringify({ skus, label: `${TYPE_TAG[r.action_type] || 'Recommendation'} · ${leadName}`, recId: r.id }));
                             } catch { /* no-op */ }
                             onNavigate && onNavigate('purchasing');
-                          }}>View supporting data <ArrowRight size={13} /></button>
+                          }}>View supporting data <ArrowRight size={13} /></button>}
                         </div>
                       </div>
                     )}
@@ -1442,14 +1476,14 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
               <span className="rh-panel-title"><Radar size={15} /> Signals informing today’s recommendations</span>
               <span className="rh-panel-count">{fmtNum(Object.values(domainCounts).reduce((a, b) => a + b, 0))} active</span>
             </header>
-            <SignalsRail snapshot={snapshot} onViewAll={() => setSignalsOpen(true)} />
+            <SignalsRail snapshot={snapshot} onViewAll={() => openSignals('all')} />
           </section>
 
           {/* Effectiveness to date - withdrawn with the Effectiveness screen it
               links into. Leaving the tile up would strand a "View effectiveness"
               button on a route that no longer resolves, and it is the loudest
               number on the page. See utils/features.js. */}
-          {SHOW_EFFECTIVENESS && (
+          {SHOW_EFFECTIVENESS && SHOW_EFFECTIVENESS_TILE && (
             <EffectivenessTile eff={eff} onView={() => onNavigate && onNavigate('effectiveness')} />
           )}
 
@@ -1481,7 +1515,7 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
         </aside>
       </div>
 
-      <SignalsModal snapshot={snapshot} open={signalsOpen} onClose={() => setSignalsOpen(false)} />
+      <SignalsModal snapshot={snapshot} open={signalsOpen} initialTab={signalsTab} onClose={() => setSignalsOpen(false)} />
     </div>
   );
 }

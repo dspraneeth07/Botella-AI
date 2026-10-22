@@ -3,7 +3,7 @@ import { MessageSquare, X, PanelLeftClose, LogOut, Store, Menu, Lightbulb, BarCh
 import Wordmark from './Wordmark';
 import ConversationHistory from './ConversationHistory';
 import ThemeSwitch from './ThemeSwitch';
-import { SHOW_EFFECTIVENESS, SHOW_BOTTLESENSE, SHOW_CARD_STATEMENTS } from '../utils/features';
+import { SHOW_EFFECTIVENESS, SHOW_EFFECTIVENESS_NAV, SHOW_BOTTLESENSE, SHOW_CARD_STATEMENTS } from '../utils/features';
 
 // The main navigation. Each maps to a `navKey` the parent (ChatPage.goNav)
 // routes to the screen serving it today.
@@ -19,7 +19,7 @@ const NAV_ITEMS = [
   { key: 'market', label: 'Market Comparison', icon: Store },
   { key: 'customers', label: 'Customers', icon: Users },
   { key: 'reports', label: 'Reports', icon: BarChart3 },
-  { key: 'effectiveness', label: 'Effectiveness', icon: Trophy, show: SHOW_EFFECTIVENESS },
+  { key: 'effectiveness', label: 'Effectiveness', icon: Trophy, show: SHOW_EFFECTIVENESS && SHOW_EFFECTIVENESS_NAV },
   { key: 'bottlesense', label: 'BottleSense', icon: Gauge, show: SHOW_BOTTLESENSE },
   // Card statements sit with the other uploaded documents, directly above
   // Purchase Orders, so Purchase Orders keeps its place next to Ask Botella.

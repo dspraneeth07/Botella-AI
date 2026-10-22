@@ -464,10 +464,10 @@ function PurchaseOrdersScreen({ authToken, apiUrl, onNavigate }) {
                         <span className="po-filename" title={d.fileName}>{d.fileName}</span>
                       )}
                     </td>
-                    <td title={d.vendorName || ''}>{pending ? <span className="po-muted">—</span> : (d.vendorName || 'n/a')}</td>
-                    <td>{pending ? <span className="po-muted">—</span> : shortDate(d.invoiceDate || d.createdAt)}</td>
-                    <td className="ref-num">{pending ? <span className="po-muted">—</span> : money(d.invoiceTotal)}</td>
-                    <td className="ref-num">{pending ? <span className="po-muted">—</span> : (d.itemCount ?? 0)}</td>
+                    <td title={d.vendorName || ''}>{pending ? <span className="po-muted">-</span> : (d.vendorName || 'n/a')}</td>
+                    <td>{pending ? <span className="po-muted">-</span> : shortDate(d.invoiceDate || d.createdAt)}</td>
+                    <td className="ref-num">{pending ? <span className="po-muted">-</span> : money(d.invoiceTotal)}</td>
+                    <td className="ref-num">{pending ? <span className="po-muted">-</span> : (d.itemCount ?? 0)}</td>
                     <td><StatusChip status={d.status} /></td>
                     <td><MappingChip doc={d} /></td>
                     <td>
@@ -634,7 +634,7 @@ const stamp = (d) => (d
   ? new Date(d).toLocaleString('en-US', {
     month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit',
   })
-  : '—');
+  : '-');
 
 function ParserLogModal({ id, base, headers, onClose }) {
   const [log, setLog] = useState(null);
@@ -686,13 +686,13 @@ function ParserLogModal({ id, base, headers, onClose }) {
             <>
               <dl className="po-log-summary">
                 <div><dt>Parsed status</dt><dd>{PARSE_LABEL[log.status] || log.status}</dd></div>
-                <div><dt>Method</dt><dd>{log.method || '—'}</dd></div>
+                <div><dt>Method</dt><dd>{log.method || '-'}</dd></div>
                 <div>
                   <dt>Confidence</dt>
                   {/* The stored value is a share of lines, 0-1. Shown as a
                       percentage because that is how it was described to
                       everyone who asked what it means. */}
-                  <dd>{log.confidence == null ? '—' : `${(log.confidence * 100).toFixed(1)}%`}</dd>
+                  <dd>{log.confidence == null ? '-' : `${(log.confidence * 100).toFixed(1)}%`}</dd>
                 </div>
                 <div><dt>Updated</dt><dd>{stamp(log.updatedAt)}</dd></div>
               </dl>
@@ -746,10 +746,10 @@ function ParserLogModal({ id, base, headers, onClose }) {
    notion of "ready" - how many lines are matched to a POS SKU - not a push
    state, which this product does not have. */
 function MappingChip({ doc }) {
-  if (doc.status !== 'parsed') return <span className="po-muted">—</span>;
+  if (doc.status !== 'parsed') return <span className="po-muted">-</span>;
   const items = Number(doc.itemCount || 0);
   const mapped = Number(doc.mappedCount || 0);
-  if (items === 0) return <span className="po-muted">—</span>;
+  if (items === 0) return <span className="po-muted">-</span>;
   if (mapped >= items) return <span className="po-chip po-chip-ok"><Check size={12} /> Mapped</span>;
   if (mapped === 0) return <span className="po-chip po-chip-warn">Mapping required</span>;
   return <span className="po-chip po-chip-warn">{mapped}/{items} mapped</span>;

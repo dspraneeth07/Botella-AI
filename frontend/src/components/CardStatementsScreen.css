@@ -419,7 +419,7 @@
 .cs-chip-ok { color: var(--gr); background: color-mix(in srgb, var(--gr) 15%, transparent); }
 .cs-chip-bad { color: var(--rd); background: color-mix(in srgb, var(--rd) 15%, transparent); }
 .cs-chip-wait { color: var(--ac2); background: var(--act); }
-.cs-chip-bad[title]:not([title=""]) { cursor: help; }
+.cs-chip-bad[title]:not([title=""]) { cursor: var(--cursor-info, help); }
 
 .cs-log-btn {
   display: inline-flex; align-items: center; gap: 5px;

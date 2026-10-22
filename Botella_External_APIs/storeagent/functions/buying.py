@@ -1,4 +1,4 @@
-"""Predictive Buying — concrete buy list and don't-buy list.
+"""Predictive Buying - concrete buy list and don't-buy list.
 
 Turns the demand forecast into action: how many units to order now to cover the
 lead time + review period (plus a safety buffer), and which SKUs to STOP buying
@@ -23,8 +23,8 @@ MIN_TREND_HISTORY_DAYS = 56
 def order_quantity(d: SkuDemand, t: ForecastThresholds = FORECAST) -> tuple[int, int]:
     """THE canonical reorder size for one SKU: ``(order_qty, coverage_days)``.
 
-    Every surface that tells the owner how much to buy — the Buying tab, the
-    Daily Report action queue, and the AI recommendations' quantity hints —
+    Every surface that tells the owner how much to buy - the Buying tab, the
+    Daily Report action queue, and the AI recommendations' quantity hints -
     must get its number from here, so the same product can never carry two
     different reorder figures. Order enough to cover the delivery lead plus
     the supplier's observed reorder cycle (or the flat review period), with a
@@ -58,12 +58,12 @@ def _buy_row(d: SkuDemand, order_qty: int, coverage: int, dos: float | None,
              t: ForecastThresholds, today: date) -> dict:
     lead = t.lead_time_days
     # The forward-looking fields (order_by, run_out, stockout_risk) run at the
-    # PROJECTED pace — trend included, the same pace the order quantity is
-    # sized on — so a row never mixes two paces (days_of_supply stays the
+    # PROJECTED pace - trend included, the same pace the order quantity is
+    # sized on - so a row never mixes two paces (days_of_supply stays the
     # un-trended classification figure, labeled as such, with `trend` beside
     # it). order_by is an instruction to a human acting in WALL-CLOCK time:
     # when the data frontier lags (or a fast seller is already inside its lead
-    # window), the engine date lands in the past — clamp to today so the owner
+    # window), the engine date lands in the past - clamp to today so the owner
     # reads "order today", never "the reorder date was three days ago".
     # run_out is the transparency companion: the day stock hits zero at the
     # projected pace, so the owner sees WHY the order date is what it is.
@@ -112,7 +112,7 @@ def buy_recommendations(demands: list[SkuDemand], as_of: date,
     buy: list[dict] = []
     dont: list[dict] = []
 
-    # The buy list is FAST SELLERS ONLY — same store-relative rule as the
+    # The buy list is FAST SELLERS ONLY - same store-relative rule as the
     # Inventory tab's "Fast" class, so the two views agree: sold within the
     # last 30 days AND (top-20% selling rate among products that sell, or
     # under ~3 weeks of stock at the current rate).
@@ -132,9 +132,9 @@ def buy_recommendations(demands: list[SkuDemand], as_of: date,
             sold_txt = f"no sale in {days_since}d" if days_since is not None else "never sold"
             dos_txt = f"{int(dos)} days of supply on hand" if dos is not None else f"{on_hand} units on hand"
             if is_dead:
-                reason = f"Stop ordering — {sold_txt}; {dos_txt}. Cash is frozen and demand is gone."
+                reason = f"Stop ordering - {sold_txt}; {dos_txt}. Cash is frozen and demand is gone."
             else:
-                reason = (f"Stop ordering — {dos_txt} and demand is falling "
+                reason = (f"Stop ordering - {dos_txt} and demand is falling "
                           f"(selling at {round(d.trend_factor(t), 2)}x its lifetime pace).")
             dont.append({
                 "sku": d.sku, "product_name": d.product_name, "category": d.category,
@@ -201,7 +201,7 @@ def buy_recommendations(demands: list[SkuDemand], as_of: date,
     # ratio for weeks, so it must also be selling NOW: sold within 30 days (the
     # buy list's own rule) and holding at least its baseline pace over the last
     # 28. (2) A brand-new listing used to score the 3.0 clamp ceiling
-    # automatically — units_90 == units_365 divided by a year it wasn't stocked
+    # automatically - units_90 == units_365 divided by a year it wasn't stocked
     # for. Shelf-age-aware rates kill that; what survives for a young SKU is a
     # real ramp inside its own short life.
     accel: list[dict] = []
@@ -257,7 +257,7 @@ def buy_recommendations(demands: list[SkuDemand], as_of: date,
         accel_status, accel_reason = "opportunities", None
     elif history_days < MIN_TREND_HISTORY_DAYS:
         accel_status = "insufficient_history"
-        accel_reason = (f"only {history_days} days of sales history — measuring "
+        accel_reason = (f"only {history_days} days of sales history - measuring "
                         f"acceleration needs a recent window to compare against "
                         f"an earlier one")
     else:
@@ -280,7 +280,7 @@ def buy_recommendations(demands: list[SkuDemand], as_of: date,
         "dont_buy_units_total": sum(r["on_hand"] for r in dont),
         "dont_buy_dead_count": sum(1 for r in dont if r["units_365"] == 0),
         "accelerating_count": len(accel),
-        # Why the list is the length it is — so an empty section can say so
+        # Why the list is the length it is - so an empty section can say so
         # instead of vanishing. history_days is the store's own sales span.
         "accelerating_status": accel_status,
         "accelerating_reason": accel_reason,

@@ -41,9 +41,9 @@ import { formatLocalDate, parseLocalDate } from '../utils/date';
 import { useCellTitles } from '../utils/useCellTitles';
 
 /* ── Formatters ──────────────────────────────────────────────────────────── */
-// '—' is the one placeholder the copy rules allow, and only for a value that
+// '-' is the one placeholder the copy rules allow, and only for a value that
 // is genuinely absent. Negative money keeps a plain hyphen-minus.
-const DASH = '—';
+const DASH = '-';
 const isNum = (v) => v != null && v !== '' && Number.isFinite(Number(v));
 const money = (v, d = 2) => (!isNum(v)
   ? DASH

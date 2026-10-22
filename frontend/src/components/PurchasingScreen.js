@@ -260,9 +260,12 @@ export default function PurchasingScreen({ authToken, apiUrl, onNavigate }) {
                           const o = f.orderBy;
                           return (
                             <>
+                              {/* The provenance stays on the hover title; the
+                                  second line it used to print ("from your
+                                  recommendation") made those rows taller than
+                                  the rest of the table (22 Oct 2026). */}
                               <td className="ref-num ref-strong" title={fromCard ? FROM_CARD_TITLE : undefined}>
                                 {num(f.qty)}
-                                {fromCard && <span className="ref-from-card">from your recommendation</span>}
                               </td>
                               <td title={o && o.source === 'engine' ? FROM_CARD_TITLE : undefined}>
                                 {o ? <span className={`ref-due ${proxClass(o.dueInDays)}`}>{fmtDate(o.date)}</span> : <span className="ref-due ref-due-later">n/a</span>}

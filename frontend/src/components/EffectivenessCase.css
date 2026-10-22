@@ -9,7 +9,7 @@
 .ep-tip { position: relative; display: inline-flex; }
 .ep-tip-btn {
   display: inline-flex; align-items: center; padding: 0; margin: 0 0 0 4px;
-  background: none; border: none; cursor: help;
+  background: none; border: none; cursor: var(--cursor-info, help);
   color: var(--text-muted, #9ca3af);
 }
 .ep-tip-btn:hover, .ep-tip-btn:focus-visible { color: var(--accent-light, #B79CFF); }

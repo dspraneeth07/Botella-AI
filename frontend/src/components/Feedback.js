@@ -140,7 +140,7 @@ export function ChatFeedbackPopup({ apiBase, authToken, conversationId, answerCo
       </button>
 
       {done ? (
-        <p className="fb-pop-done"><Check size={16} /> Thank you — we read every one.</p>
+        <p className="fb-pop-done"><Check size={16} /> Thank you. We read every one.</p>
       ) : (
         <>
           <p className="fb-pop-title">How was this conversation?</p>

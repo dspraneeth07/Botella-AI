@@ -42,7 +42,7 @@ def _parallel(*jobs):
     connection (SourceDB is not thread-safe). Returns results in submission
     order; re-raises the first failure."""
     with ThreadPoolExecutor(max_workers=len(jobs)) as pool:
-        # copy_context(): TESTING-ONLY: SQL debug — carries the per-request SQL
+        # copy_context(): TESTING-ONLY: SQL debug - carries the per-request SQL
         # capture into worker threads. Harmless otherwise; one copy per job
         # because a single Context can't be entered by two threads at once.
         futures = [pool.submit(contextvars.copy_context().run, j) for j in jobs]
@@ -201,7 +201,7 @@ def run_customer_radar(client_id: int, location_id: int,
             for c in radar["win_back"]:
                 c["favorite_category"] = fav.get(c["customer_id"])
         elif as_of is not None:
-            # Gated store: the page still earns its place — anonymous shopper
+            # Gated store: the page still earns its place - anonymous shopper
             # patterns plus a measurable path to unlocking win-back.
             #
             # ONLY WHEN THE STORE HAS SALES. An engagement profile is a read of
@@ -241,9 +241,9 @@ def run_buying(client_id: int, location_id: int, store_label: str | None = None,
         with source_db("120s") as db:
             pulled = fetch_sku_demand(db, client_id, location_id)
         # Publish into the canonical-demand cache slot (the key the rec
-        # service's bridge reads via get_or_compute): a Buying-tab compute —
+        # service's bridge reads via get_or_compute): a Buying-tab compute -
         # including a nocache refresh, which must stay FRESH and so never
-        # reads this cache — hands its snapshot to the next rec run within
+        # reads this cache - hands its snapshot to the next rec run within
         # the TTL, so both surfaces price reorders off one warehouse pull.
         result_cache.put(("canonical_demand", client_id, location_id), pulled)
         return pulled
@@ -266,7 +266,7 @@ def run_buying(client_id: int, location_id: int, store_label: str | None = None,
             "buying": None,
             "lost_sales": None,
             "forecast_backtest": None,
-            "briefing": f"{label}: no sales data yet — the buying engine needs "
+            "briefing": f"{label}: no sales data yet - the buying engine needs "
                         f"at least one recorded sale to size orders.",
         }
     backtest = backtest_daily(daily, as_of)
@@ -316,7 +316,7 @@ def run_loss_prevention(client_id: int, location_id: int, store_label: str | Non
                         narrate: bool = False) -> dict:
     """Loss Prevention = Loss & Theft Radar + Shrinkage & Staff on ONE page.
 
-    They tell a single story — every way money quietly walks out — and an owner
+    They tell a single story - every way money quietly walks out - and an owner
     investigating a cashier needs the register signals and the stock math side
     by side. The two pulls run in parallel on separate connections.
     """
@@ -395,7 +395,7 @@ def run_basket(client_id: int, location_id: int, store_label: str | None = None,
 
 
 def _safe(name: str, fn, errors: list[dict]):
-    """Run an engine for the overview; never let one failure sink the page —
+    """Run an engine for the overview; never let one failure sink the page -
     but RECORD the failure, so a broken engine is never mistaken for a clean run."""
     try:
         return fn()
@@ -406,11 +406,11 @@ def _safe(name: str, fn, errors: list[dict]):
 
 def _action_queue(client_id: int, location_id: int) -> tuple[list[dict], list[dict]]:
     """The executive's differentiated value: ONE prioritized list of what to do,
-    in dollars, synthesized across every engine — something no POS assembles.
+    in dollars, synthesized across every engine - something no POS assembles.
     Engines run in parallel and go through the shared result cache under the
     SAME keys the capability endpoints use, so a Daily Report compute makes the
     inventory/buying/market tabs instant (and vice versa) instead of
-    doing the warehouse work twice. Returns (actions, engine_errors) — failed
+    doing the warehouse work twice. Returns (actions, engine_errors) - failed
     engines are reported, not hidden."""
     actions: list[dict] = []
     errors: list[dict] = []
@@ -430,7 +430,7 @@ def _action_queue(client_id: int, location_id: int) -> tuple[list[dict], list[di
                                lambda: _cached("market", run_market), errors)
         # Retired fan-out engines, kept for reuse. Pricing left with its tab;
         # customers left when the win-back finding was dropped (its dollar
-        # figure was a forecast, not a measurement — see the reorder action
+        # figure was a forecast, not a measurement - see the reorder action
         # below for what replaced it). The buying engine already serves the
         # reorder action, so the queue needs only these three.
         # f_pricing = pool.submit(contextvars.copy_context().run, _safe, "pricing",
@@ -509,7 +509,7 @@ def _action_queue(client_id: int, location_id: int) -> tuple[list[dict], list[di
     #                                       f"their visit pattern"})
 
     # Today's reorder: the most decisive item on the list. Every figure is a
-    # measurement, not a forecast — order quantities come from on-hand stock vs
+    # measurement, not a forecast - order quantities come from on-hand stock vs
     # each product's own selling pace, and the dollar is quantity × supplier
     # cost. The Buying tab's Suggested Reorder table backs it line by line.
     B = _usable(bu, "buying") or {}
@@ -519,7 +519,7 @@ def _action_queue(client_id: int, location_id: int) -> tuple[list[dict], list[di
                         "capability": "buying", "severity": "risk",
                         "value": B["buy_total_value"], "value_label": "to restock (at cost)",
                         "recommendation": (
-                            f"{urgent:,} fast sellers will likely run out before the next delivery — "
+                            f"{urgent:,} fast sellers will likely run out before the next delivery - "
                             f"{B['buy_sku_count']:,} SKUs on the reorder list" if urgent
                             else f"{B['buy_sku_count']:,} SKUs need reordering to stay ahead of demand")})
 
@@ -534,7 +534,7 @@ def run_overview(client_id: int, location_id: int, store_label: str | None = Non
                  narrate: bool = False) -> dict:
     label = store_label or f"{client_id}/{location_id}"
 
-    # Pulse/momentum and the action queue are independent — overlap them.
+    # Pulse/momentum and the action queue are independent - overlap them.
     def _pulse():
         with source_db("120s") as db:
             return fetch_overview(db, client_id, location_id)

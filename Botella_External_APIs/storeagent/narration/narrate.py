@@ -35,8 +35,8 @@ _INSTRUCTIONS = {
               "buying, and what stockouts are costing per day.",
     "customers": "Tell the owner which regulars are slipping away, what that's worth per "
                  "year, and who to call first.",
-    "loss": "Flag the doubtful sales worth reviewing — items rung up as free, below-cost "
-            "sales, voids, returns — and the dollar exposure. Be careful: these are signals "
+    "loss": "Flag the doubtful sales worth reviewing - items rung up as free, below-cost "
+            "sales, voids, returns - and the dollar exposure. Be careful: these are signals "
             "to review, not proof of theft. Tell the owner what to check first.",
     "lossprev": "One loss-prevention read: doubtful sales at the register (items rung as "
                 "free, below-cost, voids, returns) AND stock/staff signals (cashier "
@@ -53,7 +53,7 @@ _INSTRUCTIONS = {
     "shrinkage": "Tell the owner which cashiers to review (above-norm voids/discounts) and the "
                  "book-vs-physical shrinkage exposure. These are signals to review, not proof.",
     "market": "Tell the owner which products nearby stores sell well that THEY don't carry, and "
-              "make a strong, specific case to stock the top few — how many nearby stores sell it "
+              "make a strong, specific case to stock the top few - how many nearby stores sell it "
               "and the projected annual profit. Note the projection is conservative.",
 }
 
@@ -298,7 +298,7 @@ def narration_available(cfg: NarrationConfig = NARRATION) -> bool:
 
 # ---------------------------------------------------------------------------
 # Numeric grounding check. The SYSTEM prompt's "use ONLY numbers in the FACTS"
-# is an instruction, not a guarantee — this makes it one. Every number the
+# is an instruction, not a guarantee - this makes it one. Every number the
 # model wrote must appear in the FACTS payload (exactly, or as a plain
 # rounding of a fact value); otherwise the narration is dropped and the UI
 # falls back to the deterministic briefing. A missing paragraph costs nothing;
@@ -307,7 +307,7 @@ def narration_available(cfg: NarrationConfig = NARRATION) -> bool:
 
 _NUM_TOKEN = re.compile(r"\d[\d,]*(?:\.\d+)?")
 # Small counts read as language, not data: "your top 3", "one of two cashiers",
-# "first 5 items" — enumeration the model derives from list LENGTHS, which the
+# "first 5 items" - enumeration the model derives from list LENGTHS, which the
 # facts never carry as literals. Bounded low so real quantities stay checked.
 _SMALL_COUNT_MAX = 12
 
@@ -317,14 +317,14 @@ def _numbers_in_text(text: str) -> list[float]:
     for m in _NUM_TOKEN.finditer(text or ""):
         try:
             out.append(float(m.group().replace(",", "")))
-        except ValueError:  # pragma: no cover — the regex shouldn't allow this
+        except ValueError:  # pragma: no cover - the regex shouldn't allow this
             pass
     return out
 
 
 def _fact_numbers(node: object) -> set[float]:
     """Every number a FACTS payload can justify: numeric leaves (plus their
-    plain roundings — "about $4,613" for 4612.75 is quoting, not inventing)
+    plain roundings - "about $4,613" for 4612.75 is quoting, not inventing)
     and numbers embedded in string leaves (dates, "24/12" pack names)."""
     nums: set[float] = set()
     if isinstance(node, bool):
@@ -361,7 +361,7 @@ def ungrounded_numbers(text: str, facts: dict) -> list[float]:
 
 def narrate_capability(capability: str, result: dict,
                        cfg: NarrationConfig = NARRATION) -> dict:
-    """Return {available, text, model, error}. Never raises — narration is additive."""
+    """Return {available, text, model, error}. Never raises - narration is additive."""
     facts = build_facts(capability, result)
     instruction = _INSTRUCTIONS.get(capability, "Brief the owner on these facts.")
     user = (f"{instruction}\n\nFACTS (the only numbers you may use):\n"

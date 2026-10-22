@@ -85,7 +85,7 @@ const SAMPLES = {
         'purchase order 11 Mar'],
       ['Josh Cellars Cabernet 750ml', '18', '7', 'underperformed',
         'purchase order 9 Mar, 11 still on hand'],
-      ['Casamigos Blanco 750ml', '6', '—', 'cannot be said yet',
+      ['Casamigos Blanco 750ml', '6', '-', 'cannot be said yet',
         '30-day window closes in 8 days'],
     ],
     reading: [

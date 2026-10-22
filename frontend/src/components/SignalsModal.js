@@ -207,18 +207,21 @@ function SignalRow({ item, color, icon: Icon }) {
 }
 
 /* ── The modal ───────────────────────────────────────────────────────────── */
-export function SignalsModal({ snapshot, open, onClose }) {
+export function SignalsModal({ snapshot, open, onClose, initialTab = 'all' }) {
   const { domains, total } = useMemo(() => buildSignalDomains(snapshot), [snapshot]);
   const [active, setActive] = useState('all');
 
-  // Reset to All each time it opens, and lock body scroll while open.
+  // Open on the tab the caller asked for - a source chip on a card opens the
+  // popup on THAT source (22 Oct 2026) - or on All when the domain has no
+  // signals today. Escape closes.
   useEffect(() => {
     if (!open) return undefined;
-    setActive('all');
+    const wanted = String(initialTab || 'all');
+    setActive(wanted !== 'all' && domains.some((d) => d.id === wanted) ? wanted : 'all');
     const onKey = (e) => { if (e.key === 'Escape') onClose && onClose(); };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, [open, onClose]);
+  }, [open, onClose, initialTab, domains]);
 
   if (!open) return null;
 

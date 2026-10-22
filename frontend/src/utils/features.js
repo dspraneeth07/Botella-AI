@@ -47,6 +47,13 @@ import { IS_INTERNAL } from './env';
  * Recommendations home, so flipping this one constant brings all of it back. */
 export const SHOW_EFFECTIVENESS = true;
 
+/** Show the Effectiveness item in the sidebar.
+ *
+ * OFF, 22 Oct 2026, by request. The screen itself stays reachable: the
+ * Recommendations sub-tab and the /effectiveness route follow
+ * SHOW_EFFECTIVENESS above; only the sidebar entry is withdrawn. */
+export const SHOW_EFFECTIVENESS_NAV = false;
+
 /** Show the "N more recommendations - lower estimated value" folded group
  * under the open list.
  *
