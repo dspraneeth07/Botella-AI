@@ -6,31 +6,31 @@
   "period_days": 15,
   "pass": "post-generation",
   "generation": {
-    "ok": 65,
+    "ok": 0,
     "refused": 170,
-    "failed": 4,
-    "already": 0,
+    "failed": 0,
+    "already": 69,
     "stores_in_scope": 239
   },
-  "cards_generated_today": 349,
+  "cards_generated_today": 1314,
   "capture": {
-    "cards": 1474,
-    "stores": 49,
-    "skus": 608,
-    "inserted": 59,
-    "already_captured": 520,
-    "without_product": 29,
-    "observed_stockouts": 346
+    "cards": 1853,
+    "stores": 50,
+    "skus": 706,
+    "inserted": 0,
+    "already_captured": 678,
+    "without_product": 28,
+    "observed_stockouts": 351
   },
   "runs": [
     {
       "label": "period",
       "window_mode": "fixed",
-      "run_id": "341",
+      "run_id": "349",
       "since": "2026-10-16",
-      "cards": 1474,
+      "cards": 1853,
       "scored": 0,
-      "pending": 1474,
+      "pending": 1853,
       "no_data": 0,
       "rar_pct": null,
       "rar_ci95": [
@@ -48,18 +48,18 @@
         "understocked": 0,
         "unutilized": 0,
         "no_data": 0,
-        "pending": 1474
+        "pending": 1853
       }
     },
     {
       "label": "period",
       "window_mode": "intended",
-      "run_id": "342",
+      "run_id": "350",
       "since": "2026-10-16",
-      "cards": 1474,
+      "cards": 1853,
       "scored": 0,
-      "pending": 1474,
-      "no_data": 0,
+      "pending": 1832,
+      "no_data": 21,
       "rar_pct": null,
       "rar_ci95": [
         null,
@@ -75,18 +75,18 @@
         "overstocked": 0,
         "understocked": 0,
         "unutilized": 0,
-        "no_data": 0,
-        "pending": 1474
+        "no_data": 21,
+        "pending": 1832
       }
     },
     {
       "label": "trailing30",
       "window_mode": "fixed",
-      "run_id": "343",
+      "run_id": "351",
       "since": "2026-09-22",
-      "cards": 1741,
+      "cards": 2120,
       "scored": 267,
-      "pending": 1474,
+      "pending": 1853,
       "no_data": 0,
       "rar_pct": 0.7,
       "rar_ci95": [
@@ -104,35 +104,35 @@
         "understocked": 14,
         "unutilized": 105,
         "no_data": 0,
-        "pending": 1474
+        "pending": 1853
       }
     },
     {
       "label": "trailing30",
       "window_mode": "intended",
-      "run_id": "344",
+      "run_id": "352",
       "since": "2026-09-22",
-      "cards": 1741,
-      "scored": 40,
-      "pending": 1699,
-      "no_data": 2,
-      "rar_pct": 10,
+      "cards": 2120,
+      "scored": 54,
+      "pending": 2043,
+      "no_data": 23,
+      "rar_pct": 9.3,
       "rar_ci95": [
         4,
-        23.1
+        19.9
       ],
-      "met_forecast_rate_pct": 7.5,
+      "met_forecast_rate_pct": 31.5,
       "median_velocity_ratio": 0.774,
-      "ite": 0.43,
-      "net_financial_impact": 1050.28,
+      "ite": 0.599,
+      "net_financial_impact": 2989.63,
       "counts": {
-        "successful": 4,
+        "successful": 5,
         "partial_absorption": 21,
         "overstocked": 14,
-        "understocked": 0,
+        "understocked": 13,
         "unutilized": 1,
-        "no_data": 2,
-        "pending": 1699
+        "no_data": 23,
+        "pending": 2043
       }
     }
   ],
@@ -155,13 +155,13 @@
           "key": "closed_windows",
           "label": "Fixed windows closed",
           "score": 0,
-          "detail": "0 of 1474 cards have a closed 7-open-day window"
+          "detail": "0 of 1853 cards have a closed 7-open-day window"
         },
         {
           "key": "intended_closed",
           "label": "Intended horizons closed",
           "score": 0,
-          "detail": "0 of 1474 cards have lived through the cover they were sized for"
+          "detail": "0 of 1853 cards have lived through the cover they were sized for"
         },
         {
           "key": "period_coverage",
@@ -172,15 +172,15 @@
         {
           "key": "shelf_observed",
           "label": "Cards with an observed shelf count today",
-          "score": 94.16553595658074,
-          "detail": "1388 of 1474 cards have a captured stock_qty for today"
+          "score": 94.81921208850513,
+          "detail": "1757 of 1853 cards have a captured stock_qty for today"
         }
       ],
-      "score": 25.5
+      "score": 25.6
     },
     "engine_confidence": 0,
     "band": "insufficient evidence"
   },
-  "observed_stockouts_on_cards": 889,
-  "shelf_covered_cards": 1388
+  "observed_stockouts_on_cards": 1065,
+  "shelf_covered_cards": 1757
 }
