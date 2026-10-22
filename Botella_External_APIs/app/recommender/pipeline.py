@@ -33,7 +33,7 @@ from app.pipeline.candidates.merchandise import is_merchandise as catalogue_allo
 from app.pipeline.context import RunContext
 from app.pipeline.rank.portfolio import CASH_BUDGET
 from app.pipeline.registry import cfg
-from app.recommender import deterministic, families, narrate, quantity, slate
+from app.recommender import deterministic, families, hybrid, narrate, quantity, slate
 from app.pipeline.features.taxonomy import category_family_of
 from app.recommender.families import (
     signal_effects_from_rows,
@@ -390,6 +390,14 @@ class RecommendationPipeline:
         narrated = 0
         out: list[dict] = []
         for card in raw_recs:
+            # A hybrid model card arrived with its prose already written
+            # from the same signal lines; narration exists to put words on an
+            # engine card whose body was an f-string, and grounding it against
+            # engine figures the model never published would only throw the
+            # sentence away. Passed through, and not charged to the budget.
+            if hybrid.is_model_card(card):
+                out.append(card)
+                continue
             if narrated >= budget:
                 out.append(card)
                 continue
@@ -428,6 +436,81 @@ class RecommendationPipeline:
                  from_model=sum(1 for c in out
                                 if c.get("rationale_source") == "model"))
         return out
+
+    # ----- the hybrid slate: the model's signal cards beside the engine's ----
+
+    async def _hybrid_model_cards(
+        self, engine_cards: list[dict], context: RecommendationContext,
+        client_id: int, location_id: int,
+    ) -> list[dict]:
+        """Ask the model for the signal categories and merge its cards in.
+
+        The engine has already chosen the stock cards. This runs the ORIGINAL
+        recommend_products prompt (prompt_builder) with one paragraph appended
+        to the user payload naming what the engine covered and which
+        categories are wanted, then composes the slate with `hybrid.plan`:
+        engine lead slots, model cards, engine remainder. The validator still
+        checks every model SKU against the candidate pool, every cited key
+        against the active signals, and dedupes by SKU with the engine first.
+
+        FAIL-SOFT. Any failure - no client, a refusal, a timeout, a truncated
+        tool call, a billing error - returns the engine's cards untouched and
+        logs why. The 29 September outage must stay impossible on this path.
+        """
+        if self._anthropic is None:
+            return engine_cards
+        settings = self._settings
+        catalogue = context.catalogue or {}
+        names = {sku: info.name for sku, info in catalogue.items()}
+        pos_categories = {sku: info.pos_category for sku, info in catalogue.items()
+                          if getattr(info, "pos_category", None)}
+        candidates = list(getattr(context, "candidates", ()) or ())
+        signals = context.signals
+        # What the model is allowed to lean on, computed BEFORE the call so a
+        # failure in any of it is a model-side failure and degrades the same way.
+        try:
+            has_trend = bool(getattr(signals, "social", None)) or bool(
+                getattr(context, "trend_proof", None))
+            has_new = (
+                any(getattr(c, "slice", None) in ("new", "new_hot", "area_winner")
+                    for c in candidates)
+                or bool(getattr(context, "area_winners", None))
+                or bool(getattr(getattr(context, "intel", None), "market_gaps", None))
+            )
+            prompt = build_prompt(context, settings)
+            prompt["user"] = prompt["user"] + hybrid.prompt_addendum(
+                engine_cards, names,
+                stock_fallback=settings.hybrid_llm_stock_fallback,
+                has_trend_lines=has_trend, has_new_lines=has_new,
+            )
+            model_cards = await self._llm.recommend(prompt)
+        except Exception as exc:  # noqa: BLE001 - the engine slate must survive
+            log.warning("hybrid_model_unavailable", client_id=client_id,
+                        location_id=location_id, error=str(exc))
+            return engine_cards
+        # The evidence each category is held to. A weather card cites a
+        # weather key or it goes; a trending card names a product that matches
+        # the trend or it goes. See hybrid.plan for the full list.
+        key_domains = signals.citable_keys_by_domain() if signals is not None else {}
+        trend_skus = hybrid.trend_matching_skus(
+            candidates, list(getattr(signals, "trend_product_keywords", []) or []))
+        slate = hybrid.plan(
+            engine_cards, model_cards,
+            lead_slots=settings.hybrid_engine_lead_slots,
+            signal_categories=settings.hybrid_llm_categories,
+            stock_fallback=settings.hybrid_llm_stock_fallback,
+            key_domains=key_domains,
+            trend_skus=trend_skus,
+            product_names=names,
+            pos_categories=pos_categories,
+        )
+        log.info("hybrid_slate_composed", client_id=client_id,
+                 location_id=location_id, engine=len(engine_cards),
+                 model_returned=len(model_cards),
+                 model_kept=sum(1 for c in slate if hybrid.is_model_card(c)),
+                 categories=sorted({str(c.get("category")) for c in slate
+                                    if hybrid.is_model_card(c)}))
+        return slate
 
     # ----- the signal impact block, on EVERY card ---------------------------
 
@@ -1157,6 +1240,42 @@ class RecommendationPipeline:
             verified = ({p.sku for p in picks}
                         | {s for e in extra for s in e.skus})
             # Read out of this store's own sales, so not hallucinations.
+
+            # ── THE HYBRID SLATE (22 Oct 2026) ─────────────────────────
+            #
+            # The engine's cards above are reorders and markdowns, and the
+            # signal families refuse at nearly every store for want of a
+            # measured effect - so the owner saw ten reorders and concluded
+            # the POS could do it. The model is asked, with the SAME prompt
+            # the first version of the product ran on, for the signal
+            # categories only: weather, calendar and sports, news, bundles
+            # from the basket data, new arrivals and trending drinks. Its
+            # cards sit after the engine's lead slots; the engine keeps
+            # reorder to itself; and a model failure costs nothing but the
+            # signal cards. See app/recommender/hybrid.py.
+            # NEVER A CARTON OF CIGARETTES. The engine's merchandise screen
+            # keys on the POS category, and at stores whose POS files tobacco
+            # under a blank or a generic category "Newport 100 Box" and
+            # "MARLBORO GLD" reached the owner's screen as reorders #1 and #4
+            # on 22 Oct 2026. The name screen the hybrid applies to model
+            # cards applies to the engine's too; a liquor recommendation
+            # engine does not recommend tobacco, lottery or ice whatever
+            # their unit counts. Dropped cards are counted, not hidden.
+            names_by_sku = {sku: info.name for sku, info in context.catalogue.items()}
+            screened = [
+                r for r in raw_recs
+                if not (r.get("primary_skus") and all(
+                    hybrid.is_non_beverage(names_by_sku.get(s), catalogue.get(s, {}).get("category"))
+                    for s in r.get("primary_skus")))
+            ]
+            if len(screened) != len(raw_recs):
+                log.info("engine_non_beverage_cards_dropped",
+                         client_id=client_id, location_id=location_id,
+                         dropped=len(raw_recs) - len(screened))
+                raw_recs = [{**r, "rank": i} for i, r in enumerate(screened, start=1)]
+            if self._settings.hybrid_llm_enabled:
+                raw_recs = await self._hybrid_model_cards(
+                    raw_recs, context, client_id, location_id)
         else:
             # The superseded path. Retained behind a setting rather than
             # deleted so the two can be compared on one store, not so it can

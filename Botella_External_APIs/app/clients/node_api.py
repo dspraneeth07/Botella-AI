@@ -128,7 +128,19 @@ class NodeApiClient:
 
     async def get_inventory(self, client_id: int, location_id: int) -> list[InventoryItem]:
         rows = _as_list(await self._get(f"{self._base(client_id, location_id)}/inventory"))
-        return [InventoryItem.model_validate(row) for row in rows]
+        # A product row with no name is a product row, not a reason to refuse
+        # the store. Store 214's feed carried one `product_name: null` line and
+        # every run for the store 500'd on it (22 Oct 2026) - one unnamed SKU
+        # cost the owner the whole slate. The schema's default is "", which
+        # pydantic does not apply to an explicit null, so it is applied here.
+        return [
+            InventoryItem.model_validate(
+                {**row, "product_name": ""}
+                if isinstance(row, dict) and row.get("product_name") is None
+                else row
+            )
+            for row in rows
+        ]
 
     async def get_sales(
         self, client_id: int, location_id: int, *, days: int | None = None

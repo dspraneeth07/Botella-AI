@@ -67,6 +67,27 @@ async def test_inventory_accepts_data_envelope_and_null_created_at() -> None:
 
 
 @respx.mock
+async def test_inventory_null_product_name_does_not_refuse_the_store() -> None:
+    """Store 214, 22 Oct 2026: one `product_name: null` row and every run for
+    the store answered 500. An unnamed SKU is still a SKU."""
+    respx.get(_url("inventory")).mock(
+        return_value=httpx.Response(
+            200,
+            json=[
+                {"sku": "A", "product_name": None, "on_hand": 5, "price": 9.99},
+                {"sku": "B", "product_name": "Beer", "on_hand": 1, "price": 4.5},
+            ],
+        )
+    )
+    client = _client()
+    try:
+        inv = await client.get_inventory(CLIENT_ID, LOC)
+        assert [(r.sku, r.product_name) for r in inv] == [("A", ""), ("B", "Beer")]
+    finally:
+        await client.aclose()
+
+
+@respx.mock
 async def test_inventory_created_at_tolerates_postgres_text_and_junk() -> None:
     """A raw ``timestamptz`` render must parse, and junk must not sink the run.
 

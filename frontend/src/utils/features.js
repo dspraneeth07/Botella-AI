@@ -37,13 +37,15 @@ import { IS_INTERNAL } from './env';
 
 /** Show the Effectiveness screen, its nav item, and the home-page tile.
  *
- * OFF, 20 Oct 2026, by request, ahead of the QA deploy. The screen is not
- * wrong - it now refuses to put a number on a store with no purchase feed -
- * but it is being withheld until it has something to show at every pilot
- * store. The route guard (HIDDEN_VIEWS) follows this flag, as does the
- * Recommendations sub-tab (RecommendationsView.SHOW_EFFECTIVENESS_TAB), so
- * there is no side door. */
-export const SHOW_EFFECTIVENESS = false;
+ * ON, 22 Oct 2026, by request. It was switched OFF on 20 Oct ahead of the QA
+ * deploy, to be withheld until it had something to show at every pilot store;
+ * the owner has asked for the tab back, everything unhidden. The screen
+ * refuses to put a number on a store with no purchase feed, so a store with
+ * nothing to show sees that sentence rather than a figure. The route guard
+ * (HIDDEN_VIEWS) follows this flag, as does the Recommendations sub-tab
+ * (RecommendationsView.SHOW_EFFECTIVENESS_TAB) and the rail tile on the
+ * Recommendations home, so flipping this one constant brings all of it back. */
+export const SHOW_EFFECTIVENESS = true;
 
 /** Show the "N more recommendations - lower estimated value" folded group
  * under the open list.

@@ -263,6 +263,30 @@ class SignalBundle(BaseModel):
             key = self.news[i].key
         return {key} if key else set()
 
+    def citable_keys_by_domain(self) -> dict[str, str]:
+        """Every citable key in this bundle -> the field it belongs to.
+
+        ``{"heat_advisory": "weather", "nhl_home_game": "sports",
+        "event_concert": "events", "halloween": "holidays",
+        "news_tariff_bourbon": "news", "trend_espresso_martini": "social"}``.
+
+        The hybrid slate (app/recommender/hybrid.py) holds a model card to its
+        own evidence with this: a weather card must cite a weather key, a
+        game-day card a sports, events or holidays key, and a key from another
+        domain is removed from the card rather than shown as a chip the owner
+        would read as the reason. Built from the same `_entry_keys` the
+        snapshot trim uses, so the two cannot disagree about what a key is.
+        """
+        out: dict[str, str] = {}
+        if self.weather is not None:
+            for k in self._entry_keys("weather", 0):
+                out[k] = "weather"
+        for field in ("sports", "events", "holidays", "news", "social"):
+            for i in range(len(getattr(self, field) or [])):
+                for k in self._entry_keys(field, i):
+                    out.setdefault(k, field)
+        return out
+
     def _display_order(self) -> list[tuple[str, int]]:
         """(field, index) pairs, most owner-relevant first.
 

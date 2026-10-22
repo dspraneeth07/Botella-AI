@@ -107,6 +107,30 @@ class Settings(BaseSettings):
     # prose. False: the superseded LLM-chooses path, kept for comparison on a
     # single store rather than as a fallback - it is the arm that scored 24.2%.
     use_deterministic_engine: bool = True
+
+    # ----- The hybrid slate (22 Oct 2026) ----------------------------------
+    # With the engine choosing, the slate was reorders and little else: the
+    # signal families refuse without a measured effect, and 499 of 504 cells
+    # refused on the first estate-wide fit. So the model is asked, with the
+    # first version's prompt, for the SIGNAL categories - weather, calendar
+    # and sports, news, bundles, new arrivals, trending - and its cards are
+    # merged after the engine's lead slots. The engine keeps reorder to
+    # itself; the model covers a stock category only where the engine was
+    # silent. Off = exactly the engine-only slate. See app/recommender/hybrid.py.
+    hybrid_llm_enabled: bool = True
+    # Engine cards ranked ahead of the first model card. The rest of the
+    # engine's cards follow the model's, so an empty or failed model answer
+    # leaves the engine slate as it was.
+    hybrid_engine_lead_slots: int = 4
+    # The categories the model's cards are accepted in.
+    hybrid_llm_categories: tuple[str, ...] = (
+        "weather", "calendar_sports", "news", "bundle", "new_arrival",
+        "social_trending",
+    )
+    # May the model issue inventory_understock / inventory_overstock cards
+    # when the engine produced none of that kind? A store with no cost data
+    # gets no engine markdown; a store with thin sales gets no engine reorder.
+    hybrid_llm_stock_fallback: bool = True
     # The trend-validation read fans out to ~25 peer stores on Node's remote
     # warehouse (measured seconds, not milliseconds) — it gets its own, more
     # patient per-request timeout instead of the default data-read one.

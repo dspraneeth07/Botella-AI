@@ -119,6 +119,18 @@ router.post('/login', async (req, res) => {
     } catch (bgErr) {
       require('../utils/logger').warn('[Auth] login refresh could not start', { error: bgErr.message });
     }
+    // Fresh recommendations for the session, the same way: after the response,
+    // never awaited, coalesced with any run already in flight, and skipped when
+    // a run from the last ~20 h exists (the 04:00 batch's). The owner sees the
+    // previous slate immediately and the new one on their next visit to the
+    // Recommendations screen. See recommendationService.refreshRecommendationsOnLogin.
+    try {
+      require('../services/recommendationService')
+        .refreshRecommendationsOnLogin(getAnalyticsPool(), user.client_id, user.location_id)
+        .catch(() => {});
+    } catch (bgErr) {
+      require('../utils/logger').warn('[Auth] recommendation refresh could not start', { error: bgErr.message });
+    }
   } catch (err) {
     const logger = require('../utils/logger');
     const { toSafeError } = require('../utils/errors');

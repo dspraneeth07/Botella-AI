@@ -27,10 +27,9 @@ import {
   Sparkles, Loader, ChevronDown,
   ArrowRight, Check, ClipboardList, Trophy, Package,
   CloudSun, MapPin, CalendarDays, Newspaper, Coins, TrendingUp,
-  Hourglass, PackageX,
+  Hourglass, PackageX, Radar,
 } from 'lucide-react';
 import { buildSignalDomains, SignalsModal } from './SignalsModal';
-import SignalImpactRail from './SignalImpactRail';
 import { mainFold } from '../utils/mainFold';
 // `counts` is NOT imported: a local const of the same name at line ~217
 // shadows it, so the import has been dead and CRA has been warning about it.
@@ -75,7 +74,12 @@ const TYPE_TAG = {
   endcap: 'Endcap', win_back: 'Win-back', reprice: 'Reprice',
 };
 // How many cards the Open tab leads with. The rest fold; nothing is discarded.
-const MAIN_CARD_LIMIT = 5;
+// 10, not 5, since the hybrid slate (22 Oct 2026): the engine's reorders now
+// share the list with the model's weather, game-day, news, bundle and trending
+// cards, and with the fold withheld (SHOW_FOLDED_RECOMMENDATIONS) a limit of
+// five hid the second card of every kind. The validator caps the daily slate
+// at ten plus four trending cards, so fourteen here shows every admitted card.
+const MAIN_CARD_LIMIT = 14;
 
 const VALUE_KIND_LABEL = {
   sales_protected: 'sales protected', projected_sales: 'projected sales',
@@ -688,25 +692,6 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
     return byStatus.open.filter((r) => !keep.has(r.id));
   }, [byStatus.open, openMain]);
 
-  // A click on a card chip in the Signals rail brings that card into view.
-  // The card may be folded, filtered out by type, or on another tab, so the
-  // view is put where the card is first; the scroll runs after that paint.
-  // The flash is a transient class, not the report highlight (`hiIds`), which
-  // belongs to a cross-screen link and should not be repurposed here.
-  const [flashId, setFlashId] = useState(null);
-  const jumpToCard = useCallback((id) => {
-    const sid = String(id);
-    const owner = ['open', 'accepted', 'claimed', 'completed'].find((k) => (byStatus[k] || []).some((r) => String(r.id) === sid));
-    if (owner && owner !== tab) setTab(owner);
-    if (openFolded.some((r) => String(r.id) === sid)) setShowFolded(true);
-    setTypeFilter('all');
-    setFlashId(sid);
-    window.setTimeout(() => {
-      const el = document.getElementById(`rec-${sid}`);
-      if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 60);
-    window.setTimeout(() => setFlashId((cur) => (cur === sid ? null : cur)), 2600);
-  }, [byStatus, tab, openFolded]);
   // WHAT THE OPEN TAB COUNTS IS WHAT THE OPEN TAB SHOWS. With the folded group
   // withdrawn (SHOW_FOLDED_RECOMMENDATIONS, utils/features.js) the cards that
   // would have folded are not on the screen at all, and a headline reading
@@ -1251,7 +1236,7 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
                   <li key={r.id}
                       id={`rec-${r.id}`}
                       ref={hiIds.has(String(r.id)) && !firstHiRef.current ? firstHiRef : null}
-                      className={`rh-card ${isOpen ? 'is-open' : ''} rh-prox-${dl.proximity}${hiIds.has(String(r.id)) ? ' rh-card-hi' : ''}${flashId === String(r.id) ? ' rh-card-flash' : ''}`}>
+                      className={`rh-card ${isOpen ? 'is-open' : ''} rh-prox-${dl.proximity}${hiIds.has(String(r.id)) ? ' rh-card-hi' : ''}`}>
                     <div className="rh-card-grid">
                       {/* LEFT: what and why */}
                       <div className="rh-card-left">
@@ -1424,7 +1409,7 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
                     const lead = (r.products && r.products[0]) || {};
                     const name = lead.product_name || (r.primary_skus && r.primary_skus[0]) || 'this product';
                     return (
-                      <li key={r.id} id={`rec-${r.id}`} className={`rh-folded-item${flashId === String(r.id) ? ' rh-card-flash' : ''}`}>
+                      <li key={r.id} id={`rec-${r.id}`} className="rh-folded-item">
                         <span className="rh-folded-type">{TYPE_TAG[r.action_type] || 'Act'}</span>
                         <span className="rh-folded-name" title={name}>{truncate(name, 40)}</span>
                         <span className="rh-folded-val">{fmtMoney(amountOf(r))} <em>(est.)</em></span>
@@ -1445,18 +1430,20 @@ export default function RecommendationsHome({ authToken, apiUrl, onNavigate, onA
 
         {/* RIGHT RAIL (§6.6-6.7) - sticky */}
         <aside className="rh-rail">
-          {/* Signals - what is live, what the fit found it does here, and which
-              cards it reached (GET /api/signal-impact/today). Falls back to the
-              snapshot-only list when the endpoint fails or has nothing. */}
-          <SignalImpactRail
-            base={base}
-            headers={headers}
-            cards={recsRaw}
-            onViewAll={() => setSignalsOpen(true)}
-            onCardJump={jumpToCard}
-            fallbackCount={Object.values(domainCounts).reduce((a, b) => a + b, 0)}
-            renderFallback={() => <SignalsRail snapshot={snapshot} onViewAll={() => setSignalsOpen(true)} />}
-          />
+          {/* Signals - the compact, domain-grouped list from the run's own
+              signal_snapshot. "View all signals" opens the clustered modal.
+              (The per-signal "measured / not yet measurable" rail that read
+              GET /api/signal-impact/today was tried here on 20 Oct 2026 and
+              taken back out on 22 Oct by request: the owner wanted the
+              original Active Signals panel. The component is still in
+              SignalImpactRail.js and the endpoint still answers.) */}
+          <section className="rh-panel">
+            <header className="rh-panel-head">
+              <span className="rh-panel-title"><Radar size={15} /> Signals informing today’s recommendations</span>
+              <span className="rh-panel-count">{fmtNum(Object.values(domainCounts).reduce((a, b) => a + b, 0))} active</span>
+            </header>
+            <SignalsRail snapshot={snapshot} onViewAll={() => setSignalsOpen(true)} />
+          </section>
 
           {/* Effectiveness to date - withdrawn with the Effectiveness screen it
               links into. Leaving the tile up would strand a "View effectiveness"

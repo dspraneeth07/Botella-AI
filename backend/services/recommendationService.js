@@ -682,6 +682,65 @@ function generateAndPersist(analyticsPool, clientId, locationId) {
   return p;
 }
 
+// ─── 2b. Fresh cards when the owner logs in ──────────────────────────────────
+
+/** Switch: REC_LOGIN_REFRESH=false turns the login refresh off. */
+const LOGIN_REFRESH_ENABLED = String(process.env.REC_LOGIN_REFRESH ?? 'true').toLowerCase() !== 'false';
+/** A run older than this when the owner logs in is replaced. 20 h, not 24:
+ *  the nightly batch runs at 04:00 and an owner logging in at 09:00 the next
+ *  day is 29 h past yesterday's run and 5 h past today's, so 20 h separates
+ *  "today's run exists" from "yesterday's is all we have" at every login hour. */
+const LOGIN_REFRESH_MAX_AGE_HOURS = Number(process.env.REC_LOGIN_REFRESH_MAX_AGE_HOURS || '20');
+
+/**
+ * Regenerate this store's recommendations if its newest run is stale.
+ *
+ * Called from POST /auth/login AFTER the response is sent and never awaited:
+ * a run is a minute or two of signal fetches and two model calls, and login
+ * must not wait for it. The owner's first screen shows the previous run and
+ * the fresh one takes its place when they next load Recommendations.
+ *
+ * Same rules as the 04:00 batch, from the same functions: the data-quality
+ * gate (getStoreQuality + storeRefusals) refuses a never-synced or quarantined
+ * store, and generateAndPersist coalesces repeat logins onto one run. A run
+ * from the last LOGIN_REFRESH_MAX_AGE_HOURS is kept, so the 04:00 batch and a
+ * 09:00 login do not double up.
+ *
+ * Returns { started, reason } for tests and the log; throws nothing.
+ */
+async function refreshRecommendationsOnLogin(analyticsPool, clientId, locationId) {
+  if (!LOGIN_REFRESH_ENABLED) return { started: false, reason: 'disabled' };
+  try {
+    const { rows } = await analyticsPool.query(
+      `SELECT 1 FROM recommendation_runs
+        WHERE client_id = $1 AND location_id = $2
+          AND generated_at > now() - ($3::text || ' hours')::interval
+        LIMIT 1`,
+      [clientId, locationId, String(LOGIN_REFRESH_MAX_AGE_HOURS)]
+    );
+    if (rows.length) return { started: false, reason: 'fresh_run_exists' };
+    const recGate = require('./recommendationGateService');
+    const quality = await recGate.getStoreQuality(analyticsPool, clientId, locationId);
+    const refusals = recGate.storeRefusals(quality);
+    if (refusals.length) {
+      logger.info('[Rec login] store refused by data quality - no run', {
+        clientId, locationId, reasons: refusals,
+      });
+      return { started: false, reason: `refused:${refusals[0]}` };
+    }
+    logger.info('[Rec login] no fresh run - generating', { clientId, locationId });
+    generateAndPersist(analyticsPool, clientId, locationId).catch((err) => {
+      logger.warn('[Rec login] generation failed', {
+        clientId, locationId, code: err.code || 'UNKNOWN', error: err.message,
+      });
+    });
+    return { started: true, reason: 'stale_or_missing' };
+  } catch (err) {
+    logger.warn('[Rec login] refresh check failed', { clientId, locationId, error: err.message });
+    return { started: false, reason: 'error' };
+  }
+}
+
 // ─── 3. Read the latest run (+ enrich SKUs from syncgo) ──────────────────────
 
 /**
@@ -2109,6 +2168,7 @@ async function getSignalHistory(analyticsPool, clientId, locationId,
 module.exports = {
   REC_SERVICE_URL,
   callPythonService,
+  refreshRecommendationsOnLogin,
   persistRun,
   generateAndPersist,
   getLatest,

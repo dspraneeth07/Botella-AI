@@ -20,13 +20,13 @@
     "inserted": 0,
     "already_captured": 520,
     "without_product": 27,
-    "observed_stockouts": 338
+    "observed_stockouts": 327
   },
   "runs": [
     {
       "label": "period",
       "window_mode": "fixed",
-      "run_id": "325",
+      "run_id": "333",
       "since": "2026-10-16",
       "cards": 1204,
       "scored": 0,
@@ -54,7 +54,7 @@
     {
       "label": "period",
       "window_mode": "intended",
-      "run_id": "326",
+      "run_id": "334",
       "since": "2026-10-16",
       "cards": 1204,
       "scored": 0,
@@ -82,7 +82,7 @@
     {
       "label": "trailing30",
       "window_mode": "fixed",
-      "run_id": "327",
+      "run_id": "335",
       "since": "2026-09-21",
       "cards": 1471,
       "scored": 267,
@@ -110,7 +110,7 @@
     {
       "label": "trailing30",
       "window_mode": "intended",
-      "run_id": "328",
+      "run_id": "336",
       "since": "2026-09-21",
       "cards": 1471,
       "scored": 40,
